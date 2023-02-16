@@ -67,9 +67,3 @@ Useful resources:
    
    tutorials/source/index.rst
 
-.. toctree::
-   :maxdepth: 1
-   :caption: Reference Documents
-
-   reference_docs/source/A_code_appendix.rst
-

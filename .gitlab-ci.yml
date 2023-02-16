@@ -45,18 +45,18 @@ generate-pages:
   image: $CR_REGISTRY_URI/testing-tools/doxygen:1.5.0
   script:
     # Clone
-    - git clone https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/softwareradiosystems/srsgnb.git
+    #- git clone https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/softwareradiosystems/srsgnb.git
 
-    - export pwd="$( pwd )"
-    - cd srsgnb
-    - mkdir build
-    - cd build
-    - cmake -G Ninja ..
-    - ninja doxygen
+    #- export pwd="$( pwd )"
+    #- cd srsgnb
+    #- mkdir build
+    #- cd build
+    #- cmake -G Ninja ..
+    #- ninja doxygen
 
-    - mkdir -p $pwd/docs/source/.doxygen/xml
-    - cd docs
-    - mv xml/* $pwd/docs/source/.doxygen/xml
+    #- mkdir -p $pwd/docs/source/.doxygen/xml
+    #- cd docs
+    #- mv xml/* $pwd/docs/source/.doxygen/
 
     # Install requirements
     - cd $pwd

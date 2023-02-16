@@ -27,20 +27,20 @@ The MAC is divided into the following sub-components:
 
     Translates DU configuration requests into configuration commands that can be understood by the remaining MAC sub-components. The MAC controller ensures that the other 
     components are configured with minimal service disruption in terms of traffic latency and avoiding any race conditions. The configuration commands that the DU manager 
-    sends to the MAC controller include the addition of new DU cells and addition/reconfiguration/removal of UEs. This is implemented in the :ref:`mac_controller <mac_controller>` class. 
+    sends to the MAC controller include the addition of new DU cells and addition/reconfiguration/removal of UEs. This is implemented in the ``mac_controller`` class. 
 
   - **RACH Handler:** 
 
-    Manages the allocation of RNTIs for the received PRACH preambles and association of reach RNTI to a DU UE Index. Which is implemented in the :ref:`rach_handler <rach_handler>` class. 
+    Manages the allocation of RNTIs for the received PRACH preambles and association of reach RNTI to a DU UE Index. Which is implemented in the ``rach_handler`` class. 
 
   - **MAC UL Processor:** 
 
     Decodes the received MAC PDUs and forwards the resulting MAC SDUs to their respective logical channels using the DEMUX component and forwards the UL Buffer Status 
-    Reports to the Scheduler. This is implemented in the :ref:`mac_ul_processor <mac_ul_processor>` class. 
+    Reports to the Scheduler. This is implemented in the ``mac_ul_processor`` class. 
 
   - **MAC DL processor:** 
 
-    Manages the MAC scheduler. This is implemented in the :ref:`mac_dl_processor<mac_dl_processor>` class. 
+    Manages the MAC scheduler. This is implemented in the ``mac_dl_processor`` class. 
 
 RA Procedure
 ============
