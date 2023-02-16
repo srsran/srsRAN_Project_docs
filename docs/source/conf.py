@@ -31,7 +31,7 @@ year = str(date.today().year)
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
-extensions = ['sphinxcontrib.seqdiag','sphinxcontrib.blockdiag', 'sphinx_copybutton', 'hoverxref.extension', 'breathe', 'sphinxcontrib.plantuml', 'sphinx.ext.todo']
+extensions = ['sphinxcontrib.seqdiag','sphinxcontrib.blockdiag', 'sphinx_copybutton', 'hoverxref.extension', 'sphinxcontrib.plantuml', 'sphinx.ext.todo', 'sphinx.ext.intersphinx',]
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['.templates']

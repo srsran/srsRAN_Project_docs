@@ -1,5 +1,5 @@
 # srsRAN Project Docs
-Private repo for the srsRAN Project documentation.
+The srsRAN Project documentation.
 
 # Local Installation 
 
@@ -14,8 +14,8 @@ pip install -r requirements.txt
 Once all dependencies are installed, you can download and build the docs with the following commands: 
 
 ```
-git clone https://github.com/srsRAN/srsRAN_project_docs.git
-cd srsRAN_project_docs/docs
+git clone https://github.com/srsran/srsran_project_docs.git
+cd srsran_project_docs/docs
 make html
 ```
 
