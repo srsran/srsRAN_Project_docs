@@ -1,3 +1,302 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:8b41f0c685d01174874d063081f43171a55b41dea9f4a6f15f27b88bbcde7b24
-size 12301
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="328.14911mm"
+   height="316.60928mm"
+   viewBox="0 0 328.1491 316.60928"
+   version="1.1"
+   id="svg21"
+   sodipodi:docname="rlc_rx_entity.svg"
+   inkscape:version="1.2.1 (9c6d41e410, 2022-07-14, custom)"
+   inkscape:export-filename="../../../../../../../../../../../tmp/rlc_rx_entity.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview8369"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="0.87996867"
+     inkscape:cx="446.60681"
+     inkscape:cy="460.24366"
+     inkscape:window-width="1920"
+     inkscape:window-height="1023"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg21" />
+  <defs
+     id="defs18">
+    <marker
+       style="overflow:visible"
+       id="Arrow1L"
+       refX="0"
+       refY="0"
+       orient="auto-start-reverse"
+       markerWidth="8.75"
+       markerHeight="5"
+       viewBox="0 0 8.75 5"
+       preserveAspectRatio="xMidYMid">
+      <path
+         style="fill:context-stroke;fill-rule:evenodd;stroke:none"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="arrow1L"
+         transform="scale(-0.5)" />
+    </marker>
+  </defs>
+  <rect
+     style="fill:#f9f9f9;stroke:#000000;stroke-width:0.486074;stroke-dasharray:2.91644, 2.91644;stroke-dashoffset:0;paint-order:stroke fill markers"
+     id="rect147"
+     width="247.71552"
+     height="172.91959"
+     x="78.895294"
+     y="69.189713" />
+  <rect
+     style="fill:#f9f9f9;stroke:#000000;stroke-width:0.486;stroke-dasharray:2.916, 2.916;stroke-dashoffset:0;paint-order:stroke fill markers"
+     id="rect147-8"
+     width="248.21318"
+     height="28.236332"
+     x="79.312439"
+     y="13.950461" />
+  <text
+     xml:space="preserve"
+     style="font-size:12.7px;line-height:1.25;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';stroke-width:0.264583"
+     x="226.43083"
+     y="148.00037"
+     id="text1974-5"
+     transform="scale(1.0000254,0.99997461)"><tspan
+       id="tspan1972-6"
+       style="font-size:12.7px;stroke-width:0.264583"
+       x="226.43083"
+       y="148.00037">RX window</tspan></text>
+  <g
+     id="g12988"
+     transform="matrix(1.5005711,0,0,1.5004949,28.029569,3.7339421)"
+     style="fill:#d5f6ff;stroke-width:0.66643">
+    <g
+       id="g12927"
+       transform="translate(0,0.00539235)"
+       style="fill:#d5f6ff;stroke-width:0.66643">
+      <rect
+         style="fill:#d5f6ff;stroke:#1a1a1a;stroke-width:0.176603;stroke-dasharray:none;paint-order:stroke fill markers"
+         id="rect12050-7"
+         width="6.4342003"
+         height="4.011045"
+         x="83.665627"
+         y="91.469803" />
+      <rect
+         style="fill:#d5f6ff;stroke:#1a1a1a;stroke-width:0.176603;stroke-dasharray:none;paint-order:stroke fill markers"
+         id="rect12050-4-1"
+         width="6.4342003"
+         height="4.011045"
+         x="76.825424"
+         y="91.469803" />
+      <rect
+         style="fill:#d5f6ff;stroke:#1a1a1a;stroke-width:0.176603;stroke-dasharray:none;paint-order:stroke fill markers"
+         id="rect12050-9-1"
+         width="6.4342003"
+         height="4.011045"
+         x="56.304802"
+         y="91.469803" />
+      <rect
+         style="fill:#d5f6ff;stroke:#1a1a1a;stroke-width:0.176603;stroke-dasharray:none;paint-order:stroke fill markers"
+         id="rect12050-0-5"
+         width="6.4342003"
+         height="4.011045"
+         x="63.145008"
+         y="91.469803" />
+      <rect
+         style="fill:#d5f6ff;stroke:#1a1a1a;stroke-width:0.176603;stroke-dasharray:none;paint-order:stroke fill markers"
+         id="rect12050-91-9"
+         width="6.4342003"
+         height="4.011045"
+         x="69.985214"
+         y="91.469803" />
+    </g>
+    <g
+       id="g12927-7"
+       transform="translate(33.963553,0.00539235)"
+       style="fill:#d5f6ff;stroke-width:0.66643">
+      <rect
+         style="fill:#d5f6ff;stroke:#1a1a1a;stroke-width:0.176603;stroke-dasharray:none;paint-order:stroke fill markers"
+         id="rect12050-7-7"
+         width="6.4342003"
+         height="4.011045"
+         x="83.665627"
+         y="91.469803" />
+      <rect
+         style="fill:#d5f6ff;stroke:#1a1a1a;stroke-width:0.176603;stroke-dasharray:none;paint-order:stroke fill markers"
+         id="rect12050-4-1-6"
+         width="6.4342003"
+         height="4.011045"
+         x="76.825424"
+         y="91.469803" />
+      <rect
+         style="fill:#d5f6ff;stroke:#1a1a1a;stroke-width:0.176603;stroke-dasharray:none;paint-order:stroke fill markers"
+         id="rect12050-9-1-7"
+         width="6.4342003"
+         height="4.011045"
+         x="56.304802"
+         y="91.469803" />
+      <rect
+         style="fill:#d5f6ff;stroke:#1a1a1a;stroke-width:0.176603;stroke-dasharray:none;paint-order:stroke fill markers"
+         id="rect12050-0-5-3"
+         width="6.4342003"
+         height="4.011045"
+         x="63.145008"
+         y="91.469803" />
+      <rect
+         style="fill:#d5f6ff;stroke:#1a1a1a;stroke-width:0.176603;stroke-dasharray:none;paint-order:stroke fill markers"
+         id="rect12050-91-9-6"
+         width="6.4342003"
+         height="4.011045"
+         x="69.985214"
+         y="91.469803" />
+    </g>
+  </g>
+  <text
+     xml:space="preserve"
+     style="font-size:12.7045px;line-height:1.25;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';stroke-width:0.264583"
+     x="162.81677"
+     y="62.234299"
+     id="text13133"
+     transform="scale(1.0000254,0.99997461)"><tspan
+       id="tspan13131"
+       style="stroke-width:0.264583"
+       x="162.81677"
+       y="62.234299">RLC RX entity</tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-size:12.7045px;line-height:1.25;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';stroke-width:0.264583"
+     x="187.34091"
+     y="10.857269"
+     id="text13133-1"
+     transform="scale(1.0000254,0.99997461)"><tspan
+       id="tspan13131-2"
+       style="stroke-width:0.264583"
+       x="187.34091"
+       y="10.857269">PDCP</tspan></text>
+  <rect
+     style="fill:#f9f9f9;stroke:#000000;stroke-width:0.486;stroke-dasharray:2.916, 2.916;stroke-dashoffset:0;paint-order:stroke fill markers"
+     id="rect147-8-9"
+     width="250.21318"
+     height="44.229721"
+     x="77.692917"
+     y="272.13657" />
+  <text
+     xml:space="preserve"
+     style="font-size:12.7045px;line-height:1.25;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';stroke-width:0.264583"
+     x="188.39941"
+     y="262.15625"
+     id="text13133-1-3"
+     transform="scale(1.0000254,0.99997461)"><tspan
+       id="tspan13131-2-9"
+       style="stroke-width:0.264583"
+       x="188.39941"
+       y="262.15625">MAC</tspan></text>
+  <path
+     style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.264583"
+     id="path14000-0"
+     d="m 116.89468,295.43302 c 0.50867,0.5029 -0.42697,0.93375 -0.83589,0.8454 -1.10816,-0.23944 -1.29413,-1.65597 -0.855,-2.51711 0.7855,-1.54037 2.8469,-1.73201 4.19858,-0.8645 1.98364,1.2731 2.18294,4.05366 0.87409,5.87962 -1.74448,2.43372 -5.26654,2.63913 -7.56126,0.8836 -2.88766,-2.20915 -3.09841,-6.48161 -0.89319,-9.24213 2.67082,-3.34336 7.69888,-3.55903 10.92393,-0.9027 3.80064,3.13039 4.02104,8.91631 0.91231,12.60464 -3.58917,4.25833 -10.1353,4.48332 -14.28663,0.9218 -4.71701,-4.04682 -4.94653,-11.35369 -0.93139,-15.96716 4.50438,-5.1756 12.57358,-5.4096 17.6493,-0.94089 5.63504,4.96111 5.87348,13.79242 0.95049,19.32967" />
+  <text
+     xml:space="preserve"
+     style="font-size:12.7045px;line-height:1.25;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';stroke-width:0.264583"
+     x="142.94511"
+     y="298.79996"
+     id="text16303"
+     transform="scale(1.0000254,0.99997461)"><tspan
+       id="tspan16301"
+       style="stroke-width:0.264583"
+       x="142.94511"
+       y="298.79996">UE executor thread</tspan></text>
+  <rect
+     style="fill:#d5f6ff;stroke:#000000;stroke-width:0.486;stroke-dasharray:2.916, 2.916;stroke-dashoffset:0;paint-order:stroke fill markers"
+     id="rect16357"
+     width="37.345428"
+     height="10.819587"
+     x="112.89397"
+     y="197.40045" />
+  <rect
+     style="fill:#d5f6ff;stroke:#000000;stroke-width:0.486;stroke-dasharray:2.916, 2.916;stroke-dashoffset:0;paint-order:stroke fill markers"
+     id="rect16357-5"
+     width="37.345428"
+     height="10.819587"
+     x="107.49965"
+     y="93.060028" />
+  <text
+     xml:space="preserve"
+     style="font-size:12.69999994px;line-height:1.25;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';stroke-width:0.264583"
+     x="164.39313"
+     y="206.34682"
+     id="text16465"
+     transform="scale(1.0000254,0.99997461)"><tspan
+       style="stroke-width:0.264583;font-size:12.69999994px"
+       x="164.39313"
+       y="206.34682"
+       id="tspan16467">Extract header</tspan></text>
+  <path
+     style="fill:none;stroke:#000000;stroke-width:0.6;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#Arrow1L)"
+     d="M 89.723667,29.082911 V 293.30629"
+     id="path13017-4" />
+  <text
+     xml:space="preserve"
+     style="font-size:12.7045px;line-height:1.25;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';stroke-width:0.264583"
+     x="-0.53349006"
+     y="59.426907"
+     id="text16475"
+     transform="scale(1.0000254,0.99997461)"><tspan
+       id="tspan16473"
+       style="stroke-width:0.264583"
+       x="-0.53349006"
+       y="59.426907">on_new_sdu()</tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-size:12.7045px;line-height:1.25;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';stroke-width:0.264583"
+     x="9.9396009"
+     y="260.81232"
+     id="text16475-8"
+     transform="scale(1.0000254,0.99997461)"><tspan
+       id="tspan16473-8"
+       style="stroke-width:0.264583"
+       x="9.9396009"
+       y="260.81232">handle_pdu()</tspan></text>
+  <path
+     style="fill:none;stroke:#000000;stroke-width:0.3;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:0.3, 0.900001;stroke-dashoffset:0;stroke-opacity:1;marker-start:url(#Arrow1L)"
+     d="m 117.90915,110.08858 v 24.96915"
+     id="path17366" />
+  <path
+     style="fill:none;stroke:#000000;stroke-width:0.3;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:0.3, 0.899999;stroke-dashoffset:0;stroke-opacity:1;marker-start:url(#Arrow1L)"
+     d="m 118.5998,154.62381 v 32.80755"
+     id="path17368" />
+  <path
+     style="fill:none;stroke:#000000;stroke-width:0.3;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:0.3, 0.9;stroke-dashoffset:0;stroke-opacity:1;marker-start:url(#Arrow1L)"
+     d="m 130.79191,212.56264 v 21.25967"
+     id="path17370" />
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-weight:normal;font-size:11.2889px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+     x="158.23181"
+     y="94.978783"
+     id="text806"><tspan
+       sodipodi:role="line"
+       id="tspan804"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.2889px;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';stroke-width:0.264583"
+       x="158.23181"
+       y="94.978783">Update cached status report</tspan><tspan
+       sodipodi:role="line"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.2889px;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';stroke-width:0.264583"
+       x="158.23181"
+       y="109.19286"
+       id="tspan808">Deliver to upper layers</tspan></text>
+</svg>

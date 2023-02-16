@@ -1,3 +1,331 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:41639312f2bb5fe4f1efb43634906641a1fcc10c677be375cc9003ee0edec344
-size 11603
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="669.68506mm"
+   height="89.784645mm"
+   viewBox="0 0 669.68506 89.784646"
+   version="1.1"
+   id="svg4157"
+   inkscape:version="1.2.1 (9c6d41e410, 2022-07-14, custom)"
+   sodipodi:docname="rlc_rx_window.svg"
+   inkscape:export-filename="rlc_rx_window.odg.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview4159"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="0.64693624"
+     inkscape:cx="1279.106"
+     inkscape:cy="596.65849"
+     inkscape:window-width="2560"
+     inkscape:window-height="1395"
+     inkscape:window-x="0"
+     inkscape:window-y="22"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs4154">
+    <marker
+       style="overflow:visible"
+       id="Arrow1L"
+       refX="0"
+       refY="0"
+       orient="auto-start-reverse"
+       inkscape:stockid="Arrow1L"
+       markerWidth="8.75"
+       markerHeight="5"
+       viewBox="0 0 8.75 5"
+       inkscape:isstock="true"
+       inkscape:collect="always"
+       preserveAspectRatio="xMidYMid">
+      <path
+         style="fill:context-stroke;fill-rule:evenodd;stroke:none"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="arrow1L"
+         transform="scale(-0.5)" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow1L-9"
+       refX="0"
+       refY="0"
+       orient="auto-start-reverse"
+       inkscape:stockid="Arrow1L"
+       markerWidth="8.75"
+       markerHeight="5"
+       viewBox="0 0 8.75 5"
+       inkscape:isstock="true"
+       inkscape:collect="always"
+       preserveAspectRatio="xMidYMid">
+      <path
+         style="fill:context-stroke;fill-rule:evenodd;stroke:none"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="arrow1L-5"
+         transform="scale(-0.5)" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow1L-9-6"
+       refX="0"
+       refY="0"
+       orient="auto-start-reverse"
+       inkscape:stockid="Arrow1L"
+       markerWidth="8.75"
+       markerHeight="5"
+       viewBox="0 0 8.75 5"
+       inkscape:isstock="true"
+       inkscape:collect="always"
+       preserveAspectRatio="xMidYMid">
+      <path
+         style="fill:context-stroke;fill-rule:evenodd;stroke:none"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="arrow1L-5-3"
+         transform="scale(-0.5)" />
+    </marker>
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(148.29667,-9.0390476)">
+    <rect
+       style="fill:#aaeeff;stroke:#000000;stroke-width:0.792022;paint-order:stroke fill markers"
+       id="rect4544"
+       width="56.679592"
+       height="46.791748"
+       x="-146.55702"
+       y="9.4350586" />
+    <rect
+       style="fill:#aaeeff;stroke:#000000;stroke-width:0.792022;paint-order:stroke fill markers"
+       id="rect4544-0"
+       width="56.679592"
+       height="46.791748"
+       x="-89.473541"
+       y="9.4350586" />
+    <rect
+       style="fill:#aaeeff;stroke:#000000;stroke-width:0.792022;paint-order:stroke fill markers"
+       id="rect4544-6"
+       width="56.679592"
+       height="46.791748"
+       x="-32.390064"
+       y="9.4350586" />
+    <rect
+       style="fill:#aaeeff;stroke:#000000;stroke-width:0.792022;paint-order:stroke fill markers"
+       id="rect4544-8"
+       width="56.679592"
+       height="46.791748"
+       x="24.693415"
+       y="9.4350586" />
+    <text
+       xml:space="preserve"
+       style="font-size:31.631px;line-height:1.25;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';stroke-width:0.790778"
+       x="109.83444"
+       y="31.806303"
+       id="text5855"
+       transform="scale(0.88690868,1.1275118)"><tspan
+         sodipodi:role="line"
+         id="tspan5853"
+         style="stroke-width:0.790778"
+         x="109.83444"
+         y="31.806303">...</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:31.631px;line-height:1.25;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';stroke-width:0.790778"
+       x="283.09558"
+       y="32.170334"
+       id="text5855-8"
+       transform="scale(0.88690868,1.1275118)"><tspan
+         sodipodi:role="line"
+         id="tspan5853-4"
+         style="stroke-width:0.790778"
+         x="283.09558"
+         y="32.170334">...</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow1L)"
+       d="M -145.79667,87.730307 V 63.937763"
+       id="path6093" />
+    <text
+       xml:space="preserve"
+       style="font-size:16.9333px;line-height:1.25;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';stroke-width:0.529166"
+       x="-139.082"
+       y="93.982277"
+       id="text7056"><tspan
+         sodipodi:role="line"
+         id="tspan7054"
+         style="font-size:16.9333px;stroke-width:0.529166"
+         x="-139.082"
+         y="93.982277">RX_Next</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:10.5833px;line-height:1.25;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';stroke-width:0.264583"
+       x="23.49085"
+       y="48.964634"
+       id="text9461"><tspan
+         sodipodi:role="line"
+         id="tspan9459"
+         style="stroke-width:0.264583"
+         x="23.49085"
+         y="48.964634" /></text>
+    <text
+       xml:space="preserve"
+       style="font-size:16.9333px;line-height:1.25;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';stroke-width:0.529166"
+       x="-135.43996"
+       y="28.159382"
+       id="text9477"><tspan
+         sodipodi:role="line"
+         id="tspan9475"
+         style="stroke-width:0.529166"
+         x="-135.43996"
+         y="28.159382">SDU</tspan><tspan
+         sodipodi:role="line"
+         style="stroke-width:0.529166"
+         x="-135.43996"
+         y="49.326008"
+         id="tspan9479">   1</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:16.9333px;line-height:1.25;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';stroke-width:0.529166"
+       x="-78.356468"
+       y="28.159382"
+       id="text9477-7"><tspan
+         sodipodi:role="line"
+         id="tspan9475-1"
+         style="stroke-width:0.529166"
+         x="-78.356468"
+         y="28.159382">SDU</tspan><tspan
+         sodipodi:role="line"
+         style="stroke-width:0.529166"
+         x="-78.356468"
+         y="49.326008"
+         id="tspan9479-7">   2</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:16.9333px;line-height:1.25;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';stroke-width:0.529166"
+       x="-21.272993"
+       y="28.076702"
+       id="text9477-2"><tspan
+         sodipodi:role="line"
+         id="tspan9475-7"
+         style="stroke-width:0.529166"
+         x="-21.272993"
+         y="28.076702">SDU</tspan><tspan
+         sodipodi:role="line"
+         style="stroke-width:0.529166"
+         x="-21.272993"
+         y="49.243328"
+         id="tspan9479-2">   3</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:16.9333px;line-height:1.25;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';stroke-width:0.529166"
+       x="35.810478"
+       y="28.159382"
+       id="text9477-26"><tspan
+         sodipodi:role="line"
+         id="tspan9475-10"
+         style="stroke-width:0.529166"
+         x="35.810478"
+         y="28.159382">SDU</tspan><tspan
+         sodipodi:role="line"
+         style="stroke-width:0.529166"
+         x="35.810478"
+         y="49.326008"
+         id="tspan9479-6">   4</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow1L-9)"
+       d="M 384.04935,87.620662 V 63.828118"
+       id="path6093-0" />
+    <text
+       xml:space="preserve"
+       style="font-size:16.9333px;line-height:1.25;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';stroke-width:0.529166"
+       x="386.92245"
+       y="95.273636"
+       id="text7056-4"><tspan
+         sodipodi:role="line"
+         id="tspan7054-8"
+         style="font-size:16.9333px;stroke-width:0.529166"
+         x="386.92245"
+         y="95.273636">RX_Next_Highest</tspan></text>
+    <g
+       id="g21963"
+       transform="translate(-34.925016,-3.4215493)">
+      <rect
+         style="fill:#aaeeff;stroke:#000000;stroke-width:0.792022;paint-order:stroke fill markers"
+         id="rect4544-8-64"
+         width="56.679592"
+         height="46.791748"
+         x="362.27982"
+         y="13.332915" />
+      <text
+         xml:space="preserve"
+         style="font-size:16.9333px;line-height:1.25;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';stroke-width:0.529166"
+         x="371.21375"
+         y="33.085354"
+         id="text9477-1"><tspan
+           sodipodi:role="line"
+           id="tspan9475-5"
+           style="stroke-width:0.529166"
+           x="371.21375"
+           y="33.085354">SDU</tspan><tspan
+           sodipodi:role="line"
+           style="stroke-width:0.529166"
+           x="371.21375"
+           y="54.25198"
+           id="tspan9479-9">   N</tspan></text>
+    </g>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow1L-9-6)"
+       d="M 193.96992,87.656722 V 63.864182"
+       id="path6093-0-5" />
+    <text
+       xml:space="preserve"
+       style="font-size:16.9333px;line-height:1.25;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';stroke-width:0.529166"
+       x="196.84331"
+       y="95.3097"
+       id="text7056-4-6"><tspan
+         sodipodi:role="line"
+         id="tspan7054-8-1"
+         style="font-size:16.9333px;stroke-width:0.529166"
+         x="196.84331"
+         y="95.3097">RX_Highest_Status</tspan></text>
+    <g
+       id="g21957"
+       transform="translate(0,0.24654916)">
+      <rect
+         style="fill:#aaeeff;stroke:#000000;stroke-width:0.792022;paint-order:stroke fill markers"
+         id="rect4544-8-64-8"
+         width="56.679592"
+         height="46.791748"
+         x="137.27524"
+         y="9.6648169" />
+      <text
+         xml:space="preserve"
+         style="font-size:16.9333px;line-height:1.25;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';stroke-width:0.529166"
+         x="146.20917"
+         y="29.417242"
+         id="text9477-1-1"><tspan
+           sodipodi:role="line"
+           id="tspan9475-5-5"
+           style="stroke-width:0.529166"
+           x="146.20917"
+           y="29.417242">SDU</tspan><tspan
+           sodipodi:role="line"
+           style="stroke-width:0.529166"
+           x="146.20917"
+           y="50.583866"
+           id="tspan9479-9-9">   M</tspan></text>
+    </g>
+  </g>
+</svg>
