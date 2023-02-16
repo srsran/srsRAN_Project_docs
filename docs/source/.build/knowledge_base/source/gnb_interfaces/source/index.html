@@ -1,0 +1,636 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>gNB Interfaces &mdash; srsRAN Project XX.YY documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/copybutton.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/tooltipster.custom.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/tooltipster.bundle.min.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/tooltipster-sideTip-shadow.min.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/tooltipster-sideTip-punk.min.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/tooltipster-sideTip-noir.min.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/tooltipster-sideTip-light.min.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/tooltipster-sideTip-borderless.min.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/micromodal.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/sphinx_rtd_theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/custom.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../../_static/favicon.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script src="../../../../_static/clipboard.min.js"></script>
+        <script src="../../../../_static/copybutton.js"></script>
+        <script src="../../../../_static/js/hoverxref.js"></script>
+        <script src="../../../../_static/js/tooltipster.bundle.min.js"></script>
+        <script src="../../../../_static/js/micromodal.min.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="MCS" href="../../mcs/source/index.html" />
+    <link rel="prev" title="O-RAN gNB Components" href="../../gnb_components/source/index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> srsRAN Project
+          
+
+          
+            
+            <img src="../../../../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                XX.YY
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+    
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">User Manuals</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../user_manuals/source/1_installation.html">Installation Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../user_manuals/source/2_feature_list.html">Feature List</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../user_manuals/source/3_troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../user_manuals/source/4_advanced_usage.html">Advanced Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../user_manuals/source/5_config_ref.html">Configuration Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../user_manuals/source/6_console_ref.html">Console Reference</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developers Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../dev_guide/source/software_arch/source/index.html">srsRAN Project Software Architecture</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../dev_guide/source/software_arch/source/index.html#high-level-architecture">High Level Architecture</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../dev_guide/source/software_arch/source/index.html#components-and-interfaces">Components and Interfaces</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../dev_guide/source/software_arch/source/index.html#threading-model">Threading Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../dev_guide/source/software_arch/source/index.html#memory-model">Memory Model</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../dev_guide/source/CU/source/index.html">CU</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../dev_guide/source/DU/source/index.html">DU</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../dev_guide/source/DU/source/index.html#du-high">DU-High</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../dev_guide/source/DU/source/DU_high/du_manager.html">DU Manager</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../dev_guide/source/DU/source/DU_high/du_manager.html#overview">Overview</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../dev_guide/source/DU/source/DU_high/F1AP_du.html">F1AP-DU</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../dev_guide/source/DU/source/DU_high/F1AP_du.html#overview">Overview</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../dev_guide/source/DU/source/DU_high/rlc.html">Radio Link Control (RLC)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../dev_guide/source/DU/source/DU_high/rlc_tm.html">RLC Transparent Mode(TM)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../dev_guide/source/DU/source/DU_high/rlc_um.html">RLC Unacknowledged Mode(UM)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../dev_guide/source/DU/source/DU_high/rlc_am.html">RLC Acknowledged Mode (AM)</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../dev_guide/source/DU/source/DU_high/mac.html">MAC</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../dev_guide/source/DU/source/DU_high/mac.html#implementation">Implementation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../dev_guide/source/DU/source/index.html#du-low">DU-Low</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../dev_guide/source/interfaces/source/index.html">Interfaces</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../dev_guide/source/interfaces/source/1_fronthaul.html">Open FrontHaul</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../dev_guide/source/interfaces/source/1_fronthaul.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../dev_guide/source/interfaces/source/1_fronthaul.html#implementation">Implementation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../dev_guide/source/interfaces/source/2_fapi.html">FAPI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../dev_guide/source/interfaces/source/3_f1.html">F1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../dev_guide/source/interfaces/source/4_e1.html">E1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../dev_guide/source/interfaces/source/5_e2.html">E2</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../dev_guide/source/interfaces/source/5_e2.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../dev_guide/source/interfaces/source/5_e2.html#implementation">Implementation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../dev_guide/source/interfaces/source/6_o1.html">O1</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../dev_guide/source/interfaces/source/6_o1.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../dev_guide/source/interfaces/source/6_o1.html#implementation">Implementation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../dev_guide/source/code_guide/source/index.html">Code Style Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../dev_guide/source/code_guide/source/1_language_libraries.html">Language and libraries</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../dev_guide/source/code_guide/source/1_language_libraries.html#c-c-version">C &amp; C++ version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../dev_guide/source/code_guide/source/1_language_libraries.html#use-of-the-c-standard-library">Use of the C++ standard library</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../dev_guide/source/code_guide/source/2_mechanical_source_aspects.html">Mechanical source aspects</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../dev_guide/source/code_guide/source/2_mechanical_source_aspects.html#source-code-formatting">Source Code Formatting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../dev_guide/source/code_guide/source/2_mechanical_source_aspects.html#comments">Comments</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../dev_guide/source/code_guide/source/2_mechanical_source_aspects.html#file-headers">File Headers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../dev_guide/source/code_guide/source/2_mechanical_source_aspects.html#class-overviews">Class Overviews</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../dev_guide/source/code_guide/source/2_mechanical_source_aspects.html#method-information">Method Information</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../dev_guide/source/code_guide/source/2_mechanical_source_aspects.html#member-variable-information">Member Variable Information</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../dev_guide/source/code_guide/source/2_mechanical_source_aspects.html#header-guards">Header Guards</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../dev_guide/source/code_guide/source/2_mechanical_source_aspects.html#include-style">#include Style</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../dev_guide/source/code_guide/source/2_mechanical_source_aspects.html#language-and-compiler-aspects">Language and compiler aspects</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../dev_guide/source/code_guide/source/2_mechanical_source_aspects.html#treat-compiler-warnings-as-errors">Treat compiler warnings as errors</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../dev_guide/source/code_guide/source/2_mechanical_source_aspects.html#code-portability">Code Portability</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../dev_guide/source/code_guide/source/2_mechanical_source_aspects.html#avoid-rtti-and-exceptions">Avoid RTTI and Exceptions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../dev_guide/source/code_guide/source/2_mechanical_source_aspects.html#use-of-auto">Use of auto</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../dev_guide/source/code_guide/source/3_style_aspects_high_level.html">Style Aspects: High Level Issues</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../dev_guide/source/code_guide/source/3_style_aspects_high_level.html#self-contained-headers">Self-contained Headers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../dev_guide/source/code_guide/source/3_style_aspects_high_level.html#using-include-sparingly">Using <code class="docutils literal notranslate"><span class="pre">#include</span></code> Sparingly</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../dev_guide/source/code_guide/source/3_style_aspects_high_level.html#using-internal-headers">Using “Internal” Headers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../dev_guide/source/code_guide/source/3_style_aspects_high_level.html#use-of-namespace">Use of <code class="docutils literal notranslate"><span class="pre">namespace</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../dev_guide/source/code_guide/source/3_style_aspects_high_level.html#using-early-exits-and-continue">Using “early exits” and <code class="docutils literal notranslate"><span class="pre">continue</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../dev_guide/source/code_guide/source/3_style_aspects_high_level.html#avoid-else-after-a-return-statement">Avoid <code class="docutils literal notranslate"><span class="pre">else</span></code> after a <code class="docutils literal notranslate"><span class="pre">return</span></code> statement</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../dev_guide/source/code_guide/source/3_style_aspects_high_level.html#use-of-static-helper-functions">Use of Static Helper Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../dev_guide/source/code_guide/source/4_style_aspects_low_level.html">Style Aspects: Low Level Issues</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../dev_guide/source/code_guide/source/4_style_aspects_low_level.html#naming-conventions">Naming Conventions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../dev_guide/source/code_guide/source/4_style_aspects_low_level.html#assert-and-expect">Assert and expect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../dev_guide/source/code_guide/source/4_style_aspects_low_level.html#do-not-use-using-namespace-std">Do not use <code class="docutils literal notranslate"><span class="pre">using</span> <span class="pre">namespace</span> <span class="pre">std</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../dev_guide/source/code_guide/source/4_style_aspects_low_level.html#using-range-for-loops">Using Range for Loops</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../dev_guide/source/code_guide/source/4_style_aspects_low_level.html#loop-structure">Loop Structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../dev_guide/source/code_guide/source/4_style_aspects_low_level.html#using-pre-increment">Using Pre-increment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../dev_guide/source/code_guide/source/4_style_aspects_low_level.html#use-of-anonymous-namespaces">Use of Anonymous Namespaces</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../dev_guide/source/code_guide/source/4_style_aspects_low_level.html#using-c-casts">Using C++ Casts</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../dev_guide/source/code_guide/source/5_recommendations.html">Recommendations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../dev_guide/source/code_guide/source/5_recommendations.html#function-and-class-length">Function and Class Length</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../dev_guide/source/code_guide/source/5_recommendations.html#scope">Scope</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../dev_guide/source/code_guide/source/5_recommendations.html#logical-operators">Logical Operators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../dev_guide/source/code_guide/source/5_recommendations.html#using-references-over-pointers">Using References(&amp;) Over Pointers(*)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../dev_guide/source/code_guide/source/5_recommendations.html#const-correctness">Const Correctness</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../dev_guide/source/code_guide/source/5_recommendations.html#avoid-complex-expressions">Avoid Complex Expressions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../dev_guide/source/code_guide/source/5_recommendations.html#magic-numbers">Magic numbers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../dev_guide/source/code_guide/source/5_recommendations.html#fixed-width-integer-types">Fixed Width Integer Types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../dev_guide/source/code_guide/source/5_recommendations.html#function-signatures">Function signatures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../dev_guide/source/code_guide/source/5_recommendations.html#class-layout-example">Class Layout Example</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../dev_guide/source/code_guide/source/6_self_generating_docs.html">Self Generating Documentation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../dev_guide/source/code_guide/source/6_self_generating_docs.html#comment-formatting-dos-and-donts">Comment Formatting DOs and DONTs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../dev_guide/source/code_guide/source/6_self_generating_docs.html#doxygen-commands">Doxygen Commands</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../dev_guide/source/code_guide/source/7_commit_formatting.html">Commit Formatting</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Knowledge Base</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../oran_gnb/source/index.html">O-RAN gNB Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../oran_gnb/source/index.html#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../oran_gnb/source/index.html#split-7-2x-architecture">Split 7.2x Architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../oran_gnb/source/index.html#srsgnb">srsGNB</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../oran_gnb/source/index.html#further-reading">Further Reading</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../gnb_components/source/index.html">O-RAN gNB Components</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../gnb_components/source/index.html#control-unit-cu">Control Unit (CU)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../gnb_components/source/index.html#distributed-unit-du">Distributed Unit (DU)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../gnb_components/source/index.html#du-high">DU-high</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../gnb_components/source/index.html#du-low">DU-low</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">gNB Interfaces</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#e2">E2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#o1">O1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#e1">E1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#f1">F1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#fapi">FAPI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#open-fronthaul">Open FrontHaul</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mcs/source/index.html">MCS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ldpc_polar/source/index.html">LDPC/ Polar Encoding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../nr_phy_test/source/index.html">NR PHY Test</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorials/source/index.html">Tutorials</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference Documents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../reference_docs/source/A_code_appendix.html">Code Appendix</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../reference_docs/source/A_code_appendix.html#mac-controller"><code class="docutils literal notranslate"><span class="pre">mac_controller</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../reference_docs/source/A_code_appendix.html#mac-dl-processor"><code class="docutils literal notranslate"><span class="pre">mac_dl_processor</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../reference_docs/source/A_code_appendix.html#mac-ul-processor"><code class="docutils literal notranslate"><span class="pre">mac_ul_processor</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../reference_docs/source/A_code_appendix.html#rach-handler"><code class="docutils literal notranslate"><span class="pre">rach_handler</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+
+    
+        <p class="caption">
+            <span class="caption-text">
+            
+                Links
+            
+            </span>
+        </p>
+        <ul>
+            
+                
+                    <li class="toctree-l1"><a href="https://www.srsran.com"><i class="web-icon"></i> Website</a></li>
+                
+            
+                
+                    <li class="toctree-l1"><a href="https://github.com/srsran/srsran_project"><i class="fa fa-github fa-fw"></i> Source code</a></li>
+                
+            
+                
+                    <li class="toctree-l1"><a href="https://github.com/srsran/srsran_project/issues"><i class="fa fa-bug fa-fw"></i> Report an issue</a></li>
+                
+            
+                
+                    <li class="toctree-l1"><a href="https://github.com/srsran/srsran_project/discussions"><i class="fa fa-envelope fa-fw"></i> Discussions Board</a></li>
+                
+            
+                
+                    <li class="toctree-l1"><a href="https://twitter.com/srsRANProject"><i class="fa fa-twitter fa-fw"></i> Twitter</a></li>
+                
+            
+        </ul>
+    
+
+
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">srsRAN Project</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>gNB Interfaces</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../../../../_sources/knowledge_base/source/gnb_interfaces/source/index.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
+      
+        <a href="../../mcs/source/index.html" class="btn btn-neutral float-right" title="MCS" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+      
+      
+        <a href="../../gnb_components/source/index.html" class="btn btn-neutral float-left" title="O-RAN gNB Components" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+      
+  </div>
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="gnb-interfaces">
+<span id="oran-gnb-interfaces"></span><h1>gNB Interfaces<a class="headerlink" href="#gnb-interfaces" title="Permalink to this headline">¶</a></h1>
+<p>As outlined in the <a class="hxr-hoverxref hxr-tooltip reference internal" href="../../oran_gnb/source/index.html#oran-gnb-overview"><span class="std std-ref">O-RAN gNB Overview</span></a> the 5G NR gNB introduces a flexible architecture. Splitting the gNB and introducing multiple new interfaces.</p>
+<p>This section of our knowledge base aims to go through these interfaces in further detail. Outlining the components they connect, the types of messages they carry and their purpose.</p>
+<hr class="docutils" />
+<div class="section" id="e2">
+<h2>E2<a class="headerlink" href="#e2" title="Permalink to this headline">¶</a></h2>
+<p>The E2 interface connects the near-RT RIC to an E2 node (E2-du, E2-cp, E2-up). The application protocol (E2AP) is implemented on top of SCTP using ASN1
+messages (similar to E1 interface defined by 3GPP). Its main functions are:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Provide Near-RT RIC services:</p>
+<ul>
+<li><p>Report</p></li>
+<li><p>Insert</p></li>
+<li><p>Control</p></li>
+<li><p>Policy</p></li>
+</ul>
+</li>
+</ul>
+</div></blockquote>
+<p>Support functions include:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Interface management</p></li>
+<li><p>RIC service updates</p></li>
+</ul>
+</div></blockquote>
+<p>The main functions outlined above include the following procedures:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Report:</strong> Subscription request to the E2 node with information to configure how reports should be sent by the node back to the RIC.</p></li>
+<li><p><strong>Insert:</strong> Subscription request to the E2 node with information to configure an insert message which will be used to suspend an ongoing procedure in the node. The RIC then decides how to deal with the suspended procedure (override, cancel, …).</p></li>
+<li><p><strong>Control:</strong> Control message to the E2 node to instantiate a procedure or resume a previously suspended one.</p></li>
+<li><p><strong>Policy:</strong> RIC requests a node to execute a specific policy during the normal functioning of the E2 node.</p></li>
+</ul>
+</div></blockquote>
+<p>The E2 service model defines the functions in the E2 node which may be controlled by the RIC. For each exposed function in the service model, the RIC
+may monitor, suspend, stop, override or control via different policies the behavior of the E2 node.</p>
+<p>The current specification (as of March 2021 specs) defines two service models which are specific implementations of the above points:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p><strong>Network Interface (NI):</strong> exposure of network interfaces and modification of the messages.</p></li>
+<li><p><strong>Key Performance Measurement (KPM):</strong> Performance monitoring of set metrics within the RAN.</p></li>
+</ol>
+</div></blockquote>
+<p>The KPM service model requires the following metrics to be exposed:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>CU-UP:</strong> PDCP UL/DL bytes, QCI.</p></li>
+<li><p><strong>DU:</strong> DL/UL PRB usage.</p></li>
+<li><p><strong>CU-CP:</strong> number of active UEs.</p></li>
+</ul>
+</div></blockquote>
+</div>
+<hr class="docutils" />
+<div class="section" id="o1">
+<h2>O1<a class="headerlink" href="#o1" title="Permalink to this headline">¶</a></h2>
+<p>The O1 interface is aligned to the 3GPP specifications for RAN element management. It connects the multiple elements of the gNB to the Service Management and Orchestration (SMO)
+platform. The following Fault, Configuration, Accounting, Performance and Security (FCAPS) functions are supported through the O1 interface:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Performance management (PM)</p></li>
+<li><p>Configuration management (CM)</p></li>
+<li><p>Fault management (FM)</p></li>
+<li><p>File management</p></li>
+<li><p>Communication surveillance (heartbeat)</p></li>
+<li><p>Tracing</p></li>
+<li><p>Physical network function (PNF) discovery</p></li>
+<li><p>PNF software management</p></li>
+</ul>
+</div></blockquote>
+<p>O1 provisioning operations use NETCONF for communication using YANG files for data exchange, while for CM notifications a RESTFUL HTTP-based solution is
+used. O1 is the communication protocol to support OAM.</p>
+</div>
+<hr class="docutils" />
+<div class="section" id="e1">
+<h2>E1<a class="headerlink" href="#e1" title="Permalink to this headline">¶</a></h2>
+</div>
+<hr class="docutils" />
+<div class="section" id="f1">
+<h2>F1<a class="headerlink" href="#f1" title="Permalink to this headline">¶</a></h2>
+</div>
+<hr class="docutils" />
+<div class="section" id="fapi">
+<h2>FAPI<a class="headerlink" href="#fapi" title="Permalink to this headline">¶</a></h2>
+</div>
+<hr class="docutils" />
+<div class="section" id="open-fronthaul">
+<h2>Open FrontHaul<a class="headerlink" href="#open-fronthaul" title="Permalink to this headline">¶</a></h2>
+<p>The architecture of a gNB with CU, DU and RUs is shown in the following figure, using split 7.2x. Here, the term Lower Layer Split (LSS) replaces FrontHaul.
+LLS-C and LLS-U provide the control and user planes over the LLS interface respectively.</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../../../../_images/FrontHaul.png"><img alt="../../../../_images/FrontHaul.png" src="../../../../_images/FrontHaul.png" style="width: 273.0px; height: 352.8px;" /></a>
+</div>
+<p>The FrontHaul interface is divided into two main planes:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>CUS plane:</strong> control, user and synchronization</p></li>
+<li><p><strong>M plane:</strong> management</p></li>
+</ul>
+</div></blockquote>
+<p>The CUS plane of the FrontHaul interface uses different data flows to exchange data between the DU and the RU. They are:</p>
+<blockquote>
+<div><ol class="arabic">
+<li><p>User plane:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>1a:</strong> flow of IQ data in FFT frequency domain on DL</p></li>
+<li><p><strong>1b:</strong> flow of IQ data in FFT frequency domain on UL</p></li>
+<li><p><strong>1c:</strong> flow of PRACH IQ data in FFT frequency domain</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>Control plane:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>2a:</strong> Scheduling commands (DL and UL) &amp; beamforming commands</p></li>
+<li><p><strong>2b:</strong> LAA listen-before-talk (LBT) configuration commands and requests</p></li>
+<li><p><strong>2c:</strong> LAA LBT status and response messages</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>Synchronization plane:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>S:</strong> timing and synchronization data</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ol>
+</div></blockquote>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../../../../_images/FrontHaul_flow.png"><img alt="../../../../_images/FrontHaul_flow.png" src="../../../../_images/FrontHaul_flow.png" style="width: 763.2px; height: 352.0px;" /></a>
+</div>
+<p>The Management plane, not included in the previous figure, uses a similar interface to O1 to set up, configure and perform maintenance tasks on the FrontHaul interface.</p>
+<p>The following tables show the protocol architecture for each plane:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 36%" />
+<col style="width: 36%" />
+<col style="width: 11%" />
+<col style="width: 16%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Control Plane</p></th>
+<th class="head"><p>User Plane</p></th>
+<th class="head" colspan="2"><p>Sync Plane</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>eCPRI / ROE</p></td>
+<td><p>eCPRI / ROE</p></td>
+<td colspan="2" rowspan="2"></td>
+</tr>
+<tr class="row-odd"><td><p>UDP (optional)</p></td>
+<td><p>UDP (optional)</p></td>
+</tr>
+<tr class="row-even"><td><p>IP (optional)</p></td>
+<td><p>IP (optional)</p></td>
+<td><p>PTP</p></td>
+<td><p>SyncE</p></td>
+</tr>
+<tr class="row-odd"><td><p>Eth L2 + VLAN</p></td>
+<td><p>Eth L2 + VLAN</p></td>
+<td colspan="2"><p>ETH L2</p></td>
+</tr>
+<tr class="row-even"><td><p>ETH L1</p></td>
+<td><p>ETH L1</p></td>
+<td colspan="2"><p>ETH L1</p></td>
+</tr>
+</tbody>
+</table>
+<p>We can see that for user and control planes we can choose, for transport purposes, between eCPRI or IEEE 1914.3 (Radio over Ethernet).</p>
+<hr class="docutils" />
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="../../mcs/source/index.html" class="btn btn-neutral float-right" title="MCS" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../../gnb_components/source/index.html" class="btn btn-neutral float-left" title="O-RAN gNB Components" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2023-2023, Software Radio Systems..
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

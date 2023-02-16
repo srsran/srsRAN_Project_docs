@@ -1,0 +1,620 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Self Generating Documentation &mdash; srsRAN Project XX.YY documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/copybutton.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/tooltipster.custom.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/tooltipster.bundle.min.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/tooltipster-sideTip-shadow.min.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/tooltipster-sideTip-punk.min.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/tooltipster-sideTip-noir.min.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/tooltipster-sideTip-light.min.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/tooltipster-sideTip-borderless.min.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/micromodal.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/sphinx_rtd_theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/custom.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../../_static/favicon.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script src="../../../../_static/clipboard.min.js"></script>
+        <script src="../../../../_static/copybutton.js"></script>
+        <script src="../../../../_static/js/hoverxref.js"></script>
+        <script src="../../../../_static/js/tooltipster.bundle.min.js"></script>
+        <script src="../../../../_static/js/micromodal.min.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="Commit Formatting" href="7_commit_formatting.html" />
+    <link rel="prev" title="Recommendations" href="5_recommendations.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> srsRAN Project
+          
+
+          
+            
+            <img src="../../../../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                XX.YY
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+    
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">User Manuals</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../user_manuals/source/1_installation.html">Installation Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../user_manuals/source/2_feature_list.html">Feature List</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../user_manuals/source/3_troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../user_manuals/source/4_advanced_usage.html">Advanced Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../user_manuals/source/5_config_ref.html">Configuration Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../user_manuals/source/6_console_ref.html">Console Reference</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developers Guide</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../software_arch/source/index.html">srsRAN Project Software Architecture</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../software_arch/source/index.html#high-level-architecture">High Level Architecture</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../software_arch/source/index.html#components-and-interfaces">Components and Interfaces</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../software_arch/source/index.html#threading-model">Threading Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../software_arch/source/index.html#memory-model">Memory Model</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../CU/source/index.html">CU</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../DU/source/index.html">DU</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../DU/source/index.html#du-high">DU-High</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../DU/source/DU_high/du_manager.html">DU Manager</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../DU/source/DU_high/du_manager.html#overview">Overview</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../DU/source/DU_high/F1AP_du.html">F1AP-DU</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../DU/source/DU_high/F1AP_du.html#overview">Overview</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../DU/source/DU_high/rlc.html">Radio Link Control (RLC)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../DU/source/DU_high/rlc_tm.html">RLC Transparent Mode(TM)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../DU/source/DU_high/rlc_um.html">RLC Unacknowledged Mode(UM)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../DU/source/DU_high/rlc_am.html">RLC Acknowledged Mode (AM)</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../DU/source/DU_high/mac.html">MAC</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../DU/source/DU_high/mac.html#implementation">Implementation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../DU/source/index.html#du-low">DU-Low</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../interfaces/source/index.html">Interfaces</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../interfaces/source/1_fronthaul.html">Open FrontHaul</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../interfaces/source/1_fronthaul.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../interfaces/source/1_fronthaul.html#implementation">Implementation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../interfaces/source/2_fapi.html">FAPI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../interfaces/source/3_f1.html">F1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../interfaces/source/4_e1.html">E1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../interfaces/source/5_e2.html">E2</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../interfaces/source/5_e2.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../interfaces/source/5_e2.html#implementation">Implementation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../interfaces/source/6_o1.html">O1</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../interfaces/source/6_o1.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../interfaces/source/6_o1.html#implementation">Implementation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Code Style Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="1_language_libraries.html">Language and libraries</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="1_language_libraries.html#c-c-version">C &amp; C++ version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="1_language_libraries.html#use-of-the-c-standard-library">Use of the C++ standard library</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="2_mechanical_source_aspects.html">Mechanical source aspects</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="2_mechanical_source_aspects.html#source-code-formatting">Source Code Formatting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="2_mechanical_source_aspects.html#comments">Comments</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="2_mechanical_source_aspects.html#file-headers">File Headers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="2_mechanical_source_aspects.html#class-overviews">Class Overviews</a></li>
+<li class="toctree-l4"><a class="reference internal" href="2_mechanical_source_aspects.html#method-information">Method Information</a></li>
+<li class="toctree-l4"><a class="reference internal" href="2_mechanical_source_aspects.html#member-variable-information">Member Variable Information</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="2_mechanical_source_aspects.html#header-guards">Header Guards</a></li>
+<li class="toctree-l3"><a class="reference internal" href="2_mechanical_source_aspects.html#include-style">#include Style</a></li>
+<li class="toctree-l3"><a class="reference internal" href="2_mechanical_source_aspects.html#language-and-compiler-aspects">Language and compiler aspects</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="2_mechanical_source_aspects.html#treat-compiler-warnings-as-errors">Treat compiler warnings as errors</a></li>
+<li class="toctree-l4"><a class="reference internal" href="2_mechanical_source_aspects.html#code-portability">Code Portability</a></li>
+<li class="toctree-l4"><a class="reference internal" href="2_mechanical_source_aspects.html#avoid-rtti-and-exceptions">Avoid RTTI and Exceptions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="2_mechanical_source_aspects.html#use-of-auto">Use of auto</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="3_style_aspects_high_level.html">Style Aspects: High Level Issues</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="3_style_aspects_high_level.html#self-contained-headers">Self-contained Headers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="3_style_aspects_high_level.html#using-include-sparingly">Using <code class="docutils literal notranslate"><span class="pre">#include</span></code> Sparingly</a></li>
+<li class="toctree-l3"><a class="reference internal" href="3_style_aspects_high_level.html#using-internal-headers">Using “Internal” Headers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="3_style_aspects_high_level.html#use-of-namespace">Use of <code class="docutils literal notranslate"><span class="pre">namespace</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="3_style_aspects_high_level.html#using-early-exits-and-continue">Using “early exits” and <code class="docutils literal notranslate"><span class="pre">continue</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="3_style_aspects_high_level.html#avoid-else-after-a-return-statement">Avoid <code class="docutils literal notranslate"><span class="pre">else</span></code> after a <code class="docutils literal notranslate"><span class="pre">return</span></code> statement</a></li>
+<li class="toctree-l3"><a class="reference internal" href="3_style_aspects_high_level.html#use-of-static-helper-functions">Use of Static Helper Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="4_style_aspects_low_level.html">Style Aspects: Low Level Issues</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="4_style_aspects_low_level.html#naming-conventions">Naming Conventions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="4_style_aspects_low_level.html#assert-and-expect">Assert and expect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="4_style_aspects_low_level.html#do-not-use-using-namespace-std">Do not use <code class="docutils literal notranslate"><span class="pre">using</span> <span class="pre">namespace</span> <span class="pre">std</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="4_style_aspects_low_level.html#using-range-for-loops">Using Range for Loops</a></li>
+<li class="toctree-l3"><a class="reference internal" href="4_style_aspects_low_level.html#loop-structure">Loop Structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="4_style_aspects_low_level.html#using-pre-increment">Using Pre-increment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="4_style_aspects_low_level.html#use-of-anonymous-namespaces">Use of Anonymous Namespaces</a></li>
+<li class="toctree-l3"><a class="reference internal" href="4_style_aspects_low_level.html#using-c-casts">Using C++ Casts</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="5_recommendations.html">Recommendations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="5_recommendations.html#function-and-class-length">Function and Class Length</a></li>
+<li class="toctree-l3"><a class="reference internal" href="5_recommendations.html#scope">Scope</a></li>
+<li class="toctree-l3"><a class="reference internal" href="5_recommendations.html#logical-operators">Logical Operators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="5_recommendations.html#using-references-over-pointers">Using References(&amp;) Over Pointers(*)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="5_recommendations.html#const-correctness">Const Correctness</a></li>
+<li class="toctree-l3"><a class="reference internal" href="5_recommendations.html#avoid-complex-expressions">Avoid Complex Expressions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="5_recommendations.html#magic-numbers">Magic numbers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="5_recommendations.html#fixed-width-integer-types">Fixed Width Integer Types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="5_recommendations.html#function-signatures">Function signatures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="5_recommendations.html#class-layout-example">Class Layout Example</a></li>
+</ul>
+</li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Self Generating Documentation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#comment-formatting-dos-and-donts">Comment Formatting DOs and DONTs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#doxygen-commands">Doxygen Commands</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="7_commit_formatting.html">Commit Formatting</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Knowledge Base</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../knowledge_base/source/oran_gnb/source/index.html">O-RAN gNB Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../knowledge_base/source/oran_gnb/source/index.html#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../knowledge_base/source/oran_gnb/source/index.html#split-7-2x-architecture">Split 7.2x Architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../knowledge_base/source/oran_gnb/source/index.html#srsgnb">srsGNB</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../knowledge_base/source/oran_gnb/source/index.html#further-reading">Further Reading</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../knowledge_base/source/gnb_components/source/index.html">O-RAN gNB Components</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../knowledge_base/source/gnb_components/source/index.html#control-unit-cu">Control Unit (CU)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../knowledge_base/source/gnb_components/source/index.html#distributed-unit-du">Distributed Unit (DU)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../knowledge_base/source/gnb_components/source/index.html#du-high">DU-high</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../knowledge_base/source/gnb_components/source/index.html#du-low">DU-low</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../knowledge_base/source/gnb_interfaces/source/index.html">gNB Interfaces</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../knowledge_base/source/gnb_interfaces/source/index.html#e2">E2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../knowledge_base/source/gnb_interfaces/source/index.html#o1">O1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../knowledge_base/source/gnb_interfaces/source/index.html#e1">E1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../knowledge_base/source/gnb_interfaces/source/index.html#f1">F1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../knowledge_base/source/gnb_interfaces/source/index.html#fapi">FAPI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../knowledge_base/source/gnb_interfaces/source/index.html#open-fronthaul">Open FrontHaul</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../knowledge_base/source/mcs/source/index.html">MCS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../knowledge_base/source/ldpc_polar/source/index.html">LDPC/ Polar Encoding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../knowledge_base/source/nr_phy_test/source/index.html">NR PHY Test</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorials/source/index.html">Tutorials</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference Documents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../reference_docs/source/A_code_appendix.html">Code Appendix</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../reference_docs/source/A_code_appendix.html#mac-controller"><code class="docutils literal notranslate"><span class="pre">mac_controller</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../reference_docs/source/A_code_appendix.html#mac-dl-processor"><code class="docutils literal notranslate"><span class="pre">mac_dl_processor</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../reference_docs/source/A_code_appendix.html#mac-ul-processor"><code class="docutils literal notranslate"><span class="pre">mac_ul_processor</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../reference_docs/source/A_code_appendix.html#rach-handler"><code class="docutils literal notranslate"><span class="pre">rach_handler</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+
+    
+        <p class="caption">
+            <span class="caption-text">
+            
+                Links
+            
+            </span>
+        </p>
+        <ul>
+            
+                
+                    <li class="toctree-l1"><a href="https://www.srsran.com"><i class="web-icon"></i> Website</a></li>
+                
+            
+                
+                    <li class="toctree-l1"><a href="https://github.com/srsran/srsran_project"><i class="fa fa-github fa-fw"></i> Source code</a></li>
+                
+            
+                
+                    <li class="toctree-l1"><a href="https://github.com/srsran/srsran_project/issues"><i class="fa fa-bug fa-fw"></i> Report an issue</a></li>
+                
+            
+                
+                    <li class="toctree-l1"><a href="https://github.com/srsran/srsran_project/discussions"><i class="fa fa-envelope fa-fw"></i> Discussions Board</a></li>
+                
+            
+                
+                    <li class="toctree-l1"><a href="https://twitter.com/srsRANProject"><i class="fa fa-twitter fa-fw"></i> Twitter</a></li>
+                
+            
+        </ul>
+    
+
+
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">srsRAN Project</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="index.html">Code Style Guide</a> &raquo;</li>
+        
+      <li>Self Generating Documentation</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../../../../_sources/dev_guide/source/code_guide/source/6_self_generating_docs.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
+      
+        <a href="7_commit_formatting.html" class="btn btn-neutral float-right" title="Commit Formatting" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+      
+      
+        <a href="5_recommendations.html" class="btn btn-neutral float-left" title="Recommendations" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+      
+  </div>
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="self-generating-documentation">
+<span id="self-generating-docs"></span><h1>Self Generating Documentation<a class="headerlink" href="#self-generating-documentation" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="comment-formatting-dos-and-donts">
+<h2>Comment Formatting DOs and DONTs<a class="headerlink" href="#comment-formatting-dos-and-donts" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Use a double slash for normal code comments (comments inlined in the body of a function).</p></li>
+</ul>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">some_func</span><span class="p">(){</span><span class="w"></span>
+<span class="w">  </span><span class="c1">// This does something</span>
+<span class="w">  </span><span class="n">fmt</span><span class="o">::</span><span class="n">print</span><span class="p">(</span><span class="s">&quot;Some comment&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Place code comments above the line that is going to be explained, not next to it.</p></li>
+</ul>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// This does something - Good.</span>
+<span class="n">do_something</span><span class="p">();</span><span class="w"></span>
+
+<span class="n">do_something</span><span class="p">();</span><span class="w">  </span><span class="c1">// This does something - Bad.</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>For the case of documentation, use a triple slash /// for single line and multi line documentation blocks. IDEs highlight this with a different color compared to regular code comments</p></li>
+</ul>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">/// Single line documentation.</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">do_something</span><span class="p">();</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1">/// Multi</span>
+<span class="w">  </span><span class="c1">/// line</span>
+<span class="w">  </span><span class="c1">/// documentation</span>
+<span class="w">  </span><span class="c1">/// block</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">do_something</span><span class="p">();</span><span class="w"></span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Documentation comments document classes and functions, so they should be always placed outside the body of a function/method.</p></li>
+<li><p>Normal code comments should never appear outside the body of a function.</p></li>
+<li><p>Use C-style comments <code class="docutils literal notranslate"><span class="pre">/**/</span></code> when documenting an important constant parameter in a function call. This is very useful when passing a <code class="docutils literal notranslate"><span class="pre">bool</span></code> or a <code class="docutils literal notranslate"><span class="pre">nullptr</span></code> to a function.</p></li>
+</ul>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">obj</span><span class="p">.</span><span class="n">method</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="nb">true</span><span class="p">,</span><span class="w"> </span><span class="k">nullptr</span><span class="p">);</span><span class="w">                            </span><span class="c1">// hard to see what does the true and nullptr actually refer to.</span>
+<span class="n">obj</span><span class="p">.</span><span class="n">method</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="cm">/*enable_X=*/</span><span class="nb">true</span><span class="p">,</span><span class="w"> </span><span class="cm">/*options=*/</span><span class="k">nullptr</span><span class="p">);</span><span class="w">   </span><span class="c1">// easy to see what the input values actually do.</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><strong>Avoid</strong> commenting out code. If you really need to do it for documentation purposes or maybe for debug printing, use <code class="docutils literal notranslate"><span class="pre">#if</span> <span class="pre">0</span></code> and <code class="docutils literal notranslate"><span class="pre">#endif</span></code>. These next properly and are better behaved in general than C-style comments.</p></li>
+</ul>
+</div>
+<div class="section" id="doxygen-commands">
+<h2>Doxygen Commands<a class="headerlink" href="#doxygen-commands" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Use the <code class="docutils literal notranslate"><span class="pre">\command</span></code> (as opposed to <code class="docutils literal notranslate"><span class="pre">&#64;command</span></code>) form of Doxygen commands.</p></li>
+<li><p>Use the <code class="docutils literal notranslate"><span class="pre">\file</span></code> command to tell Doxygen to parse the current file.</p></li>
+<li><p>The first paragraph (i.e., until the first empty line) should begin with the <code class="docutils literal notranslate"><span class="pre">\brief</span></code> command and will be used as an abstract.
+A single sentence is typically enough: add a more detailed description in optional separate paragraphs.</p></li>
+<li><p>Wrap code examples in <code class="docutils literal notranslate"><span class="pre">\code</span></code> and <code class="docutils literal notranslate"><span class="pre">\endcode</span></code> commands</p></li>
+</ul>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="c1">/// \code</span>
+<span class="k">class</span> <span class="nc">UselessClass</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">useless_field</span><span class="p">;</span><span class="w"></span>
+<span class="p">};</span><span class="w"></span>
+<span class="c1">/// \endcode</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Use the <code class="docutils literal notranslate"><span class="pre">\c</span></code> command or the <code class="docutils literal notranslate"><span class="pre">&lt;tt&gt;...&lt;/tt&gt;</span></code> tags for short inline bits of code, e.g. <code class="docutils literal notranslate"><span class="pre">\c</span> <span class="pre">variable_name</span></code> or <code class="docutils literal notranslate"><span class="pre">&lt;tt&gt;</span> <span class="pre">variable_name</span> <span class="pre">=</span> <span class="pre">5</span> <span class="pre">&lt;/tt&gt;</span></code>.</p></li>
+<li><p>Start a paragraph with <code class="docutils literal notranslate"><span class="pre">\note</span></code>, <code class="docutils literal notranslate"><span class="pre">\warning</span></code> or <code class="docutils literal notranslate"><span class="pre">\remark</span></code> if you want to put extra emphasis (with the obvious meaning) on it.</p></li>
+</ul>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">/// \remark: Implemented as specified by TS 36.211 v13.13.0 Table 4.2-1.</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>When referencing technical specifications or similar documents, only reference specific sections and tables, since they do not change between releases,
+and avoid using page numbers. Consider including extracts of the document if they provide clarification.</p></li>
+</ul>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">///</span>
+<span class="c1">/// \remark: Implemented as specified by TS 36.211 v13.13.0. Procedure description:</span>
+<span class="c1">/// 1. reset MAC;</span>
+<span class="c1">/// 2. stop all timers that are running except T320;</span>
+<span class="c1">///</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Classes, functions, enumerations and similar objects should be documented by providing a very short (one sentence) description and one or more optional extra paragraphs.</p></li>
+<li><p>For functions, use the command <code class="docutils literal notranslate"><span class="pre">\param</span></code> to describe parameters. The direction of the parameter can be specified as in <code class="docutils literal notranslate"><span class="pre">\param</span> <span class="pre">[out]</span> <span class="pre">&lt;name&gt;</span></code>,
+<code class="docutils literal notranslate"><span class="pre">\param</span> <span class="pre">[in,out]</span> <span class="pre">&lt;name&gt;</span></code> or <code class="docutils literal notranslate"><span class="pre">\param</span> <span class="pre">[in]</span> <span class="pre">&lt;name&gt;</span></code>.</p></li>
+<li><p>For the function return value, use the <code class="docutils literal notranslate"><span class="pre">\returns</span></code> command. Use <code class="docutils literal notranslate"><span class="pre">\\\&lt;</span></code> for short inline comments.</p></li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>other requirements for classes, typedefs…</p>
+</div>
+<ul class="simple">
+<li><p>Some examples:</p></li>
+</ul>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">set_enabled</span><span class="p">(</span><span class="kt">bool</span><span class="w"> </span><span class="n">b</span><span class="p">);</span><span class="w"></span>
+<span class="c1">/// Sets the enabled property to \c b.</span>
+<span class="c1">///</span>
+<span class="c1">/// Decodes the PDSCH.</span>
+<span class="c1">///</span>
+<span class="c1">/// Applies specific decoding options when \p opt is not the default option.</span>
+<span class="c1">///</span>
+<span class="c1">/// Typical usage:</span>
+<span class="c1">/// \code</span>
+<span class="c1">///   decode_PDSCH(q, OPTION_FAST|OPTION_X, mybuffer);</span>
+<span class="c1">/// \endcode</span>
+<span class="c1">///</span>
+<span class="c1">/// \param [in] q is the handle of the decoder.</span>
+<span class="c1">/// \param [in] opt represents a bitmask of possible decoding  options.</span>
+<span class="c1">/// \param [out] mybuffer filled with the decoded samples on success.</span>
+<span class="c1">///</span>
+<span class="c1">/// \returns 0 on success.</span>
+<span class="c1">///</span>
+<span class="c1">/// \remark: Implemented as described in TS 36.211 v13.13.0 Table 4.2-1.</span>
+<span class="c1">///</span>
+<span class="kt">int</span><span class="w"> </span><span class="nf">decode_PDSCH</span><span class="p">(</span><span class="n">srslte_decoder</span><span class="w"> </span><span class="o">*</span><span class="n">q</span><span class="p">,</span><span class="w"> </span><span class="n">srslte_options</span><span class="w"> </span><span class="n">opt</span><span class="p">,</span><span class="w"> </span><span class="n">cf_t</span><span class="w">  </span><span class="o">*</span><span class="n">Result</span><span class="p">);</span><span class="w"></span>
+<span class="c1">/// Hex color codes</span>
+<span class="k">enum</span> <span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">VIOLET</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0x9400D3</span><span class="p">,</span><span class="w">  </span><span class="c1">///&lt; RGB: (148,   0, 211)</span>
+<span class="w">  </span><span class="n">INDIGO</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0x4B0082</span><span class="p">,</span><span class="w">  </span><span class="c1">///&lt; RGB: ( 75,   0, 130)</span>
+<span class="w">  </span><span class="n">BLUE</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="mh">0x0000FF</span><span class="p">,</span><span class="w">  </span><span class="c1">///&lt; RGB: (  0,   0, 255)</span>
+<span class="p">};</span><span class="w"></span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>the following depends on how we configure Doxygen</p>
+</div>
+<p><strong>Do not</strong> duplicate the documentation comments in the header file and the in the implementation file. Write the documentation comments
+for public interfaces in the header file. Implementation files can include additional documentation to explain implementation details
+as needed.</p>
+<p><strong>Do not</strong> duplicate the function or class name at the beginning.</p>
+<p>For example:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// example.h:</span>
+
+<span class="c1">// example - Does something important.</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">example</span><span class="p">();</span><span class="w"></span>
+
+<span class="c1">// example.cpp:</span>
+
+<span class="c1">// example - Does something important.</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">example</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Instead <strong>do</strong>:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// example.h:</span>
+
+<span class="c1">/// Does something important.</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">example</span><span class="p">();</span><span class="w"></span>
+
+<span class="c1">// example.cpp:</span>
+
+<span class="c1">/// Builds a B-tree in order to do foo.  See paper by...</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">example</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="7_commit_formatting.html" class="btn btn-neutral float-right" title="Commit Formatting" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="5_recommendations.html" class="btn btn-neutral float-left" title="Recommendations" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2023-2023, Software Radio Systems..
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

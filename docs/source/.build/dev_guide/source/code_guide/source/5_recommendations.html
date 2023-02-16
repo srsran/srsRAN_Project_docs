@@ -1,0 +1,727 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Recommendations &mdash; srsRAN Project XX.YY documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/copybutton.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/tooltipster.custom.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/tooltipster.bundle.min.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/tooltipster-sideTip-shadow.min.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/tooltipster-sideTip-punk.min.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/tooltipster-sideTip-noir.min.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/tooltipster-sideTip-light.min.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/tooltipster-sideTip-borderless.min.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/micromodal.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/sphinx_rtd_theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/custom.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../../_static/favicon.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script src="../../../../_static/clipboard.min.js"></script>
+        <script src="../../../../_static/copybutton.js"></script>
+        <script src="../../../../_static/js/hoverxref.js"></script>
+        <script src="../../../../_static/js/tooltipster.bundle.min.js"></script>
+        <script src="../../../../_static/js/micromodal.min.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="Self Generating Documentation" href="6_self_generating_docs.html" />
+    <link rel="prev" title="Style Aspects: Low Level Issues" href="4_style_aspects_low_level.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> srsRAN Project
+          
+
+          
+            
+            <img src="../../../../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                XX.YY
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+    
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">User Manuals</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../user_manuals/source/1_installation.html">Installation Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../user_manuals/source/2_feature_list.html">Feature List</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../user_manuals/source/3_troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../user_manuals/source/4_advanced_usage.html">Advanced Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../user_manuals/source/5_config_ref.html">Configuration Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../user_manuals/source/6_console_ref.html">Console Reference</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developers Guide</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../software_arch/source/index.html">srsRAN Project Software Architecture</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../software_arch/source/index.html#high-level-architecture">High Level Architecture</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../software_arch/source/index.html#components-and-interfaces">Components and Interfaces</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../software_arch/source/index.html#threading-model">Threading Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../software_arch/source/index.html#memory-model">Memory Model</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../CU/source/index.html">CU</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../DU/source/index.html">DU</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../DU/source/index.html#du-high">DU-High</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../DU/source/DU_high/du_manager.html">DU Manager</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../DU/source/DU_high/du_manager.html#overview">Overview</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../DU/source/DU_high/F1AP_du.html">F1AP-DU</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../DU/source/DU_high/F1AP_du.html#overview">Overview</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../DU/source/DU_high/rlc.html">Radio Link Control (RLC)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../DU/source/DU_high/rlc_tm.html">RLC Transparent Mode(TM)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../DU/source/DU_high/rlc_um.html">RLC Unacknowledged Mode(UM)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../DU/source/DU_high/rlc_am.html">RLC Acknowledged Mode (AM)</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../DU/source/DU_high/mac.html">MAC</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../DU/source/DU_high/mac.html#implementation">Implementation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../DU/source/index.html#du-low">DU-Low</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../interfaces/source/index.html">Interfaces</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../interfaces/source/1_fronthaul.html">Open FrontHaul</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../interfaces/source/1_fronthaul.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../interfaces/source/1_fronthaul.html#implementation">Implementation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../interfaces/source/2_fapi.html">FAPI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../interfaces/source/3_f1.html">F1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../interfaces/source/4_e1.html">E1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../interfaces/source/5_e2.html">E2</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../interfaces/source/5_e2.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../interfaces/source/5_e2.html#implementation">Implementation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../interfaces/source/6_o1.html">O1</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../interfaces/source/6_o1.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../interfaces/source/6_o1.html#implementation">Implementation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Code Style Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="1_language_libraries.html">Language and libraries</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="1_language_libraries.html#c-c-version">C &amp; C++ version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="1_language_libraries.html#use-of-the-c-standard-library">Use of the C++ standard library</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="2_mechanical_source_aspects.html">Mechanical source aspects</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="2_mechanical_source_aspects.html#source-code-formatting">Source Code Formatting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="2_mechanical_source_aspects.html#comments">Comments</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="2_mechanical_source_aspects.html#file-headers">File Headers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="2_mechanical_source_aspects.html#class-overviews">Class Overviews</a></li>
+<li class="toctree-l4"><a class="reference internal" href="2_mechanical_source_aspects.html#method-information">Method Information</a></li>
+<li class="toctree-l4"><a class="reference internal" href="2_mechanical_source_aspects.html#member-variable-information">Member Variable Information</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="2_mechanical_source_aspects.html#header-guards">Header Guards</a></li>
+<li class="toctree-l3"><a class="reference internal" href="2_mechanical_source_aspects.html#include-style">#include Style</a></li>
+<li class="toctree-l3"><a class="reference internal" href="2_mechanical_source_aspects.html#language-and-compiler-aspects">Language and compiler aspects</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="2_mechanical_source_aspects.html#treat-compiler-warnings-as-errors">Treat compiler warnings as errors</a></li>
+<li class="toctree-l4"><a class="reference internal" href="2_mechanical_source_aspects.html#code-portability">Code Portability</a></li>
+<li class="toctree-l4"><a class="reference internal" href="2_mechanical_source_aspects.html#avoid-rtti-and-exceptions">Avoid RTTI and Exceptions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="2_mechanical_source_aspects.html#use-of-auto">Use of auto</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="3_style_aspects_high_level.html">Style Aspects: High Level Issues</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="3_style_aspects_high_level.html#self-contained-headers">Self-contained Headers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="3_style_aspects_high_level.html#using-include-sparingly">Using <code class="docutils literal notranslate"><span class="pre">#include</span></code> Sparingly</a></li>
+<li class="toctree-l3"><a class="reference internal" href="3_style_aspects_high_level.html#using-internal-headers">Using “Internal” Headers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="3_style_aspects_high_level.html#use-of-namespace">Use of <code class="docutils literal notranslate"><span class="pre">namespace</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="3_style_aspects_high_level.html#using-early-exits-and-continue">Using “early exits” and <code class="docutils literal notranslate"><span class="pre">continue</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="3_style_aspects_high_level.html#avoid-else-after-a-return-statement">Avoid <code class="docutils literal notranslate"><span class="pre">else</span></code> after a <code class="docutils literal notranslate"><span class="pre">return</span></code> statement</a></li>
+<li class="toctree-l3"><a class="reference internal" href="3_style_aspects_high_level.html#use-of-static-helper-functions">Use of Static Helper Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="4_style_aspects_low_level.html">Style Aspects: Low Level Issues</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="4_style_aspects_low_level.html#naming-conventions">Naming Conventions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="4_style_aspects_low_level.html#assert-and-expect">Assert and expect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="4_style_aspects_low_level.html#do-not-use-using-namespace-std">Do not use <code class="docutils literal notranslate"><span class="pre">using</span> <span class="pre">namespace</span> <span class="pre">std</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="4_style_aspects_low_level.html#using-range-for-loops">Using Range for Loops</a></li>
+<li class="toctree-l3"><a class="reference internal" href="4_style_aspects_low_level.html#loop-structure">Loop Structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="4_style_aspects_low_level.html#using-pre-increment">Using Pre-increment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="4_style_aspects_low_level.html#use-of-anonymous-namespaces">Use of Anonymous Namespaces</a></li>
+<li class="toctree-l3"><a class="reference internal" href="4_style_aspects_low_level.html#using-c-casts">Using C++ Casts</a></li>
+</ul>
+</li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Recommendations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#function-and-class-length">Function and Class Length</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#scope">Scope</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#logical-operators">Logical Operators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#using-references-over-pointers">Using References(&amp;) Over Pointers(*)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#const-correctness">Const Correctness</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#avoid-complex-expressions">Avoid Complex Expressions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#magic-numbers">Magic numbers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#fixed-width-integer-types">Fixed Width Integer Types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#function-signatures">Function signatures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#class-layout-example">Class Layout Example</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="6_self_generating_docs.html">Self Generating Documentation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="6_self_generating_docs.html#comment-formatting-dos-and-donts">Comment Formatting DOs and DONTs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="6_self_generating_docs.html#doxygen-commands">Doxygen Commands</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="7_commit_formatting.html">Commit Formatting</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Knowledge Base</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../knowledge_base/source/oran_gnb/source/index.html">O-RAN gNB Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../knowledge_base/source/oran_gnb/source/index.html#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../knowledge_base/source/oran_gnb/source/index.html#split-7-2x-architecture">Split 7.2x Architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../knowledge_base/source/oran_gnb/source/index.html#srsgnb">srsGNB</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../knowledge_base/source/oran_gnb/source/index.html#further-reading">Further Reading</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../knowledge_base/source/gnb_components/source/index.html">O-RAN gNB Components</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../knowledge_base/source/gnb_components/source/index.html#control-unit-cu">Control Unit (CU)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../knowledge_base/source/gnb_components/source/index.html#distributed-unit-du">Distributed Unit (DU)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../knowledge_base/source/gnb_components/source/index.html#du-high">DU-high</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../knowledge_base/source/gnb_components/source/index.html#du-low">DU-low</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../knowledge_base/source/gnb_interfaces/source/index.html">gNB Interfaces</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../knowledge_base/source/gnb_interfaces/source/index.html#e2">E2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../knowledge_base/source/gnb_interfaces/source/index.html#o1">O1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../knowledge_base/source/gnb_interfaces/source/index.html#e1">E1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../knowledge_base/source/gnb_interfaces/source/index.html#f1">F1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../knowledge_base/source/gnb_interfaces/source/index.html#fapi">FAPI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../knowledge_base/source/gnb_interfaces/source/index.html#open-fronthaul">Open FrontHaul</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../knowledge_base/source/mcs/source/index.html">MCS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../knowledge_base/source/ldpc_polar/source/index.html">LDPC/ Polar Encoding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../knowledge_base/source/nr_phy_test/source/index.html">NR PHY Test</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorials/source/index.html">Tutorials</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference Documents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../reference_docs/source/A_code_appendix.html">Code Appendix</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../reference_docs/source/A_code_appendix.html#mac-controller"><code class="docutils literal notranslate"><span class="pre">mac_controller</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../reference_docs/source/A_code_appendix.html#mac-dl-processor"><code class="docutils literal notranslate"><span class="pre">mac_dl_processor</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../reference_docs/source/A_code_appendix.html#mac-ul-processor"><code class="docutils literal notranslate"><span class="pre">mac_ul_processor</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../reference_docs/source/A_code_appendix.html#rach-handler"><code class="docutils literal notranslate"><span class="pre">rach_handler</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+
+    
+        <p class="caption">
+            <span class="caption-text">
+            
+                Links
+            
+            </span>
+        </p>
+        <ul>
+            
+                
+                    <li class="toctree-l1"><a href="https://www.srsran.com"><i class="web-icon"></i> Website</a></li>
+                
+            
+                
+                    <li class="toctree-l1"><a href="https://github.com/srsran/srsran_project"><i class="fa fa-github fa-fw"></i> Source code</a></li>
+                
+            
+                
+                    <li class="toctree-l1"><a href="https://github.com/srsran/srsran_project/issues"><i class="fa fa-bug fa-fw"></i> Report an issue</a></li>
+                
+            
+                
+                    <li class="toctree-l1"><a href="https://github.com/srsran/srsran_project/discussions"><i class="fa fa-envelope fa-fw"></i> Discussions Board</a></li>
+                
+            
+                
+                    <li class="toctree-l1"><a href="https://twitter.com/srsRANProject"><i class="fa fa-twitter fa-fw"></i> Twitter</a></li>
+                
+            
+        </ul>
+    
+
+
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">srsRAN Project</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="index.html">Code Style Guide</a> &raquo;</li>
+        
+      <li>Recommendations</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../../../../_sources/dev_guide/source/code_guide/source/5_recommendations.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
+      
+        <a href="6_self_generating_docs.html" class="btn btn-neutral float-right" title="Self Generating Documentation" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+      
+      
+        <a href="4_style_aspects_low_level.html" class="btn btn-neutral float-left" title="Style Aspects: Low Level Issues" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+      
+  </div>
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="recommendations">
+<h1>Recommendations<a class="headerlink" href="#recommendations" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="function-and-class-length">
+<h2>Function and Class Length<a class="headerlink" href="#function-and-class-length" title="Permalink to this headline">¶</a></h2>
+<p><strong>Avoid</strong> writing classes or functions that are too large.</p>
+<p>As a rule of thumb, functions should fit in a window and no scrolling should be needed to review them.
+Try to write functions that only do one thing or action. If you write a function that does more than one thing, try to split it into multiple functions,
+each of which do a single thing. This will dramatically improve code maintainability. By using concise function names,
+and by having each function well documented, code will be much easier to understand.</p>
+<p>For classes, it is harder to set a maximum number of lines, so instead, give a class a single responsibility. Although the concept of responsibility
+may sound abstract, another way of thinking about it is that a class should only have “one reason to change”.
+If a class does multiple things or responsibilities, it is better to split it into multiple classes.
+This way we may avoid falling into the <em>god class</em> anti-pattern which can be a maintenance nightmare.</p>
+</div>
+<div class="section" id="scope">
+<h2>Scope<a class="headerlink" href="#scope" title="Permalink to this headline">¶</a></h2>
+<p>Define variables where they are going to be used, making their scope as short as possible. This applies to both C++ and C code.</p>
+<p>For example:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="p">;</span><span class="w"></span>
+<span class="kt">float</span><span class="w"> </span><span class="n">f</span><span class="p">;</span><span class="w"></span>
+<span class="p">...</span><span class="w"></span>
+<span class="p">...</span><span class="w"> </span><span class="n">other</span><span class="w"> </span><span class="n">unrelated</span><span class="w"> </span><span class="n">code</span><span class="w"> </span><span class="p">...</span><span class="w"></span>
+<span class="p">...</span><span class="w"></span>
+<span class="n">f</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">get_float</span><span class="p">();</span><span class="w"></span>
+<span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">get_multiplier</span><span class="p">();</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Should be transformed to:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="p">...</span><span class="w"></span>
+<span class="p">...</span><span class="w"> </span><span class="n">other</span><span class="w"> </span><span class="n">unrelated</span><span class="w"> </span><span class="n">code</span><span class="w"> </span><span class="p">...</span><span class="w"></span>
+<span class="p">...</span><span class="w"></span>
+<span class="kt">float</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">get_float</span><span class="p">();</span><span class="w"></span>
+<span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">get_multiplier</span><span class="p">();</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="logical-operators">
+<h2>Logical Operators<a class="headerlink" href="#logical-operators" title="Permalink to this headline">¶</a></h2>
+<p>The codebase uses the standard form of logical operators:</p>
+<blockquote>
+<div><p>-<code class="docutils literal notranslate"><span class="pre">&amp;&amp;</span></code>, <code class="docutils literal notranslate"><span class="pre">||</span></code> and <code class="docutils literal notranslate"><span class="pre">!</span></code></p>
+</div></blockquote>
+<p>As opposed to the alternative form:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">and</span></code>, <code class="docutils literal notranslate"><span class="pre">or</span></code> and <code class="docutils literal notranslate"><span class="pre">not</span></code></p></li>
+</ul>
+</div></blockquote>
+<p>The following code block shows the correct and incorrect use of logical operators:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">a</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="p">(</span><span class="n">b</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">8</span><span class="p">))</span><span class="w">     </span><span class="c1">// Correct, only used the standard form.</span>
+
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">not</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="p">(</span><span class="n">b</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">8</span><span class="p">))</span><span class="w">  </span><span class="c1">// Incorrect, used &#39;not&#39; instead of the standard form &#39;!&#39;.</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="using-references-over-pointers">
+<h2>Using References(&amp;) Over Pointers(*)<a class="headerlink" href="#using-references-over-pointers" title="Permalink to this headline">¶</a></h2>
+<p>In the general, it is better to use references instead of pointers.
+C++ references have a simpler syntax than pointers and always refer to a valid object (unless you do some undefined behavior).</p>
+<p>Pointers are very useful when the pointed object may optionally be <em>nullptr</em>, however managing this case may require adding additional checks
+to manage this situation.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">static</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="nf">check_objects_are_equal</span><span class="p">(</span><span class="n">foo</span><span class="w"> </span><span class="o">*</span><span class="n">left</span><span class="p">,</span><span class="w"> </span><span class="n">foo</span><span class="w"> </span><span class="o">*</span><span class="n">right</span><span class="p">);</span><span class="w">              </span><span class="c1">// Bad, left or right may be nullptr, prefer references.</span>
+<span class="k">static</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="nf">check_objects_are_equal</span><span class="p">(</span><span class="n">foo</span><span class="w"> </span><span class="n">left</span><span class="p">,</span><span class="w"> </span><span class="n">foo</span><span class="w"> </span><span class="n">right</span><span class="p">);</span><span class="w">                </span><span class="c1">// Bad, copies objects.</span>
+<span class="k">static</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="nf">check_objects_are_equal</span><span class="p">(</span><span class="n">foo</span><span class="w"> </span><span class="o">&amp;</span><span class="n">left</span><span class="p">,</span><span class="w"> </span><span class="n">foo</span><span class="w"> </span><span class="o">&amp;</span><span class="n">right</span><span class="p">);</span><span class="w">              </span><span class="c1">// Bad, missing const, checking the objects should not modify them.</span>
+<span class="k">static</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="nf">check_objects_are_equal</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">foo</span><span class="w"> </span><span class="o">&amp;</span><span class="n">left</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">foo</span><span class="w"> </span><span class="o">&amp;</span><span class="n">right</span><span class="p">);</span><span class="w">  </span><span class="c1">// Good.</span>
+<span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">fill_optional_object</span><span class="p">(</span><span class="n">foo</span><span class="w"> </span><span class="o">*</span><span class="n">x</span><span class="p">);</span><span class="w">                                </span><span class="c1">// Good, x is optional, function checks for nullptr.</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="const-correctness">
+<h2>Const Correctness<a class="headerlink" href="#const-correctness" title="Permalink to this headline">¶</a></h2>
+<p>Write code that is <code class="docutils literal notranslate"><span class="pre">const</span></code> correct.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">const</span><span class="w"> </span><span class="n">object</span><span class="o">&amp;</span><span class="w"> </span><span class="nf">get_object</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="p">;</span><span class="w"> </span><span class="c1">// Return value cannot be modified, method does not modify the contents of the class.</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="avoid-complex-expressions">
+<h2>Avoid Complex Expressions<a class="headerlink" href="#avoid-complex-expressions" title="Permalink to this headline">¶</a></h2>
+<p>Try to use local variables to store intermediate results or to cache the result of a function call when calling it multiple times
+and it is known not to change. This will help to avoid complex expressions.</p>
+<p>For example:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">unsigned</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">get_bar_count</span><span class="p">();</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">get_bar_count</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">do_something</span><span class="p">();</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="n">do_other</span><span class="p">();</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Can be transformed to this code, saving many calls to <code class="docutils literal notranslate"><span class="pre">get_bar_count()</span></code></p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">unsigned</span><span class="w"> </span><span class="n">bar_count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">get_bar_count</span><span class="p">();</span><span class="w"></span>
+<span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">unsigned</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">bar_count</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">bar_count</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">do_something</span><span class="p">();</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="n">do_other</span><span class="p">();</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>There may be cases where you <em>need</em> to work with complex and deep nested structures. In these cases try to store intermediate members
+as pointers or references (if writing C++ code) and remember to use <code class="docutils literal notranslate"><span class="pre">const</span></code> if only reading the values.
+This will avoid needless typing, having more compact code and potentially improving performance for unneeded indirection chasing pointers.</p>
+<p>For example:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">je</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">metrics_tmp</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">je</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">metrics</span><span class="p">[</span><span class="n">j</span><span class="p">].</span><span class="n">dl</span><span class="p">.</span><span class="n">n_samples</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">metrics_tmp</span><span class="p">[</span><span class="n">j</span><span class="p">].</span><span class="n">dl</span><span class="p">.</span><span class="n">n_samples</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">metrics</span><span class="p">[</span><span class="n">j</span><span class="p">].</span><span class="n">dl</span><span class="p">.</span><span class="n">mcs</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">metrics_tmp</span><span class="p">[</span><span class="n">j</span><span class="p">].</span><span class="n">dl</span><span class="p">.</span><span class="n">n_samples</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">metrics_tmp</span><span class="p">[</span><span class="n">j</span><span class="p">].</span><span class="n">dl</span><span class="p">.</span><span class="n">mcs</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">metrics</span><span class="p">[</span><span class="n">j</span><span class="p">].</span><span class="n">ul</span><span class="p">.</span><span class="n">n_samples</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">metrics_tmp</span><span class="p">[</span><span class="n">j</span><span class="p">].</span><span class="n">ul</span><span class="p">.</span><span class="n">n_samples</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Can be transformed into:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">je</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">metrics_tmp</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">je</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">downlink_metrics</span><span class="w"> </span><span class="o">&amp;</span><span class="n">dl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">metrics</span><span class="p">[</span><span class="n">j</span><span class="p">].</span><span class="n">dl</span><span class="p">;</span><span class="w">  </span><span class="c1">// store non const reference to access the struct</span>
+<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="n">downlink_metrics</span><span class="w"> </span><span class="o">&amp;</span><span class="n">dl_tmp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">metrics_tmp</span><span class="p">[</span><span class="n">j</span><span class="p">].</span><span class="n">dl</span><span class="p">;</span><span class="w">  </span><span class="c1">// const ref to access the struct</span>
+
+<span class="w">  </span><span class="n">dl</span><span class="p">.</span><span class="n">n_samples</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">dl_tmp</span><span class="p">.</span><span class="n">n_samples</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">dl</span><span class="p">.</span><span class="n">mcs</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">dl_tmp</span><span class="p">.</span><span class="n">n_samples</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">dl_tmp</span><span class="p">.</span><span class="n">mcs</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="n">uplink_metrics</span><span class="w"> </span><span class="o">&amp;</span><span class="n">ul_tmp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">metrics_tmp</span><span class="p">[</span><span class="n">j</span><span class="p">].</span><span class="n">dl</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">ul</span><span class="p">.</span><span class="n">n_samples</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">ul_tmp</span><span class="p">.</span><span class="n">n_samples</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="magic-numbers">
+<h2>Magic numbers<a class="headerlink" href="#magic-numbers" title="Permalink to this headline">¶</a></h2>
+<p>Avoid the use of magic numbers. Instead, use a variable (<code class="docutils literal notranslate"><span class="pre">static</span></code>, <code class="docutils literal notranslate"><span class="pre">constexpr</span></code>, etc.): this way, you will be forced to give it
+a descriptive name, improving code readability.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">b</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">2.0</span><span class="p">)</span><span class="w">  </span><span class="c1">// Bad</span>
+<span class="w">  </span><span class="p">...</span><span class="w"></span>
+
+<span class="k">static</span><span class="w"> </span><span class="k">constexpr</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">detection_threshold_dB</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">2.0</span><span class="p">;</span><span class="w"></span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">b</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">detection_threshold_dB</span><span class="p">)</span><span class="w">  </span><span class="c1">// Good - we now know this is a detection threshold value in dBs</span>
+<span class="w">  </span><span class="p">...</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="fixed-width-integer-types">
+<h2>Fixed Width Integer Types<a class="headerlink" href="#fixed-width-integer-types" title="Permalink to this headline">¶</a></h2>
+<p>Use the fixed width integer types (<code class="docutils literal notranslate"><span class="pre">uint32_t</span></code>, etc…) found in the <code class="docutils literal notranslate"><span class="pre">cstdint</span></code> and <code class="docutils literal notranslate"><span class="pre">stdint.h</span></code> header files when you need to
+ensure that a variable needs to be of fixed size, independent of the target architecture.</p>
+<p>Usually you will need to use these types when defining message structures, interfacing hardware, network programming, etc…
+However, <strong>avoid</strong> using them when the type width is not important because the use of a fixed size type is a declaration done by the programmer
+that the affected code needs special treatment and careful handling.</p>
+<p>Notice that all 32-bit architectures and above define <code class="docutils literal notranslate"><span class="pre">int</span></code> and <code class="docutils literal notranslate"><span class="pre">unsigned</span> <span class="pre">int</span></code> to be of 32-bits, so it is safe to use the generic
+types safely unless you know you will need a wider type.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>discussion - bring this point up</p>
+</div>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">cc_idx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">cc_idx</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">num_cc</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">cc_idx</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// here we know we&#39;re never going to exceed 4 billion cc&#39;s - safe to use a generic unsigned int (32 bits)</span>
+
+<span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">e</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">vector</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">e</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// how many elements will the vector hold?</span>
+<span class="w">    </span><span class="c1">// a) if we know it is going to hold less than 4 billion, use unsigned int (32 bits)</span>
+<span class="w">    </span><span class="c1">// b) if in doubt, use size_t.</span>
+<span class="w">    </span><span class="c1">// but as you can see there is no need to use a fixed width type, generic types can be safely used here.</span>
+</pre></div>
+</div>
+<p>Avoid using the <code class="docutils literal notranslate"><span class="pre">long</span></code> type since it can be either 32 or 64-bits depending on the architecture. See the <a class="reference external" href="https://en.cppreference.com/w/cpp/language/types">standard definition</a> for more information.</p>
+</div>
+<div class="section" id="function-signatures">
+<h2>Function signatures<a class="headerlink" href="#function-signatures" title="Permalink to this headline">¶</a></h2>
+<p>When declaring a function, the list of arguments shall be ordered as follows:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>Arguments passed by reference or pointer, if any, that are only used to store the function output. These arguments are documented by the Doxygen command <code class="docutils literal notranslate"><span class="pre">\param[out]</span></code>.</p></li>
+<li><p>Arguments passed by reference or pointer, if any, that contain inputs to the function and will also be modified by the function itself. These arguments are documented by the Doxygen command <code class="docutils literal notranslate"><span class="pre">\param[in,out]</span></code>.</p></li>
+<li><p>Arguments passed by value, constant pointer or constant reference, if any, that represent inputs to the function. These arguments are documented by the Doxygen command <code class="docutils literal notranslate"><span class="pre">\param[in]</span></code>. In particular, structures gathering a number of configuration parameters, shall appear last in the argument list.</p></li>
+</ol>
+</div></blockquote>
+<p>For example:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">/// \brief Does something.</span>
+<span class="c1">///</span>
+<span class="c1">/// This function writes a span, reads and modifies a vector, only reads the rest of arguments.</span>
+<span class="c1">/// \param[out]    fnct_out       Main function output (recall that \c span behaves like a pointer).</span>
+<span class="c1">/// \param[in,out] my_vector      A vector of integers the function may read and modify.</span>
+<span class="c1">/// \param[in]     another_vector A vector of integers the function may only read.</span>
+<span class="c1">/// \param[in]     quantity       Another value the function needs to know about.</span>
+<span class="c1">/// \param[in]     cfg_struct     A structure describing the context the function works in.</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">my_function</span><span class="p">(</span><span class="n">span</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">fnct_out</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">my_vector</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">another_vector</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">quantity</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">config_t</span><span class="o">&amp;</span><span class="w"> </span><span class="n">cfg_struct</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="class-layout-example">
+<h2>Class Layout Example<a class="headerlink" href="#class-layout-example" title="Permalink to this headline">¶</a></h2>
+<p>This section describes the recommended layout of a class declaration, recommendations found inline.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">/// Class description block.</span>
+<span class="k">class</span> <span class="nc">my_class</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="n">interface_1</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// Define private constant configurable parameters first - easy to find by class maintainers to be always in the</span>
+<span class="w">    </span><span class="c1">// same place.</span>
+<span class="w">    </span><span class="c1">/// Constant 1 explanation.</span>
+<span class="w">    </span><span class="k">static</span><span class="w"> </span><span class="k">constexpr</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="n">some_constant_1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="c1">/// Constant 2 explanation.</span>
+<span class="w">    </span><span class="k">static</span><span class="w"> </span><span class="k">constexpr</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="n">some_constant_2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">7</span><span class="p">;</span><span class="w"></span>
+
+<span class="k">public</span><span class="o">:</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// Declare/define special members first (constructors, destructor, etc...)</span>
+<span class="w">    </span><span class="c1">// No need to document special members unless something not trivial requires an explanation.</span>
+<span class="w">    </span><span class="n">my_class</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="p">}</span><span class="w">  </span><span class="c1">// If the ctor body is big, move it down to the cpp file.</span>
+<span class="w">    </span><span class="o">~</span><span class="n">my_class</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="p">}</span><span class="w">  </span><span class="c1">// Likewise, if the dtor body is big, move it down to the cpp file.</span>
+
+<span class="w">    </span><span class="c1">/// Method 1 explanation block.</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">method1</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// Separate method declarations with a single newline.</span>
+<span class="w">    </span><span class="c1">/// Method 2 explanation block.</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">method2</span><span class="p">();</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// Try to group methods of the same category, accessors, modifiers, utilities...</span>
+
+<span class="w">    </span><span class="c1">/// Getter explanation block.</span>
+<span class="w">    </span><span class="n">something</span><span class="o">&amp;</span><span class="w"> </span><span class="nf">get_something</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="n">something</span><span class="o">&amp;</span><span class="w"> </span><span class="nf">get_something</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="p">;</span><span class="w"> </span><span class="c1">// Feel free to provide two identical explanation blocks or declare</span>
+<span class="w">                                            </span><span class="c1">// both methods in a row, no need of newline here.</span>
+
+<span class="w">    </span><span class="c1">/// Getter explanation block.</span>
+<span class="w">    </span><span class="n">another_thing</span><span class="o">&amp;</span><span class="w"> </span><span class="nf">get_anotherthing</span><span class="p">();</span><span class="w">  </span><span class="c1">// Here we separated the const and non const method declarations.</span>
+<span class="w">                                        </span><span class="c1">// Please be consistent per class basis.</span>
+
+<span class="w">    </span><span class="c1">/// Getter explanation block.</span>
+<span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="n">another_thing</span><span class="o">&amp;</span><span class="w"> </span><span class="nf">get_anotherthing</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// No need to add documentation for overridden interface methods, as they are already documented in the interface,</span>
+<span class="w">    </span><span class="c1">// we don&#39;t want to keep two copies of documentation blocks since they can easily diverge creating maintenance issues.</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">interface_method1</span><span class="p">()</span><span class="w"> </span><span class="k">override</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// Remember to add a newline between methods.</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">interface_method2</span><span class="p">()</span><span class="w"> </span><span class="k">override</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">/// Enum description block.</span>
+<span class="w">    </span><span class="c1">// Define the enum near the site where it is going to be used to improve locality when reading the interface.</span>
+<span class="w">    </span><span class="k">enum</span> <span class="k">class</span><span class="w"> </span><span class="nc">my_enum</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">enumerator1</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="n">enumerator2</span><span class="w"></span>
+<span class="w">    </span><span class="p">};</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">/// Method using above enum description block.</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">method_uses_enum</span><span class="p">(</span><span class="n">my_enum</span><span class="w"> </span><span class="n">e</span><span class="p">);</span><span class="w"> </span><span class="c1">// my_enum is declared above - easy to find.</span>
+
+<span class="k">protected</span><span class="o">:</span><span class="w">  </span><span class="c1">// After the public method section is done, declare the rest if applicable (protected, private).</span>
+<span class="w">    </span><span class="c1">// The audience here has changed to class developers, not public interface users anymore, we avoid polluting the public</span>
+<span class="w">    </span><span class="c1">// interface with implementation details</span>
+<span class="w">    </span><span class="c1">/// Protected method explanation block.</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">prot_method</span><span class="p">();</span><span class="w"></span>
+
+<span class="k">private</span><span class="o">:</span><span class="w">  </span><span class="c1">// Private method section.</span>
+<span class="w">    </span><span class="c1">// This will be only read by users who need to understand implementation details. Keep away of public interface.</span>
+<span class="w">    </span><span class="c1">/// Private method explanation block.</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">private_method</span><span class="p">();</span><span class="w"></span>
+
+<span class="k">protected</span><span class="o">:</span><span class="w"> </span><span class="c1">// Declare member variables at the end. Keep them separated from methods.</span>
+<span class="w">    </span><span class="c1">/// Protected member variable.</span>
+<span class="w">    </span><span class="kt">unsigned</span><span class="w"> </span><span class="n">protected_member_var</span><span class="p">;</span><span class="w"></span>
+
+<span class="k">private</span><span class="o">:</span><span class="w"> </span><span class="c1">// Last, declare private member variables.</span>
+<span class="w">    </span><span class="c1">// Variable names should be descriptive, so most of the times there is no need to document them.</span>
+<span class="w">    </span><span class="kt">unsigned</span><span class="w"> </span><span class="n">memb_var_1</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">void</span><span class="o">*</span><span class="w"> </span><span class="n">memb_var_2</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="c1">/// Protects access to memb_var_2.</span>
+<span class="w">    </span><span class="c1">// In the case of a mutex it helps to add a short explanation of what is protecting...</span>
+<span class="w">    </span><span class="k">mutable</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">mutex</span><span class="w"> </span><span class="n">m</span><span class="p">;</span><span class="w"></span>
+<span class="p">};</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="6_self_generating_docs.html" class="btn btn-neutral float-right" title="Self Generating Documentation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="4_style_aspects_low_level.html" class="btn btn-neutral float-left" title="Style Aspects: Low Level Issues" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2023-2023, Software Radio Systems..
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
