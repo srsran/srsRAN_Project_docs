@@ -10,5 +10,6 @@ Feature List
 * All RRC procedures excluding Mobility and UE Release
 * All MAC procedures excluding power control
 * Tested Performance:
+
   - 64 simultaneous users
   - Simultaneous 140 Mbps DL and 120 Mbps UL in TDD-100 MHz or FDD-50 MHz configuration (running in AMD Ryzen5 6-core CPU)
