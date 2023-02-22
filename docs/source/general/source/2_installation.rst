@@ -29,8 +29,6 @@ You can install the required libraries for some example distributions with the c
 
     sudo yum install cmake make gcc gcc-c++ fftw-devel lksctp-tools-devel yaml-cpp-devel mbedtls-devel gtest-devel git-lfs
 
-Install gitLFS:
-
 **Arch Linux**
 
 .. code-block:: bash
