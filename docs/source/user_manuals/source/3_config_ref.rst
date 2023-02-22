@@ -17,15 +17,15 @@ The gNB application can be run with the following arguments:
 
 .. code-block:: bash 
 
-   sudo gnb [OPTIONS] [SUBCOMMAND]
+   sudo ./gnb [OPTIONS] [SUBCOMMAND]
 
 Each of these options and subcommands can be set in a configuration file, or passed as an argument when running the gNB as shown above. 
 
-The following example shows how to configure the gNB to use a B200 USRP and enable logs from the command line:
+To see a full list of the configurable parameters use the following command: 
 
-.. code-block:: bash 
+.. code-block:: bash
 
-   sudo gnb rf_driver --device_driver uhd --device_args type=b200 --srate 11.52 --tx_gain 50 --rx_gain 60 common_cell --channel_bandwidth_MHz 10 --clock gpsdo --sync gpsdo 
+   ./gnb --help
 
 Configuration File
 ******************
@@ -36,4 +36,4 @@ To run the gNB with a config file, the following command can be used:
 
 .. code-block:: bash
 
-   sudo gnb -c [PATH TO FILE]
+   sudo ./gnb -c [PATH TO FILE]
