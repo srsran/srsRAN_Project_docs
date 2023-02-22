@@ -3,6 +3,4 @@
 Threading Model
 ###############
 
-.. note::
-   Xico to complete this section
 
