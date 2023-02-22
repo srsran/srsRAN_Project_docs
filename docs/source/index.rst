@@ -42,6 +42,7 @@ Useful resources:
 
    user_manuals/source/1_getting_started.rst
    user_manuals/source/2_troubleshooting.rst
+   user_manuals/source/3_config_ref.rst
    user_manuals/source/4_console_ref.rst
    
 .. toctree::
