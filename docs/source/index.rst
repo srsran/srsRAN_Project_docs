@@ -30,14 +30,19 @@ Useful resources:
 
 .. toctree::
    :maxdepth: 1
+   :caption: General Docs
+
+   general/source/1_feature_list.rst
+   general/source/2_installation.rst
+   general/source/3_issues.rst
+
+.. toctree::
+   :maxdepth: 1
    :caption: User Manual
 
-   user_manuals/source/1_installation.rst
-   user_manuals/source/2_feature_list.rst
-   user_manuals/source/3_troubleshooting.rst
-   user_manuals/source/4_advanced_usage.rst
-   user_manuals/source/5_config_ref.rst
-   user_manuals/source/6_console_ref.rst
+   user_manuals/source/1_getting_started.rst
+   user_manuals/source/2_troubleshooting.rst
+   user_manuals/source/4_console_ref.rst
    
 .. toctree::
    :maxdepth: 1
