@@ -75,7 +75,4 @@ Then build the code-base:
     make -j $(nproc)
     make test -j $(nproc) 
 
-You can now run the gNB from *srsRAN_Project/build/apps/gnb/*. Here you will find the gNB binary. 
-
-   
-
+You can now run the gNB from ``srsRAN_Project/build/apps/gnb/``. The :ref:`Getting Started <getting_started>` section of the documentation outlines how to run the gNB application.  
