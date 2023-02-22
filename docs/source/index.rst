@@ -2,7 +2,7 @@
 srsRAN Project Documentation
 #############################
 
-.. image:: .imgs/openran_arch.png
+.. image:: .imgs/openran_arch_shaded.png
 
 .. meta::
     :description lang=en:
