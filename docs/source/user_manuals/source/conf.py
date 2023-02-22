@@ -12,25 +12,23 @@ import os
 import sys
 sys.path.insert(0, os.path.abspath('../../../..'))
  
-from srsgnb_docs.source.conf import *
+from docs.source.conf import *
 
 
 # -- Project information -----------------------------------------------------
 
-project = u'User Manual'
+project = u'srsRAN Project User Manual'
 
 # -- Options for HTMLHelp output ---------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'GNBusermanual'
+htmlhelp_basename = 'srsran_project_user_manual'
 
 
 # -- Options for LaTeX output ------------------------------------------------
 
-latex_elements = {
-
 latex_documents = [
-    (master_doc, 'GNBusermanual.tex', u'gNB User Manual',
+    (master_doc, 'srsran_project_user_manual.tex', u'srsRAN Project User Manual',
      u'SRS', 'manual'),
 ]
 
@@ -40,7 +38,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'GNBusermanual.tex', u'gNB User Manual',
+    (master_doc, 'srsran_project_user_manual.tex', u'srsRAN Project User Manual',
      [author], 1)
 ]
 
@@ -51,8 +49,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'GNBusermanual.tex', u'gNB User Manual',
-     author, 'GNBusermanual', 'One line description of project.',
+    (master_doc, 'srsran_project_user_manual.tex', u'srsRAN Project User Manual',
+     author, 'srsran_project_user_manual', 'One line description of project.',
      'Miscellaneous'),
 ]
 
