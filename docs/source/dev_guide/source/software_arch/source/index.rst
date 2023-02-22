@@ -68,14 +68,14 @@ hardware and applications via the interfaces above; this is aligned with the aim
 
 -----
 
-Threading Model
-***************
+.. Threading Model
+.. ***************
 
-To read more about the Threading Model used for srsRAN Project, you can read :ref:`this section <sw_threading>`.  
+.. To read more about the Threading Model used for srsRAN Project, you can read :ref:`this section <sw_threading>`.  
 
------
+.. -----
 
-Memory Model
-************
+.. Memory Model
+.. ************
 
-To read more about the Memory Model used for srsRAN Project, you can read :ref:`this section <sw_memory>`.
+.. To read more about the Memory Model used for srsRAN Project, you can read :ref:`this section <sw_memory>`.
