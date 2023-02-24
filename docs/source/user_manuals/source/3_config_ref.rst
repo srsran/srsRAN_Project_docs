@@ -3,37 +3,295 @@
 Configuration Reference
 #######################
 
-The srsRAN Project gNB can be configured in two ways: 
+The srsRAN Project gNB uses a yaml (.yml) configuration file. This file can be created and customized by users as needed, and comes with a vast array of configuration options to suit all use-cases. 
 
-    - Parameters can be changed via command line arguments when starting up the gNB
-    - Users can run the gNB with a custom configuration file
+Example Config Files
+********************
 
-The srsRAN Project gNB uses a yaml configuration file. This file can be created and customized by users as needed, and comes with a vast array of configuration options to suit all use-cases. 
+The srsRAN Project gNB comes with example configuration files, these can be found in ``srsRAN_Project/configs/`` in the source code. 
 
-Configuration Options
-*********************
+You can also download these sample gNB configuration files here:  
 
-The gNB application can be run with the following arguments: 
+    - :download:`B200 USRP @ 10 MHz in band 78 (TDD) <.config/gnb_rf_b200_tdd_n78_10mhz.yml>` 
+    - :download:`N310 USRP @ 20 MHz in band 3 (FDD) <.config/gnb_rf_n310_fdd_n3_20mhz.yml>`
 
-.. code-block:: bash 
+These configuration file examples provide a basic set-up to get users up and running, users can easily modify these to suit their use-case. Each config file contains comments explaining the parameters being configured. 
+Both of these configuration files ship as standard with the srsRAN Project codebase, they can be found in the configs folder. 
 
-   sudo ./gnb [OPTIONS] [SUBCOMMAND]
+----
 
-Each of these options and subcommands can be set in a configuration file, or passed as an argument when running the gNB as shown above. 
+Running with a Config File
+**************************
 
-To see a full list of the configurable parameters use the following command: 
-
-.. code-block:: bash
-
-   ./gnb --help
-
-Configuration File
-******************
-
-The gNB takes a yaml type configuration file (.yml). From which users can easily configure each of the available parameters of the gNB.
+As mentioned above, the gNB takes a yaml type configuration file (.yml). From here users can easily configure each of the available parameters of the gNB.
 
 To run the gNB with a config file, the following command can be used: 
 
 .. code-block:: bash
 
    sudo ./gnb -c [PATH TO FILE]
+
+-----
+
+Configuration Options
+*********************
+
+To see the full list of options that can be configured, use following command: 
+
+.. code-block:: bash
+
+   ./gnb --help
+
+The list of options are as follows: 
+
++-------------------------+------+-------------------------------------------------------------+
+| Option                  | Type | Usage                                                       |
++=========================+======+=============================================================+
+| -h, \--help             |      | Prints help message and exits the application               |
++-------------------------+------+-------------------------------------------------------------+
+| -v, \--version          |      | Displays the version information and exits the application  |
++-------------------------+------+-------------------------------------------------------------+
+| -c                      | TEXT | Reads from a user-defined configuration file (must be .yml) |
++-------------------------+------+-------------------------------------------------------------+
+| \--gnb_id               | UINT | Assign custom gNB identifier (must be an integer value)     |
++-------------------------+------+-------------------------------------------------------------+
+| \--ran_node_name        | TEXT | Assign custom RAN node name (text string)                   |
++-------------------------+------+-------------------------------------------------------------+
+| \--cells                | TEXT |                                                             |
++-------------------------+------+-------------------------------------------------------------+
+| \--qos                  | TEXT |                                                             |
++-------------------------+------+-------------------------------------------------------------+
+
+The list of subcommands are as follows: 
+
++-------------+----------------------------------------------------+
+| Subcommand  | Usage                                              |
++=============+====================================================+
+| log         | Configure the logs output by the gNB               |
++-------------+----------------------------------------------------+
+| pcap        | Configure the PCAPs output by the gNB              |
++-------------+----------------------------------------------------+
+| amf         | Configure parameters associated with the AMF       |
++-------------+----------------------------------------------------+
+| rf_driver   | Configure the RF-driver parameters                 |
++-------------+----------------------------------------------------+
+| common_cell | Configure the common cell parameters               |
++-------------+----------------------------------------------------+
+| expert_phy  | Configure expert parameters of the physical layer  |
++-------------+----------------------------------------------------+
+
+These options are further outlined in the following sections.  
+
+Log Options
+===========
+
+All log levels can be configured independently to output at various levels of detail, from none to debug. With debug providing the most level of detail. 
+
++----------------------------+---------+----------------------------------------------------------------------------------------+
+| Option                     | Type    | Usage                                                                                  |
++============================+=========+========================================================================================+
+| \--filename                | TEXT    | File output path                                                                       |
++----------------------------+---------+----------------------------------------------------------------------------------------+
+| \--all_level               | TEXT    | Log level across all logs (none, error, warning, info, debug)                          |
++----------------------------+---------+----------------------------------------------------------------------------------------+
+| \--app_level               | TEXT    | Generic log level                                                                      |
++----------------------------+---------+----------------------------------------------------------------------------------------+
+| \--du_level                | TEXT    | DU log level                                                                           |
++----------------------------+---------+----------------------------------------------------------------------------------------+
+| \--cu_level                | TEXT    | CU log level                                                                           |
++----------------------------+---------+----------------------------------------------------------------------------------------+
+| \--phy_level               | TEXT    | Physical layer log level                                                               |
++----------------------------+---------+----------------------------------------------------------------------------------------+
+| \--radio_level             | TEXT    | Radio log level                                                                        |
++----------------------------+---------+----------------------------------------------------------------------------------------+
+| \--mac_level               | TEXT    | MAC log level                                                                          |
++----------------------------+---------+----------------------------------------------------------------------------------------+
+| \--rlc_level               | TEXT    | RLC log level                                                                          |
++----------------------------+---------+----------------------------------------------------------------------------------------+
+| \--f1u_level               | TEXT    | F1-u log level                                                                         |
++----------------------------+---------+----------------------------------------------------------------------------------------+
+| \--pdcp_level              | TEXT    | PDCP log level                                                                         |
++----------------------------+---------+----------------------------------------------------------------------------------------+
+| \--rrc_level               | TEXT    | RRC log level                                                                          |
++----------------------------+---------+----------------------------------------------------------------------------------------+
+| \--gtpu_level              | TEXT    | GTPU log level                                                                         |
++----------------------------+---------+----------------------------------------------------------------------------------------+
+| \--fapi_level              | TEXT    | FAPI log level                                                                         |
++----------------------------+---------+----------------------------------------------------------------------------------------+
+| \--hex_max_size            | INT     | Max number of bytes to print in hex [0 - 1024][32 by default]                          |
++----------------------------+---------+----------------------------------------------------------------------------------------+
+| \--broadcast_enabled       | BOOLEAN | Enable logging in the physical layer of broadcast messages and all PRACH opportunities |
++----------------------------+---------+----------------------------------------------------------------------------------------+
+| \--phy_rx_symbols_filename | TEXT    | Set to a valid file path to print the received symbols                                 |
++----------------------------+---------+----------------------------------------------------------------------------------------+
+
+PCAP Options
+============
+
++------------------+---------+-------------------------------------------------+
+| Option           | Type    | Usage                                           |
++==================+=========+=================================================+
+| \--ngap_filename | TEXT    | NGAP PCAP file output path                      |
++------------------+---------+-------------------------------------------------+
+| \--ngap_enable   | BOOLEAN | Enable/disable NGAP packet capture [True/False] |
++------------------+---------+-------------------------------------------------+
+| \--mac_filename  | TEXT    | MAC PCAP file output path                       |
++------------------+---------+-------------------------------------------------+
+| \--mac_enable    | BOOLEAN | Enable/disable MAC packet capture [True/False]  |
++------------------+---------+-------------------------------------------------+
+
+AMF Options
+===========
+
++--------------+------+----------------------------------------------+
+| Option       | Type | Usage                                        |
++==============+======+==============================================+
+| \--addr      | TEXT | AMF IP address (This field is required)      |
++--------------+------+----------------------------------------------+
+| \--port      | UINT | AMF port                                     |
++--------------+------+----------------------------------------------+
+| \--bind_addr | TEXT | Local IP address to bind for AMF connection  |
++--------------+------+----------------------------------------------+
+
+RF Driver Options
+=================
+
++-------------------------------+-------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Option                        | Type  | Usage                                                                                                                                                                      |
++===============================+=======+============================================================================================================================================================================+
+| \--srate                      | FLOAT | Sample rate in MHz                                                                                                                                                         |
++-------------------------------+-------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| \--device_driver              | TEXT  | Device driver name [ZMQ, UHD] [UHD by default]                                                                                                                             |
++-------------------------------+-------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| \--device_args                | TEXT  | Optional device arguments                                                                                                                                                  |
++-------------------------------+-------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| \--tx_gain                    | FLOAT | Transmit gain in dB                                                                                                                                                        |
++-------------------------------+-------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| \--rx_gain                    | FLOAT | Receive gain in dB                                                                                                                                                         |
++-------------------------------+-------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| \--lo_offset                  | FLOAT | LO frequency offset in MHz                                                                                                                                                 |
++-------------------------------+-------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| \--clock                      | TEXT  | Clock source                                                                                                                                                               |
++-------------------------------+-------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| \--sync                       | TEXT  | Time synchronization source                                                                                                                                                |
++-------------------------------+-------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| \--otw_format                 | TEXT  | Over-the-wire format                                                                                                                                                       |
++-------------------------------+-------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| \--time_alignment_calibration | TEXT  | Rx to Tx radio time alignment calibration in samples. Positive values reduce the RF transmission delay with respect to the RF reception, while negative values increase it |
++-------------------------------+-------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+Common Cell Options
+===================
+
++--------------------------+------+--------------------------------+
+| Option                   | Type | Usage                          |
++==========================+======+================================+
+| \--dl_arfcn              | UINT | Downlink ARFCN                 |
++--------------------------+------+--------------------------------+
+| \--band                  | ENUM | NR band                        |
++--------------------------+------+--------------------------------+
+| \--common_scs            | ENUM | Cell common subcarrier spacing |
++--------------------------+------+--------------------------------+
+| \--channel_bandwidth_MHz | ENUM | Channel bandwidth in MHz       |
++--------------------------+------+--------------------------------+
+| \--nof_antennas_ul       | UINT | Number of uplink antennas      |
++--------------------------+------+--------------------------------+
+| \--nof_antennas_dl       | UINT | Number of downlink antennas    |
++--------------------------+------+--------------------------------+
+| \--plmn                  | TEXT | PLMN                           |
++--------------------------+------+--------------------------------+
+| \--tac                   | UINT | TAC                            |
++--------------------------+------+--------------------------------+
+
+The common cell options also have further subcommands: 
+
++-------------------+----------------------------------------------+
+| Subcommand        | Usage                                        |
++===================+==============================================+
+| pdcch             | Configure PDCCH parameters                   |
++-------------------+----------------------------------------------+
+| pdsch             | Configure PDSCH parameters                   |
++-------------------+----------------------------------------------+
+| prach             | Configure PRACH parameters                   |
++-------------------+----------------------------------------------+
+| amplitude_control | Amplitude control parameters                 |
++-------------------+----------------------------------------------+
+
+PDCCH
+-----
+
++-----------------------+------+-----------------------------+
+| Option                | Type | Usage                       |
++=======================+======+=============================+
+| \--ue_aggr_lvl_index  | UINT | UE aggregation level index  |
++-----------------------+------+-----------------------------+
+| \--rar_aggr_lvl_index | UINT | RAR aggregation level index |
++-----------------------+------+-----------------------------+
+| \--si_aggr_lvl_index  | UINT | SI aggregation level index  |
++-----------------------+------+-----------------------------+
+
+
+PDSCH
+-----
+
++------------------+------+---------------+
+| Option           | Type | Usage         |
++==================+======+===============+
+| \--fixed_ue_mcs  | UINT | Fixed UE MCS  |
++------------------+------+---------------+
+| \--fixed_rar_mcs | UINT | Fixed RAR MCS |
++------------------+------+---------------+
+| \--fixed_si_mcs  | UINT | Fixed SI MCS  |
++------------------+------+---------------+
+
+
+PUSCH
+-----
+
++-----------------+------+--------------+
+| Option          | Type | Usage        |
++=================+======+==============+
+| \--fixed_ue_mcs | UINT | Fixed UE MCS |
++-----------------+------+--------------+
+
+
+PRACH
+-----
+
++------------------------------+------+---------------------------------------------+
+| Option                       | Type | Usage                                       |
++==============================+======+=============================================+
+| \--prach_config_index        | UINT | PRACH configuration index                   |
++------------------------------+------+---------------------------------------------+
+| \--prach_root_sequence_index | UINT | PRACH root sequence index                   |
++------------------------------+------+---------------------------------------------+
+| \--zero_correlation_zone     | UINT | Zero correlation zone index                 |
++------------------------------+------+---------------------------------------------+
+| \--fixed_msg3_mcs            | UINT | Fixed message 3 MCS                         |
++------------------------------+------+---------------------------------------------+
+| \--max_msg3_harq_retx        | UINT | Maximum number of MSG3 HARQ retransmissions |
++------------------------------+------+---------------------------------------------+
+
+Amplitude Control
+-----------------
+
++--------------------+---------+----------------------------------------------+
+| Option             | Type    | Usage                                        |
++====================+=========+==============================================+
+| \--tx_gain_backoff | FLOAT   | Gain back-off to accommodate the signal PAPR |
++--------------------+---------+----------------------------------------------+
+| \--enable_clipping | BOOLEAN | Signal clipping                              |
++--------------------+---------+----------------------------------------------+
+| \--ceiling         | FLOAT   | Clipping ceiling referenced to full scale    |
++--------------------+---------+----------------------------------------------+
+
+Expert PHY Options
+==================
+
++--------------------------------+---------+-------------------------------------------------+
+| Option                         | Type    | Usage                                           |
++================================+=========+=================================================+
+| \--pusch_dec_max_iterations    | UINT    | Maximum number of PUSCH LDPC decoder iterations |
++--------------------------------+---------+-------------------------------------------------+
+| \--pusch_dec_enable_early_stop | BOOLEAN | Enables PUSCH LDPC decoder early stop           |
++--------------------------------+---------+-------------------------------------------------+

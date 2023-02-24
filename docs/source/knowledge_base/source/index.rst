@@ -7,6 +7,5 @@ Knowledge Base
     :maxdepth: 2
 
     oran_gnb/source/index.rst
-    ldpc_polar/source/index.rst
-    mcs/source/index.rst
-    nr_phy_test/source/index.rst
+    gnb_components/source/index.rst
+    gnb_interfaces/source/index.rst

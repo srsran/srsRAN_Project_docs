@@ -8,10 +8,12 @@ Baseline Hardware Requirements
 
 To successfully run an end-to-end system using the srsRAN Project gNB you will need the following: 
 
-    - A PC with a Linux based OS WITH srsRAN Project downloaded and built
-    - An RF-frontend (we recommend a USRP)
-    - A 3rd-party 5G core (we recommend open5Gs)
-    - A 3rd-party 5G UE
+    - A PC with a Linux based OS (Ubuntu 20.04 or later)
+    - Required Dependencies (see :ref:`here <dependencies>`)
+    - A USRP and UHD installed on your machine
+    - srsRAN built and installed (see :ref:`here <build>`)
+    - A 3rd-party 5G core (we recommend `Open5GS <https://github.com/open5gs/open5gs>`_)
+    - A 3rd-party 5G UE or COTS 5G UE
 
 Recommended: 
 
@@ -20,41 +22,57 @@ Recommended:
 If you plan to connect the gNB to a COTS UE we recommend that you use an external clock source such as an Octoclock of GPSDO that is compatible with your RF-frontend, as the on-board clock within the USRP is not accurate enough to enable a connection with the UE.
 This is discussed further in the relevant app note. 
 
-Users can read about downloading and configuring Open5GS `here <https://github.com/open5gs/open5gs>`_. We suggest you do this before trying to run the gNB. 
-
 ----
 
 Running the gNB
 ***************
 
-To run the gNB navigate to ``/srsRAN_Project/build/apps/gnb`` in this folder you will find the gNB application binary. 
+If the gNB has been installed using ``sudo make install`` or installed from packages then you will be able to run the gNB from anywhere on your machine. If you built the gNB from source and have not installed it, then you can run the 
+gNB from: ``/srsRAN_Project/build/apps/gnb``. In this folder you will find the gNB application binary. 
 
-The gNB must be run using either command line arguments or a user defined configuration file. THe configuration file is .yml file and is used to configure gNB parameters such as: 
+It is recommended that users **always** run the gNB using a configuration file. The following is a list of recommended parameters that should always be configured: 
 
+    - The AMF parameters
     - The RF-device being used
     - The cell configuration
     - Log levels
 
-An example command for running the gNB with command line arguments is given below:
+An example configuration file may look like the following: 
+
+.. literalinclude:: .config/gnb_rf_b200_tdd_n78_10mhz.yml  
+    :language: yaml
+
+This configuration file configures the gNB to run using a B200 as the RF-frontend, with a TDD cell transmitting with 10 MHZ bandwdith in band 78, an external GPSDO clock source is also set to ensure an accurate clock. This file also configures the log files and the PCAPs.
+
+Assuming that the gNB has been built from source, and installed, the gNB can be run with the following commands from the folder containing the configuration file:  
 
 .. code-block:: bash
 
-   sudo ./gnb amf --addr [AMF IP] --bind_addr [LOCAL IP] rf_driver --device_driver uhd --device_args type=b200 --srate 11.52 --tx_gain 50 --rx_gain 60 common_cell --dl_arfcn 368640 --band 3 --channel_bandwidth_MHz 10 --clock gpsdo --sync gpsdo 
+   sudo gnb -c gnb_rf_b200_tdd_n78_10mhz.yml
 
-This example command will connect the gNB to the 5GC, using a B200 as the RF-frontend, with a FDD cell transmitting with 10 MHZ bandwdith in band 3, an external GPSDO clock source is also set to ensure an accurate clock.  
-
-To run the gNB with a user defined configuration file use: 
-
-.. code-block:: bash
-
-   sudo ./gnb -c [PATH TO CONFIG FILE]
-
-Example configuration files can be found in the ``configs/`` folder in the srsRAN Project codebase. 
-
-.. note::
+.. tip::
    Users should always run the gNB with sudo, this ensures threads are configured with the correct priority.
 
-To see a full list of the configurable parameters use the following command: 
+After running the gNB users can expect to see the following: 
+
+.. code-block:: bash
+
+   Available radio types: uhd.
+
+   --== srsRAN gNB (commit 77be7d339) ==--
+
+   [INFO] [UHD] linux; GNU C++ version 9.4.0; Boost_107100; UHD_4.2.0.HEAD-0-g197cdc4f
+   Making USRP object with args 'type=b200'
+   Cell pci=1, bw=10 MHz, dl_arfcn=632628 (n78), dl_freq=3489.42 MHz, dl_ssb_arfcn=632640, ul_freq=3489.42 MHz
+
+   ==== gNodeB started ===
+   Type <t> to view trace
+
+When the gNB is running, pressing ``t`` will enable to console trace, see :ref:`here <console_ref>` for a breakdown on what the trace shows. 
+
+The example configuration files can be found in the ``configs/`` folder in the srsRAN Project codebase. The configuration options are discussed further :ref:`here <config_ref>`.
+
+There is an option to run the gNB using command line arguments to change the configuration of the gNB. Although, this is not the recommended way to configure the gNB. To see the list of options for running from command line, use the following command: 
 
 .. code-block:: bash
 
@@ -78,4 +96,16 @@ The CPU governor of the PC should be set to performance mode to allow for maximu
 
 It is also recommended that users running on a laptop keep the PC connected to a power-source at all times while running the gNB, as this will avoid performance loss due to CPU frequency scaling on the machine.
 
+Configuring USRP
+================
 
+Users should always ensure that the USRP they are using is running over USB 3.0 and correctly configured. If UHD is built from source, users will have multiple example applications available in ``/usr/lib/uhd/examples/``. User can verify their USRP 
+is correctly configured by running the ``uhd_benchmark`` application.
+
+Use the following command to  this: 
+
+.. code-block:: bash
+
+   sudo ./benchmark_rate --rx_rate [rate in Hz] --tx_rate [rate in Hz]
+
+More on this can be found in `this <https://kb.ettus.com/Verifying_the_Operation_of_the_USRP_Using_UHD_and_GNU_Radio>`_ guide on the `Ettus Knowledge Base <https://kb.ettus.com/Knowledge_Base>`. 

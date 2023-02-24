@@ -33,7 +33,7 @@ simplified outline of this change is illustrated in the following figure.
 
 .. figure:: .imgs/4g_5g_changes.png
     :align: center 
-    :class: with-shadow
+    :scale: 70%
 
     Simplified overview of move from 4G architecture to 5G architecture with functional split.
 
@@ -60,7 +60,7 @@ The above shows which layers are located in the CU and DU. This is shown graphic
 
 .. figure:: .imgs/oran_gnb_simple.png
     :align: center 
-    :class: with-shadow
+    :scale: 80%
 
     Simplified overview of O-RAN gNB architecture. 
 
@@ -85,7 +85,7 @@ The following figure shows the complete architecture of an O-RAN compliant gNB, 
 
 .. figure:: .imgs/oran_gnb_arch.jpg
     :align: center 
-    :class: with-shadow
+    :scale: 80%
 
     O-RAN compliant gNB architecture, showing all main components and interfaces. The gNB-specific components are contained in the 
     blue area. 
@@ -97,19 +97,13 @@ Split 7.2 moves to low PHY out to the RU , while Split 8 keeps it within the DU-
 To be O-RAN compliant a gNB must implement the CU and DU as shown above, while also having support for the interfaces needed for the nearRT-RIC, nonRT-RIC, 
 and the RU and RU. 
 
-srsGNB
-******
+srsRAN Project gNB
+******************
 
-srsGNB is fully O-RAN compliant. While users will still be able to stand up a monolithic gNodeB on a single machine in minutes, srsGNB also 
-enables users to distribute the RAN functionality across the machines and geography of their choice. All of the elements in the blue shaded area 
-above are implemented in srsGNB, along with all of the interfaces. This allows users to easily use third party RICs, PHY solutions and other O-RAN compliant 
-hardware and applications with srsGNB.
-
-.. note::
-  Within the context of srsGNB, and throughout the documentation, we will refer to the CU, DU and the RU as CU, DU and RU. 
-
-
-
+The srsRAN Project gNB is fully O-RAN compliant. While users will still be able to stand up a monolithic gNodeB on a single machine in minutes, our new gNB will also eventually 
+enable users to distribute the RAN functionality across the machines and geography of their choice. All of the elements in the blue shaded area 
+above are implemented in the srsRAN Project gNB, along with all of the interfaces. This allows users to easily use third party RICs, PHY solutions and other O-RAN compliant 
+hardware and applications with the gNB.
 
 Further Reading
 ***************

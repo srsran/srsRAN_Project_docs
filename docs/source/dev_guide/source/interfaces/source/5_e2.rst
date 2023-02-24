@@ -2,9 +2,3 @@
 
 E2
 ####
-
-Overview
-********
-
-Implementation
-**************

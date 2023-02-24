@@ -63,13 +63,9 @@ Useful resources:
    knowledge_base/source/oran_gnb/source/index.rst
    knowledge_base/source/gnb_components/source/index.rst
    knowledge_base/source/gnb_interfaces/source/index.rst
-   knowledge_base/source/mcs/source/index.rst
-   knowledge_base/source/ldpc_polar/source/index.rst
-   knowledge_base/source/nr_phy_test/source/index.rst
    
 .. toctree::
    :maxdepth: 1
    :caption: Tutorials
    
    tutorials/source/index.rst
-

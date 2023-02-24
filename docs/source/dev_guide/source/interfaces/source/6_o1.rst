@@ -3,10 +3,4 @@
 O1
 #########
 
-Overview
-********
-
-Implementation
-**************
-
 
