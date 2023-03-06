@@ -10,9 +10,10 @@ Interfaces
 .. toctree::
    :maxdepth: 1
 
-   1_fronthaul.rst
-   2_fapi.rst
-   3_f1.rst
-   4_e1.rst
-   5_e2.rst
-   6_o1.rst
+   e1.rst
+   e2.rst
+   f1.rst
+   fapi.rst
+   fronthaul.rst
+   ng.rst
+   o1.rst
