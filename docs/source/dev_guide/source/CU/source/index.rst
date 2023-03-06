@@ -3,7 +3,7 @@
 CU
 #####
 
-As outlined in the Knowledge Base section discussing the CU, the CU is split into the control plane (CU-CP) and the user plane (CU-UP).
+As outlined in the Knowledge Base section discussing the :ref:`CU <CU_kb>`, the CU is split into the control plane (CU-CP) and the user plane (CU-UP).
 The srsRAN Project CU follows the architecture seen in the Knowledge Base.
 
 CU-CP
@@ -22,12 +22,9 @@ Likewise multiple CU-UPs can be connected to the CU-CP, so the E1AP is created i
 
 **Interfaces:**
 
-    - E1: Interface with the CU-UP
-    - F1-C: Control plane interface with the DU
-    - NG-C: Control plane interface with the Core (AMF)
-
-.. note::
-   These are discussed in detail in the Interfaces section
+    - :ref:`interfaces_E1`: Interface with the CU-UP
+    - :ref:`F1-C <interfaces_f1>`: Control plane interface with the DU
+    - :ref:`NG-C <interfaces_ng>`: Control plane interface with the Core (AMF)
 
 CU-UP
 *****
@@ -42,12 +39,9 @@ CU-UP
 
 **Interfaces:**
 
-    - E1: Interface with the CU-CP
-    - F1-U: User plane interface with the DU
-    - NG-U: User plane interface with the Core (AMF)
-
-.. note::
-   These are discussed in detail in the Interfaces section
+    - :ref:`interfaces_E1`: Interface with the CU-CP
+    - :ref:`F1-U <interfaces_f1>` User plane interface with the DU
+    - :ref:`NG-U <interfaces_ng>` User plane interface with the Core (AMF)
 
 -----
 
