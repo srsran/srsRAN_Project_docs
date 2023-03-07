@@ -7,7 +7,7 @@ This document establishes the basic guidelines and recommendations for C and C++
 some can still be applied to C. The main goal of this document is to help establish a consistent programming style throughout the srsRAN Project code base, and 
 improve the readability and maintainability of code committed by users. 
 
-This document is heavily inspired in `LLVM's coding standards<https://llvm.org/docs/CodingStandards.html>`_, please refer to this
+This document is heavily inspired in `LLVM's coding standards <https://llvm.org/docs/CodingStandards.html>`_, please refer to this
 if you would like to take a further look into coding standards and best practices.
 
 ----

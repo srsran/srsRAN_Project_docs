@@ -13,9 +13,8 @@ srsRAN Project Documentation
 
 Get started with the srsRAN Project: 
 
-   - :ref:`Install<installation>` srsRAN Project on your computer.
-   - Read the :ref:`user manual<user_manual>`. 
-   - Get up and running with our step-by-step :ref:`tutorials<tutorials>`. 
+   - :ref:`Install<manual_installation>` srsRAN Project on your computer.
+   - Get up and :ref:`running<manual_running>`. 
    - More advanced users should read the :ref:`Developers Guide <dev_guide>`.
    - Get up to speed on 5G and OpenRAN with our :ref:`Knowledge Base <knowledge_base>`. 
 
@@ -30,20 +29,23 @@ Useful resources:
 
 .. toctree::
    :maxdepth: 1
-   :caption: General Docs
+   :caption: General
 
-   general/source/1_feature_list.rst
-   general/source/2_installation.rst
-   general/source/3_issues.rst
+   general/source/1_getting_started.rst
+   general/source/2_feature_list.rst
+   general/source/3_contributions.rst
+   general/source/4_reporting.rst
+   general/source/5_release_notes.rst
 
 .. toctree::
    :maxdepth: 1
    :caption: User Manual
 
-   user_manuals/source/1_getting_started.rst
-   user_manuals/source/2_troubleshooting.rst
-   user_manuals/source/3_config_ref.rst
-   user_manuals/source/4_console_ref.rst
+   user_manuals/source/1_installation.rst
+   user_manuals/source/2_running.rst
+   user_manuals/source/3_troubleshooting.rst
+   user_manuals/source/4_config_ref.rst
+   user_manuals/source/5_console_ref.rst
    
 .. toctree::
    :maxdepth: 1

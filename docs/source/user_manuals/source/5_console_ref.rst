@@ -1,4 +1,4 @@
-.. _console_ref: 
+.. _manual_console_ref: 
 
 Console Reference
 #################

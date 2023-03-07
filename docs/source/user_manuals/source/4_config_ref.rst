@@ -1,4 +1,4 @@
-.. _config_ref: 
+.. _manual_config_ref: 
 
 Configuration Reference
 #######################

@@ -1,4 +1,4 @@
-.. _feature_list:
+.. _general_feature_list:
 
 Feature List
 ############

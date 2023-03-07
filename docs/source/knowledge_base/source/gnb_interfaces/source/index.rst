@@ -3,7 +3,7 @@
 gNB Interfaces
 ##############
 
-As outlined in the :ref:`O-RAN gNB Overview <oran_gnb_overview>` the 5G NR gNB introduces a flexible architecture. Splitting the gNB and introducing multiple new interfaces.
+As outlined in the :ref:`O-RAN gNB Overview<oran_gnb_overview>` the 5G NR gNB introduces a flexible architecture. Splitting the gNB and introducing multiple new interfaces.
 
 This section of our knowledge base aims to go through these interfaces in further detail. Outlining the components they connect, the types of messages they carry and their purpose.
 
@@ -72,12 +72,9 @@ The F1-C interface connects the CU-CP to the DU. The application protocol (F1AP)
 F1-U
 ====
 
-----
 
 FAPI
 ****
-
-----
 
 NG
 **
@@ -104,8 +101,6 @@ The NG-C interface connects the CU-CP to the AMF. The application protocol (NGAP
 
 NG-U
 ====
-
-----
 
 O1
 **
@@ -183,4 +178,3 @@ The following tables show the protocol architecture for each plane:
 
 We can see that for user and control planes we can choose, for transport purposes, between eCPRI or IEEE 1914.3 (Radio over Ethernet).
 
-----
