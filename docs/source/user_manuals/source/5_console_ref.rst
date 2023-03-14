@@ -33,5 +33,5 @@ Metrics are provided on a per-UE basis. The following metrics are provided:
 :ok: Number of packets successfully sent
 :nok: Number of packets dropped
 :(%): % of packets dropped
-:pusch: PUSCH SNIR (Signal-to-Interference-plus-Noise Ratio)
+:pusch: PUSCH SINR (Signal-to-Interference-plus-Noise Ratio)
 :bsr: `Buffer Status Report <https://www.sharetechnote.com/html/Handbook_LTE_BSR.html>`_ - data waiting to be transmitted as reported by the UE (bytes)
