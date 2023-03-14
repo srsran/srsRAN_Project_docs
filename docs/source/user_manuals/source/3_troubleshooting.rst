@@ -21,11 +21,22 @@ The CPU governor of the PC should be set to performance mode to allow for maximu
 
 It is also recommended that users running on a laptop keep the PC connected to a power-source at all times while running the gNB, as this will avoid performance loss due to CPU frequency scaling on the machine.
 
-Configuring USRP
-================
+Performance Configuration Script
+================================
 
-Verify Correct Operation
-------------------------
+We have created a script to configure known performance parameters. This script can also be found in the scripts folder of the srsRAN Project code base. 
+
+   - :download:`srsRAN Performance Script <.scripts/srsran_performance.sh>` 
+
+The script does the following: 
+
+   1. Set the scaling governor to performance
+   2. Disable DRM KMS polling
+   3. Tune network buffers (Ethernet based USRPs only)
+
+
+USRP Configuration
+******************
 
 Users should always ensure that the USRP they are using is running over USB 3.0 or ethernet and correctly configured. If UHD is built from source, users will have multiple example applications available in ``/usr/lib/uhd/examples/``. User can verify 
 their USRP is correctly configured by running the ``uhd_benchmark`` application as follows:
@@ -36,8 +47,8 @@ their USRP is correctly configured by running the ``uhd_benchmark`` application 
 
 More details can be found in `this <https://kb.ettus.com/Verifying_the_Operation_of_the_USRP_Using_UHD_and_GNU_Radio>`_ guide on the `Ettus Knowledge Base <https://kb.ettus.com/Knowledge_Base>`_. 
 
-Time Calibration
-----------------
+USRP Time Calibration
+=====================
 
 Incorrect time calibration of a USRP can lead to preventing the gNB from receiving PRACH transmissions. The TX/RX time calibration adjusts the offset between TX and RX processing chains delay in the USRP. This value varies as a function of sampling 
 rate, USRP model and UHD version. Users experiencing issues with incorrect time calibration will see a message similar to the following in the logs: 
@@ -61,17 +72,6 @@ In general, a larger negative value is better as it will make sure the PRACH fal
 By default the ``time_alignment_calibration`` parameter is set to 0. This means that in most SDR frontends the PRACH will arrive a few samples late within the window. With preamble format 0, there is enough space in the detection window and this does not cause 
 any problem. However, if you are trying to set up a very large cell, or using different preamble formats, you might want to set a positive ``time_alignment_calibration`` value such that there is space in the window for UEs far in the cell.  
 
-Running on PCs with low compute power
-=====================================
 
-We have created a script that will automatically improve performance on under powered machines. This script can also be found in the scripts folder of the srsRAN Project code base. 
-
-   - :download:`srsRAN Performance Script <.scripts/srsran_performance.sh>` 
-
-The script does the following: 
-
-   1. Set the scaling governor to performance
-   2. Disable DRM KMS polling
-   3. Tune network buffers (Ethernet based USRPs only)
 
 
