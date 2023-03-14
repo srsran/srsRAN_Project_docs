@@ -5,25 +5,24 @@ amf:
 rf_driver:
   device_driver: uhd                # The RF driver name.
   device_args: type=n3xx            # Optionally pass arguments to the selected RF driver.
-  clock: external                   # Specify the clock source used by the RF.
-  sync: external                    # Specify the sync source used by the RF.
+  clock: gpsdo                      # Specify the clock source used by the RF.
+  sync: gpsdo                       # Specify the sync source used by the RF.
   srate: 30.72                      # RF sample rate might need to be adjusted according to selected bandwidth.
   tx_gain: 35                       # Transmit gain of the RF might need to adjusted to the given situation.
   rx_gain: 60                       # Receive gain of the RF might need to adjusted to the given situation.
 
-common_cell:
+cell_cfg:
   dl_arfcn: 368640                  # ARFCN of the downlink carrier (center frequency).
   band: 3                           # The NR band.
   channel_bandwidth_MHz: 20         # Bandwith in MHz. Number of PRBs will be automatically derived.
   common_scs: 15                    # Subcarrier spacing in kHz used for data.
   plmn: "00101"                     # PLMN broadcasted by the gNB.
   tac: 7                            # Tracking area code (needs to match the core configuration).
+  pci: 1                            # Physical cell ID.
 
-cells:
- - pci: 1                           # Physical cell ID.
-      
 log:
   filename: /tmp/gnb.log            # Path of the log file.
+  all_level: warning                # Logging level applied to all layers.
 
 pcap:
   mac_enable: false                 # Set to true to enable MAC-layer PCAPs.
