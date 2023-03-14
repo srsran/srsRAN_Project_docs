@@ -50,7 +50,12 @@ Arch Linux:
 .. code-block:: bash
 
     sudo pacman -S cmake make base-devel fftw mbedtls yaml-cpp lksctp-tools gtest
-    
+
+It is also recommended users install the following (although they are not required): 
+
+    - `Ccache <https://ccache.dev/>`_: This will help to speed up re-compilation
+    - `backward-cpp <https://github.com/bombela/backward-cpp>`_: This library helps to generate more informative backtraces in the stdout if an error occurs during runtime  
+
 ----
 
 
