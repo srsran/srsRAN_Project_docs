@@ -163,7 +163,8 @@ html_context = {
 # documentation.
 html_theme_options = {
     "collapse_navigation" : False,
-    "prev_next_buttons_location": 'both'
+    "prev_next_buttons_location": 'both',
+    "sticky_navigation": False,
 }
 
 # Add any paths that contain custom themes here, relative to this directory.
