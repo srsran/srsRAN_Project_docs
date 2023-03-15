@@ -25,6 +25,28 @@ This is discussed further in the relevant app note.
 
 ----
 
+System Preparation
+******************
+
+Before running the gNB application, we recommend tuning your system for best performance. We provide a script to configure known performance parameters:
+
+   - `srsran_performance <https://github.com/srsran/srsRAN_Project/tree/main/scripts/srsran_performance>`_
+   
+
+The script does the following: 
+
+   1. Sets the scaling governor to performance
+   2. Disables DRM KMS polling
+   3. Tunes network buffers (Ethernet based USRPs only)
+   
+Run the script as follows from the main project folder:
+
+.. code-block:: bash
+
+   sudo ./scripts/srsran_performance
+
+----
+
 Running the gNB
 ***************
 

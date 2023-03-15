@@ -24,15 +24,22 @@ It is also recommended that users running on a laptop keep the PC connected to a
 Performance Configuration Script
 ================================
 
-We have created a script to configure known performance parameters. This script can also be found in the scripts folder of the srsRAN Project code base. 
+Before running the gNB application, we recommend tuning your system for best performance. We provide a script to configure known performance parameters:
 
-   - :download:`srsRAN Performance Script <.scripts/srsran_performance.sh>` 
+   - `srsran_performance <https://github.com/srsran/srsRAN_Project/tree/main/scripts/srsran_performance>`_
+   
 
 The script does the following: 
 
-   1. Set the scaling governor to performance
-   2. Disable DRM KMS polling
-   3. Tune network buffers (Ethernet based USRPs only)
+   1. Sets the scaling governor to performance
+   2. Disables DRM KMS polling
+   3. Tunes network buffers (Ethernet based USRPs only)
+   
+Run the script as follows from the main project folder:
+
+.. code-block:: bash
+
+   sudo ./scripts/srsran_performance
 
 
 USRP Configuration
