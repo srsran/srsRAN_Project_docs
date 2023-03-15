@@ -25,12 +25,10 @@ Performance Configuration Script
 ================================
 
 Before running the gNB application, we recommend tuning your system for best performance. We provide a script to configure known performance parameters:
-
    - `srsran_performance <https://github.com/srsran/srsRAN_Project/tree/main/scripts/srsran_performance>`_
    
 
 The script does the following: 
-
    1. Sets the scaling governor to performance
    2. Disables DRM KMS polling
    3. Tunes network buffers (Ethernet based USRPs only)

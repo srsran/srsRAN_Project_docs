@@ -7,7 +7,6 @@ Baseline Requirements
 *********************
 
 To successfully run the srsRAN Project gNB you will need the following: 
-
     - A PC with a Linux based OS (Ubuntu 20.04 or later)
     - A USRP device
     - Required dependencies (see :ref:`here <manual_installation_dependencies>`)
@@ -17,7 +16,6 @@ To successfully run the srsRAN Project gNB you will need the following:
     - A 3rd-party 5G UE
 
 Recommended: 
-
     - External clock source 
 
 If you plan to connect the gNB to a COTS UE we recommend that you use an external clock source such as an Octoclock or GPSDO that is compatible with your RF-frontend, as the on-board clock within the USRP may not be accurate enough to enable a connection with the UE.
@@ -29,12 +27,10 @@ System Preparation
 ******************
 
 Before running the gNB application, we recommend tuning your system for best performance. We provide a script to configure known performance parameters:
-
    - `srsran_performance <https://github.com/srsran/srsRAN_Project/tree/main/scripts/srsran_performance>`_
    
 
 The script does the following: 
-
    1. Sets the scaling governor to performance
    2. Disables DRM KMS polling
    3. Tunes network buffers (Ethernet based USRPs only)

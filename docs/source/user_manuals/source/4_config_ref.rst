@@ -6,7 +6,6 @@ Configuration Reference
 The srsRAN Project gNB application uses a YAML (.yml) configuration file. 
 
 The gNB comes with a number of example configuration files, these can be found in ``srsRAN_Project/configs/`` in the source code: 
-
     - `B200 USRP @ 20 MHz in band 78 (TDD) <https://github.com/srsran/srsRAN_Project/blob/main/configs/gnb_rf_b200_tdd_n78_10mhz.yml>`_
     - `N310 USRP @ 20 MHz in band 3 (FDD) <https://github.com/srsran/srsRAN_Project/blob/main/configs/gnb_rf_n310_fdd_n3_20mhz.yml>`_
 
