@@ -18,7 +18,7 @@ In :numref:`rlctxentity`, we can see a simplified illustration of the RLC AM Tx 
 There, we can see two threads do the work of pushing SDUs into the RLC and pulling PDUs from the RLC.
 
 .. _rlctxentity:
-.. figure:: .imgs/rlc_tx_entity.svg
+.. figure:: .imgs/rlc_tx_entity.png
    :scale: 25 %
    :align: center
 
@@ -33,7 +33,7 @@ This will be kept until the transmitted PDUs are ACKed in sequence. This is illu
 There, we can see that the TX window will maintain two state variables: *Tx_Next_Ack* and *Tx_Next*. *Tx_Next_Ack* refers to the bottom of the TX window, i.e., the SN next to the last PDU that has been sequentially ACKed. *Tx_Next* is the SN that will be assigned to the next PDU. 
 
 .. _rlctxwindow:
-.. figure:: .imgs/rlc_tx_window.svg
+.. figure:: .imgs/rlc_tx_window.png
    :scale: 80 %
    :align: center
 
@@ -47,7 +47,7 @@ Data reception
 We can see in figure :numref:`rlcrxentity` a simplified illustration of the RLC AM Rx entity. There we can see that only a single thread will push PDUs into the RLC Rx entity, the *UE executor* thread. When receiving a PDU, first the thing the entity will do is to check whether this is a Data PDU or a Control PDU (i.e. a status report.)
 
 .. _rlcrxentity:
-.. figure:: .imgs/rlc_rx_entity.svg
+.. figure:: .imgs/rlc_rx_entity.png
    :scale: 50 %
    :align: center
 
@@ -60,7 +60,7 @@ There *RX_Next*, the lower edge of the RX window, will contain the first PDU tha
 Finally, the *RX_Next_Status_trigger*, will keep the SN that triggered the *t-Reassembly*. This is for updating *RX_Highest_Status* to the first known lost PDU, when *t-Reassembly* expires and new losses are detected.
 
 .. _rlcrxwindow:
-.. figure:: .imgs/rlc_rx_window.svg
+.. figure:: .imgs/rlc_rx_window.png
    :scale: 40 %
    :align: center
 
@@ -76,7 +76,7 @@ If the status report is required, the TX entity will retrieve a cached status re
 An illustration of the process of generating the Status Report can be found in :numref:`rlcstatusgeneration`.
 
 .. _rlcstatusgeneration:
-.. figure:: .imgs/rlc_status_report_transmission.svg
+.. figure:: .imgs/rlc_status_report_transmission.png
    :scale: 50 %
    :align: center
 
@@ -85,7 +85,7 @@ An illustration of the process of generating the Status Report can be found in :
 When the RLC receives a Status Report, it must be passed to the TX entity for processing. The TX entity will use the received status report to update the TX window and the RETX queue. Because both the *UE executor* thread and *Cell Executor* thread can update both the TX window and RETX queue, both of these variables need to be protected with a lock. An illustration of the process of handling the Status Report can be found in :numref:`rlcstatushandling`.
 
 .. _rlcstatushandling:
-.. figure:: .imgs/rlc_status_report_handling.svg
+.. figure:: .imgs/rlc_status_report_handling.png
    :scale: 50 %
    :align: center
 

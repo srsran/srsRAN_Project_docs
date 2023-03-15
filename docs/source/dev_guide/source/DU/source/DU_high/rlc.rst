@@ -6,7 +6,7 @@ Radio Link Control (RLC)
 RLC layer connects the MAC and the F1AP/PDCP, as shown in :numref:`rlcstack`, and provides that transfer services to these layers.
 
 .. _rlcstack:
-.. figure:: .imgs/rlc_stack.svg
+.. figure:: .imgs/rlc_stack.png
    :scale: 50 %
    :align: center
 
