@@ -4,6 +4,7 @@ Installation Guide
 ##################
 
 The following steps need to be taken in order to download and build the srsRAN Project:
+
     1. Install dependencies
     2. Install RF driver
     3. Clone the repository
@@ -18,10 +19,12 @@ Build Tools and Dependencies
 ****************************
 
 The srsRAN Project uses CMake and C++14. We recommend the following build tools:
+
     - `cmake <https://cmake.org/>`_
     - `gcc <https://gcc.gnu.org/>`_ (v9.4.0 or later) **OR** `Clang <https://clang.llvm.org/>`_ (v10.0.0 or later)
 
 The srsRAN Project has the following necessary dependencies: 
+
     - `libfftw <https://www.fftw.org/>`_
     - `libsctp <https://github.com/sctp/lksctp-tools>`_
     - `yaml-cpp <https://github.com/jbeder/yaml-cpp>`_
@@ -49,6 +52,7 @@ Arch Linux:
     sudo pacman -S cmake make base-devel fftw mbedtls yaml-cpp lksctp-tools gtest
 
 It is also recommended users install the following (although they are not required): 
+
     - `Ccache <https://ccache.dev/>`_: This will help to speed up re-compilation
     - `backward-cpp <https://github.com/bombela/backward-cpp>`_: This library helps to generate more informative backtraces in the stdout if an error occurs during runtime  
 
