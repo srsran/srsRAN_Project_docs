@@ -15,10 +15,10 @@ The format used for all log messages is as follows:
     
 Where the fields are:
 
-    * Timestamp in YYYY-MM-DDTHH:MM:SS.UUUUUU format at which log message was generated
-    * Layer can be one of MAC/RLC/PDCP/RRC/SDAP/NGAP/GTPU/RADIO/FAPI/F1U/DU/CU/LIB. PHY layers are specified as downlink or uplink and with executor number e.g. DL-PHY1.
-    * Level can be one of E/W/I/D for error, warning, info and debug respectively.
-    * TTI is only shown for PHY or MAC messages and is in the format SFN.slot where SFN is System Frame Number.
+    * Timestamp in *YYYY-MM-DDTHH:MM:SS.UUUUUU* format at which log message was generated
+    * Layer can be one of *MAC/RLC/PDCP/RRC/SDAP/NGAP/GTPU/RADIO/FAPI/F1U/DU/CU/LIB*. PHY layers are specified as downlink or uplink and with executor number e.g. *DL-PHY1*.
+    * Level can be one of *E/W/I/D* for error, warning, info and debug respectively.
+    * TTI is only shown for PHY or MAC messages and is in the format *SFN.sn* where SFN is System Frame Number and sn is slot number.
     
 An example log file excerpt can be seen below:
 
