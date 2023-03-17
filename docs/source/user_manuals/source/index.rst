@@ -6,8 +6,9 @@ User Manual
 .. toctree::
    :maxdepth: 2
 
-   1_installation.rst
-   2_running.rst
-   3_troubleshooting.rst
-   4_config_ref.rst
-   5_console_ref.rst
+   installation.rst
+   running.rst
+   console_ref.rst
+   outputs.rst
+   config_ref.rst
+   troubleshooting.rst

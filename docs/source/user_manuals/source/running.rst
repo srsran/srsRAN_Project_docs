@@ -10,9 +10,7 @@ To successfully run the srsRAN Project gNB you will need the following:
 
     - A PC with a Linux based OS (Ubuntu 20.04 or later)
     - A USRP device
-    - Required dependencies (see :ref:`here <manual_installation_dependencies>`)
-    - UHD RF driver
-    - srsRAN Project (see :ref:`here <manual_installation_build>`)
+    - srsRAN Project (see the :ref:`Installation Guide <manual_installation_build>`)
     - A 3rd-party 5G core (we recommend `Open5GS <https://github.com/open5gs/open5gs>`_)
     - A 3rd-party 5G UE
 

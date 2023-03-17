@@ -2,7 +2,7 @@
 srsRAN Project Documentation
 #############################
 
-.. image:: .imgs/openran_arch_shaded.png
+.. image:: .imgs/srsran_arch_5g.png
 
 .. meta::
     :description lang=en:
@@ -41,11 +41,12 @@ Useful resources:
    :maxdepth: 1
    :caption: User Manual
 
-   user_manuals/source/1_installation.rst
-   user_manuals/source/2_running.rst
-   user_manuals/source/3_troubleshooting.rst
-   user_manuals/source/4_config_ref.rst
-   user_manuals/source/5_console_ref.rst
+   user_manuals/source/installation.rst
+   user_manuals/source/running.rst
+   user_manuals/source/console_ref.rst
+   user_manuals/source/outputs.rst
+   user_manuals/source/config_ref.rst
+   user_manuals/source/troubleshooting.rst
    
 .. toctree::
    :maxdepth: 1

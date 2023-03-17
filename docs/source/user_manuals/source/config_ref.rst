@@ -138,6 +138,8 @@ cell_cfg
       - **enable_clipping** : Optional BOOL (false). Sets clipping of the baseband samples on or off. If enabled, samples that exceed the power ceiling are clipped.
       - **ceiling** : Optional FLOAT (0.0). Sets the power ceiling in dB, relative to the full scale amplitude of the radio. Format: negative float or 0.
 
+.. _manual_config_ref_log: 
+
 log
 =======
 
@@ -205,6 +207,8 @@ log
 
   phy_rx_symbols_filename
     - Optional TEXT. Print received symbols to file. Symbols will be printed if a valid path is set. Format: file path.
+
+.. _manual_config_ref_pcap: 
 
 pcap
 ========
