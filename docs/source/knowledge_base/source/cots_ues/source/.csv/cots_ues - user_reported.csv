@@ -1,0 +1,24 @@
+Make,Model,Baseband,FDD,TDD,Configuration,SDR,Notes
+OnePlus,8,,,,,,"..
+.. reporter: Sylvain"
+OnePlus,Nord N10,Snapdragon 690,,,,,"..
+.. reporter: gustavobsch
+.. channel: https://github.com/srsran/srsRAN_Project/discussions/36#discussioncomment-5395469"
+OnePlus,Nord CE 5G,Snapdragon 750G 5G,n3,n78 - 20 MHz,,,"..
+.. reporter: Sylvain"
+OnePlus,10 Pro,SM8450 Snapdragon 8 Gen 1,n3,n78 - 100 MHz,,USRP X410 [9]_,"..
+.. reporter: orqa"
+Quectel,RM510Q-GL,,,,,,"..
+.. reporter: jtplatt99
+.. channel: https://github.com/srsran/srsRAN_Project/discussions/36#discussion-4992545"
+Sierra,EM9191,Snapdragon X55,,78 - 40 MHz,,,"..
+.. reporter: ChengDaHal
+.. channel: https://github.com/srsran/srsRAN_Project/discussions/36#discussioncomment-5456973"
+Xiaomi,Redmi Note 10 5G,Mediatek MT6833 Dimensity 700,n28,"| n77
+| n78",,,"| Activate hidden SA option by dialing *#*#726633#*#*
+..
+.. reporter: alvaroalfaro612
+.. channel: https://github.com/srsran/srsRAN_Project/discussions/36#discussioncomment-5466323"
+ZTE,MU5002/MU5001,SDX55+QCA6391,,,,,"..
+.. reporter: filay
+.. channel: https://github.com/srsran/srsRAN_Project/discussions/36#discussioncomment-5516975"

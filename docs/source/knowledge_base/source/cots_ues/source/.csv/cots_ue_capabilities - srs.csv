@@ -1,0 +1,4 @@
+Make,Model,UE Capability PCAP
+Simcom,SIM8262E-M2,:download:`pcap <.pcap/simcom-sim8262e-m2.pcap>`
+Motorola,Edge 30 Pro,:download:`pcap <.pcap/moto_edge_30_pro.pcap>`
+Google,Pixel 6a,:download:`pcap <.pcap/pixel_6a.pcap>`

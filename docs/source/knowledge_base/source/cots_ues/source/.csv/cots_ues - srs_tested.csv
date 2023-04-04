@@ -1,0 +1,43 @@
+Make,Model,Baseband,FDD,TDD,Configuration,SDR,Notes
+Motorola,Edge 30 Pro,SM8450 Snapdragon 8 Gen 1,"n3 - 5, 10, 20 MHz","n78 - 10, 20, 40 MHz",,"USRP B200mini [1]_, GPSDO","| Test SIM: Sysmocom SJS1 [2]_
+.. 
+.. reporter: Andre"
+OnePlus,Nord 5G,SM7250 Snapdragon 765G,"n3 - 5, 10, 20 MHz","n78 - 20, 40, 80, 100 MHz","| IMSI 00101
+| gNB PLMN 90170","| B210 [3]_, Leo Bodnar GPSDO
+| N310 [4]_, External Clock","| Seems to not like Test PLMN
+| Has been tested in the shielding box and on a desk
+.. 
+.. reporter: Lab"
+OnePlus,8T,SM8250 Snapdragon 865 5G ,,n78 - 20 MHz,"| IMSI 00101
+| gNB PLMN 90170","B210, Leo Bodnar GPSDO ","| Requires use of the ""roaming hack""
+| Requires GPSDO to keep stable connection. 
+..
+.. reporter: Brendan"
+OnePlus,9 Pro,Snapdragon 888 Octa-core,n3 - 10 MHz,n78 - 20 MHz,"| IMSI 00101
+| gNB PLMN: 00101, 99970, 46007",,"| Test SIM: Sysmocom SJA2 [5]_ (must disable service 124 [6]_)
+| Requires root [7]_
+| NSG must force 5G-NR only [8]_
+..
+.. reporter: Lab"
+Quectel,RM500q,Snapdragon X55,,,,,"..
+.. reporter: Lab"
+Simcom,SIM8262E-M2,Snapdragon X62,,n78 - 20 MHz,,,"| Test SIM: works with test SIM
+| Sysmocom IMSI doesn't work
+..
+.. reporter: Andre"
+Telit,FN990A28,Snapdragon X62,"| n7 - 5, 10, 20 MHz
+| n71 - 5, 10, 20 MHz","n78 - 20, 30 MHz","| IMSI 00101, 99970
+| gNB PLMN: 00101, 99970",USRP B210 [3]_,"| Test SIM: Sysmocom SJS1 [2]_, SJA2 [5]_ (must disable service 124 [6]_)
+| For Symocom Breakout Board requires SIMIN to be ""Active High""
+| MS operation mode: normal or type_approval (both work) 
+..
+.. reporter: Robert"
+Xiaomi,11 Lite 5G NE,SM7325 Snapdragon 778G 5G,"n3 - 10, 20 MHz",n78 - 20 MHz,gNB PLMN: 00101,"B210, Leo Bodnar GPSDO","| Test SIM: Sysmocom SJA2 [5]_
+| Activate hidden SA option by dialing *#*#726633#*#*
+..
+.. reporter: Joaquim"
+Xiaomi,12,SM8450 Snapdragon 8 Gen 1,n3 - 20 MHz,n78 - 20 MHz,gNB PLMN: 00101,"B210, Leo Bodnar GPSDO","| Test SIM: Sysmocom SJA2 [5]_
+| Initially unstable connection, fixed by forcing NR only RAT
+| Activate hidden SA option by dialing *#*#726633#*#*
+..
+.. reporter: Joaquim"

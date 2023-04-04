@@ -12,14 +12,14 @@ Logs
 The format used for all log messages is as follows:
 
     *Timestamp [Layer] [Level] [TTI] message*
-    
+
 Where the fields are:
 
     * Timestamp in *YYYY-MM-DDTHH:MM:SS.UUUUUU* format at which log message was generated
     * Layer can be one of *MAC/RLC/PDCP/RRC/SDAP/NGAP/GTPU/RADIO/FAPI/F1U/DU/CU/LIB*. PHY layers are specified as downlink or uplink and with executor number e.g. *DL-PHY1*.
     * Level can be one of *E/W/I/D* for error, warning, info and debug respectively.
     * TTI is only shown for PHY or MAC messages and is in the format *SFN.sn* where SFN is System Frame Number and sn is slot number.
-    
+
 An example log file excerpt can be seen below:
 
 .. code-block::
@@ -57,10 +57,12 @@ An example log file excerpt can be seen below:
 
 ----
 
+.. _pcaps:
+
 PCAPs
 *****
 
-| The srsRAN Project gNB application can output packet captures (PCAPs) at the MAC and NGAP layers. These PCAPs can be analyzed using `Wireshark <https://www.wireshark.org/>`_. 
+| The srsRAN Project gNB application can output packet captures (PCAPs) at the MAC and NGAP layers. These PCAPs can be analyzed using `Wireshark <https://www.wireshark.org/>`_.
 | Enable PCAPs in the gNB config file. See the :ref:`Configuration Reference<manual_config_ref_pcap>` for more details.
 
 MAC PCAPs
@@ -69,7 +71,7 @@ MAC PCAPs
 To analyze a MAC-layer PCAP using Wireshark, you will need to configure User DLT 149 for UDP and enable the mac_nr_udp protocol:
 
 #. Go to Edit->Preferences->Protocols->DLT_USER->Edit and add an entry with DLT=149 and Payload protocol=udp.
-#. Go to Analyze->Enabled Protocols->MAC-NR and enable mac_nr_udp 
+#. Go to Analyze->Enabled Protocols->MAC-NR and enable mac_nr_udp
 
 .. image:: .imgs/mac_pcap.png
 
@@ -82,5 +84,3 @@ To analyze an NGAP-layer PCAP using Wireshark, you will need to configure User D
 #. Go to Edit->Preferences->Protocols->NAS-5GS and enable "Try to detect and decode 5G-EA0 ciphered messages".
 
 .. image:: .imgs/ngap_pcap.png
-
-

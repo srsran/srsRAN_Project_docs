@@ -1,4 +1,4 @@
-.. _knowledge_base: 
+.. _knowledge_base:
 
 Knowledge Base
 ##############
@@ -9,3 +9,4 @@ Knowledge Base
     oran_gnb/source/index.rst
     gnb_components/source/index.rst
     gnb_interfaces/source/index.rst
+    cots_ues/source/index.rst

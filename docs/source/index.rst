@@ -8,24 +8,24 @@ srsRAN Project Documentation
     :description lang=en:
         Documentation for srsRAN Project.
 
-| The srsRAN Project is an open-source 5G CU/DU from `SRS <https://www.srs.io>`_. 
-| It is a complete RAN solution compliant with 3GPP and O-RAN Alliance specifications. The srsRAN Project includes the full L1/2/3 stack with minimal external dependencies. The software is portable across processor architectures and scalable from low-power embedded systems to cloudRAN, providing a powerful platform for mobile wireless research and development. 
+| The srsRAN Project is an open-source 5G CU/DU from `SRS <https://www.srs.io>`_.
+| It is a complete RAN solution compliant with 3GPP and O-RAN Alliance specifications. The srsRAN Project includes the full L1/2/3 stack with minimal external dependencies. The software is portable across processor architectures and scalable from low-power embedded systems to cloudRAN, providing a powerful platform for mobile wireless research and development.
 
-Get started with the srsRAN Project: 
+Get started with the srsRAN Project:
 
    - :ref:`Install<manual_installation>` srsRAN Project on your computer.
-   - Get up and :ref:`running<manual_running>`. 
+   - Get up and :ref:`running<manual_running>`.
    - More advanced users should read the :ref:`Developers Guide <dev_guide>`.
-   - Get up to speed on 5G and OpenRAN with our :ref:`Knowledge Base <knowledge_base>`. 
+   - Get up to speed on 5G and OpenRAN with our :ref:`Knowledge Base <knowledge_base>`.
 
-Useful resources: 
+Useful resources:
 
     * The srsRAN Project `source code <https://github.com/srsran/srsRAN_project>`_.
     * Explore the srsRAN Project `Discussions <https://github.com/srsran/srsran_project/discussions>`_ for news and user support.
     * Discover the `srsRAN Enterprise solution <https://www.srs.io/products>`_ for Private 5G network deployments.
-    
 
----- 
+
+----
 
 .. toctree::
    :maxdepth: 1
@@ -47,7 +47,7 @@ Useful resources:
    user_manuals/source/outputs.rst
    user_manuals/source/config_ref.rst
    user_manuals/source/troubleshooting.rst
-   
+
 .. toctree::
    :maxdepth: 1
    :caption: Developers Guide
@@ -58,17 +58,18 @@ Useful resources:
    dev_guide/source/interfaces/source/index.rst
    dev_guide/source/asn1/source/index.rst
    dev_guide/source/code_guide/source/index.rst
-   
+
 .. toctree::
    :maxdepth: 1
-   :caption: Knowledge Base 
-   
+   :caption: Knowledge Base
+
    knowledge_base/source/oran_gnb/source/index.rst
    knowledge_base/source/gnb_components/source/index.rst
    knowledge_base/source/gnb_interfaces/source/index.rst
-   
+   knowledge_base/source/cots_ues/source/index.rst
+
 .. toctree::
    :maxdepth: 1
    :caption: Tutorials
-   
+
    tutorials/source/index.rst
