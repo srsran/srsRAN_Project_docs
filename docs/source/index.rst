@@ -72,4 +72,4 @@ Useful resources:
    :maxdepth: 1
    :caption: Tutorials
 
-   tutorials/source/index.rst
+   tutorials/source/srsUE/source/index.rst
