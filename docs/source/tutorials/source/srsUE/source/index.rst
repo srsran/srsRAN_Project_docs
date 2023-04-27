@@ -2,13 +2,13 @@
 
 .. _srsue_appnote:
 
-gNB and srsUE
-#############
+srsRAN gNB with srsUE
+#####################
 
 Introduction
 ************
 
-srsRAN Project is a 5G CU/DU and does not include a UE application. However, `srsRAN 4G <https://github.com/srsran/srsRAN_4G>`_ does include a prototype 5G UE (srsUE) which can be used for testing.
+srsRAN Project is a 5G CU/DU solution and does not include a UE application. However, `srsRAN 4G <https://github.com/srsran/srsRAN_4G>`_ does include a prototype 5G UE (srsUE) which can be used for testing.
 This application note shows how to create an end-to-end fully open-source 5G network with srsUE, the srsRAN Project gNodeB and Open5GS 5G core network. 
 
 First, we show how to connect srsUE to the gNodeB over-the-air using USRPs. In the second part, we outline how to use virtual radios based on ZeroMQ instead of SDR hardware.
