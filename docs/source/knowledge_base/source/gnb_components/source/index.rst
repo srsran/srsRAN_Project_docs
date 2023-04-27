@@ -11,8 +11,8 @@ This section of our knowledge base aims to go through these components in furthe
 
 .. _CU_kb: 
 
-Control Unit (CU)
-*****************
+Centralized Unit (CU)
+*********************
 
 The CU has the following architecture: 
 

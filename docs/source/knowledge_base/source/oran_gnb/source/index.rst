@@ -10,7 +10,7 @@ Introduction
 ************
 
 5G Radio Access Networks (RANs) introduce the gNodeB (gNB), the next evolution of the eNodeB found in LTE networks. With Release 15, 
-3GPP introduced a flexible architecture to the 5G RAN. This splits the gNB into the Control Unit (CU), the Distributed Unit (DU) 
+3GPP introduced a flexible architecture to the 5G RAN. This splits the gNB into the Centralized Unit (CU), the Distributed Unit (DU) 
 and the Radio Unit (RU). 
 
 This new architecture brings multiple new interfaces: the CU and DU communicate over the F1 interface, gNBs communicate with each other 
