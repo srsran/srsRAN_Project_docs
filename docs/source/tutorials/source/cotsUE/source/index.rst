@@ -76,8 +76,8 @@ Configuration
 The following configuration files were modified for this set-up: 
 
     - :download:`gnb_b210_20MHz_oneplus_8t.yml <.config/gnb_b210_20MHz_oneplus_8t.yml>` 
-    - :download:`amf.yml <.config/amf.yml>` 
-    - :download:`upf.yml <.config/upf.yml>` 
+    - :download:`amf.yaml <.config/amf.yaml>` 
+    - :download:`upf.yaml <.config/upf.yaml>` 
 
 The aspects of the network should be configured in the following order: 
 
