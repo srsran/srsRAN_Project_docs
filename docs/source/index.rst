@@ -73,3 +73,4 @@ Useful resources:
    :caption: Tutorials
 
    tutorials/source/srsUE/source/index.rst
+   tutorials/source/cotsUE/source/index.rst

@@ -3,4 +3,9 @@
 Tutorials
 #########
 
-srsUE/source/index.rst
+.. toctree::
+   :maxdepth: 1
+   
+   srsUE/source/index.rst
+   cotsUE/source/index.rst
+
