@@ -51,7 +51,7 @@ with the information needed to download and set-up Open5GS so that it is ready t
 COTS UE
 =======
 
-You should make sure your device is capable of operating in 5G SA mode and that is operates in the bands supported by the srsRAN Project gNB. 
+You should make sure your device is capable of operating in 5G SA mode and that it operates in the bands supported by the srsRAN Project gNB. 
 
 The following bands are not currently supported: 
 
@@ -63,7 +63,7 @@ External Clock
 
 A `Leo Bodnar GPS reference clock <http://www.leobodnar.com/shop/index.php?main_page=product_info&cPath=107&products_id=234>`_ was used as the USRP clock source for this set-up.
 
-The use of an external clock is not essential, but it mitigates possible errors occurring as result of inaccuracies in the internal clock of the USRP being used. The issue comes 
+The use of an external clock is not essential, but it mitigates possible errors occurring as result of inaccuracies in the internal clock of the RF front-end being used. The issue comes 
 from the CFOs and timings tolerated by 5G handsets - the onboard clocks within SDRs are not always accurate enough to operate within the limits allowed by the handsets. Using an 
 external clock, which is much more accurate than an SDR onboard clock, reduces the likelihood that a COTS UE will be unable to see/ connect to the network due to synchronization issues. 
 
@@ -94,7 +94,7 @@ The gNB is configured using the base configuration example found `here <https://
 The configuration has the following modifications from the original example: 
 
     - Set the clock source of the USRP to ``external``. 
-    - Set the ARFCN of the cell to ``627340``. This ensures the gNB is broadcasting in a free area of spectrum with with a BW of 20 MHz.
+    - Set the ARFCN of the cell to ``627340``. This ensures the gNB is broadcasting in a free area of spectrum with a BW of 20 MHz.
     - The PLMN is changed to ``90170``. Using the OnePlus 8t, we have found that the PLMN of the cell must be different to the PLMN of the ISIM. By forcing a roaming scenario the phone is able to see the network, without doing this it will not work.   
 
 The above modifications are specific to the set-up being used here. It is recommended to adjust the ARFCN to your local set-up so that you are transmitting in a free area of spectrum. 
