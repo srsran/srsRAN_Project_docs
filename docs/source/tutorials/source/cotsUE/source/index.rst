@@ -146,6 +146,12 @@ Download `pySim <https://github.com/osmocom/pysim>`_ :
 
     git clone https://github.com/osmocom/pysim
     cd pysim
+    sudo apt-get install --no-install-recommends \
+    	pcscd libpcsclite-dev \
+    	python3 \
+    	python3-setuptools \
+    	python3-pyscard \
+    	python3-pip
     pip3 install -r requirements.txt
 
 You can then run the following commands from within the ``pysim`` directory. 
@@ -174,15 +180,28 @@ You need to at least set the PLMN to 00101, optionally you can also reconfigure 
 SUCI Concealment
 ----------------
 
-If you are using a 5G-enabled sysmcom-ISIM (as in this example) then you will need to modify the 5G-related fields of the sim card. In particular you need to enable SUCI concealment.
+If you are using a 5G-enabled sysmcom-ISIM (as in this example) then you will need to modify the 5G-related fields of the sim card. In particular you need to disable SUCI concealment.
 
-First, you need to add your ADM pin to ``./scripts/deactivate-5g.script``.
+This can be done using the following commands. You should replace ``<ADM-KEY>`` with the ADM key of the respective SIM card. 
 
-Then run the following command: 
+.. note::
+   ``verify_adm`` does not print any output on success. If you see something like `"SW Mismatch: Expected 9000 and got 6982"` the ADM key is not correct. Keep in mind that after 
+   3 failed write attempts due to a wrong ADM key the SIM is blocked and cannot be rewritten again.
 
 .. code-block:: bash
 
-    ./pySim-shell.py -p0 --script ./scripts/deactivate-5g.script
+    pySIM-shell (MF)> select MF
+    pySIM-shell (MF)> select ADF.USIM
+    pySIM-shell (MF/ADF.USIM)> select EF.UST
+    pySIM-shell (MF)> verify_adm <ADM-KEY>
+    pySIM-shell (MF/ADF.USIM/EF.UST)> ust_service_deactivate 124
+    pySIM-shell (MF/ADF.USIM/EF.UST)> ust_service_deactivate 125
+
+You can then verify the ISIM configuration using the following command: 
+
+.. code-block:: bash
+
+    ./pySim-read.py -p0
 
 You can find more information on this in `this guide <https://gist.github.com/mrlnc/01d6300f1904f154d969ff205136b753>`_, written by Merlin Chlosta. 
 
