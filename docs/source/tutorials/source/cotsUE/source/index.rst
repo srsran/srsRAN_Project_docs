@@ -197,7 +197,7 @@ This can be done using the following commands. You should replace ``<ADM-KEY>`` 
     pySIM-shell (MF/ADF.USIM/EF.UST)> ust_service_deactivate 124
     pySIM-shell (MF/ADF.USIM/EF.UST)> ust_service_deactivate 125
 
-You can then verify the ISIM configuration using the following command: 
+After these steps **UST service 124** and **125** should be disabled. You can verify the ISIM configuration using the following command:
 
 .. code-block:: bash
 
