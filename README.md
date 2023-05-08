@@ -7,7 +7,7 @@ The docs require multiple sphinx extensions.
 
 On Ubuntu, they can be installed with:
 ```
-sudo apt install python-pip
+sudo apt install python3-pip python3-sphinx
 pip install -r requirements.txt
 ```
 
@@ -30,7 +30,7 @@ To enable live build previews when editing documentation install the following e
 
 This can be installed from the requirements file. 
 ```
-pip install -r requirements.txt
+pip3 install -r requirements.txt
 ```
 
 To build the docs first run from /docs/source
