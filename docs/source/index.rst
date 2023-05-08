@@ -32,7 +32,7 @@ Useful resources:
    :caption: General
 
    general/source/1_getting_started.rst
-   general/source/2_feature_list.rst
+   general/source/2_features_and_roadmap.rst
    general/source/3_contributions.rst
    general/source/4_reporting.rst
    general/source/5_release_notes.rst
