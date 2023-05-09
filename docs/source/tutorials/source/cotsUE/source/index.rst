@@ -33,8 +33,8 @@ This specific implementation uses the following:
 
 -----
 
-Hardware Considerations
-***********************
+Setup Considerations
+*********************
 
 Open5GS
 =======
@@ -53,7 +53,7 @@ COTS UE
 
 You should make sure your device is capable of operating in 5G SA mode and that it operates in the bands supported by the srsRAN Project gNB. 
 
-The following bands are not currently supported: 
+The following bands are not currently supported by srsRAN: 
 
     - Band 79 (both 15 and 30 kHz sub-carrier-spacing)
     - Band 34, 38, 39 (15 kHz sub-carrier-spacing) 
@@ -73,9 +73,12 @@ external clock, which is much more accurate than an SDR onboard clock, reduces t
 Configuration
 *************
 
-The following configuration files were modified for this set-up: 
+The following srsRAN configuration files were modified for this set-up: 
 
     - :download:`gnb_b210_20MHz_oneplus_8t.yml <.config/gnb_b210_20MHz_oneplus_8t.yml>` 
+    
+The following Open5GS configuration files were modified for this set-up: 
+    
     - :download:`amf.yaml <.config/amf.yaml>` 
     - :download:`upf.yaml <.config/upf.yaml>` 
 
@@ -94,8 +97,8 @@ The gNB is configured using the base configuration example found `here <https://
 The configuration has the following modifications from the original example: 
 
     - Set the clock source of the USRP to ``external``. 
-    - Set the ARFCN of the cell to ``627340``. This ensures the gNB is broadcasting in a free area of spectrum with a BW of 20 MHz.
-    - The PLMN is changed to ``90170``. Using the OnePlus 8t, we have found that the PLMN of the cell must be different to the PLMN of the ISIM. By forcing a roaming scenario the phone is able to see the network, without doing this it will not work.   
+    - Set the ARFCN of the cell to ``627340``. This ensured the gNB was broadcasting in a free area of spectrum with a BW of 20 MHz in our location.
+    - The PLMN is changed to ``90170``. Using the OnePlus 8t, we have found that by forcing a roaming scenario, the phone sees the network and attaches more reliably. A roaming scenario is forced by setting different PLMNs in the cell and the ISIM in the phone.
 
 The above modifications are specific to the set-up being used here. It is recommended to adjust the ARFCN to your local set-up so that you are transmitting in a free area of spectrum. 
 
@@ -135,10 +138,9 @@ ISIM
 SIM Programming
 ---------------
 
-As outlined previously, this set-up uses the OnePlus 8t, during internal tests it was found that this phone (and other OnePlus devices) sometimes connect to the network more easily in a roaming scenario. Due to this, the PLMN of 
-the SIM needs to be different to that of the cell. 
+As outlined previously, this set-up uses the OnePlus 8t, during internal tests it was found that this phone (and other OnePlus devices) sometimes connect to the network more easily in a roaming scenario. This is achieved by setting different PLMNs for the cell and the ISIM in the phone. 
 
-This is done by reprogramming the ISIM to set the MMC, MNC, IMSI and other credentials to test values using a SIM reader and pySIM. The following steps were taken to do this. 
+The MMC, MNC, IMSI and other credentials in the ISIM can be set by reprogramming. We reprogrammed our SysmoISIM-SJA2 using the following steps. 
 
 Download `pySim <https://github.com/osmocom/pysim>`_ : 
 
@@ -180,9 +182,9 @@ You need to at least set the PLMN to 00101, optionally you can also reconfigure 
 SUCI Concealment
 ----------------
 
-If you are using a 5G-enabled sysmcom-ISIM (as in this example) then you will need to modify the 5G-related fields of the sim card. In particular you need to disable SUCI concealment.
+If you are using a 5G-enabled sysmcom-ISIM (as in this example) then you will need to modify the 5G-related fields of the sim card. In particular you need to configure or disable SUCI concealment.
 
-This can be done using the following commands. You should replace ``<ADM-KEY>`` with the ADM key of the respective SIM card. 
+SUCI concealment can be disabled using the following commands. You should replace ``<ADM-KEY>`` with the ADM key of the respective SIM card. 
 
 .. note::
    ``verify_adm`` does not print any output on success. If you see something like `"SW Mismatch: Expected 9000 and got 6982"` the ADM key is not correct. Keep in mind that after 
@@ -203,7 +205,7 @@ After these steps **UST service 124** and **125** should be disabled. You can ve
 
     ./pySim-read.py -p0
 
-You can find more information on this in `this guide <https://gist.github.com/mrlnc/01d6300f1904f154d969ff205136b753>`_, written by Merlin Chlosta. 
+More information on pySim and SUCI concealment can be found in `this guide <https://gist.github.com/mrlnc/01d6300f1904f154d969ff205136b753>`_, written by Merlin Chlosta. 
 
 
 Open5GS
@@ -489,7 +491,7 @@ The COTS UE can now search for the network. To do this, navigate to *Mobile Netw
 
 When you enter the *Carrier* menu your device may automatically search for available carriers, if not you can manually select the search option from the top right of the screen. 
 
-If the device can successfully receive SIBs (specifically SIB1) and "see" the network it will appear of the list of available carriers. It will be displayed as ``Open5GS 5G`` or ``90170 5G``. If your PLMN is something else it maybe be display as ``[PLMN] 5G``.
+If the device can successfully receive SIBs (specifically SIB1) and "see" the network it will appear of the list of available carriers. It will be displayed as ``Open5GS 5G`` or ``90170 5G``. If your PLMN is something else it may be displayed as ``[PLMN] 5G``.
 
 The following image shows what this may look like: 
 
@@ -551,7 +553,7 @@ Running a speedtest directly from google gives the following results:
 .. image:: .imgs/speedtest.jpg
    :width: 20% 
 
-While running this test, the following was obsevred on the gNB console: 
+While running this test, the following was observed on the gNB console: 
 
 **Uplink Test**
 
@@ -613,7 +615,7 @@ Network Not Visible
 
 - For this device, the ISIM needed to be in SIM tray 2. If your device is dual SIM capable and you cannot see the network, try placing the ISIM in the other slot.
 
-- If you were previously able to see the network, but now cannot, you should eject the ISIM and insert it again. The device may be blacklisting the gNB if the device as previously tried to connect and failed. 
+- If you were previously able to see the network, but now cannot, you should eject the ISIM and insert it again. The device may be blacklisting the gNB if the device has previously tried to connect and failed. 
 
 - You should check that the gNB is transmitting correctly. This can be done with a spectrum analyzer or tools like `gr-fospher <https://kb.ettus.com/Fosphor>`_ and `Maia SDR <https://maia-sdr.org/>`_. An example of a "healthy" gNB broadcast from Maia SDR can be seen here:
 
@@ -632,14 +634,14 @@ If you can see the network, but cannot attach, here are some things to test:
   - The device may not be able to PRACH. If you are using NSG, then you will be able to see the control messages being exchanged between the UE and the gNB, check this to see whether or not the PRACH was successful. If not, here are a list of things to check:  
   
     - The signal quality (use Maia SDR, Fospher or some other tool); you can adjust the Tx and Rx gains to compensate for this. If there are any commercial cells broadcasting in the same area of spectrum this could also be causing RF issues. 
-    - Timing issues; if there are discrepncies in timing then the UE will not be able to connect. Use an exeternal clock to overcome this. 
+    - Timing issues; if there are discrepencies in timing then the UE will not be able to connect. Use an external clock to overcome this. 
 
 
 
 No Internet Access
 ==================
 
-If your device is connect to the network but cannot access the internet it is most likely an issue with the APN configuration. Make sure that the credentials and info are the same across both the UE and the APN configuration in the Core. The main things to check are: 
+If your device is connected to the network but cannot access the internet it is most likely an issue with the APN configuration. Make sure that the credentials and info are the same across both the UE and the APN configuration in the Core. The main things to check are: 
 
     - The APN should have the same ID in both the phone and core
     - Set the protocol to IPv4
