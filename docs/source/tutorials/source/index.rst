@@ -8,4 +8,4 @@ Tutorials
    
    srsUE/source/index.rst
    cotsUE/source/index.rst
-
+   amariUE/source/index.rst
