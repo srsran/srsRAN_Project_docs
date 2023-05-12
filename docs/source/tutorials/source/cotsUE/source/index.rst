@@ -179,12 +179,12 @@ You need to at least set the PLMN to 00101, optionally you can also reconfigure 
 .. note::
    You will need to get the ICCID, ADM-KEY and other security information from the SIM provider.
 
-SUCI Concealment
-----------------
+SUCI Configuration
+------------------
 
-If you are using a 5G-enabled sysmcom-ISIM (as in this example) then you will need to modify the 5G-related fields of the sim card. In particular you need to configure or disable SUCI concealment.
+If you are using a sysmoISIM-SJA2 ISIM (5G-enabled) as in this example, then you will need to modify the 5G-related fields of the sim card. In particular you need to configure or disable SUPI concealment (SUCI).
 
-SUCI concealment can be disabled using the following commands. You should replace ``<ADM-KEY>`` with the ADM key of the respective SIM card. 
+SUPI concealment can be disabled using the following commands. You should replace ``<ADM-KEY>`` with the ADM key of the respective SIM card. 
 
 .. note::
    ``verify_adm`` does not print any output on success. If you see something like `"SW Mismatch: Expected 9000 and got 6982"` the ADM key is not correct. Keep in mind that after 
@@ -205,7 +205,7 @@ After these steps **UST service 124** and **125** should be disabled. You can ve
 
     ./pySim-read.py -p0
 
-More information on pySim and SUCI concealment can be found in `this guide <https://gist.github.com/mrlnc/01d6300f1904f154d969ff205136b753>`_, written by Merlin Chlosta. 
+More information on pySim and SUCI configuration can be found in `this guide <https://gist.github.com/mrlnc/01d6300f1904f154d969ff205136b753>`_, written by Merlin Chlosta. 
 
 
 Open5GS
