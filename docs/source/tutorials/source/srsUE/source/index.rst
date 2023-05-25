@@ -22,7 +22,7 @@ Hardware and Software Overview
 For this application note, the following hardware and software are used:
 
     - PC with Ubuntu 22.04.1
-    - `srsRAN Project <https://github.com/srsran/srsRAN_project>`_ (23.3 or later)
+    - `srsRAN Project <https://github.com/srsran/srsRAN_project>`_
     - `srsRAN 4G <https://github.com/srsran/srsRAN_4G>`_ (23.04 or later)
     - `Two Ettus Research USRP B210s <https://www.ettus.com/all-products/ub210-kit/>`_ (connected over USB3)
     - `Open5GS 5G Core <https://open5gs.org/>`_

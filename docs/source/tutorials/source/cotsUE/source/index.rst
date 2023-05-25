@@ -14,7 +14,7 @@ This tutorial demonstrates how to configure and connect a 5G capable COTS UE to 
 To connect a COTS UE to a 5G network using the srsRAN Project gNB users will need the following requirements: 
  
     - A PC with a linux based OS 
-    - The latest version of the srsRAN Project gNB
+    - srsRAN Project CU/DU
     - RF-frontend compatible with srsRAN Project
     - A third-party 5G Core 
     - A 5G SA capable COTS UE 
@@ -24,7 +24,7 @@ To connect a COTS UE to a 5G network using the srsRAN Project gNB users will nee
 This specific implementation uses the following: 
 
     - Dell XPS-13 (Intel i7-10510U CPU) with Ubuntu 20.04
-    - srsRAN Project 23.03 gNB 
+    - srsRAN Project CU/DU
     - B210 USRP
     - Open5GS 5G Core 
     - OnePlus 8T

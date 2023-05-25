@@ -24,7 +24,7 @@ Hardware and Software Overview
 For this application note, the following hardware and software are used:
 
     - PC with Ubuntu 22.04.2
-    - `srsRAN Project <https://github.com/srsran/srsRAN_project>`_ (23.03 or later)
+    - `srsRAN Project <https://github.com/srsran/srsRAN_project>`_
     - `Amarisoft UE <https://www.amarisoft.com/technology/ue-simulator/>`_  (2021-09-18 or later)
     - `Two Ettus Research USRP B210s <https://www.ettus.com/all-products/ub210-kit/>`_ (connected over USB3)
     - `Open5GS 5G Core <https://open5gs.org/>`_
