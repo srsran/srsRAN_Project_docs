@@ -25,13 +25,13 @@ For this tutorial the following hardware and software is used:
 
     - Custom Server (Running srsRAN Project CU/DU)
 
-      - CPU: AMD Ryzen 7 5700G with Radeon Graphics
+      - CPU: AMD Ryzen 7 5700G
       - MEM: 64GB
       - NIC: Intel Corporation 82599ES 10-Gigabit
-      - OS: Ubuntu 22.04 (currently 5.15.0-1037-realtime)
+      - OS: Ubuntu 22.04 (5.15.0-1037-realtime)
 
     - `srsRAN Project <https://github.com/srsran/srsRAN_project>`_  (23.05 or later)
-    - `Benetel RAN550 RU <https://benetel.com/ran550/>`_
+    - `Benetel RAN550 RU <https://benetel.com/ran550/>`_ (Firmware version RAN550-1-0.8.1)
     - `Falcon-RX/812/G xHaul Switch (w/ PTP Grandmaster) <https://www.fibrolan.com/Falcon-RX>`_
     - `Open5GS 5G Core <https://open5gs.org/>`_
     - `Amarisoft UE <https://www.amarisoft.com/technology/ue-simulator/>`_  (2021-09-18 or later)
@@ -39,7 +39,7 @@ For this tutorial the following hardware and software is used:
 DU 
 =====
 
-The DU is provided by the srsRAN Project gNB. As mentioned the Open Fonthaul Library (OFH Lib) provides the necessary interface between the DU and the RU. The DU is connected to the RU via cable. 
+The DU is provided by the srsRAN Project gNB. As mentioned the Open Fronthaul Library (OFH Lib) provides the necessary interface between the DU and the RU. The DU is connected to the RU via SFP+ fiber cable. 
 
 RU 
 =====
@@ -67,15 +67,18 @@ Clocking & Synchronization
 
 O-RAN WG 4 has defined various synchronization methods for use with Open Fronthaul. These are outlined in O-RAN.WG4.CUS.0-R003-v11.00 Section 11. The latest version of the specifications can be downloaded `here <https://orandownloadsweb.azurewebsites.net/specifications>`_.
 
-In this setup we use LLS-C2, this is defined as the following: 
+In this setup we use LLS-C3, this is defined as the following: 
 
-    *Configuration LLS-C2: with this topology, the O-DU is part of the synchronization chain towards the O-RU.
-    Network timing is distributed from O-DU to O-RU between O-DU sites and O-RU sites. One or more Ethernet
-    switches are allowed in the fronthaul network. Interconnection among switches and fabric topology (for
-    example mesh, ring, tree, spur etc.) are deployment decisions which are out of the scope of the present
-    document.*
+    *Configuration LLS-C3: With this topology, the O-DU is not part of the synchronization chain towards the ORU. Network timing is distributed from PRTC/T-GM to O-RU typically between central sites (or aggregation
+    sites) and O-RU sites. One or more Ethernet switches are allowed in the fronthaul network. Interconnection
+    among switches and fabric topology (for example mesh, ring, tree, spur etc.) are deployment decisions which
+    are out of the scope of the present document. *
 
-In the ths described setup the Falcon xHaul Switch is providing the PTP Grandmaster (which is synchronized via GPS) to the RU and the DU. These are connected to the SFP 10G ports on the switch via ethernet. 
+In the described setup the Falcon xHaul Switch is providing the PTP Grandmaster (which is synchronized via GPS) to the RU and the DU. These are connected to the SFP 10G ports on the switch via ethernet. 
+
+.. note::
+   The OFH Lib will work with any of the defined clock model and synchronization topologies defined by O-RAN WG4. The use of LLS-C3 is specific to this setup. The use of OFH Lib is agnostic to the clock model and synchronization topology being used. 
+
 
 ----
 
@@ -88,7 +91,7 @@ Falcon-RX
 SyncCenter
 -----------
 
-The switch must be connected to a GPS antenna to ensure the PTP Grandmaster is synchronized correctly. Once connected it is important to check that the GPS has been locked correctly and an accurate clock source is being provided.
+The switch must be connected to an external clock source to ensure the PTP Grandmaster is synchronized correctly. Once connected it is important to check that the GPS has been locked correctly and an accurate clock source is being provided. In this example a GPS reference is used.
 
 .. image:: .imgs/sync_center.png
     :align: center  
