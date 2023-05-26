@@ -35,6 +35,14 @@
     color: #00B2E3;
 }
 
+.rst-content div.highlight {
+    background-color: azure;
+}
+
+.rst-content span.hll {
+    background-color: #00B2E3;
+}
+
 /*--- FONT ---*/
 body, h1, h2, h3, h4, h5, h6, legend{
   font-family: "Ubuntu", sans-serif;
@@ -43,3 +51,5 @@ body, h1, h2, h3, h4, h5, h6, legend{
 .rst-content .toctree-wrapper>p.caption {
   font-family: "Ubuntu", sans-serif;
 }
+
+
