@@ -1,0 +1,57 @@
+amf:
+  addr: 10.53.1.2                                    
+  bind_addr: 10.53.1.1                                    
+
+ru_cfg:
+  ru_ofh:
+	max_proc_delay: 6
+	gps_alpha: 0
+	gps_beta: 0
+	ru_bandwidth_MHz: 100
+	t1a_max_cp_dl: 500
+	t1a_min_cp_dl: 250
+	t1a_max_cp_ul: 465
+	t1a_min_cp_ul: 250
+	t1a_max_up: 250
+	t1a_min_up: 80
+	is_prach_cp_enabled: false
+	is_dl_broadcast_enabled: true
+	compr_method_ul: bfp
+	compr_bitwidth_ul: 9
+	compr_method_dl: bfp
+	compr_bitwidth_dl: 9
+	iq_scaling: 0.35
+	cells:
+	- network_interface: enp1s0f0
+  	ru_mac_addr: 70:b3:d5:e1:5b:06
+  	du_mac_addr: 80:61:5f:0d:df:aa
+  	vlan_tag: 1
+  	prach_port_id: 4
+  	dl_port_id: [0,1]
+  	ul_port_id: 1
+
+cell_cfg:
+  dl_arfcn: 634548                                       
+  band: 78                                              
+  channel_bandwidth_MHz: 20                                
+  common_scs: 30                                       
+  plmn: "00101"               
+  tac: 7                                                 
+  pci: 1
+  prach:
+	prach_config_index: 7
+	prach_root_sequence_index: 1
+	zero_correlation_zone: 0
+	prach_frequency_start: 0
+  tdd_ul_dl_cfg:
+	nof_dl_slots: 7
+	nof_ul_slots: 2                                                    
+log:
+  filename: /tmp/gnb.log      
+  all_level: warning                                      
+
+pcap:
+  mac_enable: false            
+  mac_filename: /tmp/gnb_mac.pcap 
+  ngap_enable: false         
+  ngap_filename: /tmp/gnb_ngap.pcap  
