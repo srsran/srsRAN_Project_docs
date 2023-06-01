@@ -23,7 +23,7 @@ Setup Considerations
 
 For this tutorial the following hardware and software is used: 
 
-    - Custom Server (Running srsRAN Project CU/DU)
+    - Server (Running srsRAN Project CU/DU)
 
       - CPU: AMD Ryzen 7 5700G
       - MEM: 64GB
@@ -189,6 +189,35 @@ To verify the correct configuration of the parameters use the following command:
 .. code-block:: bash
 
    radiocontrol -o G a
+   
+**TDD pattern**
+
+The tdd pattern should be changed to 6-3 format (DDDDDDSUU) by editing the file `/etc/tdd.xml` so that it becomes: 
+
+.. code-block::
+
+<xml>                                                                                                                                                                                                      
+    <tdd-config version="1.0">
+        <description>DDDDDDDSUU</description>
+        <pattern index="1">
+            <slots>DDDD</slots>
+            <numerology>1</numerology>
+            <periodicity>2</periodicity>
+            <special-slot-symbols></special-slot-symbols>
+        </pattern>
+            <pattern index="2">
+            <slots>DDSUUU</slots>
+            <numerology>1</numerology>
+            <periodicity>3</periodicity>
+            <special-slot-symbols>DDDDDDGGGGUUUU</special-slot-symbols>
+        </pattern>
+    </tdd-config>
+</xml> 
+
+the change is in the 2nd pattern, originally it's DDDSUU, we need to change to DDSUUU. 
+
+The RU needs to be rebooted after this change
+
 
 Core
 =====
@@ -232,39 +261,35 @@ The following excerpt shows how the DU is configured to communicate with the RU:
 
 .. code-block:: yaml
 
-   ru_cfg:
-    ru_ofh:
-    	max_proc_delay: 6
-    	gps_alpha: 0
-    	gps_beta: 0
-    	ru_bandwidth_MHz: 100
-    	t1a_max_cp_dl: 500
-    	t1a_min_cp_dl: 250
-    	t1a_max_cp_ul: 465
-    	t1a_min_cp_ul: 250
-    	t1a_max_up: 250
-    	t1a_min_up: 80
-    	is_prach_cp_enabled: false
-    	is_dl_broadcast_enabled: true
-    	compr_method_ul: bfp
-    	compr_bitwidth_ul: 9
-    	compr_method_dl: bfp
-    	compr_bitwidth_dl: 9
-    	iq_scaling: 0.35
-    	cells:
-    	- network_interface: enp1s0f0
-    	  ru_mac_addr: 70:b3:d5:e1:5b:06
-    	  du_mac_addr: 80:61:5f:0d:df:aa
-    	  vlan_tag: 1
-    	  prach_port_id: 4
-    	  dl_port_id: [0,1]
-    	  ul_port_id: 1
+  ru_ofh:
+    ru_bandwidth_MHz: 100                                           # RU instantaneous bandwidth.
+    t1a_max_cp_dl: 500                                              # Maximum T1a on Control-Plane for Downlink in microseconds.
+    t1a_min_cp_dl: 250                                              # Minimum T1a on Control-Plane for Downlink in microseconds.
+    t1a_max_cp_ul: 465                                              # Maximum T1a on Control-Plane for Uplink in microseconds.
+    t1a_min_cp_ul: 250                                              # Minimum T1a on Control-Plane for Uplink in microseconds.
+    t1a_max_up: 250                                                 # Maximum T1a on User-Plane in microseconds.
+    t1a_min_up: 80                                                  # Minimum T1a on User-Plane in microseconds.
+    is_prach_cp_enabled: false                                      # Configures if Control-Plane messages should be used to receive PRACH messages.
+    is_dl_broadcast_enabled: true                                   # Set to true for a workaround over a firmware bug in the RAN550 when operating in SISO mode.
+    compr_method_ul: bfp                                            # Uplink compression method.
+    compr_bitwidth_ul: 9                                            # Uplink IQ samples bitwidth after compression.
+    compr_method_dl: bfp                                            # Downlink compression method.
+    compr_bitwidth_dl: 9                                            # Downlink IQ samples bitwidth after compression.
+    iq_scaling: 0.27                                                # IQ samples scaling factor applied before compression, should be a positive value smaller than 1.
+    cells:
+      - network_interface: enp1s0f0                                 # Ethernet interface name used to communicate with the RU.
+        ru_mac_addr: 70:b3:d5:e1:5b:06                              # RU MAC address.
+        du_mac_addr: 80:61:5f:0d:df:aa                              # DU MAC address.
+        vlan_tag: 1                                                 # VLAN tag value.
+        prach_port_id: 4                                            # PRACH eAxC port value.
+        dl_port_id: [0,1]                                           # Downlink eAxC port values.
+        ul_port_id: 0                                               # Uplink eAxC port values.
 
-To expand on this, the following parameters are set in the ``cells field`` :
+To expand on this, the following parameters are set in the ``cells`` field:
 
-    - ``Network_interface`` : Network interface used to send the OFH packets.
-    - ``ru_mac_addr`` : RU MAC address. Is the address of the R550.
-    - ``du_mac_addr`` : DU MAC address. Mac address of the interface used by the gNB (it should be connected directly to the RU or using a switch, for example a falcon).
+    - ``network_interface`` : Network interface used to send the OFH packets.
+    - ``ru_mac_addr`` : MAC address of the R550.
+    - ``du_mac_addr`` : MAC address of the interface used by the gNB (it should be connected directly to the RU or using a smart switch).
     - ``vlan_tag`` : V-LAN identifier, should be set to the value configured in the switch settings
 ----
 
