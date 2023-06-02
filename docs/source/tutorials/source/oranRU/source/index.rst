@@ -194,25 +194,25 @@ To verify the correct configuration of the parameters use the following command:
 
 The tdd pattern should be changed to 6-3 format (DDDDDDSUU) by editing the file `/etc/tdd.xml` so that it becomes: 
 
-.. code-block::
+.. code-block:: xml
 
-<xml>                                                                                                                                                                                                      
-    <tdd-config version="1.0">
-        <description>DDDDDDDSUU</description>
-        <pattern index="1">
-            <slots>DDDD</slots>
-            <numerology>1</numerology>
-            <periodicity>2</periodicity>
-            <special-slot-symbols></special-slot-symbols>
-        </pattern>
-            <pattern index="2">
-            <slots>DDSUUU</slots>
-            <numerology>1</numerology>
-            <periodicity>3</periodicity>
-            <special-slot-symbols>DDDDDDGGGGUUUU</special-slot-symbols>
-        </pattern>
-    </tdd-config>
-</xml> 
+    <xml>                                                                                                                                                                                                      
+        <tdd-config version="1.0">
+            <description>DDDDDDDSUU</description>
+            <pattern index="1">
+                <slots>DDDD</slots>
+                <numerology>1</numerology>
+                <periodicity>2</periodicity>
+                <special-slot-symbols></special-slot-symbols>
+            </pattern>
+                <pattern index="2">
+                <slots>DDSUUU</slots>
+                <numerology>1</numerology>
+                <periodicity>3</periodicity>
+                <special-slot-symbols>DDDDDDGGGGUUUU</special-slot-symbols>
+            </pattern>
+        </tdd-config>
+    </xml> 
 
 the change is in the 2nd pattern, originally it's DDDSUU, we need to change to DDSUUU. 
 
@@ -370,18 +370,96 @@ The ``offset`` parameter in the above example output can be used to tell if the 
 DU
 =====
 
+The DU can now be run. First, navigate to *srsRAN_Project/build/apps/gnb*, and then run the gNB with the following command: 
+
+.. code-block:: bash
+
+   sudo ./gnb -c du_R550_rf.yml
+
+If the DU connects to the RU successfully, you will see the following output: 
+
+.. code-block:: bash
+
+    --== srsRAN gNB (commit ) ==--
+
+    Connecting to AMF on 10.53.1.2:38412
+    Initializing Open Fronthaul Interface with ul_comp=[BFP,9], dl_comp=[BFP,9], prach_cp_enabled=false, downlink_broadcast=true.
+    Operating a 20MHz cell over a RU with instantaneous bandwidth of 100MHz.
+    Warning: Configured PRACH occasion collides with PUCCH RBs ([0..1) intersects [0..3)). Some interference between PUCCH and PRACH is expected.
+    Warning: Configured PRACH occasion collides with PUCCH RBs ([0..1) intersects [0..3)). Some interference between PUCCH and PRACH is expected.
+    Cell pci=1, bw=20 MHz, dl_arfcn=634548 (n78), dl_freq=3518.22 MHz, dl_ssb_arfcn=634464, ul_freq=3518.22 MHz
+
+    ==== gNodeB started ===
+    Type <t> to view trace
 
 ---- 
 
 Connecting to the Network
 *************************
 
+The following sections will outline two different approaches for connecting to the network. The first will show how to connect to the network using AmariUE from Amarisoft, the second will show how 
+to connect using a 5G COTS UE. 
+
+AmariUE 
+========
+
+For full details on configuring and connecting AmariUE to the srsRAN Project gNB see :ref:`this tutorial <amariUE_radios>`. 
+
+
+Connecting to the Network
+-------------------------
+
+You can download the specific config used for this tutorial :download:`here <.configs/amariUE_R550_20mhz.cfg>`.
+
+Launch the UE with root permissions to create the TUN device using the following command:
+
+.. code-block:: bash
+
+  /root/ue/lteue /root/ue/config/amariUE_R550_20mhz.cfg
+
+
+The above command should start the UE and attach it to the network.
+If UE connects successfully to the network, the following should be displayed at the end of the console output:
+
+.. code-block:: bash
+
+    Cell 0: SIB found
+    UE PDN TUN iface requested: ue_id: ue1, pdn_id: 0, ifname: ue1-pdn0, ipv4_addr: 10.45.1.2, ipv4_dns: 8.8.4.4, ipv6_local_addr: , ipv6_dns: 
+    Created iface ue1-pdn0 with 10.45.1.2
+
+Sending Traffic
+---------------
+
+Instructions for sending iPerf and ping traffic and example outputs can be found :ref:`here <amariUE_radios_test>`. 
 
 COTS UE
 =======
 
-AmariUE 
-========
+For full details on configuring and connecting a COTS UE to the srsRAN Project gNB see :ref:`this tutorial <COTS_UE_tutorial>`.
+
+For this setup a OnePlus 9 5G UE was used to connect to the network. The set-up and configuration of the device is the same as in the above tutorial. 
+
+Sending Traffic
+---------------
+
+Once connected to the network you can use send traffic and connect to the internal as normal. The following console trace was taken from the gNB during bi-directional testing: 
+
+.. code-block:: bash
+
+           -------------DL----------------|------------------UL--------------------
+     pci rnti  cqi  mcs  brate   ok  nok  (%) | pusch  mcs  brate   ok  nok  (%)    bsr
+       1 4601   15   28    38M 1200    0   0% |  17.8   26    15M  493  107  17%   300k
+       1 4601   15   28    38M 1186   14   1% |  17.7   26    14M  488  112  18%   300k
+       1 4601   15   28    38M 1196    4   0% |  17.8   26    15M  506   94  15%   300k
+       1 4601   15   28    38M 1200    0   0% |  17.8   26    15M  501   99  16%   300k
+       1 4601   15   28    38M 1200    0   0% |  17.9   26    15M  498  102  17%   300k
+       1 4601   15   28    38M 1200    0   0% |  17.9   26    15M  497  103  17%   300k
+       1 4601   15   28    38M 1198    2   0% |  17.8   26    15M  497  103  17%   300k
+       1 4601   15   28    38M 1194    6   0% |  17.8   26    15M  495  105  17%   300k
+       1 4601   15   28    38M 1195    5   0% |  17.8   26    15M  510   89  14%   300k
+       1 4601   15   28    38M 1200    0   0% |  17.8   26    15M  503   98  16%   300k
+       1 4601   15   28    38M 1200    0   0% |  17.8   26    15M  495  105  17%   300k
+   
 
 ----
 
@@ -392,3 +470,4 @@ Troubleshooting
 
 Tested Devices
 **************
+

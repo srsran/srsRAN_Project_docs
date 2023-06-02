@@ -549,6 +549,8 @@ The main modifications needed are:
 
 -----
 
+.. _amariUE_radios: 
+
 Over-the-air Setup
 ******************
 
@@ -742,6 +744,8 @@ And, once connected you can use the Amarisoft UE command line tool to verify whe
 It is clear that the connection has been made successfully once the UE has been assigned an IP, this is seen in ``PDU Session Establishment successful. IP: 192.168.100.2``.
 The NR connection is then confirmed with the ``RRC NR reconfiguration successful.`` message.
 
+
+.. _amariUE_radios_test: 
 
 Testing the Network
 ===================
