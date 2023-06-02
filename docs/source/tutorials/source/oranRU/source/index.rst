@@ -178,7 +178,7 @@ The following excerpt shows how the DU is configured to communicate with the RU:
 To expand on this, the following parameters are set in the ``cells`` field:
 
     - ``network_interface`` : Network interface used to send the OFH packets.
-    - ``ru_mac_addr`` : MAC address of the R550.
+    - ``ru_mac_addr`` : MAC address of the RAN550.
     - ``du_mac_addr`` : MAC address of the interface used by the gNB (it should be connected directly to the RU or using a smart switch).
     - ``vlan_tag`` : V-LAN identifier, should be set to the value configured in the switch settings
     
@@ -234,7 +234,7 @@ In this setup the RU is connected via SSH and monitored remotely. It is also pos
 
 Ensure the RU is running before trying to make any configuration changes. 
 
-Edit the init script configuration file found in */usr/sbin/*. The R550 has different scripts for 4x2 and 2x2 configurations. In 4x2 4 antennas send and 2 antennas receive. In 2x2 2 antennas send and 2 antennas receive. In 2x2 there are 2 configurations: one uses antennas 1 and 3, the other uses antenna 2 and 4. We have tested the mode 4x2, but only using a single antenna to transmit and a single antenna for receiving (SISO). The configuration for this mode can be found in  
+Edit the init script configuration file found in */usr/sbin/*. The RAN550 has different scripts for 4x2 and 2x2 configurations. In 4x2 4 antennas send and 2 antennas receive. In 2x2 2 antennas send and 2 antennas receive. In 2x2 there are 2 configurations: one uses antennas 1 and 3, the other uses antenna 2 and 4. We have tested the mode 4x2, but only using a single antenna to transmit and a single antenna for receiving (SISO). The configuration for this mode can be found in  
 */usr/sbin/radio_setup_ran550_1_a_4x2.sh*
 
 Inside this file, these parameters should be modified:
