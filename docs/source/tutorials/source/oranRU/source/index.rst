@@ -250,7 +250,78 @@ To set the jumbo frames in the NIC use the following command for a temporal conf
 
 Where ``eth0`` is the ethernet port for the SFP+ fiber cable that connects the DU to the Falcon-RX.
 
+To start the PTP process in the DU, use the following commands:
 
+You can download the configuration file used in these commands :download:`here <.configs/default.cfg>`  
+
+.. code-block:: bash
+
+   ./ptp4l -2 -i enp1s0f0 -f ./configs/default.cfg -m
+
+You should then see the following output: 
+
+.. code-block:: bash
+
+    ptp4l[4321.966]: rms    6 max   14 freq -25784 +/-   9 delay   172 +/-   1
+    ptp4l[4323.091]: rms    5 max   10 freq -25778 +/-   8 delay   170 +/-   1
+    ptp4l[4324.216]: rms    6 max   11 freq -25781 +/-   9 delay   169 +/-   1
+    ptp4l[4325.341]: rms    5 max   10 freq -25783 +/-   8 delay   170 +/-   1
+    ptp4l[4326.466]: rms    5 max   10 freq -25780 +/-   8 delay   171 +/-   0
+    ptp4l[4327.591]: rms    4 max   11 freq -25782 +/-   7 delay   170 +/-   0
+    ptp4l[4328.716]: rms    5 max   14 freq -25783 +/-   8 delay   170 +/-   1
+    ptp4l[4329.841]: rms    5 max    9 freq -25781 +/-   8 delay   170 +/-   1
+    ptp4l[4330.966]: rms    6 max   13 freq -25783 +/-   9 delay   170 +/-   1
+    ptp4l[4332.091]: rms    6 max   11 freq -25779 +/-   9 delay   171 +/-   1
+    ptp4l[4333.215]: rms    3 max    5 freq -25778 +/-   5 delay   171 +/-   0
+    ptp4l[4334.340]: rms    5 max    8 freq -25778 +/-   8 delay   171 +/-   1
+    ptp4l[4335.465]: rms    3 max    6 freq -25778 +/-   5 delay   171 +/-   1
+    ptp4l[4336.590]: rms    4 max    8 freq -25778 +/-   6 delay   170 +/-   1
+    ptp4l[4337.715]: rms    3 max    6 freq -25781 +/-   5 delay   170 +/-   1
+    ptp4l[4338.840]: rms    4 max    8 freq -25780 +/-   6 delay   171 +/-   0
+    ptp4l[4339.965]: rms    4 max   10 freq -25783 +/-   7 delay   170 +/-   0
+
+In the above output, the ``rms`` value can be used to determine if the PTP sync is correct, for this we look for a value < 100. 
+
+Next, run: 
+
+.. code-block:: bash
+
+    ./phc2sys -s enp1s0f0 -w -m -R 8 -f ./configs/default.cfg
+
+You should then see the following output: 
+
+.. code-block:: bash
+
+    phc2sys[4345.674]: CLOCK_REALTIME phc offset       -58 s2 freq   +7741 delay   1397
+    phc2sys[4345.799]: CLOCK_REALTIME phc offset      -289 s2 freq   +7493 delay    838
+    phc2sys[4345.924]: CLOCK_REALTIME phc offset        88 s2 freq   +7783 delay   1397
+    phc2sys[4346.049]: CLOCK_REALTIME phc offset        -3 s2 freq   +7718 delay   1397
+    phc2sys[4346.174]: CLOCK_REALTIME phc offset        60 s2 freq   +7780 delay   1397
+    phc2sys[4346.300]: CLOCK_REALTIME phc offset       134 s2 freq   +7872 delay   1397
+    phc2sys[4346.425]: CLOCK_REALTIME phc offset       238 s2 freq   +8017 delay   1396
+    phc2sys[4346.550]: CLOCK_REALTIME phc offset        18 s2 freq   +7868 delay   1397
+    phc2sys[4346.675]: CLOCK_REALTIME phc offset       100 s2 freq   +7955 delay   1397
+    phc2sys[4346.800]: CLOCK_REALTIME phc offset        70 s2 freq   +7955 delay   1396
+    phc2sys[4346.925]: CLOCK_REALTIME phc offset      -411 s2 freq   +7495 delay   1397
+    phc2sys[4347.051]: CLOCK_REALTIME phc offset        59 s2 freq   +7842 delay   1396
+    phc2sys[4347.176]: CLOCK_REALTIME phc offset       115 s2 freq   +7916 delay   1396
+    phc2sys[4347.301]: CLOCK_REALTIME phc offset       113 s2 freq   +7948 delay   1327
+    phc2sys[4347.426]: CLOCK_REALTIME phc offset       178 s2 freq   +8047 delay   1397
+    phc2sys[4347.551]: CLOCK_REALTIME phc offset       144 s2 freq   +8067 delay   1397
+    phc2sys[4347.677]: CLOCK_REALTIME phc offset       103 s2 freq   +8069 delay   1397
+    phc2sys[4347.802]: CLOCK_REALTIME phc offset         3 s2 freq   +8000 delay   1467
+    phc2sys[4347.927]: CLOCK_REALTIME phc offset        65 s2 freq   +8063 delay   1397
+    phc2sys[4348.052]: CLOCK_REALTIME phc offset        41 s2 freq   +8058 delay   1396
+    phc2sys[4348.178]: CLOCK_REALTIME phc offset        73 s2 freq   +8102 delay   1397
+    phc2sys[4348.303]: CLOCK_REALTIME phc offset       -25 s2 freq   +8026 delay   1467
+    phc2sys[4348.428]: CLOCK_REALTIME phc offset       -11 s2 freq   +8033 delay   1466
+    phc2sys[4348.553]: CLOCK_REALTIME phc offset       -25 s2 freq   +8016 delay   1396
+    phc2sys[4348.678]: CLOCK_REALTIME phc offset        -5 s2 freq   +8028 delay   1397
+    phc2sys[4348.803]: CLOCK_REALTIME phc offset      -201 s2 freq   +7831 delay   1397
+
+The first value here is used to determine if the PTP sync is correct, for this we look for a value < 1000. 
+
+In both of the above commands ``enp1s0f0`` is the network interface that gets the ptp sync, this may vary in user's local setups. 
 
 srsRAN Project gNB
 ------------------
@@ -369,6 +440,8 @@ The ``offset`` parameter in the above example output can be used to tell if the 
 
 DU
 =====
+
+Before running the DU, make sure you have used the commands outlined in the configuration section above to confirm the PTP sync between the DU and the Falcon-RX. 
 
 The DU can now be run. First, navigate to *srsRAN_Project/build/apps/gnb*, and then run the gNB with the following command: 
 
