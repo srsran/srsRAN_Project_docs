@@ -12,6 +12,8 @@ The gNB comes with a number of example configuration files, these can be found i
 
 These configuration file examples provide a basic set-up to get users up and running, users can easily modify these to suit their use-case.  
 
+More example configuration files for various use cases can be found `here <https://github.com/srsran/srsRAN_Project/tree/main/configs>`_. 
+
 ----
 
 Format
@@ -26,7 +28,6 @@ All configuration parameters are presented here below in the following format:
 
 Configuration Parameters
 ************************
-
 
 gnb_id
   - Optional UINT (411). Sets the numerical ID associated with the gNB.
@@ -45,8 +46,6 @@ cells
 
 qos
   - Optional TEXT. Configures RLC and PDCP radio bearers on a per 5QI basis. This can only be set via the configuration file.
-
-
 
 
 amf
@@ -79,8 +78,10 @@ cu_cp
   inactivity_timer
     - Optional INT (72000). Sets the UE/PDU Session/DRB inactivity timer in seconds. Supported: [1 - 7200].  
 
-rf_driver
+ru_sdr
 =============
+
+This section of the configuration file should be used when connecting the srsRAN Project gNB to a USRP using split 8 interface.
 
   srate
     - Required FLOAT (61.44). Sets the sampling rate of the RF-frontend in MHz. 
@@ -113,10 +114,97 @@ rf_driver
     - Optional TEXT (default). Specify the RF device oscillator reference synchronization source. Supported: [default, internal, external, gpsdo].
 
   otw_format
-    - Optional TEXT (default). Specific the over-the-wire format. Supported: [default, sc8, sc12, sc16]
+    - Optional TEXT (default). Specific the over-the-wire format. Supported: [default, sc8, sc12, sc16].
 
   time_alignment_calibration
     - Optional UINT (0). Compensates for any reception and transmission time misalignment inherent to the RF device. Positive values reduce the RF transmission delay with respect to the RF reception. Negative values have the opposite effect.
+
+  cells
+    - Optional TEXT. Sets the hardware specific cell configuration on a per cell basis. May contain the following parameters:
+    
+      - **amplitude_control**
+  
+        - **tx_gain_backoff**: Optional FLOAT (12.0). Sets baseband gain back-off in dB. This accounts for the signal PAPR and is applied regardless of clipping settings. Format: positive float. 
+        - **enable_clipping**: Optional BOOL (false). Sets clipping of the baseband samples on or off. If enabled, samples that exceed the power ceiling are clipped.
+        - **power_ceiling_dBFs**: Optional FLOAT (-0.1). Sets the power ceiling in dB, relative to the full scale amplitude of the radio. Format: negative float or 0.
+
+  expert_cfg
+    - Further optional parameters to configure RF-frontend. 
+
+      - **low_phy_thread_profile**: Optional TEXT. Lower physical layer executor profile. Supported: [single, dual, quad].
+
+ru_ofh
+======
+
+This section of the configuration file should be used when connecting the srsRAN Project gNB to an O-RAN RU using split 7.2 interface.
+
+.. note::
+
+  Many of the following values are optional as they have default values. In practice, all of the following parameters should be defined by the user, as they will need 
+  to be configured specifically for the RU being used. Failing to configure this parameters correctly may result in the RU failing to connect correctly to the DU. 
+\
+
+  max_proc_delay 
+    - Optional UINT (2). Sets the maximum allowed processing delay in slots. Supported: [1 - 30]. 
+
+  gps_alpha
+    - Optional FLOAT (0). Sets the GPS alpha. Supported: [0 - 1.2288e+07]. 
+
+  gps_alpha
+    - Optional INT (0). Sets the GPS beta. Supported: [-32768 - +32767]. 
+
+  ru_bandwidth_MHz
+    - Required UINT (0). Sets the channel bandwidth in MHz. Supported: [5,10,15,20,25,30,40,50,60,70,80,90,100]. 
+  
+  t1a_max_cp_dl
+    - Optional INT (500). Sets T1a maximum value for downlink control-plane. Supported: [0 - 1960].
+
+  t1a_min_cp_dl
+    - Optional INT (258). Sets T1a minimum value for downlink control-plane. Supported: [0 - 1960].
+
+  t1a_max_cp_ul
+    - Optional INT (500). Sets T1a maximum value for uplink control-plane. Supported: [0 - 1960].
+
+  t1a_min_cp_ul
+    - Optional INT (258). Sets T1a minimum value for uplink control-plane. Supported: [0 - 1960].
+
+  t1a_max_up
+    - Optional INT (300).Sets T1a maximum value for uer-plane. Supported: [0 - 1960].
+
+  t1a_min_up
+    - Optional INT (85). Sets T1a minimum value for user-plane. Supported: [0 - 1960].
+
+  is_prach_cp_enabled
+    - Optional BOOLEAN (0). Sets PRACH control-plane enabled flag. Supported: [0, 1]. 
+
+  is_dl_broadcast_enabled
+    - Optional BOOLEAN (0). Sets downlink broadcast enabled flag. Supported: [0, 1]. 
+
+  compr_method_ul
+    - Optional TEXT (bfp). Sets the uplink compression method. Supported: [none, bfp, bfp selective, block scaling, mu law, modulation, modulation selective].
+
+  compr_bitwidth_ul
+    - Optional UINT (9). Sets the uplink compression bit width. Supported: [1 - 16].  
+
+  compr_method_dl
+    - Optional TEXT (bfp). Sets the downlink compression method. Supported: [none, bfp, bfp selective, block scaling, mu law, modulation, modulation selective].
+
+  compr_bitwidth_dl
+    - Optional UINT (9). Sets the downlink compression bit width. Supported: [1 - 16]. 
+
+  iq_scaling
+    - Optional FLOAT (0.35). Sets the IQ scaling factor. Supported: [0 - 1]. 
+
+  cells
+    - Optional TEXT. Sets the hardware specific cell configuration on a per cell basis. May contain the following parameters: 
+
+      - **network_interface**: Optional TEXT ("enp1s0f0"). Sets the ethernet network interface name for the RU. Format: a string, e.g. ["interface_name"].  
+      - **ru_mac_address**: Optional TEXT ("70:b3:d5:e1:5b:06"). Sets the RU MAC address. Format: a string, e.g. ["AA:BB:CC:DD:11:22:33"]. 
+      - **du_mac_address**: Optional TEXT ("00:11:22:33:00:77"). Sets the DU MAC address. Format: a string, e.g. ["AA:BB:CC:DD:11:22:33"]. 
+      - **vlan_tag**: Optional UINT (1). Sets the V-LAN tag control information field. Supported: [1 - 4094].
+      - **ru_prach_port_id**: Optional UINT (4). Sets the RU PRACH eAxC port ID. Supported: [0 - 65535].
+      - **ru_dl_port_id**: Optional UINT (0, 1). Sets the RU downlink eAxC port ID. Format: vector containing all DL eXaC ports, e.g. [0, ...\ , N]. 
+      - **ru_ul_port_id**: Optional UINT (0). Sets the RU uplink eAxC port ID. Supported: [0 - 65535].
 
 cell_cfg
 ============
@@ -150,10 +238,14 @@ This is the default configuration that will be inherited by all cells, overwritt
   tac
     - Required UINT (7). Sets the Tracking Area Code. 
 
+  ssb_period
+    - Optional UINT (10). Sets the period of SSB scheduling in milliseconds. Supported: [5, 10, 20]. 
+
   pdcch
       - Further optional parameters to configure the Physical Downlink Control Channel of the cell. 
 
         - **ss_type**: Optional TEXT (ue_dedicated). Sets the Search Space type for the UE data. Supported: [common, ue_dedicated].  
+        - **dci_format_0_1_and_1_1**: Optional BOOLEAN (1). Sets whether to use non-fallback or fallback DCI format in UE dedicated SearchSpace. Supported: [0, 1]. 
 
 
   pdsch
@@ -164,12 +256,18 @@ This is the default configuration that will be inherited by all cells, overwritt
       - **fixed_rar_mcs**: Optional UINT (0). Sets a fixed RAR MCS value for all UEs. Supported: [0 - 9].
       - **fixed_sib1_mcs**:  Optional UINT (5). Sets a fixed SIB1 MCS for all UEs. Supported: [0 - 9].
       - **nof_harqs**: Optional UNIT (16). Sets the number of Downlink HARQ processes. Supported [2, 4, 6, 8, 10, 12, 16]
+      - **max_consecutive_kos**: Optional UINT (100). Sets the maximum number of consecutive HARQ-ACK KOs before an RLF is reported. Supported: [0 - inf]
+      - **rv_sequence**: Optional UINT (0,2,3,1). Sets the redundancy version sequence to use for PDSCH. Supported: any combination of [0, 1, 2, 3]. 
+      - **mcs_table**: Optional TEXT (qam64). Sets the MCS table to use for PDSCH. Supported: [qam64, qam256]. 
 
   pusch
     - Further optional parameters to configure the Physical Uplink Shared Channel of the cell.
 
       - **min_ue_mcs**: Optional UINT. Sets a minimum PUSCH MCS value to be used for all UEs. Supported: [0 - 28].  
       - **max_ue_mcs**: Optional UINT. Sets a maximum PUSCH MCS value to be used for all UEs. Supported: [0 - 28].
+      - **max_consecutive_kos**: Optional UINT (100). Sets the maximum number of consecutive CRC KOs before an RLF is reported. Supported: [0 - inf]
+      - **rv_sequence**: Optional UINT (0). Sets the redundancy version sequence to use for PUSCH. Supported: any combination of [0, 1, 2, 3]. 
+      - **mcs_table**: Optional TEXT (qam64). Sets the MCS table to use for PDSCH. Supported: [qam64, qam256]. 
 
   prach
     - Further optional parameters to configure the Physical Random Access Channel of the cell. 
@@ -180,13 +278,7 @@ This is the default configuration that will be inherited by all cells, overwritt
       - **fixed_msg3_mcs**: Optional UINT (0). Sets a fixed Msg3 MCS. Supported: [0 - 28].  
       - **max_msg3_harq_retx**: Optional UINT (4). Sets the maximum number of Msg3 HARQ retransmissions. Supported: [0 - 4]. 
       - **total_nof_ra_preambles**: Optional TEXT. Sets the number of different PRACH preambles. Supported: [1 - 64].
-
-  amplitude_control
-    - Further optional parameters to configure the amplitude control of the physical signal transmitted by the cell. 
-
-      - **tx_gain_backoff**: Optional FLOAT (12.0). Sets baseband gain back-off in dB. This accounts for the signal Peak-to-Average Power Ratio (PAPR) and is applied regardless of clipping settings. Format: positive float. 
-      - **enable_clipping**: Optional BOOL (false). Sets clipping of the baseband samples on or off. If enabled, samples that exceed the power ceiling are clipped.
-      - **ceiling**: Optional FLOAT (0.0). Sets the power ceiling in dB, relative to the full scale amplitude of the radio. Format: negative float or 0.
+      - **prach_frequency_start**: Optional INT. Set Offset of lowest PRACH transmission occasion in frequency domain respective to PRB 0, in PRBs. Supported: [0 - (MAX_NOF_PRB - 1)].
 
   tdd_ul_dl_cfg
     - Further optional parameters to configure the TDD Uplink and Downlink configuration parameters. 
@@ -295,8 +387,8 @@ pcap
 expert_phy
 ==============
 
-  low_phy_thread_profile
-    - Optional TEXT. Lower physical layer executor profile. Supported: [single, dual, quad].
+  nof_pdsch_threads
+    - Optional UINT (1). Sets the number of threads for encoding PDSCH. Default value of one for no concurrency acceleration in the PDSCH encoding. Format: Positive integer greater than 0.
 
   nof_ul_threads
     - Optional UINT (4). Sets number of threads for processing PUSCH and PUCCH. It is set to 4 by default unless the available hardware concurrency is limited in which case will use a minimum of one thread.
@@ -307,6 +399,8 @@ expert_phy
   pusch_dec_enable_early_stop
     - Optional BOOL (true). Enables the PUSCH decoder early stopping mechanism. 
 
+  low_phy_dl_throttling 
+    - Optional FLOAT (0). Enables throttling of the lower PHY DL baseband generation. Supported: [0, 1]
 test_mode
 =========
 
