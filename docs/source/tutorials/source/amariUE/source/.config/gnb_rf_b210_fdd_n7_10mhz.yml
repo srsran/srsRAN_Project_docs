@@ -2,7 +2,7 @@ amf:
   addr: 172.22.0.10                                                         # The address or hostname of the AMF.
   bind_addr: 172.22.0.1                                                     # A local IP that the gNB binds to for traffic from the AMF.
 
-rf_driver:
+ru_sdr:
   device_driver: uhd                                                        # The RF driver name.
   device_args: type=b200,num_recv_frames=64,num_send_frames=64              # Optionally pass arguments to the selected RF driver.
   srate: 11.52                                                              # RF sample rate might need to be adjusted according to selected bandwidth.

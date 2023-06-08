@@ -2,7 +2,7 @@ amf:
   addr: 10.53.1.2                  # The address or hostname of the AMF.
   bind_addr: 10.53.1.1             # A local IP that the gNB binds to for traffic from the AMF.
 
-rf_driver:
+ru_sdr:
   device_driver: zmq                # The RF driver name.
   device_args: tx_port=tcp://127.0.0.1:2000,rx_port=tcp://127.0.0.1:2001,base_srate=11.52e6 # Optionally pass arguments to the selected RF driver.
   srate: 11.52                      # RF sample rate might need to be adjusted according to selected bandwidth.
