@@ -110,7 +110,7 @@ To configure the connection between the core and the gNB, you need to set the AM
           addr: 127.0.1.100                                             # The address or hostname of the AMF.
           bind_addr: 127.0.0.1                                          # A local IP that the gNB binds to for traffic from the AMF.
 
-        rf_driver:
+        ru_sdr:
           device_driver: uhd                                            # The RF driver name.
           device_args: type=b200,num_recv_frames=64,num_send_frames=64  # Optionally pass arguments to the selected RF driver.
     -     clock:                                                        # Specify the clock source used by the RF.

@@ -49,7 +49,7 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'GNBtutorials.tex', u'srsGNB Tutorials,
+    (master_doc, 'GNBtutorials.tex', u'srsGNB Tutorials',
      author, 'GNBtutorials', 'One line description of project.',
      'Miscellaneous'),
 ]

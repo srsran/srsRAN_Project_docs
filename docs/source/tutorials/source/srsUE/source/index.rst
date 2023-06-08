@@ -171,7 +171,7 @@ The gNB has to connect to AMF in the 5G core network, therefore we need to provi
 
 Next, we have to configure the RF front-end device::
 
-  rf_driver:
+  ru_sdr:
     device_driver: uhd                # The RF driver name.
     device_args: type=b200            # Optionally pass arguments to the selected RF driver.
     clock: external                   # Specify the clock source used by the RF.
@@ -492,9 +492,9 @@ Details of the modifications made are outlined in following sections.
 
 gNB
 ---
-Replacing the UHD driver with the ZMQ-based RF driver requires changing only **rf_driver** sections of the gNB file::
+Replacing the UHD driver with the ZMQ-based RF driver requires changing only **ru_sdr** sections of the gNB file::
 
-  rf_driver:
+  ru_sdr:
     device_driver: zmq
     device_args: tx_port=tcp://127.0.0.1:2000,rx_port=tcp://127.0.0.1:2001,base_srate=11.52e6
     srate: 11.52

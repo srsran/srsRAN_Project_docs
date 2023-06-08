@@ -203,11 +203,11 @@ Modify the ``amf`` section with IP of AMF and IP to which gNB need to bind in or
     addr:      172.22.0.10
     bind_addr: 172.22.0.1
 
-Modify the ``rf_driver`` section with IPs from which gNB sends and receives radio samples via ZMQ driver:
+Modify the ``ru_sdr`` section with IPs from which gNB sends and receives radio samples via ZMQ driver:
 
 .. code-block:: yaml
 
-  rf_driver:
+  ru_sdr:
     device_driver: zmq
     device_args:   tx_port=tcp://10.53.1.1:5000,rx_port=tcp://10.53.1.2:6000
 
@@ -215,11 +215,11 @@ Modify the ``rf_driver`` section with IPs from which gNB sends and receives radi
 Amarisoft UE
 ------------
 
-Modify the ``rf_driver`` section of Amarisoft UE configuration with IPs from which UE sends and receives radio samples via ZMQ driver:
+Modify the ``ru_sdr`` section of Amarisoft UE configuration with IPs from which UE sends and receives radio samples via ZMQ driver:
 
 .. code-block:: cfg
 
-  rf_driver: {
+  ru_sdr: {
     name:      "srsran",
     args:      "",
     tx_port0:  "tcp://10.53.1.2:6000",
@@ -575,11 +575,11 @@ Details of the modifications made compared to ZMQ setup are outlined in followin
 srsRAN Project gNB
 ------------------
 
-Modify the ``rf_driver`` section to send and receive radio samples via UHD driver:
+Modify the ``ru_sdr`` section to send and receive radio samples via UHD driver:
 
 .. code-block:: yaml
 
-  rf_driver:
+  ru_sdr:
     device_driver: uhd
     device_args: type=b200,num_recv_frames=64,num_send_frames=64
     srate: 11.52
@@ -591,11 +591,11 @@ Modify the ``rf_driver`` section to send and receive radio samples via UHD drive
 Amarisoft UE
 ------------
 
-Modify the ``rf_driver`` section of Amarisoft UE configuration to send and receive radio samples via UHD driver:
+Modify the ``ru_sdr`` section of Amarisoft UE configuration to send and receive radio samples via UHD driver:
 
 .. code-block:: cfg
 
-    rf_driver: {
+    ru_sdr: {
         name: "uhd",
         sync: "none",
     #if CELL_BANDWIDTH < 5
@@ -722,7 +722,7 @@ If UE connects successfully to the network, the following (or similar) should be
   [INFO] [B200] Asking for clock rate 11.520000 MHz...
   [INFO] [B200] Actually got clock rate 11.520000 MHz.
   RF0: sample_rate=11.520 MHz dl_freq=3489.420 MHz ul_freq=3489.420 MHz (band n78) dl_ant=1 ul_ant=1
-  (ue) Warning: config/rf_driver/config_tdd.cfg:25: unused property 'tx_time_offset'
+  (ue) Warning: config/ru_sdr/config_tdd.cfg:25: unused property 'tx_time_offset'
   [INFO] [MULTI_USRP]     1) catch time transition at pps edge
   [INFO] [MULTI_USRP]     2) set times next pps (synchronously)
   Chan Gain(dB)   Freq(MHz)
