@@ -67,11 +67,11 @@ rate, USRP model and UHD version. Users experiencing issues with incorrect time 
       - Property=Timing advance offset in nanoseconds, value=-7291, expected value=[0-2005000]
 
 In the above log the PRACH arrived 7.29 us early to the gNB, which at a sampling rate of 23.04 MHz is approximately 168 samples. The TX/RX offset needs to be adjusted to a higher value than this so that the PRACH arrives within the detection window. This 
-can be done by adding the following to the config file under the ``rf_driver`` options: 
+can be done by adding the following to the config file under the ``ru_sdr`` options: 
 
 .. code-block:: yaml 
    
-   rf_driver:
+   ru_sdr:
       time_alignment_calibration: -170    # This will set an offset of -170 samples
 
 In general, a larger negative value is better as it will make sure the PRACH falls within the detection window. The consequence of increasing this too much is that the effective cell size is reduced (this is not important for a lab set up).
