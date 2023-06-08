@@ -191,6 +191,7 @@ Finally, we configure the 5G cell parameters::
     tac: 7                            # Tracking area code (needs to match the core configuration).
     pdcch:
       ss_type: common                 # Search Space type, has to be set to common
+      dci_format_0_1_and_1_1: 0       # Set correct DCI format (fallback)
 
 srsUE
 -----
