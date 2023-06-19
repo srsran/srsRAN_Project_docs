@@ -475,10 +475,7 @@ test_mode
       - **rnti**: Optional ENUM (0). Sets the C-RNTI of the UE. Supported: [0 - 65519].
       - **pdsch_active**: Optional BOOLEAN (1). Enables the PDSCH of the UE.
       - **pusch_active**: Optional BOOLEAN (1). Enables the PUSCH of the UE.
-<<<<<<< HEAD
-=======
       - **cqi**: Optional UINT (15). Sets the Channel Quality Information to be forwarded to the test UE. Supported: [1 - 15]. 
       - **pmi**: Optional UINT (0). Sets the Precoder Matrix Indicator to be forwarded to test UE. Supported: [0 - 3]. 
       - **ri**: Optional UINT (1). Sets the Rank Indicator to be forwarded to the test UE. Supported: [1 - 2]. 
 
->>>>>>> d8fbbd4 (config_ref: update to match latest code)
