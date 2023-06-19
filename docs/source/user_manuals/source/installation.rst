@@ -104,6 +104,43 @@ You can now run the gNB from ``srsRAN_Project/build/apps/gnb/``. If you wish to 
 
 The :ref:`Running srsRAN Project <manual_running>` section of the documentation further discusses how to configure and run the gNB application. 
 
+----
+
+Packages
+********
+
+srsRAN Project is available to download directly from packages for various linux distributions. Users looking for a simple installation who do not wish to edit the source code should use the package installation.
+
+Ubuntu
+======
+
+Ubuntu users can download the srsRAN Project packages using the following commands: 
+
+.. code-block:: bash
+
+    sudo add-apt-repository ppa:softwareradiosystems/srsran-project
+    sudo apt-get update
+    sudo apt-get install srsran-project -y
+
+The application can then be run with the: 
+
+.. code-block:: bash
+
+   sudo gnb -c <config file>
+
+Arch Linux
+==========
+
+Arch Linux users can download the srsRAN Project packages using an AUR helper, e.g. 'yay', using the following command: 
+
+.. code-block:: bash
+
+   yay -Sy srsran-project-git
+
+This will build and install the latest version of srsRAN Project from git. 
+
+When installed from packages srsRAN Project example configs can be found in ``/usr/share/srsran``. For info on these config files, see :ref:`here <manual_config_ref>`
+
 ---- 
 
 PHY testvectors 
@@ -125,26 +162,6 @@ The following steps are required to enable them:
 
     option(USE_PHY_TESTVECTORS   "Enable testvector PHY tests"              ON)
 
-4. Do a fresh srsRAN build.
-
-----
-
-Packages
-********
-
-srsRAN Project is available to download directly from packages for various linux distributions. Users looking for a simple installation who do not wish to edit the source code should use the package installation.
-
-Arch Linux
-==========
-
-Arch Linux users can download the srsRAN Project packages using an AUR helper, e.g. 'yay', using the following command: 
-
-.. code-block:: bash
-
-   yay -Sy srsran-project-git
-
-This will build and install the latest version of srsRAN Project from git. 
-
-When installed from packages srsRAN Project example configs can be found in ``/usr/share/srsran``. For info on these config files, see :ref:`here <manual_config_ref>`
+4. Rebuild srsRAN Project. 
 
 
