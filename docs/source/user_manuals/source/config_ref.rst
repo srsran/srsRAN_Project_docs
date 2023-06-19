@@ -47,8 +47,8 @@ cells
 qos
   - Optional TEXT. Configures RLC and PDCP radio bearers on a per 5QI basis. This can only be set via the configuration file.
 
-slicing:
-  - Optional TEXT. Configures network slices, overwriting the default configuration defined by ``slicing_cfg``. This can only be set via the configuration file.
+slicing
+  - Optional TEXT. Configure network slicing options. This can only be set via the configuration file. 
 
 amf
 =======
@@ -71,8 +71,14 @@ amf
   sctp_rto_max
     - Optional INT. Sets the maximum retransmission timeout for the SCTP connection.
 
-  sctp_initial_max_timeo
+  sctp_initial_max_attempts 
+    - Optional INT. Sets the maximum retransmission attempts for the initial SCTP connection.
+
+  sctp_initial_max_timeo 
     - Optional INT. Sets the maximum retransmission timeout for the initial SCTP connection.
+
+  no_core
+    - Optional BOOLEAN (0). Setting to true allows the gNB to run without a core. Supported: [0, 1]. 
 
 cu_cp
 =====
@@ -152,8 +158,8 @@ This section of the configuration file should be used when connecting the srsRAN
   gps_alpha
     - Optional FLOAT (0). Sets the GPS alpha. Supported: [0 - 1.2288e+07].
 
-  gps_alpha
-    - Optional INT (0). Sets the GPS beta. Supported: [-32768 - +32767].
+  gps_beta
+    - Optional INT (0). Sets the GPS beta. Supported: [-32768 - +32767]. 
 
   ru_bandwidth_MHz
     - Required UINT (0). Sets the channel bandwidth in MHz. Supported: [5,10,15,20,25,30,40,50,60,70,80,90,100].
@@ -240,14 +246,27 @@ This is the default configuration that will be inherited by all cells, overwritt
   tac
     - Required UINT (7). Sets the Tracking Area Code.
 
-  ssb_period
-    - Optional UINT (10). Sets the period of SSB scheduling in milliseconds. Supported: [5, 10, 20].
+  q_rx_lev_min
+    - Optional INT (-70). Sets the required minimum received RSRP level for cell selection/re-selection, in dBm. Supported: [-70 - -22]. 
+  
+  q_qual_min
+    - Optional INT (-20). Sets the required minimum received RSRQ level for cell selection/re-selection, in dB. Supported: [-43 - -12].
+
+  pcg_p_nr_fr1
+    - Optional INT (10). Sets the maximum total TX power to be used by the UE in this NR cell group across in FR1. Supported: [-30 - +33]. 
+
+  ssb 
+    - Further optional parameters to configure the Synchronization Signal Block of the cell. 
+    
+      - **ssb_period**: Optional UINT (10). Sets the period of SSB scheduling in milliseconds. Supported: [5, 10, 20]. 
+      - **ssb_block_power_dbm**: Optional INT (-16). Sets the SS PBCH block power in dBm. Supported: [-60 - +50]. 
+      - **pss_to_sss_epre_db**: Optional UINT (0). Sets the Synchronization Signal Block Primary Synchronization Signal to Secondary Synchronization Signal Energy Per Resource Element ratio in dB. Supported: [0, 3].
 
   pdcch
-      - Further optional parameters to configure the Physical Downlink Control Channel of the cell.
-
-        - **ss_type**: Optional TEXT (ue_dedicated). Sets the Search Space type for the UE data. Supported: [common, ue_dedicated].
-        - **dci_format_0_1_and_1_1**: Optional BOOLEAN (1). Sets whether to use non-fallback or fallback DCI format in UE dedicated SearchSpace. Supported: [0, 1].
+    - Further optional parameters to configure the Physical Downlink Control Channel of the cell. 
+  
+      - **ss_type**: Optional TEXT (ue_dedicated). Sets the Search Space type for the UE data. Supported: [common, ue_dedicated].  
+      - **dci_format_0_1_and_1_1**: Optional BOOLEAN (1). Sets whether to use non-fallback or fallback DCI format in UE dedicated SearchSpace. Supported: [0, 1]. 
 
 
   pdsch
@@ -259,8 +278,9 @@ This is the default configuration that will be inherited by all cells, overwritt
       - **fixed_sib1_mcs**:  Optional UINT (5). Sets a fixed SIB1 MCS for all UEs. Supported: [0 - 9].
       - **nof_harqs**: Optional UNIT (16). Sets the number of Downlink HARQ processes. Supported [2, 4, 6, 8, 10, 12, 16]
       - **max_consecutive_kos**: Optional UINT (100). Sets the maximum number of consecutive HARQ-ACK KOs before an RLF is reported. Supported: [0 - inf]
-      - **rv_sequence**: Optional UINT (0,2,3,1). Sets the redundancy version sequence to use for PDSCH. Supported: any combination of [0, 1, 2, 3].
-      - **mcs_table**: Optional TEXT (qam64). Sets the MCS table to use for PDSCH. Supported: [qam64, qam256].
+      - **rv_sequence**: Optional UINT (0,2,3,1). Sets the redundancy version sequence to use for PDSCH. Supported: any combination of [0, 1, 2, 3]. 
+      - **mcs_table**: Optional TEXT (qam64). Sets the MCS table to use for PDSCH. Supported: [qam64, qam256]. 
+      - **nof_ports**: Optional TEXT. Sets the number of ports for PDSCH. By default it is set to be equal to number of DL antennas Supported: [1,2].
 
   pusch
     - Further optional parameters to configure the Physical Uplink Shared Channel of the cell.
@@ -268,8 +288,18 @@ This is the default configuration that will be inherited by all cells, overwritt
       - **min_ue_mcs**: Optional UINT. Sets a minimum PUSCH MCS value to be used for all UEs. Supported: [0 - 28].
       - **max_ue_mcs**: Optional UINT. Sets a maximum PUSCH MCS value to be used for all UEs. Supported: [0 - 28].
       - **max_consecutive_kos**: Optional UINT (100). Sets the maximum number of consecutive CRC KOs before an RLF is reported. Supported: [0 - inf]
-      - **rv_sequence**: Optional UINT (0). Sets the redundancy version sequence to use for PUSCH. Supported: any combination of [0, 1, 2, 3].
-      - **mcs_table**: Optional TEXT (qam64). Sets the MCS table to use for PDSCH. Supported: [qam64, qam256].
+      - **rv_sequence**: Optional UINT (0). Sets the redundancy version sequence to use for PUSCH. Supported: any combination of [0, 1, 2, 3]. 
+      - **mcs_table**: Optional TEXT (qam64). Sets the MCS table to use for PDSCH. Supported: [qam64, qam256]. 
+      - **msg3_delta_preamble**: Optional INT (6). Sets the MSG3 DeltaPreamble power offset between MS3 and RACH preamble transmission. Supported: [-1 - 6]. 
+      - **p0_nominal_with_grant**: Optional INT (-76). Sets the P0 value for PUSCH grant (except MSG3), in dBm. Supported: multiples of 2 within the range [-202, 24]. 
+      - **msg3_delta_power**: Optional INT (8). Sets the target power level at the network receiver side, in dBm. Supported: multiples of 2 within the range [-6, 8]. 
+      - **b_offset_ack_idx_1**: Optional UINT (9). Sets the betaOffsetACK-Index1 part of UCI-OnPUSCH. Supported: [0 - 31].
+      - **b_offset_ack_idx_2**: Optional UINT (9). Sets the betaOffsetACK-Index2 part of UCI-OnPUSCH. Supported: [0 - 31].
+      - **b_offset_ack_idx_3**: Optional UINT (9). Sets the betaOffsetACK-Index3 part of UCI-OnPUSCH. Supported: [0 - 31].
+      - **beta_offset_csi_p1_idx_1**: Optional UINT (9). Sets the b_offset_csi_p1_idx_1 part of UCI-OnPUSCH. Supported: [0 - 31].
+      - **beta_offset_csi_p1_idx_2**: Optional UINT (9). Sets the b_offset_csi_p1_idx_2 part of UCI-OnPUSCH. Supported: [0 - 31].
+      - **beta_offset_csi_p2_idx_1**: Optional UINT (9). Sets the b_offset_csi_p2_idx_1 part of UCI-OnPUSCH. Supported: [0 - 31].
+      - **beta_offset_csi_p2_idx_2**: Optional UINT (9). Sets the b_offset_csi_p2_idx_2 part of UCI-OnPUSCH. Supported: [0 - 31].
 
   prach
     - Further optional parameters to configure the Physical Random Access Channel of the cell.
@@ -281,6 +311,7 @@ This is the default configuration that will be inherited by all cells, overwritt
       - **max_msg3_harq_retx**: Optional UINT (4). Sets the maximum number of Msg3 HARQ retransmissions. Supported: [0 - 4].
       - **total_nof_ra_preambles**: Optional TEXT. Sets the number of different PRACH preambles. Supported: [1 - 64].
       - **prach_frequency_start**: Optional INT. Set Offset of lowest PRACH transmission occasion in frequency domain respective to PRB 0, in PRBs. Supported: [0 - (MAX_NOF_PRB - 1)].
+      - **preamble_rx_target_pw**: Optional INT (-100). Sets the Target power level at the network receiver side, in dBm. Supported: multiples of 2 within range [-202, -60]. 
 
   tdd_ul_dl_cfg
     - Further optional parameters to configure the TDD Uplink and Downlink configuration parameters.
@@ -291,17 +322,21 @@ This is the default configuration that will be inherited by all cells, overwritt
       - **nof_ul_slots**: Optional INT (3). Number of consecutive full Uplink slots. Supported: [0 - 80].
       - **nof_ul_symbols**: Optional INT (0). Number of Uplink symbols at the end of the slot preceding the first full Uplink slot. Supported: [0-13].
 
-slicing_cfg
-===========
-  This is the default slicing configuration, will be overwritten by the ``slicing`` list.
+  paging
+    - Further optional parameters to configure the paging configuration parameters. 
 
-  sst
-    - Required UINT(1). Sets the Slice Service Type. Supported: [0-255].
+      - **pg_search_space_id**: Optional UINT (1). Sets the SearchSpace to use for Paging. Supported: [0, 1]. 
+      - **default_pg_cycle_in_rf**: Optional UINT (128). Sets the default Paging cycle in nof. Radio Frames. Supported: [32,64,128,256]. 
+      - **nof_pf_per_paging_cycle**: Optional TEXT (oneT). Sets the number of paging frames per DRX cycle. Supported: [oneT,halfT,quarterT,oneEighthT,oneSixteethT]. 
+      - **pf_offset**: Optional UINT (0). Sets the paging frame offset. Supported: [0 - (nof_pf_per_paging_cycle - 1)].
+      - **nof_po_per_pf**: Optional UINT (1). Sets the number of paging occasions per paging frame. Supported: [1, 2, 4]. 
 
-  sd
-    - Optional UINT. Sets the Service Differentiator. Supported: [0-16777215].
+  csi
+    - Further optional parameters to configure the CSI configuration parameters. 
 
-.. _manual_config_ref_log:
+      - **pwr_ctrl_offset**: Optional INT (0). Sets the power offset of PDSCH RE to NZP CSI-RS RE in dB. Supported: [-8 - +15]. 
+
+.. _manual_config_ref_log: 
 
 log
 ===
@@ -345,10 +380,16 @@ log
     - Optional TEXT (warning). Sets GTPU log level.
 
   radio_level
-    - Optional TEXT (warning). Sets radio log level.
+    - Optional TEXT (info). Sets radio log level.
 
   fapi_level
     - Optional TEXT (warning). Sets FAPI log level.
+
+  ofh_level
+    - Optional TEXT (warning). Sets Open Fronthaul log level.
+
+  f1ap_level
+    - Optional TEXT (warning). Sets F1AP log level.
 
   f1u_level
     - Optional TEXT (warning). Sets F1u log level.
@@ -358,6 +399,9 @@ log
 
   cu_level
     - Optional TEXT (warning). Sets CU log level.
+    
+  sec_level
+    - Optional TEXT (warning). Sets security functions level.
 
   lib_level
     - Optional TEXT (warning). Sets generic log level.
@@ -392,8 +436,13 @@ pcap
     - Optional BOOL (false). Enable/disable E1AP packet capture.
 
   e1ap_filename
-    - Optional TEXT (/tmp/gnb_mac.pcap). Path for E1AP PCAPs.
+    - Optional TEXT (/tmp/gnb_e1ap.pcap). Path for E1AP PCAPs.
 
+  f1ap_enable
+    - Optional BOOL (false). Enable/disable F1AP packet capture.
+    
+  f1ap_filename
+    - Optional TEXT (/tmp/gnb_f1ap.pcap). Path for F1AP PCAPs.
 
 
 expert_phy
@@ -413,6 +462,7 @@ expert_phy
 
   low_phy_dl_throttling
     - Optional FLOAT (0). Enables throttling of the lower PHY DL baseband generation. Supported: [0, 1]
+  
 test_mode
 =========
 
@@ -422,3 +472,10 @@ test_mode
       - **rnti**: Optional ENUM (0). Sets the C-RNTI of the UE. Supported: [0 - 65519].
       - **pdsch_active**: Optional BOOLEAN (1). Enables the PDSCH of the UE.
       - **pusch_active**: Optional BOOLEAN (1). Enables the PUSCH of the UE.
+<<<<<<< HEAD
+=======
+      - **cqi**: Optional UINT (15). Sets the Channel Quality Information to be forwarded to the test UE. Supported: [1 - 15]. 
+      - **pmi**: Optional UINT (0). Sets the Precoder Matrix Indicator to be forwarded to test UE. Supported: [0 - 3]. 
+      - **ri**: Optional UINT (1). Sets the Rank Indicator to be forwarded to the test UE. Supported: [1 - 2]. 
+
+>>>>>>> d8fbbd4 (config_ref: update to match latest code)
