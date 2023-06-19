@@ -48,7 +48,10 @@ qos
   - Optional TEXT. Configures RLC and PDCP radio bearers on a per 5QI basis. This can only be set via the configuration file.
 
 slicing
-  - Optional TEXT. Configure network slicing options. This can only be set via the configuration file. 
+  - Optional TEXT. Configure network slicing options. This can only be set via the configuration file. May contain the following parameters: 
+
+    - **sst**: Optional UINT (1). Sets the Slice Service Type. Supported: [0 - 255].
+    - **sd**: Optional UINT (0). Sets the Service Differentiator. Supported: [0-16777215].
 
 amf
 =======
