@@ -233,17 +233,96 @@ receive the PTP sync.
 RU 
 =====
 
+In this setup the RU is connected via SSH and monitored remotely. It is also possible to connect the O-RU via micro USB to a control PC to enable a serial console (UART). In our setup this port is connected to the DU machine, as shown in the setup diagram above. 
+
 Refer to the Benetel User Guide documentation to apply the following configuration changes. Ensure the RU is running before trying to make any configuration changes.
 
-*MAC Address* : The MAC address of the DU must be configured in the RU for Control-Plane and User-Plane traffic. In our configuration we use the same MAC address for both planes. 
+.. Edit the init script configuration file found in */usr/sbin/*. The RAN550 has different scripts for 4x2 and 2x2 configurations. In 4x2 4 antennas send and 2 antennas receive. In 2x2 2 antennas send and 2 antennas receive. In 2x2 there are 2 configurations: one uses antennas 1 and 3, the other uses antenna 2 and 4. We have tested the mode 4x2, but only using a single antenna to transmit and a single antenna for receiving (SISO). The configuration for this mode can be found in  */usr/sbin/radio_setup_ran550_1_a_4x2.sh*
 
-*VLAN tag* : In our setup the same VLAN ID is used for all network traffic, as only one MAC address is used.
+.. Inside this file, these parameters should be modified:
 
-*Compression* : Currently only static compression headers are supported for this setup. We use BFP9 compression for all uplink and downlink channels. Refer to the Benetel User Guide for details on how to configure compression in the RU. 
+**MAC Address**
 
-*Transmission Power* : Depending on your setup, you may need to alter the transmission power of the RU. For example, in a lab setting with the UE in close proximity to the RU, the default power settings may result in UE saturation.
+The MAC address of the DU must be configured in the RU for Control-Plane and User-Plane traffic. In our configuration we use the same MAC address for both planes. 
+
+**VLAN tag**
+
+In this setup the same VLAN ID is used for all the network traffic, as only one MAC address is used. In this setup, these values are set to ``1``.
+
+**Compression Parameters**
+
+Currently only static compression headers are supported for this setup. In static compression, the compression header is not sent in the Open Fronthaul message for User-Plane messages. Refer to the Benetel documentation to disable the compression header.
+
+.. The compression header must be disabled by configuring the registers ``c0350`` and ``c0351`` to ``0``. 
+
+There is also no differentiation made between PRACH and Slot traffic in the uplink so, the static compression algorithm method should also be selected for PRACH data in the RU configuration.
+
+.. by configuring the register ``c0352`` to ``0``.
+
+The compression header for downlink User-Plane, uplink User-Plane and uplink PRACH data should also be disabled. 
+
+.. As the uplink data and PRACH data share the same compression method, the compression is enabled for PRACH by setting the register ``C0353`` to ``1``.
+
+.. Once this file is saved, a reboot is needed in the RU to apply these parameters using the reboot command.
+
+**Transmission Attenuation Parameters**
+
+Depending on your setup, you may need to alter the attenuation settings of the RU. For example, in a lab setting with the UE in close proximity to the RU, the default attenuation settings may not be sufficient to avoid saturating the UE.
+
+.. By default, the RU initializes the attenuation for all antennas to around ~7dB. If the RU is too close to the UE, these attenuation values are small and should be increased to avoid saturating the UE.
+
+.. To modify the attenuation parameters use the following command: 
+
+.. code-block:: bash
+
+..   radiocontrol -o A <attenuation> <antenna id>
+
+.. Where *<attenuation>* is the attenuation in milli dBs (20000=20dB), valid range:[3000-40000], and *<antenna id>* is the antenna id [1,2,4,8] (antenna 1=1, antenna 2=2, antenna 3=4, antenna 4=8).
+
+.. In this setup the following attenuation values give the best results: 
+
+    - TX1 -> 17000 mdB
+    - TX2 -> 40000 mdB
+    - TX3 -> 40000 mdB
+    - TX4 -> 40000 mdB
+
+.. These values will be dependent on your local setup. 
+
+.. To verify the correct configuration of the parameters use the following command: 
+
+.. code-block:: bash
+
+..   radiocontrol -o G a
    
-*TDD pattern* : The TDD pattern should be changed to 6-3 format (DDDDDDSUU).
+**TDD pattern**
+
+The TDD pattern should be changed to 6-3 format (DDDDDDSUU).
+
+.. by editing the file `/etc/tdd.xml` so that it becomes: 
+
+.. code-block:: xml
+
+..    <xml>                                                                                                                                                                                                      
+        <tdd-config version="1.0">
+            <description>DDDDDDDSUU</description>
+            <pattern index="1">
+                <slots>DDDD</slots>
+                <numerology>1</numerology>
+                <periodicity>2</periodicity>
+                <special-slot-symbols></special-slot-symbols>
+            </pattern>
+                <pattern index="2">
+                <slots>DDSUUU</slots>
+                <numerology>1</numerology>
+                <periodicity>3</periodicity>
+                <special-slot-symbols>DDDDDDGGGGUUUU</special-slot-symbols>
+            </pattern>
+        </tdd-config>
+    </xml> 
+
+.. the change is in the 2nd pattern, originally it's DDDSUU, we need to change to DDSUUU. 
+
+.. The RU needs to be rebooted after this change.
 
 
 Core
@@ -268,7 +347,71 @@ RU
 
 To bring up the RU simply boot it and ensure it is running correctly before attempting to connect the DU. 
 
-Check for RU synchronization and that the PTP process is running correctly.   
+To ensure the RU had booted correctly, you can view the output of */tmp/logs/radio_status*. If successful you should see the following output: 
+
+.. code-block:: bash
+    :emphasize-lines: 6, 38
+
+    [INFO] Platform: RAN550_A_4x2_FlexRAN
+    [INFO] Frequency: 3558.18
+    [INFO] Radio bringup begin, 82.40 seconds since boot
+    [INFO] Initlialize TDD Pattern
+    [INFO] Waiting for Sync
+    [INFO] Sync completed
+    [INFO] Set expected DU MAC Address for C-Plane Traffic (C0319/C031A)
+    [INFO] Set expected DU MAC Address for U-Plane Traffic (C0315/C0316)
+    [INFO] Set required DU VLAN Tag Control Information for uplink U-Plane Traffic (C0318)
+    [INFO] Set expected DU VLAN Tag Control Information for downlink U-Plane Traffic (C0330)
+    [INFO] Set expected DU VLAN Tag Control Information for downlink C-Plane Traffic (C0331)
+    [INFO] Aligning TDD switching relative to downlink and uplink data and with respect to PPS (C0366)
+    [INFO] Aligning FPGA uplink timing to arrival of uplink frame(C0303)
+    [INFO] Set the Number of Tx's to 4 (C0300)
+    [INFO] Enable  udCompHdr option for DL (C0352)
+    [INFO] Enable  udCompHdr option for UL (C0352)
+    [INFO] Enable  udCompHdr option for PRACH (C0352)
+    [INFO] Set PRACH compression disable for FlexRAN (C0353)
+    [INFO] Set Downlink scaling 6 dB for FlexRAN (C0358)
+    [INFO] Configure eAxC ID via /etc/eaxc.xml settings, as M-Plane is disabled.
+    [INFO] Set expected RU PRACH Configuration Index (C0322)
+    [INFO] Start Radio Configuration
+    [INFO] Initialize RF SoC
+    [INFO]  Configure CFR for Antenna 1 (0.54)
+    [INFO] Configure CFR for Antenna 2 (0.54)
+    [INFO] Configure CFR for Antenna 3 (0.54)
+    [INFO] Configure CFR for Antenna 4 (0.54)
+    [INFO] Move platform to TDD mode
+    [INFO] Set CP60 as TDD control master
+    [INFO] DPD Tx1 configuration
+    [INFO] DPD Tx2 configuration
+    [INFO] DPD Tx3 configuration
+    [INFO] DPD Tx4 configuration
+    [INFO] Enable PA Protection on Transmitters
+    [INFO] End Radio Configuration - Start U-Plane Data
+    [INFO]  
+    [INFO] Set the attenuation for TX1/2/3/4
+    [INFO] Radio bringup complete
+     17:51:50 up 5 min,  load average: 0.19, 0.29, 0.15
+
+Pay close attention to the line highlighted above to make sure that the RU is synchronized correctly.
+
+You should also verify that the PTP process is running correctly, to do this check the output of the processes in */var/log/pcm4l*. It should look like the following: 
+
+.. code-block:: bash
+
+    RE::SyncAnalysis: 2023-05-26 10:35:45 549015038 ns [3, Tracker#0] (3240) offset: 0.5 ns    delay: 69.5 ns  
+    RE::SyncAnalysis: 2023-05-26 10:35:59 401045478 ns [3, Tracker#0] (3240) offset: 0.0 ns    delay: 69.0 ns  
+    RE::SyncAnalysis: 2023-05-26 10:36:13 109073756 ns [3, Tracker#0] (3240) offset: 0.0 ns    delay: 69.0 ns  
+    RE::SyncAnalysis: 2023-05-26 10:36:27 313113802 ns [3, Tracker#0] (3240) offset: 0.5 ns    delay: 69.5 ns  
+    RE::SyncWarning: 2023-05-26 10:36:37 085001763 ns [3, Tracker#0] (2093) Outlier detected: -831.5 (ns), variance 6.883508e-13 >= 4.518154e-14 threshold  
+    RE::SyncAnalysis: 2023-05-26 10:36:41 797023749 ns [3, Tracker#0] (3240) offset: -0.5 ns    delay: 69.5 ns  
+    RE::SyncWarning: 2023-05-26 10:36:51 709001537 ns [3, Tracker#0] (2093) Outlier detected: -832.0 (ns), variance 6.874613e-13 >= 6.661078e-14 threshold  
+    RE::SyncAnalysis: 2023-05-26 10:36:55 013023628 ns [3, Tracker#0] (3240) offset: 0.5 ns    delay: 69.5 ns  
+    RE::SyncAnalysis: 2023-05-26 10:36:55 645081078 ns [3, Tracker#0] (3203) 	numberOfCorrection: 692722, mean: -2.6 ns, std: 49.3 ns.  
+    RE::SyncAnalysis: 2023-05-26 10:37:09 005011045 ns [3, Tracker#0] (3240) offset: 0.5 ns    delay: 69.5 ns  
+    RE::SyncAnalysis: 2023-05-26 10:37:22 713080466 ns [3, Tracker#0] (3240) offset: 0.0 ns    delay: 69.0 ns  
+    RE::SyncAnalysis: 2023-05-26 10:37:37 057062769 ns [3, Tracker#0] (3240) offset: 0.0 ns    delay: 70.0 ns  
+
+The ``offset`` parameter in the above example output can be used to tell if the PTP synchronization is good or not. If the value is less than ``1.0 ns``, then the PTP synchronization is good.    
 
 CU/DU
 =====
