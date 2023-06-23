@@ -648,6 +648,28 @@ If your device is connected to the network but cannot access the internet it is 
     - Make sure VoNR/ VoLTE is disabled on the UE 
     - Restart all Open5GS services and try again
 
+
+
+UE Disconnects after a few Minutes
+==================================
+
+Some Android smartphones silently drop the network connection if IMS is not configured within a couple of minutes after attach. We confirmed this behavior with Google Pixel 6 having a timeout of 180s (3 minutes), but it may apply to other devices and vendors as well.
+
+A possible solution without the need to configure IMS is to either set an infinite timeout or disable the feature in smartphone. For this purpose, open a hidden IMS settings menu by dialing ``*#*#0702#*#*``, then change one of the two following settings:
+
+    - Infinite timeout: Set ``NR_TIMER_WAIT_IMS_REGISTRATION`` from default ``180`` to ``-1``
+    - Disable timeout: Set ``SUPPORT_IMS_NR_REGISTRATION_TIMER`` from default ``1`` to ``0``
+
+Examples:
+
+   .. image:: .imgs/nr_timer_wait_ims_registration.png
+      :scale: 50% 
+
+   .. image:: .imgs/support_ims_nr_registration_timer.png
+      :scale: 50% 
+
+The smartphone stores these setting persistently across reboots on a per-IMSI basis, i.e. if you change the SIM the UE remembers the settings for each SIM separately.
+
 -----
 
 Tested Devices
