@@ -13,6 +13,9 @@ This tutorial outlines the use of the srsRAN Project gNB (including both CU and 
 
 The split 7.2 interface is supported in srsRAN through the Open Fronthaul (OFH) Library. Developed by the SRS team, OFH is an open-source, portable library with minimal 3rd-party dependencies. It has been designed to minimize the integration and configuration burden associated with using srsRAN with 3rd-party O-RUs. 
 
+.. note::
+   This example features an O-RU device from `Benetel <https://www.benetel.com/>`_. Please refer to the Benetel User Guide Documentation for up-to-date configuration and usage guidelines, along with disclaimer and warranty information. Contact Benetel (sales@benetel.com) for more information.
+
 ----
 
 Setup Considerations
