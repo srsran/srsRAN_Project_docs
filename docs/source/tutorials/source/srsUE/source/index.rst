@@ -190,8 +190,9 @@ Finally, we configure the 5G cell parameters::
     plmn: "00101"                     # PLMN broadcasted by the gNB.
     tac: 7                            # Tracking area code (needs to match the core configuration).
     pdcch:
-      ss_type: common                 # Search Space type, has to be set to common
-      dci_format_0_1_and_1_1: 0       # Set correct DCI format (fallback)
+      dedicated:
+        ss2_type: common              # Search Space type, has to be set to common
+        dci_format_0_1_and_1_1: false # Set correct DCI format (fallback)
 
 srsUE
 -----
