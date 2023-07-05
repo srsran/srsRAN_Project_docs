@@ -1,3 +1,9 @@
+# This configuration file example shows how to configure the srsRAN Project gNB to connect to a COTS UE. As with the 
+# associated tutorial, this config has been tested with a OnePlus 8T. A B210 USRP is used as the RF-frontend.   
+# This config creates a TDD cell with 20 MHz bandwidth in band 78. 
+# To run the srsRAN Project gNB with this config, use the following command: 
+#   sudo ./gnb -c gnb_b210_20MHz_oneplus_8t.yaml
+
 amf:
   addr: 127.0.1.100                                             # The address or hostname of the AMF.
   bind_addr: 127.0.0.1                                          # A local IP that the gNB binds to for traffic from the AMF.

@@ -364,5 +364,14 @@ Once connected to the network you can use iPerf to generate traffic. The followi
        1 4601   15   28    38M 1200    0   0% |  17.8   26    15M  503   98  16%   300k
        1 4601   15   28    38M 1200    0   0% |  17.8   26    15M  495  105  17%   300k
 
+-----
 
+Supported O-RUs
+***************
 
+The following is a list of other O-RUs that have been tested with the srsRAN Project CU/DU and OFH library: 
+
+    - Foxconn RPQN
+    - Picocom PC802 SCB
+
+Example configuration files for the srsRAN Project gNB for use with these O-RUs can be found `here <https://github.com/srsran/srsRAN_Project/tree/main/configs>`_.  

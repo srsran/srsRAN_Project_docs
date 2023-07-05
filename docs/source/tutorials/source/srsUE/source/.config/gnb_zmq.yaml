@@ -1,3 +1,8 @@
+# This configuration file example shows how to configure the srsRAN Project gNB to allow srsUE to connect to it. 
+# This specific example uses ZMQ in place of a USRP for the RF-frontend, and creates an FDD cell with 10 MHz bandwidth. 
+# To run the srsRAN Project gNB with this config, use the following command: 
+#   sudo ./gnb -c gnb_zmq.yaml
+
 amf:
   addr: 10.53.1.2                  # The address or hostname of the AMF.
   bind_addr: 10.53.1.1             # A local IP that the gNB binds to for traffic from the AMF.
