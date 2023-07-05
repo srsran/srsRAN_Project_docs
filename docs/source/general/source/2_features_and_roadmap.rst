@@ -14,13 +14,12 @@ Current Features
  * All MAC procedures excluding power control
  * Split 7.2 support using in-house OFH library
  * Support for QAM-256
- * 2x2 MIMO
+ * 4x4 MIMO
 
 
 Coming Soon
 -----------
 
- * 4x4 MIMO
  * Multi-cell support
  * Handover
  * CU/DU split deployment
