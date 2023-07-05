@@ -15,6 +15,7 @@ Current Features
  * Split 7.2 support using in-house OFH library
  * Support for QAM-256
  * 4x4 MIMO
+ * Slicing
 
 
 Coming Soon
