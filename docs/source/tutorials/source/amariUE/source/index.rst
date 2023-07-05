@@ -182,8 +182,8 @@ Configuration
 
 The following config files were modified to use ZMQ-based RF driver:
 
-  * :download:`gNB FDD band 7 config <.config/gnb_rf_zmq_fdd_n7_10mhz.yml>`
-  * :download:`gNB TDD band 78 config <.config/gnb_rf_zmq_tdd_n78_10mhz.yml>`
+  * :download:`gNB FDD band 7 config <.config/gnb_zmq_fdd_n7_10mhz.yml>`
+  * :download:`gNB TDD band 78 config <.config/gnb_zmq_tdd_n78_10mhz.yml>`
   * :download:`Single UE config FDD band 7 <.config/ue-nr-sa-fdd-n7-zmq-single-ue.cfg>`
   * :download:`Single UE config TDD band 78 <.config/ue-nr-sa-tdd-n78-zmq-single-ue.cfg>`
   * :download:`Multiple UEs config FDD band 7 <.config/ue-nr-sa-fdd-n7-zmq-multiple-ues.cfg>`
