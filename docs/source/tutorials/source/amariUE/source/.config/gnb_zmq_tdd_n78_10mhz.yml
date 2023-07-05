@@ -1,0 +1,31 @@
+# This configuration file example shows how to configure the srsRAN Project gNB to allow AmariUE to connect to it. 
+# This specific example uses ZMQ in place of a physical RF-frontend, and creates an TDD cell with 10 MHz bandwidth in band 78. 
+# To run the srsRAN Project gNB with this config, use the following command: 
+#   sudo ./gnb -c gnb_zmq_b210_fdd_n78_10mhz.yaml
+
+amf:
+  addr: 172.22.0.10                                                             # The address or hostname of the AMF.
+  bind_addr: 172.22.0.1                                                         # A local IP that the gNB binds to for traffic from the AMF.
+
+ru_sdr:
+  device_driver: zmq                                                            # The RF driver name.
+  device_args: tx_port=tcp://10.53.1.1:5000,rx_port=tcp://10.53.1.2:6000        # Optionally pass arguments to the selected RF driver.
+
+cell_cfg:
+  dl_arfcn: 632628                                                              # ARFCN of the downlink carrier (center frequency).
+  band: 78                                                                      # The NR band.
+  channel_bandwidth_MHz: 10                                                     # Bandwith in MHz. Number of PRBs will be automatically derived.
+  common_scs: 30                                                                # Subcarrier spacing in kHz used for data.
+  plmn: "00101"                                                                 # PLMN broadcasted by the gNB.
+  tac: 7                                                                        # Tracking area code (needs to match the core configuration).
+  pci: 1                                                                        # Physical cell ID.
+
+log:
+  filename: /tmp/gnb.log                                                        # Path of the log file.
+  all_level: warning                                                            # Logging level applied to all layers.
+
+pcap:
+  mac_enable: false                                                             # Set to true to enable MAC-layer PCAPs.
+  mac_filename: /tmp/gnb_mac.pcap                                               # Path where the MAC PCAP is stored.
+  ngap_enable: false                                                            # Set to true to enable NGAP PCAPs.
+  ngap_filename: /tmp/gnb_ngap.pcap                                             # Path where the NGAP PCAP is stored.
