@@ -77,7 +77,7 @@ amf
   sctp_initial_max_attempts 
     - Optional INT. Sets the maximum retransmission attempts for the initial SCTP connection.
 
-  sctp_initial_max_timeo 
+  sctp_max_init_timeo 
     - Optional INT. Sets the maximum retransmission timeout for the initial SCTP connection.
 
   no_core
@@ -88,6 +88,18 @@ cu_cp
 
   inactivity_timer
     - Optional INT (72000). Sets the UE/PDU Session/DRB inactivity timer in seconds. Supported: [1 - 7200].
+
+  mobility
+    - Further optional parameters to configure Mobility.
+
+    - **cells**: Optional TEXT. Sets the list of cells known to the CU-CP. 
+
+    - **meas_config**
+
+      - **a3_report_type**: Optional TEXT. A3 report type. Supported: [rsrp, rsrq, sinr].
+      - **a3_offset_db**: Optional UINT. A3 offset in dB used for measurement report trigger.
+      - **a3_hysteresis_db**: Optional UINT. A3 hysteresis in dB used for measurement report trigger.
+      - **a3_time_to_trigger_ms**: Optional UINT. Time in ms during which A3 condition must be met before measurement report trigger.
 
 ru_sdr
 =============
@@ -203,6 +215,18 @@ This section of the configuration file should be used when connecting the srsRAN
   compr_bitwidth_dl
     - Optional UINT (9). Sets the downlink compression bit width. Supported: [1 - 16].
 
+  compr_method_prach
+    - Optional TEXT (none). Sets the PRACH compression method. Supported: [none, bfp, bfp selective, block scaling, mu law, modulation, modulation selective]. 
+
+  compr_bitwidth_prach
+    - Optional UINT (16). Sets the PRACH compression bit width. Supported [1 - 16].
+
+  enable_ul_static_compr_hdr
+    - Optional BOOLEAN (1). Uplink static compression header enabled flag. Supported: [0 . 1].
+
+  enable_dl_static_compr_hdr
+    - Optional BOOLEAN (1). Downlink static compression header enabled flag. Supported: [0 . 1].
+
   iq_scaling
     - Optional FLOAT (0.35). Sets the IQ scaling factor. Supported: [0 - 1].
 
@@ -268,10 +292,21 @@ This is the default configuration that will be inherited by all cells, overwritt
   pdcch
     - Further optional parameters to configure the Physical Downlink Control Channel of the cell. 
   
-      - **ss_type**: Optional TEXT (ue_dedicated). Sets the Search Space type for the UE data. Supported: [common, ue_dedicated].  
-      - **dci_format_0_1_and_1_1**: Optional BOOLEAN (1). Sets whether to use non-fallback or fallback DCI format in UE dedicated SearchSpace. Supported: [0, 1]. 
+      - **common**
 
+        - **coreset0_index**: Optional INT. Sets the CORESET 0 index. Supported: [0 - 15].  
+        - **ss1_n_candidates**: Optional UINT ({0, 0, 1, 0, 0}). Sets the number of PDCCH candidates per aggregation level for SearchSpace#1. Supported: any 5 value array containing the following UINT values [0, 1, 2, 3, 4, 5, 6, 7, 8]. 
+        - **ss0_index**: Optional UINT (0). Sets the SearchSpace#0 index. Supported: [0 - 15].
 
+      - **dedicated**
+
+        - **coreset1_rb_start**: Optional INT (0). Sets the starting common resource block (CRB) number for CORESET 1, relative to CRB0. Supported: [0 - 275].  
+        - **coreset1_l_crb**: Optional INT (Across entire BW of cell). Sets the length of CORESET 1 in number of CRBs. Supported: [0 - 275]. 
+        - **coreset1_duration**: Optional INT (2). Sets the duration of CORESET 1 in number of OFDM symbols. Supported: [1 - 2]. 
+        - **ss2_n_candidates**: Optional UINT ({0, 0, 0, 0, 0}). Sets the number of PDCCH candidates per aggregation level for SearchSpace#2. Supported: any 5 value array containing the following UINT values [0, 1, 2, 3, 4, 5, 6, 7, 8].
+        - **dci_format_0_1_and_1_1**: Optional BOOLEAN (1). Sets whether to use non-fallback or fallback DCI format in UE SearchSpace#2. Supported: [0, 1].
+        - **ss2_type**: Optional TEXT (ue_dedicated). Sets the SearchSpace type for UE dedicated SearchSpace#2. Supported: [common, ue_dedicated]. 
+  
   pdsch
     - Further optional parameters to configure the Physical Downlink Shared Channel of the cell.
 
@@ -319,11 +354,19 @@ This is the default configuration that will be inherited by all cells, overwritt
   tdd_ul_dl_cfg
     - Further optional parameters to configure the TDD Uplink and Downlink configuration parameters.
 
-      - **dl_ul_tx_period**: Optional FLOAT (5). TDD pattern periodicity in milliseconds. Supported: [0 - 10].
+      - **dl_ul_tx_period**: Optional INT (10). Sets the TDD pattern periodicity in slots. The combination of this value and the chosen numerology must lead to a TDD periodicity of 0.5, 0.625, 1, 1.25, 2, 2.5, 3, 4, 5 or 10 milliseconds. Supported: [2 - 80].
       - **nof_dl_slots**: Optional INT (6). Number of consecutive full Downlink slots. Supported: [0-80].
       - **nof_dl_symbols**: Optional INT (0). Number of Downlink symbols at the beginning of the slot following full Downlink slots. Supported: [0-13].
       - **nof_ul_slots**: Optional INT (3). Number of consecutive full Uplink slots. Supported: [0 - 80].
       - **nof_ul_symbols**: Optional INT (0). Number of Uplink symbols at the end of the slot preceding the first full Uplink slot. Supported: [0-13].
+
+      - **pattern2** 
+
+        - **dl_ul_tx_period**: Optional INT (10). Sets the TDD pattern periodicity in slots. The combination of this value and the chosen numerology must lead to a TDD periodicity of 0.5, 0.625, 1, 1.25, 2, 2.5, 3, 4, 5 or 10 milliseconds. Supported: [2 - 80].
+        - **nof_dl_slots**: Optional INT (6). Number of consecutive full Downlink slots. Supported: [0-80].
+        - **nof_dl_symbols**: Optional INT (0). Number of Downlink symbols at the beginning of the slot following full Downlink slots. Supported: [0-13].
+        - **nof_ul_slots**: Optional INT (3). Number of consecutive full Uplink slots. Supported: [0 - 80].
+        - **nof_ul_symbols**: Optional INT (0). Number of Uplink symbols at the end of the slot preceding the first full Uplink slot. Supported: [0-13].
 
   paging
     - Further optional parameters to configure the paging configuration parameters. 
@@ -337,7 +380,10 @@ This is the default configuration that will be inherited by all cells, overwritt
   csi
     - Further optional parameters to configure the CSI configuration parameters. 
 
-      - **pwr_ctrl_offset**: Optional INT (0). Sets the power offset of PDSCH RE to NZP CSI-RS RE in dB. Supported: [-8 - +15]. 
+      - **csi_rs_period**: Optional UINT (80). Sets the CSI-RS period in milliseconds. Supported: [10, 20, 40, 80].
+      - **meas_csi_rs_slot_offset**: Optional UINT (2). Sets the slot offset of first CSI-RS resource used for measurement.
+      - **tracking_csi_rs_slot_offset**: Optional UINT (12). Sets the slot offset of the first CSI-RS slot used for tracking. 
+      - **pwr_ctrl_offset**: Optional INT (0). Sets the power offset of PDSCH RE to NZP CSI-RS RE in dB. Supported: [-8 - 15]. 
 
 .. _manual_config_ref_log: 
 
