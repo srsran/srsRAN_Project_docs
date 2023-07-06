@@ -563,10 +563,13 @@ The following diagram presents the setup architecture:
 Configuration
 =============
 
-The following config files were modified to use SDR RF driver:
+You can find the srsRAN Project gNB configuration file for this example in the ``configs`` folder of the srsRAN Project source files. You can also find it `here <https://github.com/srsran/srsRAN_Project/tree/main/configs>`_. 
 
-  * :download:`gNB FDD band 7 config <.config/gnb_rf_b210_fdd_n7_10mhz.yml>`
-  * :download:`gNB TDD band 78 config <.config/gnb_rf_b210_tdd_n78_10mhz.yml>`
+ 
+  * `gNB TDD band 78 config <https://github.com/srsran/srsRAN_Project/blob/main/configs/gnb_rf_b200_tdd_n78_20mhz.yml>`_
+
+You can download the AmariUE configs here: 
+
   * :download:`Single UE config FDD band 7 <.config/ue-nr-sa-fdd-n7-b210-single-ue.cfg>`
   * :download:`Single UE config TDD band 78 <.config/ue-nr-sa-tdd-n78-b210-single-ue.cfg>`
 
