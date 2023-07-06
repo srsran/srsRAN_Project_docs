@@ -148,7 +148,7 @@ In both of the above commands ``enp1s0f0`` is the network interface on our DU th
 srsRAN configuration
 --------------------
 
-A sample configuration file for the DU can be downloaded from :download:`here <.configs/du_R550_rf.yml>`.
+A sample configuration file for the DU can be downloaded from `here <https://github.com/srsran/srsRAN_Project/blob/main/configs/gnb_ru_ran550_tdd_n78_20mhz.yml>`_.
 
 The following excerpt shows how the DU is configured to communicate with the RU: 
 
@@ -173,7 +173,7 @@ The following excerpt shows how the DU is configured to communicate with the RU:
       - network_interface: enp1s0f0                                 # Ethernet interface name used to communicate with the RU.
         ru_mac_addr: 70:b3:d5:e1:5b:06                              # RU MAC address.
         du_mac_addr: 80:61:5f:0d:df:aa                              # DU MAC address.
-        vlan_tag: 1                                                 # VLAN tag value.
+        vlan_tag: 5                                                 # VLAN tag value.
         prach_port_id: 4                                            # PRACH eAxC port value.
         dl_port_id: [0,1]                                           # Downlink eAxC port values.
         ul_port_id: 0                                               # Uplink eAxC port values.
