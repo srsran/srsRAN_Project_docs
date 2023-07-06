@@ -134,10 +134,14 @@ The following diagram presents the setup architecture:
 Configuration
 =============
 
-The following config files were modified for this App Note:
+You can find the srsRAN Project gNB configuration file for this example in the ``configs`` folder of the srsRAN Project source files. You can also find it `here <https://github.com/srsran/srsRAN_Project/tree/main/configs>`_: 
 
-  * :download:`gNB config <.config/gnb.yaml>`
-  * :download:`UE config <.config/ue.conf>`
+ 
+  * `gNB FDD srsUE config <https://github.com/srsran/srsRAN_Project/blob/main/configs/gnb_rf_b210_fdd_srsUE.yml>`_
+
+You can download the srsUE config here: 
+
+  * :download:`srsUE <./config/ue_rf.conf>` 
 
 It is recommended you use these files to avoid errors while changing configs manually. Any configuration files not included here do not require modification from the default settings.
 Details of the modifications made are outlined in following sections.
