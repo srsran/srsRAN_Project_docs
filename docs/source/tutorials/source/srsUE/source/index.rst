@@ -141,7 +141,7 @@ You can find the srsRAN Project gNB configuration file for this example in the `
 
 You can download the srsUE config here: 
 
-  * :download:`srsUE <./config/ue_rf.conf>` 
+  * :download:`srsUE <.config/ue_rf.conf>`
 
 It is recommended you use these files to avoid errors while changing configs manually. Any configuration files not included here do not require modification from the default settings.
 Details of the modifications made are outlined in following sections.
