@@ -677,3 +677,15 @@ If you encounter issues with the srsUE not finding the cell and/or not being abl
 =================
 
 By default, Open5GS uses 5QI = 9. If the **qos** section is not provided in the gNB config file, the default one with 5QI = 9 will be generated and the UE should connect to the network. If one needs to change the 5QI, please harmonize these settings between gNB and Open5GS config files, as otherwise, a UE will not be able to connect.
+
+-----
+
+Limitations
+***********
+
+srsUE
+=====
+
+**Multiple TACs**
+
+  - srsUE does not support the use of multiple TACs. Using multple TACs will result in errors parsing NAS messages from the core, resulting in the UE not connecting correctly. 
