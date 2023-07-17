@@ -205,7 +205,7 @@ After these steps **UST service 124** and **125** should be disabled. You can ve
 
     ./pySim-read.py -p0
 
-More information on pySim and SUCI configuration can be found in `this guide <https://gist.github.com/mrlnc/01d6300f1904f154d969ff205136b753>`_, written by Merlin Chlosta. 
+More information on pySim and SUCI configuration can be found in `this guide <https://downloads.osmocom.org/docs/pysim/master/html/suci-tutorial.html>`_ in the pySim documentation. 
 
 
 Open5GS
