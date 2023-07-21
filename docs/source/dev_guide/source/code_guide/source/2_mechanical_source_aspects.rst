@@ -17,75 +17,122 @@ When adding new commits to the repository, please make sure you have formatted y
 
 ----
 
+.. _comments: 
+
 Comments
 ********
 
-When writing comments, write them as English prose, using proper capitalization, punctuation, etc (eg: end them with a period sign).
-Try to describe what the code is trying to do and why, not how it does it at a micro level.
+Comments have to be regarded as an essential part of the code, as they greatly facilitate reviewers' and maintainers' tasks. From this perspective, comments
+should describe what the code is trying to do and why, without getting into the implementation details at a micro level and, most importantly, targeting an
+audience that may not be as familiar as you are with the topic at hand.
+
+The following brief sections provide a very rough introduction to how developers are expected to comment code. A more thorough guide can be found :ref:`here <self_generating_docs>`.
+
+Comment Guidelines
+==================
+
+- Write comments as English prose, using proper capitalization,
+  punctuation, etc., ending them with a period sign. Words are spelled in American
+  English, as given by the main entry of `The Merriam-Webster Dictionary <https://www.merriam-webster.com/>`_.
+
+
+* Comment lines should start with a double slash for *normal* comments
+  and with a triple slash for *documentation* comments. The
+  double/triple-slash format should be used always, also for multiline comments.
+
+.. code-block:: c++ 
+
+  /// \brief Does something.
+  ///
+  /// More details about the function.
+  void some_func(){
+    // Now we print a simple text.
+    fmt::print("Some comment.");
+  }
+
+- Comments should always start on a new line above the code that is being
+  commented. Specifically, documentation comments should precede the class or
+  function declarations and not go inside their body. Normal comments cannot be
+  placed next to the code or outside the body of a function.
+
+.. code-block:: c++
+
+  // Some general comment outside the body of a function - WRONG!
+
+  /// Does something. - OK
+  void some_func(){
+    // Now we print a simple text. - OK
+    fmt::print("Some comment.");
+
+    fmt::print("Something else."); // Side comment. - WRONG!
+  }
+
+* In cases where indentation is helpful to support the content of the
+  comment, the suggested form is to start the line with one or more "greater
+  than" (>) signs, depending on the indentation level. For instance, the comments
+  in the example below suggest that the PUCCH configuration is a step within the
+  UL configuration.
+
+.. code-block:: c++
+
+  uplink_config srsran::config_helpers::make_default_ue_uplink_config(const cell_config_builder_params& params)
+  {
+    // > UL configuration.
+    uplink_config ul_config{};
+    ul_config.init_ul_bwp.pucch_cfg.emplace();
+
+    // >> PUCCH configuration.
+    auto& pucch_cfg = ul_config.init_ul_bwp.pucch_cfg.value();
+
+    // ... more code ...
+  }
+
+- C-style comments ``/* */`` are, in general, not allowed. The only
+  exceptions are file headers (see below) and the documentation of parameters in a
+  function call (very useful when, e.g., passing a ``bool`` or a
+  ``nullptr`` as arguments).
+
+.. code-block:: c++
+
+  // Hard to see what "true" and "nullptr" actually refer to.
+  obj.method(a, b, true, nullptr);
+  // Easy to see what the input values actually do.
+  obj.method(a, b, /*enable_X=*/true, /*options=*/nullptr);
+
+* Merge requests should **not** contain lines of code that have been
+  commented out. If you really need to do it for documentation purposes or maybe
+  for debug printing, use ``#if 0`` and ``#endif``. These nest
+  properly and are better behaved in general than C-style comments.
 
 File Headers
 ============
 
-Every source file of the project should have a copyright header and short description of the basic purpose of the file.
-The standard header looks like this:
+Every source file of the project should have a copyright header and a short description of the basic purpose of the file. The standard header looks like
+the example below.
 
-.. code-block:: cpp
+.. code-block:: c++
 
-  /*
+    /*
    *
-   * Copyright 2013-2023 Software Radio Systems Limited
+   * Copyright 2021-2023 Software Radio Systems Limited
    *
-   * By using this file, you agree to the terms and conditions set
-   * forth in the LICENSE file which can be found at the top level of
-   * the distribution.
+   * This file is part of srsRAN.
    *
-   */
-  
-  /// \file
-  /// \brief <Description of file contents>
-
-
-.. warning::
-  Link further explanation in doxygen section 
-
-Class Overviews
-===============
-
-All class definitions should have a comment block that explains what the class is used for and how it user should interface it.
-
-.. code-block:: cpp
-
-  /// Class overview.
-  class my_class {
-      ...
-  }
-
-Method Information
-==================
-
-All methods, global and static functions should also be documented at the declaration site. This includes: 
-
-  - What it does
-  - A brief description of the implementation 
-  - Edge cases to be aware of
-
-Try to be as clear as possible so that the reader is able to use interfaces without reading the code itself.
-Additional things that are good to include are thread safety behavior, error handling, if the method returns null, etc. 
-
-When implementing an interface, overridden methods should **not** be documented again (avoid documentation duplication). Only document
-new methods that appear in the implementation class.
-
-There is no need to document special member functions like constructors, destructors, operators, etc, unless something important or subtle
-needs to be pointed out.
-
-Member Variable Information
-===========================
-
-In general if a member variable has a descriptive name it is not *required* to document it, but we do recommend it. There may also be cases like a ``mutex``, or
-pointers that could hold a ``nullptr``, where adding a single line comment can help understand the code better.
-
-.. warning::
-   Add link here to documentation section once written
+   * srsRAN is free software: you can redistribute it and/or modify
+   * it under the terms of the GNU Affero General Public License as
+   * published by the Free Software Foundation, either version 3 of
+   * the License, or (at your option) any later version.
+   *
+   * srsRAN is distributed in the hope that it will be useful,
+   * but WITHOUT ANY WARRANTY; without even the implied warranty of
+   * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   * GNU Affero General Public License for more details.
+   *
+   * A copy of the GNU Affero General Public License can be found in
+   * the LICENSE file in the top-level directory of this distribution
+   * and at http://www.gnu.org/licenses/.
+   *
+  */
 
 ----
 
