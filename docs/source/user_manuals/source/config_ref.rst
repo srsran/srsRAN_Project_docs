@@ -87,8 +87,9 @@ cu_cp
 =====
 
   inactivity_timer
-    - Optional INT (72000). Sets the UE/PDU Session/DRB inactivity timer in seconds. Supported: [1 - 7200].
+    - Optional INT (7200). Sets the UE/PDU Session/DRB inactivity timer in seconds. Supported: [1 - 7200].
 
+.. 
   mobility
     - Further optional parameters to configure Mobility.
 
@@ -100,6 +101,11 @@ cu_cp
       - **a3_offset_db**: Optional UINT. A3 offset in dB used for measurement report trigger.
       - **a3_hysteresis_db**: Optional UINT. A3 hysteresis in dB used for measurement report trigger.
       - **a3_time_to_trigger_ms**: Optional UINT. Time in ms during which A3 condition must be met before measurement report trigger.
+\ 
+  rrc
+    - Further optional parameters to configure the RRC. 
+
+    - **force_reestablishment_fallback**: Optional BOOLEAN (0). Force RRC re-establishment fallback to RRC setup. Supported: [0, 1].   
 
 ru_sdr
 =============
@@ -110,7 +116,7 @@ This section of the configuration file should be used when connecting the srsRAN
     - Required FLOAT (61.44). Sets the sampling rate of the RF-frontend in MHz.
 
   device_driver
-    - Required TEXT (uhd). RF device driver name. Supported: [uhd].
+    - Required TEXT (uhd). RF device driver name. Supported: [uhd, zmq].
 
   device_args
     - Optional TEXT. An argument that gets passed to the selected RF driver.
@@ -140,7 +146,7 @@ This section of the configuration file should be used when connecting the srsRAN
     - Optional TEXT (default). Specific the over-the-wire format. Supported: [default, sc8, sc12, sc16].
 
   time_alignment_calibration
-    - Optional UINT (0). Compensates for any reception and transmission time misalignment inherent to the RF device. Positive values reduce the RF transmission delay with respect to the RF reception. Negative values have the opposite effect.
+    - Optional TEXT (auto). Compensates for any reception and transmission time misalignment inherent to the RF device. Positive values reduce the RF transmission delay with respect to the RF reception. Negative values have the opposite effect.
 
   cells
     - Optional TEXT. Sets the hardware specific cell configuration on a per cell basis. May contain the following parameters:
@@ -155,6 +161,7 @@ This section of the configuration file should be used when connecting the srsRAN
     - Further optional parameters to configure RF-frontend.
 
       - **low_phy_thread_profile**: Optional TEXT. Lower physical layer executor profile. Supported: [single, dual, quad].
+      - **low_phy_dl_throttling**: Optional FLOAT (0). Throttles the lower PHY DL baseband generation. Setting to 0 disables throttling. Supported: any value in the range [0 - 1]. 
 
 ru_ofh
 ======
@@ -167,14 +174,14 @@ This section of the configuration file should be used when connecting the srsRAN
   to be configured specifically for the RU being used. Failing to configure this parameters correctly may result in the RU failing to connect correctly to the DU.
 \
 
-  max_proc_delay
-    - Optional UINT (2). Sets the maximum allowed processing delay in slots. Supported: [1 - 30].
-
   gps_alpha
     - Optional FLOAT (0). Sets the GPS alpha. Supported: [0 - 1.2288e+07].
 
   gps_beta
     - Optional INT (0). Sets the GPS beta. Supported: [-32768 - +32767]. 
+
+  enable_dl_parallelization
+    - Optional BOOLEAN (1). Sets the Open Fronthaul downlink parallelization flag. Supported: [0 - 1]. 
 
   ru_bandwidth_MHz
     - Required UINT (0). Sets the channel bandwidth in MHz. Supported: [5,10,15,20,25,30,40,50,60,70,80,90,100].
@@ -202,6 +209,9 @@ This section of the configuration file should be used when connecting the srsRAN
 
   is_dl_broadcast_enabled
     - Optional BOOLEAN (0). Sets downlink broadcast enabled flag. Supported: [0, 1].
+
+  ignore_ecpri_payload_size
+    - Optional BOOLEAN (0). Sets whether or not to ignore eCPRI payload size field value. Supported [0. 1].  
 
   compr_method_ul
     - Optional TEXT (bfp). Sets the uplink compression method. Supported: [none, bfp, bfp selective, block scaling, mu law, modulation, modulation selective].
@@ -253,7 +263,7 @@ This is the default configuration that will be inherited by all cells, overwritt
     - Required UINT (536020). Sets the Downlink ARFCN.
 
   band
-    - Optional UINT. Sets the NR band being used for the cell. If not specified, will be set automatically based on ARFCN. Supported: all release 17 bands.
+    - Optional TEXT (auto). Sets the NR band being used for the cell. If not specified, will be set automatically based on ARFCN. Supported: all release 17 bands.
 
   common_scs
     - Required UINT (15). Sets the subcarrier spacing in KHz to be used by the cell. Supported: [15, 30].
@@ -262,10 +272,10 @@ This is the default configuration that will be inherited by all cells, overwritt
     - Required UINT (20). Sets the channel Bandwidth in MHz, the number of PRBs will be derived from this. Supported: [5, 10, 15, 20, 25, 30, 40, 50, 60, 70, 80, 90, 100].
 
   nof_antennas_ul
-    - Optional UINT (1). Sets the number of antennas for downlink transmission. Supported: [1].
+    - Optional UINT (1). Sets the number of antennas for downlink transmission. Supported: [4].
 
   nof_antennas_dl
-    - Optional UINT (1). Sets the number of antennas for uplink transmission. Supported: [1].
+    - Optional UINT (1). Sets the number of antennas for uplink transmission. Supported: [4].
 
   plmn
     - Required TEXT (00101). Sets the Public Land Mobile Network code. Format: 7-digit PLMN code containing MCC & MNC.
@@ -280,7 +290,7 @@ This is the default configuration that will be inherited by all cells, overwritt
     - Optional INT (-20). Sets the required minimum received RSRQ level for cell selection/re-selection, in dB. Supported: [-43 - -12].
 
   pcg_p_nr_fr1
-    - Optional INT (10). Sets the maximum total TX power to be used by the UE in this NR cell group across in FR1. Supported: [-30 - +33]. 
+    - Optional INT (10). Sets the maximum total TX power to be used by the UE in this NR cell group across in FR1. Supported: [-30 - +23]. 
 
   ssb 
     - Further optional parameters to configure the Synchronization Signal Block of the cell. 
@@ -289,6 +299,11 @@ This is the default configuration that will be inherited by all cells, overwritt
       - **ssb_block_power_dbm**: Optional INT (-16). Sets the SS PBCH block power in dBm. Supported: [-60 - +50]. 
       - **pss_to_sss_epre_db**: Optional UINT (0). Sets the Synchronization Signal Block Primary Synchronization Signal to Secondary Synchronization Signal Energy Per Resource Element ratio in dB. Supported: [0, 3].
 
+  ul_common 
+    - Further optional parameters to configure the common uplink parameters of the cell. 
+  
+      - **p_max**: Optional TEXT. Sets maximum transmit power allowed in this serving cell. Supported: [-30 - +23]. 
+  
   pdcch
     - Further optional parameters to configure the Physical Downlink Control Channel of the cell. 
   
@@ -312,13 +327,13 @@ This is the default configuration that will be inherited by all cells, overwritt
 
       - **min_ue_mcs**: Optional UINT. Sets a minimum PDSCH MCS value to be used for all UEs. Supported: [0 - 28].
       - **max_ue_mcs**: Optional UINT. Sets a maximum PDSCH MCS value to be used for all UEs. Supported: [0 - 28].
-      - **fixed_rar_mcs**: Optional UINT (0). Sets a fixed RAR MCS value for all UEs. Supported: [0 - 9].
-      - **fixed_sib1_mcs**:  Optional UINT (5). Sets a fixed SIB1 MCS for all UEs. Supported: [0 - 9].
+      - **fixed_rar_mcs**: Optional UINT (0). Sets a fixed RAR MCS value for all UEs. Supported: [0 - 28].
+      - **fixed_sib1_mcs**:  Optional UINT (5). Sets a fixed SIB1 MCS for all UEs. Supported: [0 - 28].
       - **nof_harqs**: Optional UNIT (16). Sets the number of Downlink HARQ processes. Supported [2, 4, 6, 8, 10, 12, 16]
       - **max_consecutive_kos**: Optional UINT (100). Sets the maximum number of consecutive HARQ-ACK KOs before an RLF is reported. Supported: [0 - inf]
       - **rv_sequence**: Optional UINT (0,2,3,1). Sets the redundancy version sequence to use for PDSCH. Supported: any combination of [0, 1, 2, 3]. 
       - **mcs_table**: Optional TEXT (qam64). Sets the MCS table to use for PDSCH. Supported: [qam64, qam256]. 
-      - **nof_ports**: Optional TEXT. Sets the number of ports for PDSCH. By default it is set to be equal to number of DL antennas Supported: [1,2].
+      - **nof_ports**: Optional TEXT (auto). Sets the number of ports for PDSCH. By default it is set to be equal to number of DL antennas Supported: [1, 2, 4].
 
   pusch
     - Further optional parameters to configure the Physical Uplink Shared Channel of the cell.
@@ -373,7 +388,7 @@ This is the default configuration that will be inherited by all cells, overwritt
 
       - **pg_search_space_id**: Optional UINT (1). Sets the SearchSpace to use for Paging. Supported: [0, 1]. 
       - **default_pg_cycle_in_rf**: Optional UINT (128). Sets the default Paging cycle in nof. Radio Frames. Supported: [32,64,128,256]. 
-      - **nof_pf_per_paging_cycle**: Optional TEXT (oneT). Sets the number of paging frames per DRX cycle. Supported: [oneT,halfT,quarterT,oneEighthT,oneSixteethT]. 
+      - **nof_pf_per_paging_cycle**: Optional TEXT (oneT). Sets the number of paging frames per DRX cycle. Supported: [oneT, halfT, quarterT, oneEighthT, oneSixteethT]. 
       - **pf_offset**: Optional UINT (0). Sets the paging frame offset. Supported: [0 - (nof_pf_per_paging_cycle - 1)].
       - **nof_po_per_pf**: Optional UINT (1). Sets the number of paging occasions per paging frame. Supported: [1, 2, 4]. 
 
@@ -497,6 +512,9 @@ pcap
 expert_phy
 ==============
 
+  max_proc_delay
+    - Optional INT (2). Sets the maximum allowed DL processing delay in slots. Supported: [1 - 30]. 
+
   nof_pdsch_threads
     - Optional UINT (1). Sets the number of threads for encoding PDSCH. Default value of one for no concurrency acceleration in the PDSCH encoding. Format: Positive integer greater than 0.
 
@@ -508,9 +526,6 @@ expert_phy
 
   pusch_dec_enable_early_stop
     - Optional BOOL (true). Enables the PUSCH decoder early stopping mechanism.
-
-  low_phy_dl_throttling
-    - Optional FLOAT (0). Enables throttling of the lower PHY DL baseband generation. Supported: [0, 1]
   
 test_mode
 =========
@@ -523,5 +538,7 @@ test_mode
       - **pusch_active**: Optional BOOLEAN (1). Enables the PUSCH of the UE.
       - **cqi**: Optional UINT (15). Sets the Channel Quality Information to be forwarded to the test UE. Supported: [1 - 15]. 
       - **pmi**: Optional UINT (0). Sets the Precoder Matrix Indicator to be forwarded to test UE. Supported: [0 - 3]. 
-      - **ri**: Optional UINT (1). Sets the Rank Indicator to be forwarded to the test UE. Supported: [1 - 2]. 
-
+      - **ri**: Optional UINT (1). Sets the Rank Indicator to be forwarded to the test UE. Supported: [1 - 4]. 
+      - **i_1_1**: Optional INT (0). Sets the Precoder Matrix codebook index "i_1_1" to be forwarded to test UE, in the case of more than 2 antennas. Supported: [0 - 7].
+      - **i_1_3**: Optional INT (0). Sets the Precoder Matrix codebook index "i_1_3" to be forwarded to test UE, in the case of more than 2 antennas. Supported: [0 - 1].
+      - **i_2**: Optional INT (0). Sets the Precoder Matrix codebook index "i_2" to be forwarded to test UE, in the case of more than 2 antennas. Supported: [0 - 3].
