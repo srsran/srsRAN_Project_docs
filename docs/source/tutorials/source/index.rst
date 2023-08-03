@@ -10,3 +10,4 @@ Tutorials
    cotsUE/source/index.rst
    amariUE/source/index.rst
    oranRU/source/index.rst
+   flexric/source/index.rst
