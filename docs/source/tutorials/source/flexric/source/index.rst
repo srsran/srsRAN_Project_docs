@@ -59,7 +59,7 @@ FlexRIC
 `FlexRIC <https://gitlab.eurecom.fr/mosaic5g/flexric>`_ framework that provides `O-RAN Alliance <https://www.o-ran.org/>`_ compliant E2 node Agent emulators, a NearRT-RIC and xApps written in C/C++ and Python.
 For the purpose of presenting the usage of E2 interface exposed by srsRAN Project gNodeB, we use the NearRT-RIC and an example monitoring xApp from the FlexRIC framework.
 
-Note that ORAN specifications are evolving and FlexRIC is under development with multiple tracks (i.e., git branches). Therefore, different versions of E2 protocols (i.e., E2AP, E2SM, E2SM_KPM) as well as xApp examples are present on different git branches. In fact, we found out that we can provide an end-to-end example only with `e2ap-v2` branch (commit: `0eac86b9ab16ba849470c748722978e8d7b94e73`). This code version, however, still requires a small patch (:download:`Flexric.patch <.patch/flexric.patch>`) that fixes issues with ASN1 criticality, allows for larger E2 Setup Request messages, and changes the name of the requested metric in the RIC Subscription Request message.
+Note that ORAN specifications are evolving and FlexRIC is under development with multiple tracks (i.e., git branches). Therefore, different versions of E2 protocols (i.e., E2AP, E2SM, E2SM_KPM) as well as xApp examples are present on different git branches. In fact, we found out that we can provide an end-to-end example only with `e2ap-v2` branch (commit: `0eac86b9ab16ba849470c748722978e8d7b94e73`). This code version, however, still requires a small patch (:download:`Flexric.patch <.patch/flexric.patch>`) that fixes issues with ASN1 criticality, allows for larger E2 Setup Request messages, changes the name of the requested metric in the RIC Subscription Request message and prints the content of the RIC Indication message. Note that in this version of FlexRIC the name of the requested metric in the RIC Subscription Request is hard-coded and cannot be easily changed in the xApp.
 
 The FlexRIC installation is performed as follows:
 
@@ -251,13 +251,13 @@ The console output should be similar to::
   --== srsRAN gNB (commit 491d7aa9d) ==--
 
   Available radio types: zmq.
-  Connecting to AMF on 127.0.0.1:36421
+  Connecting to NearRT-RIC on 127.0.0.1:36421
   Cell pci=1, bw=10 MHz, dl_arfcn=368500 (n3), dl_freq=1842.5 MHz, dl_ssb_arfcn=368410, ul_freq=1747.5 MHz
 
   ==== gNodeB started ===
   Type <t> to view trace
 
-The ``Connecting to AMF on 127.0.0.1:36421`` message indicates that gNB initiated a connection to the NearRT-RIC (note that displaying ``AMF`` here is a bug).
+The ``Connecting to NearRT-RIC on 127.0.0.1:36421`` message indicates that gNB initiated a connection to the NearRT-RIC.
 If the connection attempt is successful, the following (or similar) will be displayed on the NearRT-RIC console::
 
   Received message with id = 411, port = 45499 
@@ -352,21 +352,32 @@ Finally, the xApp sends the RIC Subscription Request message and periodically re
   [xApp]: SUBSCRIPTION RESPONSE received
   Pending event size before remove = 1 
   [xApp]: Successfully SUBSCRIBED to ran function = 147 
-  KPM ind_msg latency = 1691051157 seconds
-  KPM ind_msg latency = 1691051158 seconds
-  KPM ind_msg latency = 1691051159 seconds
-  KPM ind_msg latency = 1691051160 seconds
-  KPM ind_msg latency = 1691051161 seconds
-  KPM ind_msg latency = 1691051162 seconds
-  KPM ind_msg latency = 1691051163 seconds
-  KPM ind_msg latency = 1691051164 seconds
-  KPM ind_msg latency = 1691051165 seconds
+  Received RIC Indication:
+  ---Metric: RSRP: 123
+  Received RIC Indication:
+  ---Metric: RSRP: 123
+  Received RIC Indication:
+  ---Metric: RSRP: 123
+  Received RIC Indication:
+  ---Metric: RSRP: 123
+  Received RIC Indication:
+  ---Metric: RSRP: 123
+  Received RIC Indication:
+  ---Metric: RSRP: 123
+  Received RIC Indication:
+  ---Metric: RSRP: 123
+  Received RIC Indication:
+  ---Metric: RSRP: 123
+  Received RIC Indication:
+  ---Metric: RSRP: 123
   Remove handle number = 1 
   E42 RIC_SUBSCRIPTION_DELETE_REQUEST  sdr->ric_id.ran_func_id 147  sdr->ric_id.ric_req_id 1 
   [xApp]: E42 SUBSCRIPTION-DELETE sent 
   adding event fd = 8 ev-> 7 
-  KPM ind_msg latency = 1691051166 seconds
+  Received RIC Indication:
+  ---Metric: RSRP: 123
 
+Note that in the current version, E2 agent in srsRAN gnb fills the RIC Indication message with a hard-coded value.
 
 -----
 

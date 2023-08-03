@@ -1,3 +1,32 @@
+diff --git a/examples/xApp/c/monitor/xapp_kpm_moni.c b/examples/xApp/c/monitor/xapp_kpm_moni.c
+index 7ed3b86f..3a1ea3c6 100644
+--- a/examples/xApp/c/monitor/xapp_kpm_moni.c
++++ b/examples/xApp/c/monitor/xapp_kpm_moni.c
+@@ -36,14 +36,16 @@ void sm_cb_kpm(sm_ag_if_rd_t const* rd)
+   assert(rd != NULL);
+   assert(rd->type == KPM_STATS_V0);
+ 
+-  int64_t now = time_now_us();
+-      
+-  // KPM has 1 second resolution in its indication header, while 'now' is in microseconds
+-  int64_t diff = now/1000000 - (int64_t)rd->kpm_stats.hdr.collectStartTime;
+-  if (diff > 1)
+-    printf("KPM ind_msg latency = %lu seconds\n", diff);
+-  else
+-    printf("KPM ind_msg latency < 1 seconds\n");
++  const kpm_ind_msg_t* msg = &rd->kpm_stats.msg;
++  for(size_t i = 0; i < msg->MeasData_len; i++){
++    MeasInfo_t* curMeasInfo = &msg->MeasInfo[i];
++    adapter_MeasDataItem_t* curMeasData = &msg->MeasData[i];
++    for(size_t j = 0; j < curMeasData->measRecord_len; j++){
++      adapter_MeasRecord_t* curMeasRecord = &(curMeasData->measRecord[j]);
++      printf("Received RIC Indication:\n");
++      printf("---Metric: %s: Value: %li\n", curMeasInfo->measName.buf, curMeasRecord->int_val);
++    }
++  }
+ }
+ 
+ int main(int argc, char *argv[])
 diff --git a/src/lib/ap/dec/e2ap_msg_dec_asn.c b/src/lib/ap/dec/e2ap_msg_dec_asn.c
 index 6d489a2e..86bfb9cc 100644
 --- a/src/lib/ap/dec/e2ap_msg_dec_asn.c
@@ -52,7 +81,7 @@ index 425fa365..ae5dd829 100644
        printf("[NEAR-RIC]: Accepting RAN function ID %d with def = %s \n", id, def);
      } else {
 diff --git a/src/sm/kpm_sm_v2.02/kpm_sm_ric.c b/src/sm/kpm_sm_v2.02/kpm_sm_ric.c
-index 86208a9d..e4195274 100644
+index 86208a9d..705d2add 100644
 --- a/src/sm/kpm_sm_v2.02/kpm_sm_ric.c
 +++ b/src/sm/kpm_sm_v2.02/kpm_sm_ric.c
 @@ -81,7 +81,7 @@ static sm_subs_data_t on_subscription_kpm_sm_ric(sm_ric_t const* sm_ric, const c
