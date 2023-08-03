@@ -11,7 +11,7 @@ Introduction
 This application note shows how to use the E2 interface exposed by the srsRAN Project gNodeB.
 For this purpose, we use third-party `O-RAN Alliance <https://www.o-ran.org/>`_ compliant NearRT-RIC and xApp provided in `FlexRIC <https://gitlab.eurecom.fr/mosaic5g/flexric>`_ framework. 
 
-Our E2 interface implementation is based on the following ORAN technical specifications:
+Our E2 interface implementation is based on the following O-RAN technical specifications:
 
     - O-RAN.WG3.E2AP-R003-v03.00
     - O-RAN.WG3.E2SM-R003-v03.00
@@ -37,7 +37,7 @@ For this application note, the following hardware and software are used:
 
     - PC with Ubuntu 22.04.1 LTS
     - `srsRAN Project <https://github.com/srsran/srsRAN_project>`_
-    - `srsRAN 4G <https://github.com/srsran/srsRAN_4G>`_ (23.04 or later)
+    - `srsRAN UE <https://github.com/srsran/srsRAN_4G>`_ (srsRAN 4G 23.04 or later)
     - `ZeroMQ <https://zeromq.org/>`_
     - `FlexRIC <https://gitlab.eurecom.fr/mosaic5g/flexric>`_
     - Wireshark (Version 4.0.7 or later)
@@ -54,29 +54,49 @@ Specifically, the current E2 interface implementation supports only E2SM_KPM ser
 
 -----
 
+Installation
+************
+
 FlexRIC
 =======
-`FlexRIC <https://gitlab.eurecom.fr/mosaic5g/flexric>`_ framework that provides `O-RAN Alliance <https://www.o-ran.org/>`_ compliant E2 node Agent emulators, a NearRT-RIC and xApps written in C/C++ and Python.
-For the purpose of presenting the usage of E2 interface exposed by srsRAN Project gNodeB, we use the NearRT-RIC and an example monitoring xApp from the FlexRIC framework.
+The `FlexRIC <https://gitlab.eurecom.fr/mosaic5g/flexric>`_ framework provides `O-RAN Alliance <https://www.o-ran.org/>`_ compliant E2 node Agent emulators, a NearRT-RIC and xApps written in C/C++ and Python.
+For the purpose of presenting the usage of E2 interface exposed by srsRAN Project gNodeB, we use the NearRT-RIC and an example KPM monitoring xApp from the FlexRIC framework.
 
-Note that ORAN specifications are evolving and FlexRIC is under development with multiple tracks (i.e., git branches). Therefore, different versions of E2 protocols (i.e., E2AP, E2SM, E2SM_KPM) as well as xApp examples are present on different git branches. In fact, we found out that we can provide an end-to-end example only with `e2ap-v2` branch (commit: `0eac86b9ab16ba849470c748722978e8d7b94e73`). This code version, however, still requires a small patch (:download:`Flexric.patch <.patch/flexric.patch>`) that fixes issues with ASN1 criticality, allows for larger E2 Setup Request messages, changes the name of the requested metric in the RIC Subscription Request message and prints the content of the RIC Indication message. Note that in this version of FlexRIC the name of the requested metric in the RIC Subscription Request is hard-coded and cannot be easily changed in the xApp.
+The O-RAN specifications are evolving and FlexRIC is under development with multiple tracks (i.e. git branches). Therefore, different versions of E2 protocols (i.e. E2AP, E2SM, E2SM_KPM) and xApp examples 
+are present on different git branches. Currently the srsRAN Project gNB is **only** compatible with the ``e2ap-v2`` branch (commit: ``0eac86b9``). A patch must then be applied to this branch 
+to allow the E2 nodes in the gNB to connect correctly to the near-RT RIC. You can download the patch here: 
+
+  - :download:`Flexric.patch <.patch/flexric.patch>`
+
+The patch does the following:
+
+  - Fixes issues with ASN1 criticality
+  - Allows for larger E2 Setup Request messages 
+  - Changes the name of the requested metric in the RIC Subscription Request message and prints the content of the RIC Indication message
+
+Note, in this version of FlexRIC the name of the requested metric in the RIC Subscription Request is hard-coded and cannot be easily 
+changed in the xApp.
 
 The FlexRIC installation is performed as follows:
 
-.. code::
+.. code-block:: bash
 
   git clone https://gitlab.eurecom.fr/mosaic5g/flexric.git
-  cd ./flexric
+  cd flexric
   git checkout e2ap-v2
   git apply -v ./flexric.patch
-  cd build/
-  cmake ..
+  mkdir build
+  cd build
+  cmake ../
   make
   make install
 
-Note that while by default Ubuntu 22.04.1 uses `gcc-11`, the used FlexRIC version can be built only with `gcc-10`. One possible way to switch `gcc` version is to use `update-alternatives` tool, for example::
+Note that while by default Ubuntu 22.04.1 uses `gcc-11`, the used FlexRIC version can be built only with `gcc-10`. One possible way to switch `gcc` version is to use `update-alternatives` tool, for example:
 
-  >sudo update-alternatives --config gcc
+.. code-block:: bash
+
+  sudo update-alternatives --config gcc
+
   There are 3 choices for the alternative gcc (providing /usr/bin/gcc).
 
     Selection    Path             Priority   Status
@@ -88,22 +108,12 @@ Note that while by default Ubuntu 22.04.1 uses `gcc-11`, the used FlexRIC versio
 
   Press <enter> to keep the current choice[*], or type selection number:
 
---------
-
-srsRAN 4G
-=========
-
-If you have not already done so, install the latest version of srsRAN 4G and all of its dependencies. This is outlined in the `installation guide <https://docs.srsran.com/projects/4g/en/latest/general/source/1_installation.html>`_. 
-
-Please check our srsRAN 4G `ZeroMQ Application Note <https://docs.srsran.com/projects/4g/en/latest/app_notes/source/zeromq/source/index.html>`_ for information on installing ZMQ and using it with srsRAN 4G.
-
-
 ZeroMQ
 ======
 
 On Ubuntu, ZeroMQ development libraries can be installed with:
 
-.. code::
+.. code-block:: bash
 
   sudo apt-get install libzmq3-dev
   
@@ -111,7 +121,7 @@ Alternatively, ZeroMQ can also be built from source.
 
 First, one needs to install libzmq:
 
-.. code::
+.. code-block:: bash
 
   git clone https://github.com/zeromq/libzmq.git
   cd libzmq
@@ -123,7 +133,7 @@ First, one needs to install libzmq:
 
 Second, install czmq:
 
-.. code::
+.. code-block:: bash
 
   git clone https://github.com/zeromq/czmq.git
   cd czmq
@@ -134,12 +144,17 @@ Second, install czmq:
   sudo ldconfig
 
 Finally, you need to compile srsRAN Project and srsRAN 4G (assuming you have already installed all the required dependencies). 
-Note, if you have already built and installed srsRAN 4G and srsRAN Project prior to installing ZMQ and other dependencies you 
-will have to re-build both to ensure the ZMQ drivers have been recognized correctly. 
+
+.. note::
+  If you have already built and installed srsRAN 4G and srsRAN Project prior to installing ZMQ and other dependencies you will have to re-build both to ensure the ZMQ drivers have been recognized correctly. 
+
+
+srsRAN Project
+==============
 
 For srsRAN Project, the following commands can be used to download and build from source: 
 
-.. code::
+.. code-block:: bash
 
   git clone https://github.com/srsran/srsRAN_Project.git
   cd srsRAN_Project
@@ -148,11 +163,11 @@ For srsRAN Project, the following commands can be used to download and build fro
   cmake ../ -DENABLE_EXPORT=ON -DENABLE_ZEROMQ=ON
   make -j`nproc`
 
-ZeroMQ is disbaled by default, this is enabled when running ``cmake`` by including ``-DENABLE_EXPORT=ON -DENABLE_ZEROMQ=ON``. 
+ZeroMQ is disabled by default, this is enabled when running ``cmake`` by including ``-DENABLE_EXPORT=ON -DENABLE_ZEROMQ=ON``. 
 
 Pay extra attention to the cmake console output. Make sure you read the following line:
 
-.. code::
+.. code-block:: bash
 
   ...
   -- FINDING ZEROMQ.
@@ -161,8 +176,14 @@ Pay extra attention to the cmake console output. Make sure you read the followin
   -- Found libZEROMQ: /usr/local/include, /usr/local/lib/libzmq.so
   ...
 
------
+srsUE
+=====
 
+If you have not already done so, install the latest version of srsRAN 4G and all of its dependencies. This is outlined in the `installation guide <https://docs.srsran.com/projects/4g/en/latest/general/source/1_installation.html>`_. 
+
+Please check our srsRAN 4G `ZeroMQ Application Note <https://docs.srsran.com/projects/4g/en/latest/app_notes/source/zeromq/source/index.html>`_ for information on installing ZMQ and using it with srsRAN 4G/ srsUE.
+
+-----
 
 Configuration
 *************
@@ -183,19 +204,25 @@ gNB
 
 The following changes need to be made to the gNB configuration file.
 
-5G core network is not needed to present the E2 functionality, therefore we disable it::
+5G core network is not needed to present the E2 functionality, therefore we disable it:
+
+.. code-block:: yaml
 
   amf:
     no_core: true                     # Core is not needed for the purpose of presenting E2 operation
 
-Enable E2 agents in all DUs and enable E2SM_KPM service module::
+Enable E2 agents in all DUs and enable E2SM_KPM service module:
+
+.. code-block:: yaml
 
   e2:
     enable_du_e2: true                # Enable DU E2 agent (one for each DU instance)
     e2sm_kpm_enabled: true            # Enable KPM service module
 
 
-Enable E2AP packet captures and set the name of the output pcap file::
+Enable E2AP packet captures and set the name of the output pcap file:
+
+.. code-block:: yaml
 
   pcap:
     e2ap_enable: true                 # Set to true to enable E2AP PCAPs.
@@ -217,11 +244,15 @@ The following order should be used when running the network:
 NearRT-RIC
 ==========
 
-Start example NearRT-RIC provided in FlexRIC framework::
+Start example NearRT-RIC provided in FlexRIC framework:
+
+.. code-block:: bash
 
   ./flexric/build/examples/ric/nearRT-RIC
 
-The console output should be similar to:: 
+The console output should be similar to:
+
+.. code-block:: bash
 
   Setting the config -c file to /usr/local/etc/flexric/flexric.conf
   Setting path -p for the shared libraries to /usr/local/lib/flexric/
@@ -232,7 +263,7 @@ The console output should be similar to::
   [NEAR-RIC]: Loading SM ID = 146 with def = TC_STATS_V0 
   [NEAR-RIC]: Loading SM ID = 145 with def = SLICE_STATS_V0 
   [NEAR-RIC]: Loading SM ID = 143 with def = RLC_STATS_V0 
-  [NEAR-RIC]: Loading SM ID = 147 with def = ORAN-E2SM-KPM 
+  [NEAR-RIC]: Loading SM ID = 147 with def = O-RAN-E2SM-KPM 
   [NEAR-RIC]: Loading SM ID = 144 with def = PDCP_STATS_V0 
   [iApp]: Initializing ... 
   [iApp]: nearRT-RIC IP Address = 127.0.0.1, PORT = 36422
@@ -242,11 +273,15 @@ The console output should be similar to::
 gNB
 ===
 
-We run gNB directly from the build folder (the config file is also located there) with the following command::
+We run gNB directly from the build folder (the config file is also located there) with the following command:
+
+.. code-block:: bash
 
 	sudo ./gnb -c gnb_conf.yaml
 
-The console output should be similar to:: 
+The console output should be similar to:
+
+.. code-block:: bash
 
   --== srsRAN gNB (commit 491d7aa9d) ==--
 
@@ -258,23 +293,30 @@ The console output should be similar to::
   Type <t> to view trace
 
 The ``Connecting to NearRT-RIC on 127.0.0.1:36421`` message indicates that gNB initiated a connection to the NearRT-RIC.
-If the connection attempt is successful, the following (or similar) will be displayed on the NearRT-RIC console::
+
+If the connection attempt is successful, the following (or similar) will be displayed on the NearRT-RIC console:
+
+.. code-block:: bash
 
   Received message with id = 411, port = 45499 
   [E2AP] Received SETUP-REQUEST from PLMN   1. 1 Node ID 411 RAN type ngran_gNB
-  [NEAR-RIC]: Accepting RAN function ID 147 with def = `0ORAN-E2SM-KPM 
+  [NEAR-RIC]: Accepting RAN function ID 147 with def = `0O-RAN-E2SM-KPM` 
   [NEAR-RIC]: Accepting interfaceType 0
 
 
 srsUE
 =====
 
-Next, we start srsUE. This is also done directly from within the build folder, with the config file in the same location::
+Next, we start srsUE. This is also done directly from within the build folder, with the config file in the same location:
+
+.. code-block:: bash
 
 	sudo ./srsue ./ue_zmq.conf
 
-If srsUE connects successfully to the network, the following (or similar) should be displayed on the console:: 
-  
+If srsUE connects successfully to the network, the following (or similar) should be displayed on the console:
+
+.. code-block:: bash
+
   Active RF plugins: libsrsran_rf_uhd.so libsrsran_rf_zmq.so
   Inactive RF plugins: 
   Reading configuration file ./ue_zmq.conf...
@@ -297,17 +339,21 @@ If srsUE connects successfully to the network, the following (or similar) should
 
 Note that there is no core network present, therefore UE will not be assigned any IP address.
 
-
 xApp
 ====
 
 We use an example `xapp_kpm_moni` xApp from the FlexRIC framework. The application connects to NearRT-RIC and uses E2SM_KPM service module to subscribe for measurements of a single metric (i.e., RSRP).
-We start the xApp with the following command::
+
+Start the xApp with the following command:
+
+.. code-block:: bash
 
   ./examples/xApp/c/monitor/xapp_kpm_moni
 
-If xApp connects successfully to the NearRT-RIC, the following (or similar) should be displayed on the console:: 
-  
+If xApp connects successfully to the NearRT-RIC, the following (or similar) should be displayed on the console:
+
+.. code-block:: bash
+
   Setting the config -c file to /usr/local/etc/flexric/flexric.conf
   Setting path -p for the shared libraries to /usr/local/lib/flexric/
   [xAapp]: Initializing ... 
@@ -324,7 +370,7 @@ If xApp connects successfully to the NearRT-RIC, the following (or similar) shou
   [NEAR-RIC]: Loading SM ID = 146 with def = TC_STATS_V0 
   [NEAR-RIC]: Loading SM ID = 145 with def = SLICE_STATS_V0 
   [NEAR-RIC]: Loading SM ID = 143 with def = RLC_STATS_V0 
-  [NEAR-RIC]: Loading SM ID = 147 with def = ORAN-E2SM-KPM 
+  [NEAR-RIC]: Loading SM ID = 147 with def = O-RAN-E2SM-KPM 
   [NEAR-RIC]: Loading SM ID = 144 with def = PDCP_STATS_V0 
   Filename = /tmp/xapp_db_1691051154281476 
    [xApp]: E42 SETUP-REQUEST sent
@@ -337,7 +383,9 @@ If xApp connects successfully to the NearRT-RIC, the following (or similar) shou
   Registered node 0 ran func id = 147 
    Generated of req_id = 1 
 
-The following (or similar) will be displayed on the NearRT-RIC console::
+The following (or similar) will be displayed on the NearRT-RIC console:
+
+.. code-block:: bash
 
   [iApp]: E42 SETUP-REQUEST received
   [iApp]: E42 SETUP-RESPONSE sent
@@ -345,7 +393,9 @@ The following (or similar) will be displayed on the NearRT-RIC console::
   [E2AP] SUBSCRIPTION REQUEST generated
   [NEAR-RIC]: nb_id 411 port = 45499
 
-Finally, the xApp sends the RIC Subscription Request message and periodically receives RIC Indication messages with the recent measurements of a specific metric. The following (or similar) should be displayed on the console:: 
+Finally, the xApp sends the RIC Subscription Request message and periodically receives RIC Indication messages with the recent measurements of a specific metric. The following (or similar) should be displayed on the console:
+
+.. code-block:: bash
 
   [xApp]: RIC SUBSCRIPTION REQUEST sent
   adding event fd = 8 ev-> 5 
@@ -409,7 +459,7 @@ Wireshark can be used to collect E2AP packets exchanged between E2 agent (locate
 
   1. Start sniffing on the loopback interface.
   2. Set filter to `sctp.port == 36421`.
-  3. Right-click on any packet -> Decode As.. -> set Current to E2AP
+  3. Right-click on any packet -> Decode As -> set Current to E2AP
   4. Now filter can be set to `e2ap` to show only E2AP messages.
 
 Note that at least Wireshark version 4.0.7 is needed to correctly decode and display E2AP packets (i.e., earlier Wireshark versions do not support E2APv3 protocol and as a result will display information about the Malformed Packets).
