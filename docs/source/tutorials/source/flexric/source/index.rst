@@ -263,7 +263,7 @@ The console output should be similar to:
   [NEAR-RIC]: Loading SM ID = 146 with def = TC_STATS_V0 
   [NEAR-RIC]: Loading SM ID = 145 with def = SLICE_STATS_V0 
   [NEAR-RIC]: Loading SM ID = 143 with def = RLC_STATS_V0 
-  [NEAR-RIC]: Loading SM ID = 147 with def = O-RAN-E2SM-KPM 
+  [NEAR-RIC]: Loading SM ID = 147 with def = ORAN-E2SM-KPM 
   [NEAR-RIC]: Loading SM ID = 144 with def = PDCP_STATS_V0 
   [iApp]: Initializing ... 
   [iApp]: nearRT-RIC IP Address = 127.0.0.1, PORT = 36422
@@ -300,7 +300,7 @@ If the connection attempt is successful, the following (or similar) will be disp
 
   Received message with id = 411, port = 45499 
   [E2AP] Received SETUP-REQUEST from PLMN   1. 1 Node ID 411 RAN type ngran_gNB
-  [NEAR-RIC]: Accepting RAN function ID 147 with def = `0O-RAN-E2SM-KPM` 
+  [NEAR-RIC]: Accepting RAN function ID 147 with def = `0ORAN-E2SM-KPM` 
   [NEAR-RIC]: Accepting interfaceType 0
 
 
@@ -370,7 +370,7 @@ If xApp connects successfully to the NearRT-RIC, the following (or similar) shou
   [NEAR-RIC]: Loading SM ID = 146 with def = TC_STATS_V0 
   [NEAR-RIC]: Loading SM ID = 145 with def = SLICE_STATS_V0 
   [NEAR-RIC]: Loading SM ID = 143 with def = RLC_STATS_V0 
-  [NEAR-RIC]: Loading SM ID = 147 with def = O-RAN-E2SM-KPM 
+  [NEAR-RIC]: Loading SM ID = 147 with def = ORAN-E2SM-KPM 
   [NEAR-RIC]: Loading SM ID = 144 with def = PDCP_STATS_V0 
   Filename = /tmp/xapp_db_1691051154281476 
    [xApp]: E42 SETUP-REQUEST sent
@@ -459,7 +459,7 @@ Wireshark can be used to collect E2AP packets exchanged between E2 agent (locate
 
   1. Start sniffing on the loopback interface.
   2. Set filter to `sctp.port == 36421`.
-  3. Right-click on any packet -> Decode As -> set Current to E2AP
+  3. Right-click on any packet -> Decode As.\. -> set Current to E2AP
   4. Now filter can be set to `e2ap` to show only E2AP messages.
 
 Note that at least Wireshark version 4.0.7 is needed to correctly decode and display E2AP packets (i.e., earlier Wireshark versions do not support E2APv3 protocol and as a result will display information about the Malformed Packets).
