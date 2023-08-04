@@ -83,6 +83,39 @@ amf
   no_core
     - Optional BOOLEAN (0). Setting to true allows the gNB to run without a core. Supported: [0, 1].
 
+e2
+=====
+
+  enable_du_e2
+    - Optional BOOLEAN (0). Enables the DU E2 agent. Supported: [0, 1].
+  
+  addr
+    - Optional TEXT. Sets the RIC IP address.
+
+  port
+    - Optional UINT (36421). Sets the RIC Port. Supported: [20000 - 40000].
+
+  bind_addr
+    - Optional TEXT. Sets the local IP address to bind for RIC connection. Supported: IPv4 address.
+  
+  sctp_rto_initial
+    - Optional INT. Sets the initial retransmission timeout when creating the SCTP connection.
+
+  sctp_rto_min
+    - Optional INT. Sets the minimum retransmission timeout for the SCTP connection.
+
+  sctp_rto_max
+    - Optional INT. Sets the maximum retransmission timeout for the SCTP connection.
+
+  sctp_initial_max_attempts
+    - Optional INT. Sets the maximum retransmission attempts for the initial SCTP connection.
+
+  sctp_max_init_timeo
+    - Optional INT. Sets the maximum retransmission timeout for the initial SCTP connection.
+
+  e2sm_kpm_enabled
+    - Optional BOOLEAN (0). Enabled the E2SM KPM service module. Supported: [0, 1]. 
+
 cu_cp
 =====
 
@@ -93,12 +126,15 @@ cu_cp
     - Further optional parameters to configure Mobility.
 
     - **cells**: Optional TEXT. Sets the list of cells known to the CU-CP, their configs (if not provided over F1) and their respective neighbor cells.
-       - **nr_cell_id**: UINT. The ID of this serving cell.
+  
+       - **nr_cell_id**: Required UINT. The ID of this serving cell.
        - **periodic_report_cfg_id**: Optional UINT. The periodical report configuration to use for this serving cell.
-       - **ncells**: TEXT. List of neighbor cells.
-           - **nr_cell_id**: UINT. The ID of this neighbor cell.
-           - **report_configs**: TEXT. List of report configurations to use for measurements of this neighbor cell.
-       - **gnb_id**: UINT. The ID of this gNB.
+       - **ncells**: Required TEXT. List of neighbor cells.
+       
+           - **nr_cell_id**: Required UINT. The ID of this neighbor cell.
+           - **report_configs**: Required TEXT. List of report configurations to use for measurements of this neighbor cell.
+      
+       - **gnb_id**: Optional UINT. The ID of this gNB.
        - **ssb_arfcn**: Optional UINT. The SSB ARFCN of this serving cell. Must be present if not provided over F1.
        - **band**: Optional UINT. The NR band of this serving cell cell. Must be present if not provided over F1.
        - **ssb_scs**: Optional UINT. The SSB subcarrier spacing of this serving cell in KHz. Must be present if not provided over F1.
@@ -107,6 +143,7 @@ cu_cp
        - **ssb_duration**: Optional UINT. The SSB duration of this serving cell in subframes. Must be present if not provided over F1.
 
     - **report_configs**: Optional TEXT. Sets the list of report congfigurations to dynamically build a measurement configuration sent to the UEs using the below values.
+
        - **report_cfg_id**: Required UINT. The ID of this report configuration.
        - **report_type**: Required TEXT. The type of the report. Supported: [event_triggered, periodical]. Note that periodical reports are only supported for serving cells.
        - **report_interval_ms**: Optional UINT (1024). The report interval in ms.
