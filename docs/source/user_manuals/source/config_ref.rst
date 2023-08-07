@@ -125,6 +125,8 @@ cu_cp
   mobility
     - Further optional parameters to configure Mobility.
 
+    - **trigger_handover_from_measurements**: Optional BOOLEAN (0). Sets whether or not to start HO if neighbor cells become stronger. Supported: [0, 1]. 
+
     - **cells**: Optional TEXT. Sets the list of cells known to the CU-CP, their configs (if not provided over F1) and their respective neighbor cells.
   
        - **nr_cell_id**: Required UINT. The ID of this serving cell.
@@ -404,6 +406,26 @@ This is the default configuration that will be inherited by all cells, overwritt
       - **beta_offset_csi_p2_idx_1**: Optional UINT (9). Sets the b_offset_csi_p2_idx_1 part of UCI-OnPUSCH. Supported: [0 - 31].
       - **beta_offset_csi_p2_idx_2**: Optional UINT (9). Sets the b_offset_csi_p2_idx_2 part of UCI-OnPUSCH. Supported: [0 - 31].
 
+  pucch
+    - Further optional parameters to configure the Physical Uplink Control Channel of the cell.
+
+      - **p0_nomial**: Optional UINT (-90). Sets the power control parameter P0 for PUCCH transmissions in dBm. Supported: multiples of 2 and within the [-202, 24] interval.
+      - **sr_period_ms**: Optional UINT (40). Sets the SR period in milliseconds. Supported: [1,2,4,8,10,16,20,40,80,160,320].
+      - **f1_nof_ue_res_harq**: Optional UINT (3). Sets the number of PUCCH F1 resources available per UE for HARQ. Supported: [1 - 8].
+      - **f1_nof_cells_res_sr**: Optional UINT (2). Sets the number of PUCCH F1 resources available per cell for SR. Supported: [1 - 10].
+      - **f1_nof_symbols**: Optional UINT (14). Sets the number of symbols for PUCCH F1 resources. Supported: [4 - 14].
+      - **f1_enable_occ**: Optional BOOLEAN (0). Enables OCC for PUCCH F1. Supported: [0, 1].
+      - **f1_nof_cyclic_shifts**: Optional UINT (1). Sets the number of possible cyclic shifts available for PUCCH F1 resources. Supported: [1,2,3,4,6,12].
+      - **f1_intraslot_freq_hop**: Optional BOOLEAN (0). Enables intra-slot frequency hopping for PUCCH F1. Supported: [0, 1].
+      - **nof_cell_harq_pucch_res_sets**: Optional UINT (1). Sets the number of separate PUCCH resource sets for HARQ-ACK that are available in the cell. The higher the number of sets, the lower the chances UEs have to share the same PUCCH resources. Supported: [1 - 10].
+      - **f2_nof_ue_res_harq**: Optional UINT (6). Sets the number of PUCCH F2 resources available per UE for HARQ. Supported: [1 - 8].
+      - **f2_nof_cells_res_csi**: Optional UINT (1). Sets the number of PUCCH F2 resources available per cell for CSI. Supported: [1 - 10].
+      - **f2_nof_symbols**: Optional UINT (2). Sets the number of symbols for PUCCH F2 resources. Supported: [1 - 2].
+      - **f2_max_nof_rbs**: Optional UINT (1). Sets the max number of RBs for PUCCH F2 resources. Supported: [1 - 16].
+      - **f2_max_payload**: Optional INT. Sets the max number of payload bits for PUCCH F2 resources. Supported [1 - 11].
+      - **f2_max_code_rate**: Optional TEXT (dot35). Sets the PUCCH F2 max code rate. Supported: [dot08, dot15, dot25, dot35, dot45, dot60, dot80].
+      - **f2_intraslot_freq_hop**: Optional BOOLEAN (0). Enables intra-slot frequency hopping for PUCCH F2. Supported: [0, 1].
+
   prach
     - Further optional parameters to configure the Physical Random Access Channel of the cell.
 
@@ -529,6 +551,9 @@ log
   phy_rx_symbols_filename
     - Optional TEXT. Print received symbols to file. Symbols will be printed if a valid path is set. Format: file path.
 
+  tracing_filename
+    - Optional TEXT. Set to a valid file name to enable tracing log. 
+
 .. _manual_config_ref_pcap:
 
 pcap
@@ -558,6 +583,12 @@ pcap
   f1ap_filename
     - Optional TEXT (/tmp/gnb_f1ap.pcap). Path for F1AP PCAPs.
 
+  e2ap_enable
+    - Optional BOOL (false). Enable/disable E2AP packet capture.
+
+  e2ap_filename
+    - Optional TEXT (/tmp/gnb_e2ap.pcap). Path for E1AP PCAPs.
+  
 
 expert_phy
 ==============
@@ -569,13 +600,25 @@ expert_phy
     - Optional UINT (1). Sets the number of threads for encoding PDSCH. Default value of one for no concurrency acceleration in the PDSCH encoding. Format: Positive integer greater than 0.
 
   nof_ul_threads
-    - Optional UINT (4). Sets number of threads for processing PUSCH and PUCCH. It is set to 4 by default unless the available hardware concurrency is limited in which case will use a minimum of one thread.
+    - Optional UINT (4). Sets number of upper PHY threads to process uplink. It is set to 4 by default unless the available hardware concurrency is limited in which case will use a minimum of one thread.
 
+  nof_dl_threads
+    - Optional UINT (1). Sets number of upper PHY threads to process downlinklink.
+  
   pusch_dec_max_iterations
     - Optional UINT (6). Sets the number of PUSCH LDPC decoder iterations. Format: Positive integer greater than 0.
 
   pusch_dec_enable_early_stop
     - Optional BOOL (true). Enables the PUSCH decoder early stopping mechanism.
+
+buffer_pool
+===========
+
+  nof_segments
+    - Optional UINT (524288). Sets the number of segments allocated by the buffer pool. 
+
+  segment_size
+    - Optional UINT (1024). Sets the size of each buffer pool segment in bytes. 
 
 test_mode
 =========
@@ -592,3 +635,15 @@ test_mode
       - **i_1_1**: Optional INT (0). Sets the Precoder Matrix codebook index "i_1_1" to be forwarded to test UE, in the case of more than 2 antennas. Supported: [0 - 7].
       - **i_1_3**: Optional INT (0). Sets the Precoder Matrix codebook index "i_1_3" to be forwarded to test UE, in the case of more than 2 antennas. Supported: [0 - 1].
       - **i_2**: Optional INT (0). Sets the Precoder Matrix codebook index "i_2" to be forwarded to test UE, in the case of more than 2 antennas. Supported: [0 - 3].
+
+expert
+======
+
+  enable_tuned_affinity_profile
+    - Optional BOOLEAN (0). Enables usage of tuned affinity profile. Supported: [0, 1]. 
+
+  number_of_threads_per_cpu
+    - Optional UINT (2). Sets the number of threads per physcial CPU. Supported [1 - 2].
+
+  number_of_reserved_cored
+    - Optional UINT (4). Sets the number of CPU cores reserved for non-priority tasks. Supported: [1 - 1024]. 
