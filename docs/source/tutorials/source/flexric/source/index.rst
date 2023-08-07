@@ -28,8 +28,6 @@ The following diagram presents the setup architecture used in this application n
   :align: center
 
 
-Note that no core network is present, as it is not needed to show the operation of the E2 interface. 
-
 Hardware and Software Overview
 ******************************
 
@@ -40,6 +38,7 @@ For this application note, the following hardware and software are used:
     - `srsRAN UE <https://github.com/srsran/srsRAN_4G>`_ (srsRAN 4G 23.04 or later)
     - `ZeroMQ <https://zeromq.org/>`_
     - `FlexRIC <https://gitlab.eurecom.fr/mosaic5g/flexric>`_
+    - `Open5GS 5G Core <https://open5gs.org/>`_
     - Wireshark (Version 4.0.7 or later)
 
 
@@ -72,9 +71,9 @@ The patch does the following:
 
   - Fixes issues with ASN1 criticality
   - Allows for larger E2 Setup Request messages 
-  - Changes the name of the requested metric in the RIC Subscription Request message and prints the content of the RIC Indication message
+  - Changes the name of the requested metric in the ``RIC Subscription Request`` message and prints the content of the RIC Indication message
 
-Note, in this version of FlexRIC the name of the requested metric in the RIC Subscription Request is hard-coded and cannot be easily 
+Note, in this version of FlexRIC the name of the requested metric in the ``RIC Subscription Request`` is hard-coded and cannot be easily 
 changed in the xApp.
 
 The FlexRIC installation is performed as follows:
@@ -107,6 +106,20 @@ Note that while by default Ubuntu 22.04.1 uses `gcc-11`, the used FlexRIC versio
     3            /usr/bin/gcc-9    9         manual mode
 
   Press <enter> to keep the current choice[*], or type selection number:
+
+
+Open5GS
+=======
+
+For this example we are using Open5GS as the 5G Core. 
+
+Open5GS is a C-language Open Source implementation for 5G Core and EPC. The following links will provide you 
+with the information needed to download and set-up Open5GS so that it is ready to use with srsRAN: 
+
+    - `GitHub <https://github.com/open5gs/open5gs>`_ 
+    - `Quickstart Guide <https://open5gs.org/open5gs/docs/guide/01-quickstart/>`_
+
+For the purpose of this application note, we will use a dockerized Open5GS version provided in srsRAN Project at ``srsgnb/docker``.
 
 ZeroMQ
 ======
@@ -204,13 +217,6 @@ gNB
 
 The following changes need to be made to the gNB configuration file.
 
-5G core network is not needed to present the E2 functionality, therefore we disable it:
-
-.. code-block:: yaml
-
-  amf:
-    no_core: true                     # Core is not needed for the purpose of presenting E2 operation
-
 Enable E2 agents in all DUs and enable E2SM_KPM service module:
 
 .. code-block:: yaml
@@ -235,11 +241,25 @@ Running the Network
 
 The following order should be used when running the network:
 
-  1. NearRT-RIC
-  2. gNB
-  3. UE
-  4. xApp
+  1. Open5GS
+  2. NearRT-RIC
+  3. gNB
+  4. UE
+  5. Start IP traffic (e.g., ping)
+  6. xApp
 
+
+Open5GS Core
+============
+
+srsRAN Project provides a dockerized version of the Open5GS. It is a convenient and quick way to start the core network. You can run it as follows:
+
+.. code-block:: bash
+
+  cd ./srsRAN_Project/docker
+  docker-compose up --build 5gc
+
+Note that we have already configured Open5GS to operate correctly with srsRAN Project gNB. Moreover, the UE database is populated with the credentials used by our srsUE. 
 
 NearRT-RIC
 ==========
@@ -277,22 +297,23 @@ We run gNB directly from the build folder (the config file is also located there
 
 .. code-block:: bash
 
-	sudo ./gnb -c gnb_conf.yaml
+	sudo ./gnb -c gnb_zmq.yaml
 
 The console output should be similar to:
 
 .. code-block:: bash
 
-  --== srsRAN gNB (commit 491d7aa9d) ==--
+  --== srsRAN gNB (commit 611bf17fe) ==--
 
+  Connecting to AMF on 10.53.1.2:38412
   Available radio types: zmq.
   Connecting to NearRT-RIC on 127.0.0.1:36421
   Cell pci=1, bw=10 MHz, dl_arfcn=368500 (n3), dl_freq=1842.5 MHz, dl_ssb_arfcn=368410, ul_freq=1747.5 MHz
 
   ==== gNodeB started ===
-  Type <t> to view trace
 
-The ``Connecting to NearRT-RIC on 127.0.0.1:36421`` message indicates that gNB initiated a connection to the NearRT-RIC.
+
+The ``Connecting to AMF on 10.53.1.2:38412`` message indicates that gNB initiated a connection to the core. While, the ``Connecting to NearRT-RIC on 127.0.0.1:36421`` message indicates that gNB initiated a connection to the NearRT-RIC.
 
 If the connection attempt is successful, the following (or similar) will be displayed on the NearRT-RIC console:
 
@@ -334,10 +355,39 @@ If srsUE connects successfully to the network, the following (or similar) should
   Waiting PHY to initialize ... done!
   Attaching UE...
   Random Access Transmission: prach_occasion=0, preamble_index=0, ra-rnti=0x39, tti=334
-  Received RRC Reject
   Random Access Complete.     c-rnti=0x4601, ta=0
+  RRC Connected
+  PDU Session Establishment successful. IP: 10.45.1.2
+  RRC NR reconfiguration successful.
 
-Note that there is no core network present, therefore UE will not be assigned any IP address.
+It is clear that the connection has been made successfully once the UE has been assigned an IP, this is seen in ``PDU Session Establishment successful. IP: 10.45.10.2``. 
+The NR connection is then confirmed with the ``RRC NR reconfiguration successful.`` message. 
+
+IP Traffic with ping
+====================
+
+Ping is the simplest tool to test the end-to-end connectivity in the network, i.e., it tests whether the UE and core can communicate. Here, we use it to generate traffic from UE, hence the gNB can measure its channel characteristics (e.g., ``RSRP``).
+
+To run ping from UE, use:
+
+.. code-block:: bash
+
+  sudo ip netns exec ue1 ping -i 0.1 10.45.1.1
+
+
+Note that we set the ping interval to 0.1s to increase the traffic volume.
+
+Example **ping** output:
+
+.. code-block:: bash
+
+  PING 10.45.1.1 (10.45.1.1) 56(84) bytes of data.
+  64 bytes from 10.45.1.1: icmp_seq=1 ttl=64 time=61.4 ms
+  64 bytes from 10.45.1.1: icmp_seq=2 ttl=64 time=41.9 ms
+  64 bytes from 10.45.1.1: icmp_seq=3 ttl=64 time=28.5 ms
+  64 bytes from 10.45.1.1: icmp_seq=4 ttl=64 time=54.9 ms
+  64 bytes from 10.45.1.1: icmp_seq=5 ttl=64 time=37.7 ms
+
 
 xApp
 ====
@@ -393,7 +443,7 @@ The following (or similar) will be displayed on the NearRT-RIC console:
   [E2AP] SUBSCRIPTION REQUEST generated
   [NEAR-RIC]: nb_id 411 port = 45499
 
-Finally, the xApp sends the RIC Subscription Request message and periodically receives RIC Indication messages with the recent measurements of a specific metric. The following (or similar) should be displayed on the console:
+Finally, the xApp sends the ``RIC Subscription Request`` message and periodically receives RIC Indication messages with the recent measurements of a specific metric. The following (or similar) should be displayed on the console:
 
 .. code-block:: bash
 
@@ -403,31 +453,37 @@ Finally, the xApp sends the RIC Subscription Request message and periodically re
   Pending event size before remove = 1 
   [xApp]: Successfully SUBSCRIBED to ran function = 147 
   Received RIC Indication:
-  ---Metric: RSRP: 123
+  ---Metric: RSRP: Value: 65
   Received RIC Indication:
-  ---Metric: RSRP: 123
+  ---Metric: RSRP: Value: 65
   Received RIC Indication:
-  ---Metric: RSRP: 123
+  ---Metric: RSRP: Value: 65
   Received RIC Indication:
-  ---Metric: RSRP: 123
+  ---Metric: RSRP: Value: 65
   Received RIC Indication:
-  ---Metric: RSRP: 123
+  ---Metric: RSRP: Value: 65
   Received RIC Indication:
-  ---Metric: RSRP: 123
+  ---Metric: RSRP: Value: 65
   Received RIC Indication:
-  ---Metric: RSRP: 123
+  ---Metric: RSRP: Value: 65
   Received RIC Indication:
-  ---Metric: RSRP: 123
+  ---Metric: RSRP: Value: 65
   Received RIC Indication:
-  ---Metric: RSRP: 123
+  ---Metric: RSRP: Value: 65
   Remove handle number = 1 
   E42 RIC_SUBSCRIPTION_DELETE_REQUEST  sdr->ric_id.ran_func_id 147  sdr->ric_id.ric_req_id 1 
   [xApp]: E42 SUBSCRIPTION-DELETE sent 
   adding event fd = 8 ev-> 7 
   Received RIC Indication:
-  ---Metric: RSRP: 123
+  ---Metric: RSRP: Value: 65
+  [xApp]: E42 SUBSCRIPTION DELETE RESPONSE received
+  Pending event size before remove = 1 
+  [xApp]: Successfully received SUBSCRIPTION-DELETE-RESPONSE 
+  Closing the agent socket: Socket operation on non-socket 
+  [xApp]: Sucessfully stopped 
+  Test xApp run SUCCESSFULLY
 
-Note that in the current version, E2 agent in srsRAN gnb fills the RIC Indication message with a hard-coded value.
+Note that when running over a virtual RF channel (i.e., with the ZMQ-based RF driver) the RSRP value does not change.
 
 -----
 
