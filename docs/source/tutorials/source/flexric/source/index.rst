@@ -224,7 +224,8 @@ Enable E2 agents in all DUs and enable E2SM_KPM service module:
   e2:
     enable_du_e2: true                # Enable DU E2 agent (one for each DU instance)
     e2sm_kpm_enabled: true            # Enable KPM service module
-
+    addr: 127.0.0.1                   # RIC IP address
+    port: 36421                       # RIC port
 
 Enable E2AP packet captures and set the name of the output pcap file:
 
@@ -526,4 +527,10 @@ The figure below shows an example trace of E2AP packets.
   :scale: 40%
   :align: center
 
+-----
 
+
+Troubleshooting
+***************
+
+E2AP dissector is still under development in Wireshark. Therefore, some fields are not decoded correctly in Wireshark version 4.0.7. Currently, the best option is to compile Wireshark from the source code. The screenshots presented in this tutorial were obtained with Wireshark version 4.1.0 (v4.1.0rc0-3390-g4f4a54e6d3f9).
