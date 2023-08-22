@@ -76,6 +76,14 @@ The patch does the following:
 Note, in this version of FlexRIC the name of the requested metric in the ``RIC Subscription Request`` is hard-coded and cannot be easily 
 changed in the xApp.
 
+FlexRIC requires the following dependencies to be installed (see `FlexRIC Installation Guide <https://gitlab.eurecom.fr/mosaic5g/flexric>`_ for details):
+
+.. code-block:: bash
+
+  sudo apt-get update
+  sudo apt-get install swig libsctp-dev cmake-curses-gui libpcre2-dev python3 python3-dev
+
+
 The FlexRIC installation is performed as follows:
 
 .. code-block:: bash
@@ -399,7 +407,7 @@ Start the xApp with the following command:
 
 .. code-block:: bash
 
-  ./examples/xApp/c/monitor/xapp_kpm_moni
+  ./flexric/build/examples/xApp/c/monitor/xapp_kpm_moni
 
 If xApp connects successfully to the NearRT-RIC, the following (or similar) should be displayed on the console:
 
