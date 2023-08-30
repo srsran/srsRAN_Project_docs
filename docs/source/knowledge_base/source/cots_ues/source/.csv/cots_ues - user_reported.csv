@@ -15,7 +15,7 @@ Sierra,EM9191,,Snapdragon X55,,78 - 40 MHz,,,"..
 .. reporter: ChengDaHal
 .. channel: https://github.com/srsran/srsRAN_Project/discussions/36#discussioncomment-5456973"
 Xiaomi,Redmi Note 10 5G,,Mediatek MT6833 Dimensity 700,n28,"| n77
-| n78",,,"| Activate hidden SA option by dialing *#*#726633#*#*
+| n78",,,"| Activate hidden SA option by dialing \*#\*#726633#\*#\*
 ..
 .. reporter: alvaroalfaro612
 .. channel: https://github.com/srsran/srsRAN_Project/discussions/36#discussioncomment-5466323"
