@@ -11,14 +11,23 @@ OnePlus,10 Pro,,SM8450 Snapdragon 8 Gen 1,n3,n78 - 100 MHz,,USRP X410 [9]_,"..
 Quectel,RM510Q-GL,,,,,,,"..
 .. reporter: jtplatt99
 .. channel: https://github.com/srsran/srsRAN_Project/discussions/36#discussion-4992545"
-Sierra,EM9191,,Snapdragon X55,,78 - 40 MHz,,,"..
+Sierra,EM9191,,Snapdragon X55,,n78 - 40 MHz,,,"..
 .. reporter: ChengDaHal
 .. channel: https://github.com/srsran/srsRAN_Project/discussions/36#discussioncomment-5456973"
-Xiaomi,Redmi Note 10 5G,,Mediatek MT6833 Dimensity 700,n28,"| n77
-| n78",,,"| Activate hidden SA option by dialing *#*#726633#*#*
-..
+Xiaomi,Redmi Note 10 5G,,Mediatek MT6833 Dimensity 700,n28,N77 and 78,,,"| Activate hidden SA option by dialing *#*#726633#*#*
 .. reporter: alvaroalfaro612
 .. channel: https://github.com/srsran/srsRAN_Project/discussions/36#discussioncomment-5466323"
 ZTE,MU5002/MU5001,,SDX55+QCA6391,,,,,"..
 .. reporter: filay
 .. channel: https://github.com/srsran/srsRAN_Project/discussions/36#discussioncomment-5516975"
+OnePlus,Nord CE 2 Lite 5G,,,,n78 - 20 MHz and 40 MHz,,B210,"| Same PLMN for both SIM and RAN
+.. reporter: improperaffo
+.. channel: https://github.com/srsran/srsRAN_Project/discussions/219"
+OnePlus,Nord CE 3 Lite 5G,,,,n78 - 20 MHz and 40 MHz,,B210,"| Same PLMN for both SIM and RAN
+.. reporter: improperaffo
+.. channel: https://github.com/srsran/srsRAN_Project/discussions/219"
+Asus,Zenfone 8,,,,n78 - 20 MHz and 40 MHz,,B210,"| Same PLMN for both SIM and RAN
+.. reporter: improperaffo
+.. channel: https://github.com/srsran/srsRAN_Project/discussions/219"
+Crosscall,Core Z5,,,,n78 - 20MHz,,,"..
+.. reporter: galalmounir"
