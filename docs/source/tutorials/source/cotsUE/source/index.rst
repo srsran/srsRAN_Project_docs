@@ -617,7 +617,7 @@ Network Not Visible
 
 - If you were previously able to see the network, but now cannot, you should eject the ISIM and insert it again. The device may be blacklisting the gNB if the device has previously tried to connect and failed. 
 
-- You should check that the gNB is transmitting correctly. This can be done with a spectrum analyzer or tools like `gr-fospher <https://kb.ettus.com/Fosphor>`_ and `Maia SDR <https://maia-sdr.org/>`_. An example of a "healthy" gNB broadcast from Maia SDR can be seen here:
+- You should check that the gNB is transmitting correctly. This can be done with a spectrum analyzer or tools like `gr-fosphor <https://kb.ettus.com/Fosphor>`_ and `Maia SDR <https://maia-sdr.org/>`_. An example of a "healthy" gNB broadcast from Maia SDR can be seen here:
 
    .. image:: .imgs/maia_sdr.png
       :scale: 50% 
@@ -633,7 +633,7 @@ If you can see the network, but cannot attach, here are some things to test:
 
   - The device may not be able to PRACH. If you are using NSG, then you will be able to see the control messages being exchanged between the UE and the gNB, check this to see whether or not the PRACH was successful. If not, here are a list of things to check:  
   
-    - The signal quality (use Maia SDR, Fospher or some other tool); you can adjust the Tx and Rx gains to compensate for this. If there are any commercial cells broadcasting in the same area of spectrum this could also be causing RF issues. 
+    - The signal quality (use Maia SDR, Fosphor or some other tool); you can adjust the Tx and Rx gains to compensate for this. If there are any commercial cells broadcasting in the same area of spectrum this could also be causing RF issues. 
     - Timing issues; if there are discrepencies in timing then the UE will not be able to connect. Use an external clock to overcome this. 
 
 
