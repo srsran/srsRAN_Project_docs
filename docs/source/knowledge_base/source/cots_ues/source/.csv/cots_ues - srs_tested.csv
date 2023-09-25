@@ -1,7 +1,7 @@
 Make,Model,Codename,Baseband,FDD,TDD,Configuration,SDR,Notes
 Google,Pixel 6,GB7N6,,"n71 - 10 MHz","","| IMSI 00101
 | gNB PLMN: 00101",USRP B210 [3]_,"| Test SIM: Sysmocom SJS1 [2]_, SJA2 [5]_ (must disable service 124 [6]_)
-| Requires disabled NR_TIMER_WAIT_IMS_REGISTRATION or SUPPORT_IMS_NR_REGISTRATION_TIMER in hidden IMS menu by dialing *#*#0702#*#*
+| Requires disabled NR_TIMER_WAIT_IMS_REGISTRATION or SUPPORT_IMS_NR_REGISTRATION_TIMER in hidden IMS menu by dialing \*#\*#0702#\*#\*
 ..
 .. reporter: Robert"
 Motorola,Edge 30 Pro,XT2201-1,SM8450 Snapdragon 8 Gen 1,"n3 - 5, 10, 20 MHz","n78 - 10, 20, 40 MHz",,"USRP B200mini [1]_, GPSDO","| Test SIM: Sysmocom SJS1 [2]_
@@ -38,11 +38,11 @@ Telit,FN990A28,,Snapdragon X62,"| n7 - 5, 10, 20 MHz
 ..
 .. reporter: Robert"
 Xiaomi,11 Lite 5G NE,,SM7325 Snapdragon 778G 5G,"n3 - 10, 20 MHz",n78 - 20 MHz,gNB PLMN: 00101,"B210, Leo Bodnar GPSDO","| Test SIM: Sysmocom SJA2 [5]_
-| Activate hidden SA option by dialing *#*#726633#*#*
+| Activate hidden SA option by dialing \*#\*#726633#\*#\*
 ..
 .. reporter: Joaquim"
 Xiaomi,12,,SM8450 Snapdragon 8 Gen 1,n3 - 20 MHz,n78 - 20 MHz,gNB PLMN: 00101,"B210, Leo Bodnar GPSDO","| Test SIM: Sysmocom SJA2 [5]_
 | Initially unstable connection, fixed by forcing NR only RAT
-| Activate hidden SA option by dialing *#*#726633#*#*
+| Activate hidden SA option by dialing \*#\*#726633#\*#\*
 ..
 .. reporter: Joaquim"

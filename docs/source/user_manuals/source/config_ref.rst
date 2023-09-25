@@ -550,6 +550,7 @@ log
 
   phy_rx_symbols_filename
     - Optional TEXT. Print received symbols to file. Symbols will be printed if a valid path is set. Format: file path.
+    - This file can be used in the `srsRAN_matlab <https://github.com/srsran/srsRAN_matlab>`_ project.
 
   tracing_filename
     - Optional TEXT. Set to a valid file name to enable tracing log. 
