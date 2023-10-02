@@ -12,5 +12,6 @@ Developer Guide
    DU/source/index.rst
    interfaces/source/index.rst
    asn1/source/index.rst
+   testing_policy/source/index.rst
    CICD_framework/source/index.rst
    

@@ -58,6 +58,7 @@ Useful resources:
    dev_guide/source/interfaces/source/index.rst
    dev_guide/source/asn1/source/index.rst
    dev_guide/source/code_guide/source/index.rst
+   dev_guide/source/testing_policy/source/index.rst
 
 .. toctree::
    :maxdepth: 1
@@ -66,7 +67,6 @@ Useful resources:
    knowledge_base/source/oran_gnb/source/index.rst
    knowledge_base/source/gnb_components/source/index.rst
    knowledge_base/source/gnb_interfaces/source/index.rst
-   knowledge_base/source/testing_policy/source/index.rst
    knowledge_base/source/cots_ues/source/index.rst
 
 .. toctree::
