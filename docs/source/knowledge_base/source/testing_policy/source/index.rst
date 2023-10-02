@@ -3,7 +3,7 @@
 Testing Policy
 ##############
 
-This section of our knowledge base outlines our comprehensive testing strategy, which adheres to the shift-left development approach. Unlike the traditional waterfall model, where testing occurs after coding, our strategy emphasizes testing at the earliest possible stages of development. This proactive approach ensures that the development team considers testing from the project's inception.
+This section of our knowledge base outlines our comprehensive testing strategy, which adheres to the `shift-left <https://devopedia.org/shift-left>`_ development approach. Unlike the traditional `waterfall <https://business.adobe.com/blog/basics/waterfall>`_ model, where testing occurs after coding, our strategy emphasizes testing at the earliest possible stages of development. This proactive approach ensures that the development team considers testing from the project's inception.
 
 Throughout the development and validation stages, we employ various types of tests to ensure the robustness and reliability of our software:
 
@@ -14,7 +14,7 @@ Throughout the development and validation stages, we employ various types of tes
 Unit Tests
 **********
 
-Unit tests are the foundational layer of our testing strategy. They scrutinize software behavior at a granular level, examining individual components in isolation. We prioritize unit testing because it is faster, more straightforward, and cost-effective compared to other types of tests. Our development team writes and executes unit tests for every Pull Request.
+Unit tests are the foundational layer of our testing strategy. They scrutinize software behavior at a granular level, examining individual components in isolation. We prioritize unit testing because it is faster, more straightforward, and cost-effective compared to other types of tests. Our development team writes unit tests during development. In most cases, new features in the code and their associated unit tests are in the same Pull Request, even in the same commit. ToIn order to merge a Pull Request into the main development branch, all unit tests (old and new) must success.
 
 Key aspects of our Unit Testing approach:
 
@@ -30,7 +30,7 @@ Key aspects of our Unit Testing approach:
 
 - Component Labeling: We label unit tests by component, making it easy to assess testing coverage for each software component.
 
-We mainly use Google Test for unit and integration tests, although we have some tests written in pure c++ without the help of a testing framework
+We mainly use `Google Test <https://github.com/google/googletest>`_ for unit and integration tests, although we have some tests written in pure C++ without the help of a testing framework
 
 ----
 
@@ -54,7 +54,7 @@ Given the complexity of our ecosystem, we still need E2E and system tests to eva
 
 - Tests with Hardware: For real-world scenarios, we employ commercial (COTS) UE devices and/or RUs to trigger complex tests. These tests evaluate behavior, performance, and integration with external components. They run nightly and weekly and provide valuable metrics and Key Performance Indicators (KPIs).
 
-To facilitate these tests, we've developed an in-house E2E testing framework, containerized for deployment flexibility, ensuring testing replicates production environments. Additionally, we utilize VIAVI solutions to validate our product.
+To facilitate these tests, we've developed an in-house E2E testing framework, containerized for deployment flexibility, ensuring testing replicates production environments. Additionally, we utilize `VIAVI <https://www.viavisolutions.com/>`_ solutions to validate our product.
 
 While our E2E test suite does not grow with every code change like unit tests, we continually add new tests when significant features are introduced or when exploratory testing identifies noteworthy scenarios to automate.
 
