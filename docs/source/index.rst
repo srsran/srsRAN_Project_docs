@@ -66,6 +66,7 @@ Useful resources:
    knowledge_base/source/oran_gnb/source/index.rst
    knowledge_base/source/gnb_components/source/index.rst
    knowledge_base/source/gnb_interfaces/source/index.rst
+   knowledge_base/source/testing_policy/source/index.rst
    knowledge_base/source/cots_ues/source/index.rst
 
 .. toctree::

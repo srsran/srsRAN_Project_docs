@@ -3,7 +3,7 @@
 Contributions
 #############
 
-Contributions to the srsRAN Project are always welcome. The easiest way to contribute is by issuing a pull request on the `srsRAN Project repository <https://github.com/srsran/srsran_project>`_. Take a look at our :ref:`code style guide <code_guide_overview>`. 
+Contributions to the srsRAN Project are always welcome. The easiest way to contribute is by issuing a pull request on the `srsRAN Project repository <https://github.com/srsran/srsran_project>`_. Take a look at our :ref:`code style guide <code_guide_overview>` and please follow our :ref:`testing policy <testing_policy>`. 
 
 We ask srsRAN Project contributors to agree to a Copyright License Agreement. This provides us with necessary permissions to use contributed code. For more information, see the FAQ below.
 
