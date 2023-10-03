@@ -3,7 +3,7 @@
 Testing Policy
 ##############
 
-This section of our knowledge base outlines our comprehensive testing strategy, which adheres to the `shift-left <https://devopedia.org/shift-left>`_ development approach. Unlike the traditional `waterfall <https://business.adobe.com/blog/basics/waterfall>`_ model, where testing occurs after coding, our strategy emphasizes testing at the earliest possible stages of development. This proactive approach ensures that the development team considers testing from the project's inception.
+This section of our knowledge base outlines our comprehensive testing strategy, which adheres to the `shift-left <https://en.wikipedia.org/wiki/Shift-left_testing>`_ development approach. Unlike the traditional `waterfall <https://en.wikipedia.org/wiki/Waterfall_model>`_ model, where testing occurs after coding, our strategy emphasizes testing at the earliest possible stages of development. This proactive approach ensures that the development team considers testing from the project's inception.
 
 Throughout the development and validation stages, we employ various types of tests to ensure the robustness and reliability of our software:
 
@@ -14,7 +14,7 @@ Throughout the development and validation stages, we employ various types of tes
 Unit Tests
 **********
 
-Unit tests are the foundational layer of our testing strategy. They scrutinize software behavior at a granular level, examining individual components in isolation. We prioritize unit testing because it is faster, more straightforward, and cost-effective compared to other types of tests. Our development team writes unit tests during development. In most cases, new features in the code and their associated unit tests are in the same Pull Request, even in the same commit. ToIn order to merge a Pull Request into the main development branch, all unit tests (old and new) must success.
+Unit tests are the foundational layer of our testing strategy. They scrutinize software behavior at a granular level, examining individual components in isolation. We prioritize unit testing because it is faster, more straightforward, and cost-effective compared to other types of tests. Our development team writes unit tests during development. In most cases, new features in the code and their associated unit tests are in the same Pull Request, even in the same commit. In order to merge a Pull Request into the main development branch, all unit tests (old and new) must success.
 
 Key aspects of our Unit Testing approach:
 
@@ -48,7 +48,7 @@ Integration tests encompass a few sub-components or complete ORAN items, verifyi
 End-to-End (E2E) Tests
 **********************
 
-Given the complexity of our ecosystem, we still need E2E and system tests to evaluate the behavior and integration of our GNB with real and simulated UEs and 5G cores. These tests are primarily managed by the testing team and follow two distinct approaches:
+Given the complexity of our ecosystem, we still need E2E and system tests to evaluate the behavior and integration of our CU/DU solutions with real and simulated UEs and 5G cores. These tests are primarily managed by the testing team and follow two distinct approaches:
 
 - Tests without Hardware: Using ZMQ and simulators, we've developed a test suite encompassing basic scenarios such as attaches, reattaches, and various types of traffic. These tests are easily executable and do not require hardware devices, making them suitable for developers to assess the software's behavior after major changes. They run nightly and can be triggered inside Pull Requests.
 
