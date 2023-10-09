@@ -196,7 +196,7 @@ cell_cfg:
     dc_offset:                              # Optional TEXT. Sets the direct Current (DC) Offset in number of subcarriers, using the common SCS as reference for carrier spacing, and the center of the gNB DL carrier as DC offset value 0. The user can additionally 
                                             # set "outside" to define that the DC offset falls outside the DL carrier or "undetermined" in the case the DC offset is unknown. Supported: [-1650 - 1649] OR [outside,undetermined,center]. 
 
-  push: 
+  pusch: 
     min_ue_mcs:                             # Optional UINT. Sets a minimum PUSCH MCS value to be used for all UEs. Supported: [0 - 28].
     max_ue_mcs:                             # Optional UINT. Sets a maximum PUSCH MCS value to be used for all UEs. Supported: [0 - 28].
     max_consecutive_kos: 100                # Optional UINT (100). Sets the maximum number of consecutive CRC KOs before an RLF is reported. Supported: [0 - inf]. 
