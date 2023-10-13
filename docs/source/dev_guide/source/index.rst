@@ -8,10 +8,9 @@ Developer Guide
 
    software_arch/source/index.rst
    code_guide/source/index.rst
-   CU/source/index.rst
-   DU/source/index.rst
-   interfaces/source/index.rst
-   asn1/source/index.rst
+   CU_cp/source/index.rst
+   CU_up/source/index.rst
+   DU_high/source/index.rst
+   DU_low/source/index.rst
    testing_policy/source/index.rst
-   CICD_framework/source/index.rst
    

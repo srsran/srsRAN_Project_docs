@@ -1,4 +1,0 @@
-.. interfaces_fapi:
-
-FAPI
-####
