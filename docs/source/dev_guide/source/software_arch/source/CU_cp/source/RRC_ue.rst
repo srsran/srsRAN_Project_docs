@@ -8,8 +8,6 @@ RRC UE
 
 -----
 
-.. toctree::
-   :maxdepth: 1
-   :caption: RRC UE Contents
+.. Add the following to TOCTREE once populated: 
 
    PDCP_cu_cp.rst

@@ -1,7 +1,7 @@
 .. _sw_overview: 
 
-srsRAN Project Software Architecture
-####################################
+Software Architecture
+#####################
 
 A primer on the O-RAN gNB architecture has already been outlined in the Knowledge Base, this can be found :ref:`here <oran_gnb_overview>`. 
 
@@ -16,16 +16,16 @@ This documentation aims to outline how this architecture is implemented the srsR
 srsRAN Project implements all of the components and interfaces in the above diagram. All of these elements have been implemented in software and are fully performant, 
 customizable and compliant with the O-RAN standard. Users can also integrate 3rd-party RICs, RUs, and gNB components with the srsRAN Project components. 
 
+
+
 -----
 
-.. Threading Model
-.. ***************
+.. toctree::
+   :maxdepth: 1
+   :caption: Software Architecture: 
 
-.. To read more about the Threading Model used for srsRAN Project, you can read :ref:`this section <sw_threading>`.  
+   CU_cp/source/index.rst
+   CU_up/source/index.rst
+   DU_high/source/index.rst
+   DU_low/source/index.rst 
 
-.. -----
-
-.. Memory Model
-.. ************
-
-.. To read more about the Memory Model used for srsRAN Project, you can read :ref:`this section <sw_memory>`.

@@ -1,4 +1,4 @@
-.. _ue_manager: 
+.. _ue_manager_cu_up: 
 
 UE Manager
 ##########

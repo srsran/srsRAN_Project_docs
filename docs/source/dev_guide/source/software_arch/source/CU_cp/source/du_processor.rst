@@ -8,10 +8,7 @@ DU Processor
 
 -----
 
-.. toctree::
-   :maxdepth: 1
-   :caption: DU Processor Contents
-
+.. Add the following to TOCTREE once populated: 
    RRC_du.rst
    F1AP_cu.rst
 

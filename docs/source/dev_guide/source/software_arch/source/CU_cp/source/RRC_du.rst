@@ -8,8 +8,6 @@ RRC DU
 
 -----
 
-.. toctree::
-   :maxdepth: 1
-   :caption: RRC DU Contents
+.. Add the following to TOCTREE once populated: 
 
    RRC_ue.rst

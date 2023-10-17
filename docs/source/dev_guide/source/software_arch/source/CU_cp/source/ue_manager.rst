@@ -1,7 +1,7 @@
-.. _ue_manager:
+.. _ue_manager_cu_cp: 
 
 UE Manager
 ##########
 
 .. note::
-   to do
+   To do

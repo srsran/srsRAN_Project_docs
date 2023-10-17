@@ -8,8 +8,5 @@ CU-UP Processor
 
 -----
 
- .. toctree::
-    :maxdepth: 1
-    :caption: CU-UP Contents
-
-    E1AP_cu_cp.rst
+.. Add the following to TOCTREE once populated: 
+   E1AP_cu_cp.rst
