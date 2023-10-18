@@ -53,8 +53,10 @@ The Random Access procedure is handled primarily by the DU MAC in the following 
 
 This leads to the following messaging flow graph: 
 
-.. uml:: .uml/RA.puml
-    :align: center
+.. figure:: .imgs/ra.png
+   :scale: 100%
+   :alt: RA Procedure
+   :align: center
 
 It is worth noting, that the creation of a new UE in the DU is deferred until Msg3 is received. This design has the following advantages: 
 

@@ -53,10 +53,6 @@ Useful resources:
    :caption: Developers Guide
 
    dev_guide/source/software_arch/source/index.rst
-   dev_guide/source/CU_cp/source/index.rst
-   dev_guide/source/CU_up/source/index.rst
-   dev_guide/source/DU_high/source/index.rst
-   dev_guide/source/DU_low/source/index.rst
    dev_guide/source/code_guide/source/index.rst
    dev_guide/source/testing_policy/source/index.rst
 

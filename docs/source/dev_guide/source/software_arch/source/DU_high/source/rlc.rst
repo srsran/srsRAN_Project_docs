@@ -16,11 +16,11 @@ It does this, by providing three different modes:
 
  * **Transparent Mode (TM)**
 
-  :ref:`TM <rlc_tm>` is used only in control signaling (SRB0 only) and provides data transfer services without modifying the SDUs/PDUs at all.
+  TM is used only in control signaling (SRB0 only) and provides data transfer services without modifying the SDUs/PDUs at all.
 
  * **Unacknowledged Mode (UM)**
 
-  :ref:`UM <rlc_um>` can only be used in data traffic (DRBs only) and provides data transfer services with segmentation/reassembly. It is usually used in delay-sensitive and loss-tolerant traffic, as it does not provide re-transmissions.
+  UM can only be used in data traffic (DRBs only) and provides data transfer services with segmentation/reassembly. It is usually used in delay-sensitive and loss-tolerant traffic, as it does not provide re-transmissions.
 
  * **Acknowledged Mode (AM)**
 
@@ -30,10 +30,13 @@ It does this, by providing three different modes:
 
 .. toctree::
    :maxdepth: 1
-   
+
+   rlc_am.rst   
+ 
+.. Add to TOCTREE when ready 
    rlc_tm.rst
    rlc_um.rst
-   rlc_am.rst
+
 
 
 

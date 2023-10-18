@@ -4,16 +4,15 @@ CU-UP
 #####
 
 .. figure:: .imgs/CU_UP.png
-    :align: center 
     :width: 30%
 
     srsRAN Project CU-UP implementation.
 
-The CU-UP, or Central Unit - User Plane, is the responsible for the handling of user plane messaging. Specifically the user plane part of the PDCP and SDAP protocols. In the srsRAN 
-Project implementation of the CU-UP, there is four main components and four main interfaces. The CU-UP communicates directly with the UPF in the 5G Core (via the N3 interface), the CU-UP (via 
-the E1 interface), the DU-high (via the F1-u interface) and can also be connected to the near-RT RIC (via the E2 interface). 
+The CU-UP, or Central Unit - User Plane, is responsible for the handling of user plane messaging. Specifically the user plane aspect of the PDCP and SDAP protocols. In the implementation of the CU-UP, there are four 
+main components and four main interfaces. The CU-UP communicates directly with the UPF in the 5G Core (via the N3 interface), the CU-UP (via the E1 interface), the DU-high (via the F1-u interface) and can also be 
+connected to the near-RT RIC (via the E2 interface). 
 
-:ref:`Back to top level architecture diagram <sw_overview>`.
+:ref:`Return to top level architecture diagram <sw_overview>`.
    
 **Components:**
 
@@ -30,7 +29,7 @@ the E1 interface), the DU-high (via the F1-u interface) and can also be connecte
 **Interfaces:**
 
     - E2: Interface with the near-RT RIC.
-    - E1:Interface with the CU-CP.
+    - E1: Interface with the CU-CP.
     - F1-u: User plane interface with the DU.
     - N3: User plane interface with the 5G Core (UPF).
 

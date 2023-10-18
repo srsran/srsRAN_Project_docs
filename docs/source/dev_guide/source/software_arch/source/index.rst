@@ -13,10 +13,8 @@ This documentation aims to outline how this architecture is implemented the srsR
 
     High level overview of the srsRAN Project codebase architecture showing all main components and interfaces. 
 
-srsRAN Project implements all of the components and interfaces in the above diagram. All of these elements have been implemented in software and are fully performant, 
+The code implements all of the components and interfaces in the above diagram. All of these elements have been implemented in software and are fully performant, 
 customizable and compliant with the O-RAN standard. Users can also integrate 3rd-party RICs, RUs, and gNB components with the srsRAN Project components. 
-
-
 
 -----
 

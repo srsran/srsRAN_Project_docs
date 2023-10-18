@@ -4,16 +4,15 @@ CU-CP
 #####
 
 .. figure:: .imgs/CU_CP.png
-    :align: center 
     :width: 40%
 
     srsRAN Project CU-CP implementation. 
 
-The CU-CP, or Central Unit - Control Plane, is the responsible for the handling of control plane messaging. Specifically the control plane part of the PDCP protocol. In the srsRAN Project implementation of the CU-CP, there is five main components and 
+The CU-CP, or Central Unit - Control Plane, is responsible for the handling of control plane messaging, specifically, the control plane part of the PDCP protocol. In the CU-CP, there are five main components and 
 four main interfaces. The CU-CP communicates directly with the 5G Core (via the N2 interface), the CU-UP (via the E1 interface), the DU-high (via the F1-c interface) and can also be connected to the near-RT RIC (via the E2 interface). This implementation
 takes a UE-centric approach. 
 
-:ref:`Back to top level architecture diagram <sw_overview>`.
+:ref:`Return to top level architecture diagram <sw_overview>`.
 
 **Components:**
 
