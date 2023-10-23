@@ -1,10 +1,21 @@
 .. _general_release_notes:
 
 Release Notes
-=============
+#############
+
+23.10
+*****
+
+ * Added downlink MIMO (up to 4 layers)
+ * Added Open Fronthaul (OFH) interface for split 7.2 ORAN radio units (optionally using DPDK)
+ * Added E2 interface including KPM and RAN control (RC) service model
+ * Added Timing Advance support
+ * Added Docker files
+ * Expose many more config parameters
+ * Other bug-fixes and improved stability and performance in all part
 
 23.5
-----
+*****
 
  * Updated ASN.1 of RRC/NGAP/F1AP/E1AP to 3GPP Release 17.4
  * Add UE capability transfer procedure
@@ -15,7 +26,7 @@ Release Notes
  * Other bug-fixes and improved stability and performance in all parts
 
 23.3 (initial public release)
------------------------------
+*****************************
 
   * FDD/TDD supported, all FR1 bands
   * 15/30 KHz subcarrier spacing
