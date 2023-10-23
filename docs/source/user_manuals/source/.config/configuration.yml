@@ -24,6 +24,7 @@ amf:
   sctp_rto_max:                         # Optional INT. Sets the maximum retransmission timeout for the SCTP connection.
   sctp_initial_max_attempts:            # Optional INT. Sets the maximum retransmission attempts for the initial SCTP connection.
   sctp_max_init_timeo:                  # Optional INT. Sets the maximum retransmission timeout for the initial SCTP connection.
+  udp_max_rx_msgs:                      # Optional INT. Sets the maximum amount of messages RX in a single syscall. 
   no_core: 0                            # Optional BOOLEAN (0). Setting to true allows the gNB to run without a core. Supported: [0, 1].
 
 e2: 
@@ -41,6 +42,7 @@ e2:
 
 cu_cp: 
   inactivity_timer: 7200                # Optional INT (7200). Sets the UE/PDU Session/DRB inactivity timer in seconds. Supported: [1 - 7200].
+  ue_context_setup_timeout_s: 2         # Optional INT (2). Sets the timeout for the reception of an InitialContextSetupRequest after an InitialUeMessage was sent to the core, in seconds. If the value is reached, the UE will be released. 
 
   mobility: 
     trigger_handover_from_measurements: 0    # Optional BOOLEAN (0). Sets whether or not to start HO if neighbor cells become stronger. Supported: [0, 1].
@@ -72,12 +74,14 @@ cu_cp:
     force_reestablishment_fallback: 0        # Optional BOOLEAN (0). Force RRC re-establishment fallback to RRC setup. Supported: [0, 1].
     rrc_procedure_timeout_ms: 360            # Optional UINT (360). Sets the timeout in ms used for RRC message exchange with UE. It needs to suit the expected communication delay and account for potential retransmissions UE processing delays, SR delays, etc. Supported: [0 - inf]. 
 
+cu_up: 
+  gtpu_queue_size: 2024                # Optional INT (2024). Sets the GTP-U queue size, in PDUs.
+
+ru_ofh: 
 # Many of the following values are optional as they have default values. In practice, all of the following parameters should be defined by the user, as they will need
 # to be configured specifically for the RU being used. Failing to configure this parameters correctly may result in the RU failing to connect correctly to the DU.
-ru_ofh: 
   gps_alpha: 0                          # Optional FLOAT (0). Sets the GPS alpha. Supported: [0 - 1.2288e+07].
   gps_beta: 0                           # Optional INT (0). Sets the GPS beta. Supported: [-32768 - +32767].
-  enable_dl_parallelization: 1          # Optional BOOLEAN (1). Sets the Open Fronthaul downlink parallelization flag. Supported: [0 - 1].
   ru_bandwidth_MHz: 0                   # Required UINT (0). Sets the channel bandwidth in MHz. Supported: [5,10,15,20,25,30,40,50,60,70,80,90,100].
   t1a_max_cp_dl: 500                    # Optional INT (500). Sets T1a maximum value for downlink control-plane. Supported: [0 - 1960].
   t1a_min_cp_dl: 258                    # Optional INT (258). Sets T1a minimum value for downlink control-plane. Supported: [0 - 1960].
@@ -130,7 +134,6 @@ ru_sdr:
       power_ceiling_dBFs: -0.1                  # Optional FLOAT (-0.1). Sets the power ceiling in dB, relative to the full scale amplitude of the radio. Format: negative float or 0.
 
   expert_cfg:
-    low_phy_thread_profile:                 # Optional TEXT. Lower physical layer executor profile. Supported: [single, dual, quad].
     low_phy_dl_throttling: 0                # Optional FLOAT (0). Throttles the lower PHY DL baseband generation. Setting to 0 disables throttling. Supported: any value in the range [0 - 1].
 
 cell_cfg: 
@@ -163,6 +166,19 @@ cell_cfg:
     ssb_block_power_dbm: -16                # Optional INT (-16). Sets the SS PBCH block power in dBm. Supported: [-60 - +50].
     pss_to_sss_epre_db: 0                   # Optional UINT (0). Sets the Synchronization Signal Block Primary Synchronization Signal to Secondary Synchronization Signal Energy Per Resource Element ratio in dB. Supported: [0, 3].
 
+  sib:
+    si_window_length: 160                   # Optional UINT (160). Sets the length of the SI scheduling window, in slots. It must be always shorter or equal to the period of the SI message. Supported: [5,10,20,40,80,160,320,640,1280]. 
+    si_sched_info:                          # Optional TEXT. Configures the scheduling for each of the SI-messages broadcast by the gNB. 
+    t300: 1000                              # Optional UINT (1000). Sets the RRC Connection Establishment timer in ms. The timer starts upon transmission of RRCSetupRequest. Supported: [100,200,300,400,600,1000,1500,2000]. 
+    t301: 1000                              # Optional UINT (1000). Sets the RRC Connection Re-establishment timer in ms. The timer starts upon transmission of RRCReestablishmentRequest. Supported: [100,200,300,400,600,1000,1500,2000]. 
+    t310: 1000                              # Optional UINT (1000). Sets the Out-of-sync timer in ms. The timer starts upon detecting physical layer problems for the SpCell i.e. upon receiving N310 consecutive out-of-sync indications from lower layers. Supported: [0,50,100,200,500,1000,2000].
+    n310: 1                                 # Optional UINT (1). Sets the Out-of-sync counter. The counter is increased upon reception of "out-of-sync" from lower layer while the timer T310 is stopped. Starts the timer T310, when configured value is reached. Supported: [1,2,3,4,6,8,10,20].
+    t311: 3000                              # Optional UINT (3000). Sets the RRC Connection Re-establishment procedure timer in ms. The timer starts upon initiating the RRC connection re-establishment procedure. Supported: [1000,3000,5000,10000,15000,20000,30000]. 
+    n311: 1                                 # Optional UINT (1). Sets the In-sync counter. The counter is increased upon reception of the "in-sync" from lower layer while the timer T310 is running. Stops the timer T310, when configured value is reached.Supported: [1,2,3,4,5,6,8,10]. 
+    t319: 1000                              # Optional UINT (1000). Sets the RRC Connection Resume timer in ms. The timer starts upon transmission of RRCResumeRequest or RRCResumeRequest1. Supported: [100,200,300,400,600,1000,1500,2000]. 
+    sib19:
+      distance_thres:                           # Optional TEXT. Sets the distance threshold for SIB19. Supported: [0 - 255]. 
+
   ul_common: 
     p_max:                                  # Optional TEXT. Sets maximum transmit power allowed in this serving cell. Supported: [-30 - +23].
 
@@ -174,6 +190,7 @@ cell_cfg:
     dedicated: 
       coreset1_rb_start: 1                      # Optional INT (0). Sets the starting common resource block (CRB) number for CORESET 1, relative to CRB0. Supported: [0 - 275].
       coreset1_l_crb:                           # Optional INT (Across entire BW of cell). Sets the length of CORESET 1 in number of CRBs. Supported: [0 - 275].
+      coreset1_duration:                        # Optional INT (Max(2, Nof. CORESET#0 symbols)). Sets the duration of CORESET 1 in number of OFDM symbols. Supported: [1 - 2].
       ss2_n_candidates: {0, 0, 0, 0, 0}         # Optional UINT ({0, 0, 0, 0, 0}). Sets the number of PDCCH candidates per aggregation level for SearchSpace#2. Supported: any 5 value array containing the following UINT values [0, 1, 2, 3, 4, 5, 6, 7, 8]. 
       dci_format_0_1_and_1_1: 1                 # Optional BOOLEAN (1). Sets whether to use non-fallback or fallback DCI format in UE SearchSpace#2. Supported: [0, 1].
       ss2_type: ue_dedicated                    # Optional TEXT (ue_dedicated). Sets the SearchSpace type for UE dedicated SearchSpace#2. Supported: [common, ue_dedicated].
@@ -187,14 +204,17 @@ cell_cfg:
     max_consecutive_kos: 100                # Optional UINT (100). Sets the maximum number of consecutive HARQ-ACK KOs before an RLF is reported. Supported: [0 - inf]. 
     rv_sequence: [0,2,3,1]                  # Optional UINT (0,2,3,1). Sets the redundancy version sequence to use for PDSCH. Supported: any combination of [0, 1, 2, 3].
     mcs_table: qam64                        # Optional TEXT (qam64). Sets the MCS table to use for PDSCH. Supported: [qam64, qam256].
-    nof_ports: auto                         # Optional TEXT (auto). Sets the number of ports for PDSCH. By default it is set to be equal to number of DL antennas Supported: [1, 2, 4].
     min_rb_size: 1                          # Optional UINT (1). Sets the minimum RB size for the UE PDSCH resource allocation. Supported: [1 - 275].
     max_rb_size: 275                        # Optional UINT (275). Sets the maximum RB size for the UE PDSCH resource allocation. Supported: [1 - 275].
+    max_pdschs_per_slot: 35                 # Optional UINT (35). Sets the maximum number of PDSCH grants per slot, including SIB, RAR, Paging and UE data grants. Supported: [1 - 35].
+    max_alloc_attempts: 35                  # Optional UINT (35). Sets the maximum number of DL or UL PDCCH grant allocation attempts per slot before scheduler skips the slot. Supported: [1 - 35].
     olla_cqi_inc_step: 0.001                # Optional FLOAT (0.001). Sets the outer-loop link adaptation (OLLA) increment value. The value 0 means that OLLA is disabled. Supported: [0 - 1].
     olla_target_bler: 0.01                  # Optional FLOAT (0.01). Sets the target DL BLER set in Outer-loop link adaptation (OLLA) algorithm. Supported: [0 - 0.5].
     olla_max_cqi_offset: 4                  # Optional FLOAT (4). Sets the maximum offset that the Outer-loop link adaptation (OLLA) can apply to CQI. Supported: positive float. 
     dc_offset:                              # Optional TEXT. Sets the direct Current (DC) Offset in number of subcarriers, using the common SCS as reference for carrier spacing, and the center of the gNB DL carrier as DC offset value 0. The user can additionally 
                                             # set "outside" to define that the DC offset falls outside the DL carrier or "undetermined" in the case the DC offset is unknown. Supported: [-1650 - 1649] OR [outside,undetermined,center]. 
+    harq_la_cqi_drop_threshold:             # Optional UINT. Sets the link Adaptation (LA) threshold for drop in CQI of the first HARQ transmission above which HARQ retransmissions are cancelled. Set this value to 0 to disable this feature. Supported: [0 - 15]. 
+    harq_la_ri_drop_threshold:              # Optional UINT. Sets the link Adaptation (LA) threshold for drop in nof. layers of the first HARQ transmission above which HARQ retransmission is cancelled. Set this value to 0 to disable this feature. Supported: [0 - 4]. 
 
   push: 
     min_ue_mcs:                             # Optional UINT. Sets a minimum PUSCH MCS value to be used for all UEs. Supported: [0 - 28].
@@ -205,6 +225,7 @@ cell_cfg:
     msg3_delta_preamble: 6                  # Optional INT (6). Sets the MSG3 DeltaPreamble power offset between MS3 and RACH preamble transmission. Supported: [-1 - 6].
     p0_nominal_with_grant: -76              # Optional INT (-76). Sets the P0 value for PUSCH grant (except MSG3), in dBm. Supported: multiples of 2 within the range [-202, 24].
     msg3_delta_power: 8                     # Optional INT (8). Sets the target power level at the network receiver side, in dBm. Supported: multiples of 2 within the range [-6, 8].
+    max_puschs_per_slot: 16                 # Optional UINT (16). Sets the maximum number of PUSCH grants per slot. Supprted: [1 - 16].
     b_offset_ack_idx_1: 9                   # Optional UINT (9). Sets the betaOffsetACK-Index1 part of UCI-OnPUSCH. Supported: [0 - 31].
     b_offset_ack_idx_2: 9                   # Optional UINT (9). Sets the betaOffsetACK-Index2 part of UCI-OnPUSCH. Supported: [0 - 31].
     b_offset_ack_idx_3: 9                   # Optional UINT (9). Sets the betaOffsetACK-Index3 part of UCI-OnPUSCH. Supported: [0 - 31].
@@ -247,6 +268,8 @@ cell_cfg:
     total_nof_ra_preambles:                 # Optional TEXT. Sets the number of different PRACH preambles. Supported: [1 - 64].
     prach_frequency_start:                  # Optional INT. Set Offset of lowest PRACH transmission occasion in frequency domain respective to PRB 0, in PRBs. Supported: [0 - (MAX_NOF_PRB - 1)].
     preamble_rx_target_pw: -100             # Optional INT (-100). Sets the Target power level at the network receiver side, in dBm. Supported: multiples of 2 within range [-202, -60].
+    preamble_trans_max:                     # Optional UINT. Sets the max number of RA preamble transmissions performed before declaring a failure. Supported: [3,4,5,6,7,8,10,20,50,100,200]. 
+    power_ramping_step_db:                  # Optional UINT. Sets the power ramping steps for PRACH. Supported: [0, 2, 4 , 6]. 
 
   tdd_ul_dl_cfg: 
     dl_ul_tx_period: 10                     # Optional INT (10). Sets the TDD pattern periodicity in slots. The combination of this value and the chosen numerology must lead to a TDD periodicity of 0.5, 0.625, 1, 1.25, 2, 2.5, 3, 4, 5 or 10 milliseconds. Supported: [2 - 80].
@@ -277,10 +300,6 @@ cell_cfg:
 
 expert_phy: 
   max_proc_delay: 2                     # Optional INT (2). Sets the maximum allowed DL processing delay in slots. Supported: [1 - 30].
-  pdsch_processor_type: auto            # Optional TEXT (auto). Sets the PDSCH processor type. Supported: [auto, generic, concurrent, lite]. 
-  nof_pdsch_threads: 1                  # Optional UINT (1). Sets the number of threads for encoding PDSCH. Default value of one for no concurrency acceleration in the PDSCH encoding. Format: Positive integer greater than 0.
-  nof_ul_threads: 4                     # Optional UINT (4). Sets number of upper PHY threads to process uplink. It is set to 4 by default unless the available hardware concurrency is limited in which case will use a minimum of one thread.
-  nof_dl_threads: 1                     # Optional UINT (1). Sets number of upper PHY threads to process downlinklink.
   pusch_dec_max_iterations: 6           # Optional UINT (6). Sets the number of PUSCH LDPC decoder iterations. Format: Positive integer greater than 0.
   pusch_dec_enable_early_stop: true     # Optional BOOL (true). Enables the PUSCH decoder early stopping mechanism.
   pusch_sinr_calc_method: evm           # Optional TEXT (evm). Sets the PUSCH SINR calculation method. Supported: [channel_estimator, post_equalization, evm]. 
@@ -302,16 +321,38 @@ test_mode:
     i_1_3: 0                                    # Optional INT (0). Sets the Precoder Matrix codebook index "i_1_3" to be forwarded to test UE, in the case of more than 2 antennas. Supported: [0 - 1].
     i_2: 0                                      # Optional INT (0). Sets the Precoder Matrix codebook index "i_2" to be forwarded to test UE, in the case of more than 2 antennas. Supported: [0 - 3].
    
-expert: 
+expert_execution:
+
+  affinities: 
+    l1_dl_cpus:                                 # Optional TEXT. Sets the number of CPU cores assigned to L1 downlink tasks. Supported: [1 - Number of available cores].
+    l1_ul_cpus:                                 # Optional TEXT. Sets the number of CPU cores assigned to L1 uplink tasks. Supported: [1 - Number of available cores].
+    l2_cell_cpus:                               # Optional TEXT. Sets the number of CPU cores assigned to L2 cells tasks. Supported: [1 - Number of available cores].
+    low_priority_cpus:                          # Optional TEXT. Sets the number of CPU cores assigned to low priority tasks. Supported: [1 - Number of available cores].
+    ru_cpus:                                    # Optional TEXT. Sets the number of CPU cores used for the Radio Unit tasks. Supported: [1 - Number of available cores].
+    l1_dl_pinning:                              # Optional TEXT. Sets the policy used for assigning CPU cores to L1 downlink tasks.
+    l1_ul_pinning:                              # Optional TEXT. Sets the policy used for assigning CPU cores to L1 uplink tasks. 
+    l2_cell_pinning:                            # Optional TEXT. Sets the policy used for assigning CPU cores to L2 cell tasks.
+    low_priority_pinning:                       # Optional TEXT. Sets the policy used for assigning CPU cores to low priority tasks.
+    ru_pinning:                                 # Optional TEXT. Sets the policy used for assigning CPU cores to Radio Unity tasks.
+
+  threads: 
+    upper_phy: 
+      pdsch_processor_type: auto                    # Optional TEXT (auto). Sets the PDSCH processor type. Supported: [auto, generic, concurrent, lite].
+      nof_pdsch_threads: 4                          # Optional UINT (4). Sets the number of threads used to encode PDSCH.
+      nof_pusch_threads: 1                          # Optional UINT (1). Sets the number of threads used to encode PUSCH.
+      nof_ul_threads: 1                             # Optional UINT (1). Sets the number of upprt PHY threads to proccess uplink.
+      nof_dl_threads: 2                             # Optional UINT (1). Sets the number of upprt PHY threads to proccess downlink.  
+    lower_phy:
+      execution_profile:                            # Optional TEXT. Sets the lower physical layer executor profile. Supported: [single, dual, quad].
+    ofh: 
+      enable_dl_parallelization: 1                  # Optional BOOLEAN. Sets the Open Fronthaul downlink parallelization flag. Supported: [0, 1].
+
   enable_tuned_affinity_profile: 0      # Optional BOOLEAN (0). Enables usage of tuned affinity profile. Supported: [0, 1].
   number_of_threads_per_cpu: 2          # Optional UINT (2). Sets the number of threads per physcial CPU. Supported [1 - 2].
   number_of_reserved_cored: 4           # Optional UINT (4). Sets the number of CPU cores reserved for non-priority tasks. Supported: [1 - 1024].
 
 hal:
   eal_args:                             # Optional TEXT. EAL configuration parameters used to initialize DPDK. 
-
-metrics: 
-  rlc_report_period: 1000               # Optional UINT (1000). Sets the RLC metrics report period in milliseconds. Supported [0 - inf]
 
 log: 
 # All gNB layers and components can be configured independently to output at various levels of detail. Logs can be configured to the following levels (from lowest to highest levels of detail):
@@ -353,3 +394,10 @@ pcap:
   e2ap_enable: false                    # Optional BOOL (false). Enable/disable E2AP packet capture.
   gtpu_filename: /tmp/gnb_gtpu.pcap     # Optional TEXT (/tmp/gnb_gtpu.pcap). Path for GTPU PCAPs. 
   gtpu_enable: false                    # Optional BOOL (false). Enable/disable GTPU packet capture.
+
+  metrics: 
+  rlc_report_period: 1000               # Optional UINT (1000). Sets the RLC metrics report period in milliseconds. Supported [0 - inf]
+  cu_cp_statistics_report_period: 1     # Optional UINT (1). Sets the CU-CP statistics report period in seconds. Set this value to 0 to disable this feature. Supported: [0 - inf]. 
+  cu_up_statistics_report_period: 1     # Optional UINT (1). Sets the CU-UP statistics report period in seconds. Set this value to 0 to disable this feature. Supported: [0 - inf]. 
+  enable_json_metrics:                  # Optional BOOLEAN. Enables JSON metrics reporting. Supported: [0, 1]. 
+  json_metrics_filename:                # Optional TEXT. Sets the JSON metrics output path.     
