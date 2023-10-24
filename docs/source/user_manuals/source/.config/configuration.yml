@@ -220,7 +220,7 @@ cell_cfg:
     harq_la_cqi_drop_threshold:             # Optional UINT. Sets the link Adaptation (LA) threshold for drop in CQI of the first HARQ transmission above which HARQ retransmissions are cancelled. Set this value to 0 to disable this feature. Supported: [0 - 15]. 
     harq_la_ri_drop_threshold:              # Optional UINT. Sets the link Adaptation (LA) threshold for drop in nof. layers of the first HARQ transmission above which HARQ retransmission is cancelled. Set this value to 0 to disable this feature. Supported: [0 - 4]. 
 
-  push: 
+  pusch: 
     min_ue_mcs:                             # Optional UINT. Sets a minimum PUSCH MCS value to be used for all UEs. Supported: [0 - 28].
     max_ue_mcs:                             # Optional UINT. Sets a maximum PUSCH MCS value to be used for all UEs. Supported: [0 - 28].
     max_consecutive_kos: 100                # Optional UINT (100). Sets the maximum number of consecutive CRC KOs before an RLF is reported. Supported: [0 - inf]. 
