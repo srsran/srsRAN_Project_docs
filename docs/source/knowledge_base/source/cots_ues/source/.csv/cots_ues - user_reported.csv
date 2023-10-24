@@ -31,3 +31,6 @@ Asus,Zenfone 8,,,,n78 - 20 MHz and 40 MHz,,B210,"| Same PLMN for both SIM and RA
 .. channel: https://github.com/srsran/srsRAN_Project/discussions/219"
 Crosscall,Core Z5,,,,n78 - 20MHz,,,"..
 .. reporter: galalmounir"
+Google,Pixel 7 Pro,,,,n78 - 40 MHz to 60 MHz,,X310,"| SISO
+.. reporter: mrouili
+.. channel: https://github.com/srsran/srsRAN_Project/discussions/36"
