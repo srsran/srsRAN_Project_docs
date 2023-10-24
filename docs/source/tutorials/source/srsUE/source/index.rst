@@ -197,6 +197,8 @@ Finally, we configure the 5G cell parameters::
       dedicated:
         ss2_type: common              # Search Space type, has to be set to common
         dci_format_0_1_and_1_1: false # Set correct DCI format (fallback)
+    prach:
+      prach_config_index: 1
 
 srsUE
 -----
