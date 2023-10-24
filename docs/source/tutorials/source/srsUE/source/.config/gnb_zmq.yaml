@@ -25,6 +25,8 @@ cell_cfg:
     dedicated:
       ss2_type: common              # Search Space type, has to be set to common
       dci_format_0_1_and_1_1: false # Set correct DCI format (fallback)
+  prach:
+    prach_config_index: 1           # Set PRACH configuration index to 1. 
 
 log:
   filename: /tmp/gnb.log            # Path of the log file.
