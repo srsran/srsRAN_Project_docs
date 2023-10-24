@@ -74,6 +74,10 @@ cu_cp:
     force_reestablishment_fallback: 0        # Optional BOOLEAN (0). Force RRC re-establishment fallback to RRC setup. Supported: [0, 1].
     rrc_procedure_timeout_ms: 360            # Optional UINT (360). Sets the timeout in ms used for RRC message exchange with UE. It needs to suit the expected communication delay and account for potential retransmissions UE processing delays, SR delays, etc. Supported: [0 - inf]. 
 
+  security:
+    integrity: not_needed                    # Optional TEXT (not_needed). Sets the default integrity protection indication for DRBs.
+    confidentiality: not_needed              # Optional TEXT (not_needed). Sets the default integrity confidentiality indication for DRBs.
+
 cu_up: 
   gtpu_queue_size: 2024                # Optional INT (2024). Sets the GTP-U queue size, in PDUs.
 
@@ -385,6 +389,7 @@ pcap:
   f1ap_filename: /tmp/gnb_f1ap.pcap     # Optional TEXT (/tmp/gnb_f1ap.pcap). Path for F1AP PCAPs. 
   f1ap_enable: false                    # Optional BOOL (false). Enable/disable F1AP packet capture.
   mac_filename: /tmp/gnb_mac.pcap       # Optional TEXT (/tmp/gnb_mac.pcap). Path for MAC PCAPs. 
+  mac_type: udp                         # Optional TEXT (udp). Sets the MAC PCAP pcap type. Supported: [DLT or UDP].
   mac_enable: false                     # Optional BOOL (false). Enable/disable MAC packet capture.
   e2ap_filename: /tmp/gnb_e2ap.pcap     # Optional TEXT (/tmp/gnb_e2ap.pcap). Path for E2AP PCAPs. 
   e2ap_enable: false                    # Optional BOOL (false). Enable/disable E2AP packet capture.
