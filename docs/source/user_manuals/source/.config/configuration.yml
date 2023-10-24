@@ -296,7 +296,7 @@ cell_cfg:
     nof_po_per_pf: 1                        # Optional UINT (1). Sets the number of paging occasions per paging frame. Supported: [1, 2, 4].
 
   csi: 
-    csi_rs_period: 80                       # Optional UINT (80). Sets the CSI-RS period in milliseconds. Supported: [10, 20, 40, 80].
+    csi_rs_period: 20                       # Optional UINT (20). Sets the CSI-RS period in milliseconds. Supported: [10, 20, 40, 80].
     meas_csi_rs_slot_offset: 2              # Optional UINT (2). Sets the slot offset of first CSI-RS resource used for measurement.
     tracking_csi_rs_slot_offset: 12         # Optional UINT (12). Sets the slot offset of the first CSI-RS slot used for tracking.
     zp_csi_rs_slot_offset:                  # Optional TEXT. Sets the slot offset of the ZP CSI-RS resources.     
