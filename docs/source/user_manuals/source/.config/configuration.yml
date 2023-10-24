@@ -347,10 +347,6 @@ expert_execution:
     ofh: 
       enable_dl_parallelization: 1                  # Optional BOOLEAN. Sets the Open Fronthaul downlink parallelization flag. Supported: [0, 1].
 
-  enable_tuned_affinity_profile: 0      # Optional BOOLEAN (0). Enables usage of tuned affinity profile. Supported: [0, 1].
-  number_of_threads_per_cpu: 2          # Optional UINT (2). Sets the number of threads per physcial CPU. Supported [1 - 2].
-  number_of_reserved_cored: 4           # Optional UINT (4). Sets the number of CPU cores reserved for non-priority tasks. Supported: [1 - 1024].
-
 hal:
   eal_args:                             # Optional TEXT. EAL configuration parameters used to initialize DPDK. 
 
@@ -395,7 +391,7 @@ pcap:
   gtpu_filename: /tmp/gnb_gtpu.pcap     # Optional TEXT (/tmp/gnb_gtpu.pcap). Path for GTPU PCAPs. 
   gtpu_enable: false                    # Optional BOOL (false). Enable/disable GTPU packet capture.
 
-  metrics: 
+metrics: 
   rlc_report_period: 1000               # Optional UINT (1000). Sets the RLC metrics report period in milliseconds. Supported [0 - inf]
   cu_cp_statistics_report_period: 1     # Optional UINT (1). Sets the CU-CP statistics report period in seconds. Set this value to 0 to disable this feature. Supported: [0 - inf]. 
   cu_up_statistics_report_period: 1     # Optional UINT (1). Sets the CU-UP statistics report period in seconds. Set this value to 0 to disable this feature. Supported: [0 - inf]. 
