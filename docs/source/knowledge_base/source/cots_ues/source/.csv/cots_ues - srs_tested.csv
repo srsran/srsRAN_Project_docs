@@ -46,3 +46,8 @@ Xiaomi,12,,SM8450 Snapdragon 8 Gen 1,n3 - 20 MHz,n78 - 20 MHz,gNB PLMN: 00101,"B
 | Activate hidden SA option by dialing \*#\*#726633#\*#\*
 ..
 .. reporter: Joaquim"
+iPhone,13 Pro,,A15 Bionic,,n78 - 30 MHz,gNB PLMN: 00101,"B210, Leo Bodnar GPSDO","| iPhones require IMS to be enable UE to stay connected. 
+| An Open5GS and Kamailio IMS set up can be found `here <https://github.com/herlesupreeth/docker_open5gs/blob/master/sa-vonr-deploy.yaml>`_.
+| SUPI concealment is required to attempt an attach, this is outlined in `this post <https://github.com/herlesupreeth/docker_open5gs/discussions/248#discussioncomment-7392233>`_. 
+..
+.. reporter: Supreeth"
