@@ -18,7 +18,7 @@ slicing:                                # Optional TEXT. Configure network slici
 amf: 
   addr:                                 # Required TEXT. Sets the IP address or hostname of the AMF. Format: IPV4 or IPV6 IP address.
   port: 38412                           # Optional UINT (38412). Sets the AMF port. Format: integer between [20000 - 40000].
-  bind_adddr:                           # Required TEXT. Sets the local IP address that the gNB binds to for receiving traffic from the AMF. Format: IPV4 or IPV6 IP address.
+  bind_addr:                           # Required TEXT. Sets the local IP address that the gNB binds to for receiving traffic from the AMF. Format: IPV4 or IPV6 IP address.
   sctp_rto_initial:                     # Optional INT. Sets the initial retransmission timeout when creating the SCTP connection.
   sctp_rto_min:                         # Optional INT. Sets the minimum retransmission timeout for the SCTP connection.
   sctp_rto_max:                         # Optional INT. Sets the maximum retransmission timeout for the SCTP connection.
@@ -248,14 +248,14 @@ cell_cfg:
     p0_nomial: -90                          # Optional UINT (-90). Sets the power control parameter P0 for PUCCH transmissions in dBm. Supported: multiples of 2 and within the [-202, 24] interval.
     sr_period_ms: 40                        # Optional UINT (40). Sets the SR period in milliseconds. Supported: [1,2,4,8,10,16,20,40,80,160,320].
     f1_nof_ue_res_harq: 3                   # Optional UINT (3). Sets the number of PUCCH F1 resources available per UE for HARQ. Supported: [1 - 8].
-    f1_nof_cells_res_sr: 2                  # Optional UINT (2). Sets the number of PUCCH F1 resources available per cell for SR. Supported: [1 - 10].
+    f1_nof_cell_res_sr: 2                  # Optional UINT (2). Sets the number of PUCCH F1 resources available per cell for SR. Supported: [1 - 10].
     f1_nof_symbols: 14                      # Optional UINT (14). Sets the number of symbols for PUCCH F1 resources. Supported: [4 - 14].
     f1_enable_occ: 0                        # Optional BOOLEAN (0). Enables OCC for PUCCH F1. Supported: [0, 1].
     f1_nof_cyclic_shifts: 1                 # Optional UINT (1). Sets the number of possible cyclic shifts available for PUCCH F1 resources. Supported: [1,2,3,4,6,12].
     f1_intraslot_freq_hop: 0                # Optional BOOLEAN (0). Enables intra-slot frequency hopping for PUCCH F1. Supported: [0, 1].
     nof_cell_harq_pucch_res_sets: 1         # Optional UINT (1). Sets the number of separate PUCCH resource sets for HARQ-ACK that are available in the cell. The higher the number of sets, the lower the chances UEs have to share the same PUCCH resources. Supported: [1 - 10].
     f2_nof_ue_res_harq: 6                   # Optional UINT (6). Sets the number of PUCCH F2 resources available per UE for HARQ. Supported: [1 - 8].
-    f2_nof_cells_res_csi: 1                 # Optional UINT (1). Sets the number of PUCCH F2 resources available per cell for CSI. Supported: [1 - 10].
+    f2_nof_cell_res_csi: 1                 # Optional UINT (1). Sets the number of PUCCH F2 resources available per cell for CSI. Supported: [1 - 10].
     f2_nof_symbols: 2                       # Optional UINT (2). Sets the number of symbols for PUCCH F2 resources. Supported: [1 - 2].
     f2_max_nof_rbs: 1                       # Optional UINT (1). Sets the max number of RBs for PUCCH F2 resources. Supported: [1 - 16].
     f2_max_payload:                         # Optional INT. Sets the max number of payload bits for PUCCH F2 resources. Supported [1 - 11].
