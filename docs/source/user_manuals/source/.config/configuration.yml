@@ -245,7 +245,7 @@ cell_cfg:
     olla_max_snr_offset: 5                  # Optional FLOAT (5). Sets the maximum offset that the Outer-loop link adaptation (OLLA) can apply to estimate the UL SNR. Supported: positive float.
 
   pucch: 
-    p0_nomial: -90                          # Optional UINT (-90). Sets the power control parameter P0 for PUCCH transmissions in dBm. Supported: multiples of 2 and within the [-202, 24] interval.
+    p0_nominal: -90                          # Optional UINT (-90). Sets the power control parameter P0 for PUCCH transmissions in dBm. Supported: multiples of 2 and within the [-202, 24] interval.
     sr_period_ms: 40                        # Optional UINT (40). Sets the SR period in milliseconds. Supported: [1,2,4,8,10,16,20,40,80,160,320].
     f1_nof_ue_res_harq: 3                   # Optional UINT (3). Sets the number of PUCCH F1 resources available per UE for HARQ. Supported: [1 - 8].
     f1_nof_cell_res_sr: 2                  # Optional UINT (2). Sets the number of PUCCH F1 resources available per cell for SR. Supported: [1 - 10].
