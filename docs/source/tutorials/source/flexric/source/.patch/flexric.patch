@@ -20,7 +20,7 @@ index 7ed3b86f..3a1ea3c6 100644
 +    adapter_MeasDataItem_t* curMeasData = &msg->MeasData[i];
 +    for(size_t j = 0; j < curMeasData->measRecord_len; j++){
 +      adapter_MeasRecord_t* curMeasRecord = &(curMeasData->measRecord[j]);
-+      printf("Received RIC Indication:\n");
++      printf("Received RIC Indication: \n");
 +      printf("---Metric: %s: Value: %li\n", curMeasInfo->measName.buf, curMeasRecord->int_val);
 +    }
 +  }
@@ -66,7 +66,7 @@ index 6d489a2e..86bfb9cc 100644
  
    const RICindication_t* out = &pdu->choice.initiatingMessage->value.choice.RICindication;
 diff --git a/src/ric/msg_handler_ric.c b/src/ric/msg_handler_ric.c
-index 425fa365..ae5dd829 100644
+index 425fa365..f557dc65 100644
 --- a/src/ric/msg_handler_ric.c
 +++ b/src/ric/msg_handler_ric.c
 @@ -84,8 +84,8 @@ e2_setup_response_t generate_setup_response(near_ric_t* ric, const e2_setup_requ
@@ -75,13 +75,13 @@ index 425fa365..ae5dd829 100644
        accepted[i] = id;
 -      char def[128] = {0};
 -      assert(req->ran_func_item[i].def.len < 127 );
-+      char def[1024] = {0};
-+      assert(req->ran_func_item[i].def.len < 1023 );
++      char def[2048] = {0};
++      assert(req->ran_func_item[i].def.len < 2047 );
        memcpy(def, req->ran_func_item[i].def.buf, req->ran_func_item[i].def.len);
        printf("[NEAR-RIC]: Accepting RAN function ID %d with def = %s \n", id, def);
      } else {
 diff --git a/src/sm/kpm_sm_v2.02/kpm_sm_ric.c b/src/sm/kpm_sm_v2.02/kpm_sm_ric.c
-index 86208a9d..705d2add 100644
+index 86208a9d..2f3a9707 100644
 --- a/src/sm/kpm_sm_v2.02/kpm_sm_ric.c
 +++ b/src/sm/kpm_sm_v2.02/kpm_sm_ric.c
 @@ -81,7 +81,7 @@ static sm_subs_data_t on_subscription_kpm_sm_ric(sm_ric_t const* sm_ric, const c
@@ -89,7 +89,8 @@ index 86208a9d..705d2add 100644
    MeasInfo_t dummy_MeasInfo = { 
      .meas_type = KPM_V2_MEASUREMENT_TYPE_NAME, 
 -    .measName = {.buf = (unsigned char *)"test", .len = 5}, 
-+    .measName = {.buf = (unsigned char *)"RSRP", .len = 4},
++    .measName = {.buf = (unsigned char *)"DRB.RlcSduTransmittedVolumeDL", .len = 29},
      .labelInfo = &dummylabelInfo, 
      .labelInfo_len = 1
    };
+
