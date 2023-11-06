@@ -651,7 +651,7 @@ This can be done with the following command:
 
 Where ``<IFNAME>`` is the name of the interface connected to the internet. 
 
-A default root to the UE can then be configured: 
+A default route for the UE can be configured as follows:
 
 .. code-block:: bash
 
