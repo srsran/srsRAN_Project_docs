@@ -7,7 +7,7 @@ Logs
 ****
 
 | The srsRAN Project gNB application provides a highly configurable logging mechanism, with per-layer and per-component log levels.
-| Set the log file path and log levels in the gNB config file. See the :ref:`Configuration Reference<manual_config_ref_log>` for more details.
+| Set the log file path and log levels in the gNB config file. See the :ref:`Configuration Reference<manual_config_ref>` for more details.
 
 The format used for all log messages is as follows:
 
@@ -62,11 +62,19 @@ An example log file excerpt can be seen below:
 PCAPs
 *****
 
-| The srsRAN Project gNB application can output packet captures (PCAPs) at the MAC and NGAP layers. These PCAPs can be analyzed using `Wireshark <https://www.wireshark.org/>`_.
-| Enable PCAPs in the gNB config file. See the :ref:`Configuration Reference<manual_config_ref_pcap>` for more details.
+The srsRAN Project gNB can output PCAPs at the following layers: 
 
-MAC PCAPs
-=========
+  - MAC
+  - NGAP
+  - GTP-U
+  - E1AP
+  - F1AP
+  - E2AP
+
+To output these PCAPs, they must first be enabled on a per-layer basis in the gNB configuration file. See the :ref:`Configuration Reference<manual_config_ref>` for more details.
+
+MAC
+===
 
 To analyze a MAC-layer PCAP using Wireshark, you will need to configure User DLT 149 for UDP and enable the mac_nr_udp protocol:
 
@@ -75,8 +83,8 @@ To analyze a MAC-layer PCAP using Wireshark, you will need to configure User DLT
 
 .. image:: .imgs/mac_pcap.png
 
-NGAP PCAPs
-==========
+NGAP
+====
 
 To analyze an NGAP-layer PCAP using Wireshark, you will need to configure User DLT 152 for NGAP and enable detection and decoding 5G-EA0 ciphered messages:
 
@@ -84,3 +92,43 @@ To analyze an NGAP-layer PCAP using Wireshark, you will need to configure User D
 #. Go to Edit->Preferences->Protocols->NAS-5GS and enable "Try to detect and decode 5G-EA0 ciphered messages".
 
 .. image:: .imgs/ngap_pcap.png
+
+GTP-U
+=====
+
+To analyze a GTP-U PCAP using Wireshark, you will need to configure User DLT 156 for GTP:
+
+  #. Go to Edit->Preferences->Protocols->DLT_USER->Edit and add an entry with DLT=156 and Payload Protocol=gtp.
+
+.. image:: .imgs/gtpu_pcap.png
+
+E1AP
+=====
+
+To analyze an E1AP PCAP using Wireshark, you will need to configure User DLT 153 for E1AP:
+
+  #. Go to Edit->Preferences->Protocols->DLT_USER->Edit and add an entry with DLT=153 and Payload Protocol=e1ap.
+
+.. image:: .imgs/e1ap_pcap.png
+
+F1AP
+=====
+
+To analyze an F1AP PCAP using Wireshark, you will need to configure User DLT 154 for F1AP:
+
+  #. Go to Edit->Preferences->Protocols->DLT_USER->Edit and add an entry with DLT=154 and Payload Protocol=f1ap.
+
+.. image:: .imgs/f1ap_pcap.png
+
+.. _e2ap_pcap:
+
+E2AP
+====
+
+To analyze an E2AP PCAP using Wireshark, you will need to configure User DLT 155 for E2AP:
+
+  #. Go to Edit->Preferences->Protocols->DLT_USER->Edit and add an entry with DLT=155 and Payload Protocol=e2ap.
+
+.. figure:: .imgs/e2ap_pcap.png
+  :scale: 40%
+  :align: center
