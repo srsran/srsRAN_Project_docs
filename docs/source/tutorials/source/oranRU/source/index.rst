@@ -250,7 +250,7 @@ Refer to the Benetel User Guide documentation to apply the following configurati
 
 *DL scaling* : We use downlink scaling of 6dB.
    
-*TDD pattern* : The TDD pattern should be changed to 6-3 format (DDDDDDSUU). :download:`here <.configs/benetel_tdd.xml>`.
+*TDD pattern* : The TDD pattern should be changed to 6-3 format (DDDDDDSUUU). :download:`here <.configs/benetel_tdd.xml>`.
 
 The full init script we used for this appnote can be found :download:`here <.configs/benetel_radio_init.sh>`.
 
