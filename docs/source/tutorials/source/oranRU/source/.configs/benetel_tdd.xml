@@ -1,0 +1,17 @@
+<xml>
+    <tdd-config version="1.0">
+            <description>DDDDDDDSUU</description>
+                        <pattern index="1">
+                                <slots>DDDD</slots>
+                                <numerology>1</numerology>
+                                <periodicity>2</periodicity>
+                                <special-slot-symbols></special-slot-symbols>
+                        </pattern>
+                        <pattern index="2">
+                                <slots>DDSUUU</slots>
+                                <numerology>1</numerology>
+                                <periodicity>3</periodicity>
+                                <special-slot-symbols>DDDDDDGGGGUUUU</special-slot-symbols>
+                        </pattern>
+    </tdd-config>
+</xml>

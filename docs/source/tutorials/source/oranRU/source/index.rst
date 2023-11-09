@@ -245,9 +245,14 @@ Refer to the Benetel User Guide documentation to apply the following configurati
 *Compression* : Currently only static compression headers are supported for this setup. We use BFP9 compression for all uplink and downlink channels. Refer to the Benetel User Guide for details on how to configure compression in the RU. 
 
 *Transmission Power* : Depending on your setup, you may need to alter the transmission power of the RU. For example, in a lab setting with the UE in close proximity to the RU, the default power settings may result in UE saturation.
-   
-*TDD pattern* : The TDD pattern should be changed to 6-3 format (DDDDDDSUU).
 
+*PRACH format* : We recommend using long PRACH format. Use `./long_form_prach.sh` script on the RU or apply the required changes manually.
+
+*DL scaling* : We use downlink scaling of 6dB.
+   
+*TDD pattern* : The TDD pattern should be changed to 6-3 format (DDDDDDSUU). :download:`here <.configs/benetel_tdd.xml>`.
+
+The full init script we used for this appnote can be found :download:`here <.configs/benetel_radio_init.sh>`.
 
 Core
 =====
