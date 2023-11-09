@@ -155,28 +155,31 @@ The following excerpt shows how the DU is configured to communicate with the RU:
 .. code-block:: yaml
 
   ru_ofh:
-    ru_bandwidth_MHz: 100                                           # RU instantaneous bandwidth.
-    t1a_max_cp_dl: 500                                              # Maximum T1a on Control-Plane for Downlink in microseconds.
-    t1a_min_cp_dl: 250                                              # Minimum T1a on Control-Plane for Downlink in microseconds.
-    t1a_max_cp_ul: 465                                              # Maximum T1a on Control-Plane for Uplink in microseconds.
-    t1a_min_cp_ul: 250                                              # Minimum T1a on Control-Plane for Uplink in microseconds.
-    t1a_max_up: 250                                                 # Maximum T1a on User-Plane in microseconds.
-    t1a_min_up: 80                                                  # Minimum T1a on User-Plane in microseconds.
-    is_prach_cp_enabled: false                                      # Configures if Control-Plane messages should be used to receive PRACH messages.
-    is_dl_broadcast_enabled: true                                   # Set to true for a workaround over a firmware bug in the RAN550 when operating in SISO mode.
-    compr_method_ul: bfp                                            # Uplink compression method.
-    compr_bitwidth_ul: 9                                            # Uplink IQ samples bitwidth after compression.
-    compr_method_dl: bfp                                            # Downlink compression method.
-    compr_bitwidth_dl: 9                                            # Downlink IQ samples bitwidth after compression.
-    iq_scaling: 0.27                                                # IQ samples scaling factor applied before compression, should be a positive value smaller than 1.
+    ru_bandwidth_MHz: 100                # RU instantaneous bandwidth.
+    t1a_max_cp_dl: 500                   # Maximum T1a on Control-Plane for Downlink in microseconds.
+    t1a_min_cp_dl: 250                   # Minimum T1a on Control-Plane for Downlink in microseconds.
+    t1a_max_cp_ul: 465                   # Maximum T1a on Control-Plane for Uplink in microseconds.
+    t1a_min_cp_ul: 250                   # Minimum T1a on Control-Plane for Uplink in microseconds.
+    t1a_max_up: 250                      # Maximum T1a on User-Plane in microseconds.
+    t1a_min_up: 80                       # Minimum T1a on User-Plane in microseconds.
+    is_prach_cp_enabled: false           # Configures if Control-Plane messages should be used to receive PRACH messages.
+    compr_method_ul: bfp                 # Uplink compression method.
+    compr_bitwidth_ul: 9                 # Uplink IQ samples bitwidth after compression.
+    compr_method_dl: bfp                 # Downlink compression method.
+    compr_bitwidth_dl: 9                 # Downlink IQ samples bitwidth after compression.
+    compr_method_prach: bfp              # PRACH compression method.
+    compr_bitwidth_prach: 9              # PRACH IQ samples bitwidth after compression.
+    enable_ul_static_compr_hdr: true     # Configures if the compression header is present for uplink User-Plane messages (false) or not present (true).
+    enable_dl_static_compr_hdr: true     # Configures if the compression header is present for downlink User-Plane messages (false) or not present (true).
+    iq_scaling: 5.5                      # IQ samples scaling factor applied before compression, should be a positive value smaller than 10.
     cells:
-      - network_interface: enp1s0f0                                 # Ethernet interface name used to communicate with the RU.
-        ru_mac_addr: 70:b3:d5:e1:5b:06                              # RU MAC address.
-        du_mac_addr: 80:61:5f:0d:df:aa                              # DU MAC address.
-        vlan_tag: 5                                                 # VLAN tag value.
-        prach_port_id: 4                                            # PRACH eAxC port value.
-        dl_port_id: [0,1]                                           # Downlink eAxC port values.
-        ul_port_id: 0                                               # Uplink eAxC port values.
+      - network_interface: enp1s0f0      # Ethernet interface name used to communicate with the RU.
+        ru_mac_addr: 70:b3:d5:e1:5b:06   # RU MAC address.
+        du_mac_addr: 80:61:5f:0d:df:aa   # DU MAC address.
+        vlan_tag: 5                      # VLAN tag value.
+        prach_port_id: [4]               # PRACH eAxC port value.
+        dl_port_id: [0, 1]               # Downlink eAxC port values.
+        ul_port_id: [0, 1]               # Uplink eAxC port values.
 
 To expand on this, the following parameters are set in the ``cells`` field:
 
