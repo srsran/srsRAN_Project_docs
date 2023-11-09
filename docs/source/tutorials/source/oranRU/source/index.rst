@@ -171,7 +171,7 @@ The following excerpt shows how the DU is configured to communicate with the RU:
     compr_bitwidth_prach: 9              # PRACH IQ samples bitwidth after compression.
     enable_ul_static_compr_hdr: true     # Configures if the compression header is present for uplink User-Plane messages (false) or not present (true).
     enable_dl_static_compr_hdr: true     # Configures if the compression header is present for downlink User-Plane messages (false) or not present (true).
-    iq_scaling: 5.5                      # IQ samples scaling factor applied before compression, should be a positive value smaller than 10.
+    iq_scaling: 1.5                      # IQ samples scaling factor applied before compression, should be a positive value smaller than 10.
     cells:
       - network_interface: enp1s0f0      # Ethernet interface name used to communicate with the RU.
         ru_mac_addr: 70:b3:d5:e1:5b:06   # RU MAC address.
