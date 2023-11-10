@@ -247,7 +247,7 @@ Refer to the Benetel User Guide documentation to apply the following configurati
 
 *Transmission Power* : Depending on your setup, you may need to alter the transmission power of the RU. For example, in a lab setting with the UE in close proximity to the RU, the default power settings may result in UE saturation.
 
-*PRACH format* : We recommend using long PRACH format. Use `./long_form_prach.sh` script on the RU or apply the required changes manually.
+*PRACH format* : We recommend using long PRACH format. Use `long_form_prach.sh` script on the RU or apply the required changes manually.
 
 *DL scaling* : We use downlink scaling of 6dB.
    
