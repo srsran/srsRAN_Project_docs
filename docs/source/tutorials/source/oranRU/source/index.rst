@@ -163,6 +163,7 @@ The following excerpt shows how the DU is configured to communicate with the RU:
     t1a_max_up: 250                      # Maximum T1a on User-Plane in microseconds.
     t1a_min_up: 80                       # Minimum T1a on User-Plane in microseconds.
     is_prach_cp_enabled: false           # Configures if Control-Plane messages should be used to receive PRACH messages.
+    is_dl_broadcast_enabled: true        # Set to true for a workaround over a firmware bug in the RAN550 when operating in SISO mode.
     compr_method_ul: bfp                 # Uplink compression method.
     compr_bitwidth_ul: 9                 # Uplink IQ samples bitwidth after compression.
     compr_method_dl: bfp                 # Downlink compression method.
@@ -178,8 +179,8 @@ The following excerpt shows how the DU is configured to communicate with the RU:
         du_mac_addr: 80:61:5f:0d:df:aa   # DU MAC address.
         vlan_tag: 5                      # VLAN tag value.
         prach_port_id: [4]               # PRACH eAxC port value.
-        dl_port_id: [0, 1]               # Downlink eAxC port values.
-        ul_port_id: [0, 1]               # Uplink eAxC port values.
+        dl_port_id: [0]                 # Downlink eAxC port values.
+        ul_port_id: [0]                 # Uplink eAxC port values.
 
 To expand on this, the following parameters are set in the ``cells`` field:
 
