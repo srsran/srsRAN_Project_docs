@@ -21,8 +21,8 @@ The split 7.2 interface is supported in srsRAN through the Open Fronthaul (OFH) 
 Setup Considerations
 ********************
 
-.. image:: .imgs/benetel_setup_simple.png
-    :width: 50%
+.. image:: .imgs/generic_oru.png
+    :width: 75%
     :align: center
 
 This tutorial uses the following hardware: 
