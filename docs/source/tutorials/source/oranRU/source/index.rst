@@ -6,24 +6,18 @@ ORAN 7.2 RU Guide
 Overview
 ********
 
-The srsRAN Project supports both split 7.2 and split 8 fronthaul interfaces to Radio Units (RUs).
+The srsRAN Project supports both split 7.2 and split 8 fronthaul interfaces to Radio Units (RUs). This tutorial outlines the general steps required to interface an RU with the srsRAN CU/DU via split 7.2. For more detailed instructions 
+on specific O-RUs select an RU from :ref:`this list <supported_rus>`. 
 
-:ref:`Split 7.2 <7_2_split>` is an open specification published by the O-RAN Alliance aiming to  ensure interoperability between different DU and RU solutions. 
-This tutorial outlines the use of the srsRAN Project gNB (including both CU and DU) with an O-RAN RU using split 7.2 interface. For this example, we use the `RAN550 <https://benetel.com/ran550/>`_ RU from Benetel. A `Falcon-RX/812/G <https://www.fibrolan.com/Falcon-RX>`_ switch is used to provide timing synchronization to both the DU and RU.
+:ref:`Split 7.2 <7_2_split>` is an open specification published by the O-RAN Alliance aiming to  ensure interoperability between different DU and RU solutions.  
 
-The split 7.2 interface is supported in srsRAN through the Open Fronthaul (OFH) Library. Developed by the SRS team, OFH is an open-source, portable library with minimal 3rd-party dependencies. It has been designed to minimize the integration and configuration burden associated with using srsRAN with 3rd-party O-RUs. 
-
-.. note::
-   This example features an O-RU device from `Benetel <https://www.benetel.com/>`_. Please refer to the Benetel User Guide Documentation for up-to-date configuration and usage guidelines, along with disclaimer and warranty information. Contact Benetel (sales@benetel.com) for more information.
+The split 7.2 interface is supported in srsRAN through the Open Fronthaul (OFH) Library. Developed by the SRS team, OFH is an open-source, portable library with minimal 3rd-party dependencies. It has been designed to minimize the integration 
+and configuration burden associated with using srsRAN with 3rd-party O-RUs. 
 
 ----
 
 Setup Considerations
 ********************
-
-.. image:: .imgs/generic_oru.png
-    :width: 75%
-    :align: center
 
 This tutorial uses the following hardware: 
 
@@ -34,15 +28,18 @@ This tutorial uses the following hardware:
       - NIC: Intel Corporation 82599ES 10-Gigabit
       - OS: Ubuntu 22.04 (5.15.0-1037-realtime)
 
-    - `Benetel RAN550 RU <https://benetel.com/ran550/>`_ (Firmware version RAN550-1-0.8.1)
-    - `Falcon-RX/812/G xHaul Switch (w/ PTP grandmaster) <https://www.fibrolan.com/Falcon-RX>`_
+    - `Falcon-RX/812/G (xHaul Switch & PTP grandmaster) <https://www.fibrolan.com/Falcon-RX>`_
+    - RU    
     
-    
-and the following software:
+With the following software:
 
     - `srsRAN Project <https://github.com/srsran/srsRAN_project>`_
     - `Open5GS 5G Core <https://open5gs.org/>`_
     - `Amarisoft UE <https://www.amarisoft.com/technology/ue-simulator/>`_  (2021-09-18 or later)
+
+.. image:: .imgs/generic_oru.png
+    :width: 75%
+    :align: center
 
 CU/DU 
 =====
@@ -52,8 +49,10 @@ The CU/DU is provided by the srsRAN Project gNB. The Open Fronthaul (OFH) Librar
 RU 
 =====
 
-The Benetel RAN550 RU is used as the RU in this setup. This is a Split 7.2x indoor O-RU. 
-The RU is connected to the Falcon-RX via SFP+ fiber cable through the main fronthaul interface. 
+Users should chose the RU that best suits their usecase and specific requirements. There are various O-RUs available with specific implementations for indoor and outdoor use, various price points, and various hardware capabilities. A list of tested O-RUs 
+can be found :ref:`here <supported_rus>`, along with details on using them with the srsRAN Project gNB. 
+
+For all set-ups the RU should be connected to the Falcon-RX via SFP+ fiber cable through the main fronthaul interface. 
 
 5G Core
 =======
@@ -143,54 +142,16 @@ The first value here is used to determine if the PTP sync is correct, for this w
 
 In both of the above commands ``enp1s0f0`` is the network interface on our DU that gets the PTP sync. 
 
-
-
 srsRAN configuration
 --------------------
 
-A sample configuration file for the DU can be downloaded from `here <https://github.com/srsran/srsRAN_Project/blob/main/configs/gnb_ru_ran550_tdd_n78_20mhz.yml>`_.
+Sample configuration files for the DU can be downloaded from `here <https://github.com/srsran/srsRAN_Project/blob/main/configs/>`_. There is an associated configuration file for each of the tested RUs. 
 
-The following excerpt shows how the DU is configured to communicate with the RU: 
+The main configuration steps for the CU/DU occur in the ``ru_ofh`` field. Here the CU/DU is configured to match the capabilities of the RU being used. All parameters should be configured specifically for each RU. 
 
-.. code-block:: yaml
+See the specific RU guides for more information on configuring the CU/DU.
 
-  ru_ofh:
-    ru_bandwidth_MHz: 100                # RU instantaneous bandwidth.
-    t1a_max_cp_dl: 500                   # Maximum T1a on Control-Plane for Downlink in microseconds.
-    t1a_min_cp_dl: 250                   # Minimum T1a on Control-Plane for Downlink in microseconds.
-    t1a_max_cp_ul: 465                   # Maximum T1a on Control-Plane for Uplink in microseconds.
-    t1a_min_cp_ul: 250                   # Minimum T1a on Control-Plane for Uplink in microseconds.
-    t1a_max_up: 250                      # Maximum T1a on User-Plane in microseconds.
-    t1a_min_up: 80                       # Minimum T1a on User-Plane in microseconds.
-    is_prach_cp_enabled: false           # Configures if Control-Plane messages should be used to receive PRACH messages.
-    is_dl_broadcast_enabled: true        # Set to true for a workaround over a firmware bug in the RAN550 when operating in SISO mode.
-    compr_method_ul: bfp                 # Uplink compression method.
-    compr_bitwidth_ul: 9                 # Uplink IQ samples bitwidth after compression.
-    compr_method_dl: bfp                 # Downlink compression method.
-    compr_bitwidth_dl: 9                 # Downlink IQ samples bitwidth after compression.
-    compr_method_prach: bfp              # PRACH compression method.
-    compr_bitwidth_prach: 9              # PRACH IQ samples bitwidth after compression.
-    enable_ul_static_compr_hdr: true     # Configures if the compression header is present for uplink User-Plane messages (false) or not present (true).
-    enable_dl_static_compr_hdr: true     # Configures if the compression header is present for downlink User-Plane messages (false) or not present (true).
-    iq_scaling: 1.5                      # IQ samples scaling factor applied before compression, should be a positive value smaller than 10.
-    cells:
-      - network_interface: enp1s0f0      # Ethernet interface name used to communicate with the RU.
-        ru_mac_addr: 70:b3:d5:e1:5b:06   # RU MAC address.
-        du_mac_addr: 80:61:5f:0d:df:aa   # DU MAC address.
-        vlan_tag: 5                      # VLAN tag value.
-        prach_port_id: [4]               # PRACH eAxC port value.
-        dl_port_id: [0]                 # Downlink eAxC port values.
-        ul_port_id: [0]                 # Uplink eAxC port values.
-
-To expand on this, the following parameters are set in the ``cells`` field:
-
-    - ``network_interface`` : Network interface used to send the OFH packets.
-    - ``ru_mac_addr`` : MAC address of the RAN550.
-    - ``du_mac_addr`` : MAC address of the interface used by the gNB (it should be connected directly to the RU or using a smart switch).
-    - ``vlan_tag`` : V-LAN identifier, should be set to the value configured in the switch settings
-    
 ----
-
 
 Falcon-RX Switch
 ================
@@ -237,23 +198,7 @@ receive the PTP sync.
 RU 
 =====
 
-Refer to the Benetel User Guide documentation to apply the following configuration changes. Ensure the RU is running before trying to make any configuration changes.
-
-*MAC Address* : The MAC address of the DU must be configured in the RU for Control-Plane and User-Plane traffic. In our configuration we use the same MAC address for both planes. 
-
-*VLAN tag* : In our setup the same VLAN ID is used for all network traffic, as only one MAC address is used.
-
-*Compression* : Currently only static compression headers are supported for this setup. We use BFP9 compression for all uplink and downlink channels. Refer to the Benetel User Guide for details on how to configure compression in the RU. 
-
-*Transmission Power* : Depending on your setup, you may need to alter the transmission power of the RU. For example, in a lab setting with the UE in close proximity to the RU, the default power settings may result in UE saturation.
-
-*PRACH format* : We recommend using long PRACH format. Use `long_form_prach.sh` script on the RU or apply the required changes manually.
-
-*DL scaling* : We use downlink scaling of 6dB.
-   
-*TDD pattern* : The TDD pattern should be changed to 6-3 format (DDDDDDSUUU). :download:`here <.configs/benetel_tdd.xml>`.
-
-The full init script we used for this appnote can be found :download:`here <.configs/benetel_radio_init.sh>`.
+Refer to the specific RU documentation to correctly configure the RU. Ensure the RU is running before trying to make any configuration changes.
 
 Core
 =====
@@ -268,6 +213,7 @@ To configure the core correctly the following steps need to be taken:
     - Configure the PLMN and TAC values so that they are the same as those present in the gNB configuration.
     - Register the ISIM credentials of the UE to the list of subscribers through the Open5GS WebUI.
 
+-----
 
 Initializing the Network
 ************************
@@ -275,9 +221,9 @@ Initializing the Network
 RU 
 =====
 
-To bring up the RU simply boot it and ensure it is running correctly before attempting to connect the DU. 
+To bring up the RU simply boot it and ensure it is running correctly before attempting to connect the DU. Check for RU synchronization and that the PTP process is running correctly. 
 
-Check for RU synchronization and that the PTP process is running correctly.   
+These exact steps will vary depend on the RU being used. 
 
 CU/DU
 =====
@@ -288,9 +234,11 @@ We can now run the CU/DU. First, navigate to *srsRAN_Project/build/apps/gnb*, an
 
 .. code-block:: bash
 
-   sudo ./gnb -c du_R550_rf.yml
+   sudo ./gnb -c <RU_CONFIG>
 
-If the DU connects to the RU successfully, you will see the following output: 
+Where ``<RU_CONFIG>`` is the configuration file associated with the RU being used. 
+
+If the DU connects to the RU successfully, you will see the following output or similar: 
 
 .. code-block:: bash
 
@@ -322,14 +270,13 @@ For full details on configuring and connecting AmariUE to the srsRAN Project gNB
 Connecting to the Network
 -------------------------
 
-You can download the specific configuration used for this tutorial :download:`here <.configs/amariUE_R550_20mhz.cfg>`.
-
 Launch the UE with root permissions to create the TUN device using the following command:
 
 .. code-block:: bash
 
-  ./lteue amariUE_R550_20mhz.cfg
+  ./lteue <amariUE_CONFIG>
 
+Where ``amariUE_CONFIG`` is the specific configuration file being used. 
 
 The above command should start the UE emulator and attach it to the network.
 If UE connects successfully to the network, the following (or similar) should be displayed at the end of the console output:
@@ -375,12 +322,18 @@ Once connected to the network you can use iPerf to generate traffic. The followi
 
 -----
 
+.. _supported_rus: 
+
 Supported O-RUs
 ***************
+
+.. note::
+   These guides should be used in conjunction with the documentation from your RU vendor, some settings may need to be adjusted for your local setup.
 
 The following is a list of other O-RUs that have been tested with the srsRAN Project CU/DU and OFH library: 
 
     - Foxconn RPQN
+    - :ref:`Benetel R550 <r550>`
     - Picocom PC802 SCB
 
 Example configuration files for the srsRAN Project gNB for use with these O-RUs can be found `here <https://github.com/srsran/srsRAN_Project/tree/main/configs>`_.  
