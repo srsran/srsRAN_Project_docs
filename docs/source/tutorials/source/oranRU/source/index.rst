@@ -65,13 +65,8 @@ with the information needed to download and setup Open5GS so that it is ready to
     - `GitHub <https://github.com/open5gs/open5gs>`_
     - `Quickstart Guide <https://open5gs.org/open5gs/docs/guide/01-quickstart/>`_
 
-Switch
-======
-
-The Falcon-RX/812/G switch is a 5G xHaul timing-aware O-RAN switch & PTP grandmaster. This is used to provide timing synchronization to both the DU and RU. 
-
 Clocking & Synchronization
---------------------------
+==========================
 
 The split 7.2 interface requires tight timing synchronization between the DU and RU. O-RAN WG 4 has defined various synchronization methods for use with Open Fronthaul. These are outlined in O-RAN.WG4.CUS.0-R003-v11.00 Section 11.
 
@@ -80,6 +75,12 @@ In our setup the Falcon switch is acting as the PTP grandmaster (which is synchr
 
 .. note::
    The OFH library supports all of the defined clock model and synchronization topologies defined by O-RAN WG4. The use of LLS-C3 is specific to this hardware setup.
+
+
+Switch
+------
+
+The Falcon-RX/812/G switch is a 5G xHaul timing-aware O-RAN switch & PTP grandmaster. This is used to provide both clocking and timing synchronization to both the DU and RU. 
 
 
 ----

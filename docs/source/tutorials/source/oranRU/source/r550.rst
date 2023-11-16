@@ -1,7 +1,7 @@
 .. _r550:
 
-ORAN 7.2 w/ Benetel R550
-########################
+Benetel R550
+############
 
 .. warning::
   This document is intended to be used as a guide. Variances in firmware and software versions in local setups may require the sample configuration files provided to be changed. As a result please closely follow the specific users guides of your RU in conjunction with this guide.

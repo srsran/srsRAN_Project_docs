@@ -73,4 +73,5 @@ Useful resources:
    tutorials/source/cotsUE/source/index.rst
    tutorials/source/amariUE/source/index.rst
    tutorials/source/oranRU/source/index.rst
+   tutorials/source/oranRU/source/ru_integration.rst
    tutorials/source/flexric/source/index.rst
