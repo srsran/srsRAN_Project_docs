@@ -430,11 +430,50 @@ Example **ping** output:
   64 bytes from 10.45.1.1: icmp_seq=4 ttl=64 time=71.5 ms
   64 bytes from 10.45.1.1: icmp_seq=5 ttl=64 time=32.9 ms
 
-You can also ping the from core to the UE. First add a route to the UE on the **host machine**, i.e. the one running the Open5GS docker container: 
+You can also ping the from core to the UE. First add a route to the UE on the **host machine** (i.e. the one running the Open5GS docker container): 
 
 .. code-block:: bash
 
-   sudo ip ro add 10.45.0.0/16 via 10.53.1.2
+    sudo ip ro add 10.45.0.0/16 via 10.53.1.2
+
+Check the host routing table:
+
+.. code-block:: bash
+
+    route -n
+
+It should contain the following entries (note that Iface names might be different):
+
+.. code-block:: bash
+
+    Kernel IP routing table
+    Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+    0.0.0.0         192.168.0.1     0.0.0.0         UG    100    0        0 eno1
+    10.45.0.0       10.53.1.2       255.255.0.0     UG    0      0        0 br-dfa5521eb807
+    10.53.1.0       0.0.0.0         255.255.255.0   U     0      0        0 br-dfa5521eb807
+    ...
+
+Next, add a default route for the UE as follows:
+
+.. code-block:: bash
+
+   sudo ip netns exec ue1 ip route add default via 10.45.1.1 dev tun_srsue
+
+Check the routing table of ue1:
+
+.. code-block:: bash
+
+   sudo ip netns exec ue1 route -n
+
+The output should be as follows:
+
+.. code-block:: bash
+
+    Kernel IP routing table
+    Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+    0.0.0.0         10.45.1.1       0.0.0.0         UG    0      0        0 tun_srsue
+    10.45.1.0       0.0.0.0         255.255.255.0   U     0      0        0 tun_srsue
+
 
 Now ping the UE: 
 
@@ -647,23 +686,40 @@ This can be done with the following command:
 .. code-block:: bash
 
    sudo sysctl -w net.ipv4.ip_forward=1
-   sudo iptables -t nat -A POSTROUTING -s 10.45.0.0/16 ! -o <IFNAME> -j MASQUERADE
+   sudo iptables -t nat -A POSTROUTING -o <IFNAME> -j MASQUERADE
 
 Where ``<IFNAME>`` is the name of the interface connected to the internet. 
 
-A default route for the UE can be configured as follows:
-
-.. code-block:: bash
-
-   sudo ip netns exec ue1 ip route add default via 10.45.1.1 dev tun_srsue
-
-To check that this can been configured correctly run the following command: 
+To check that this has been configured correctly run the following command:
 
 .. code-block:: bash
 
    sudo ip netns exec ue1 ping -i 1 8.8.8.8
 
 If the UE can ping the Google DNS, then the internet can be successfully accessed.  
+
+2nd Open5GS instance (installed manually)
+=========================================
+The routing entries on the host PC for IPs: `10.45.0.0` and `10.53.1.0` should use the same interface, e.g.:
+
+.. code-block:: bash
+
+    route -n
+
+    Kernel IP routing table
+    Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+    0.0.0.0         192.168.0.1     0.0.0.0         UG    100    0        0 eno1
+    10.45.0.0       10.53.1.2       255.255.0.0     UG    0      0        0 br-dfa5521eb807
+    10.53.1.0       0.0.0.0         255.255.255.0   U     0      0        0 br-dfa5521eb807
+    ...
+
+However, if a second instance of Open5GS (that was installed manually) is running on the host PC, the route to `10.45.0.0` goes to `ogstun` interface. For this reason, a UE cannot access the Internet, as the host will send packets to the manually installed Open5GS version. 
+To solve this routing issue, you can disable (or even remove) the manually installed Open5GS -- please check sections 6 and/or 7 of the `Open5GS tutorial  <https://open5gs.org/open5gs/docs/guide/01-quickstart/>`_.
+In addition, you might need to disable the `ogstun` interface with the following command:
+
+.. code-block:: bash
+
+    sudo ifconfig ogstun 0.0.0.0 down
 
 RIC running on a different machine
 ==================================
