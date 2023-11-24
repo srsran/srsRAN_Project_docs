@@ -245,17 +245,17 @@ cell_cfg:
     olla_max_snr_offset: 5                  # Optional FLOAT (5). Sets the maximum offset that the Outer-loop link adaptation (OLLA) can apply to estimate the UL SNR. Supported: positive float.
 
   pucch: 
-    p0_nominal: -90                          # Optional UINT (-90). Sets the power control parameter P0 for PUCCH transmissions in dBm. Supported: multiples of 2 and within the [-202, 24] interval.
+    p0_nominal: -90                         # Optional UINT (-90). Sets the power control parameter P0 for PUCCH transmissions in dBm. Supported: multiples of 2 and within the [-202, 24] interval.
     sr_period_ms: 40                        # Optional UINT (40). Sets the SR period in milliseconds. Supported: [1,2,4,8,10,16,20,40,80,160,320].
     f1_nof_ue_res_harq: 3                   # Optional UINT (3). Sets the number of PUCCH F1 resources available per UE for HARQ. Supported: [1 - 8].
-    f1_nof_cell_res_sr: 2                  # Optional UINT (2). Sets the number of PUCCH F1 resources available per cell for SR. Supported: [1 - 10].
+    f1_nof_cell_res_sr: 2                   # Optional UINT (2). Sets the number of PUCCH F1 resources available per cell for SR. Supported: [1 - 10].
     f1_nof_symbols: 14                      # Optional UINT (14). Sets the number of symbols for PUCCH F1 resources. Supported: [4 - 14].
     f1_enable_occ: 0                        # Optional BOOLEAN (0). Enables OCC for PUCCH F1. Supported: [0, 1].
     f1_nof_cyclic_shifts: 1                 # Optional UINT (1). Sets the number of possible cyclic shifts available for PUCCH F1 resources. Supported: [1,2,3,4,6,12].
     f1_intraslot_freq_hop: 0                # Optional BOOLEAN (0). Enables intra-slot frequency hopping for PUCCH F1. Supported: [0, 1].
     nof_cell_harq_pucch_res_sets: 1         # Optional UINT (1). Sets the number of separate PUCCH resource sets for HARQ-ACK that are available in the cell. The higher the number of sets, the lower the chances UEs have to share the same PUCCH resources. Supported: [1 - 10].
     f2_nof_ue_res_harq: 6                   # Optional UINT (6). Sets the number of PUCCH F2 resources available per UE for HARQ. Supported: [1 - 8].
-    f2_nof_cell_res_csi: 1                 # Optional UINT (1). Sets the number of PUCCH F2 resources available per cell for CSI. Supported: [1 - 10].
+    f2_nof_cell_res_csi: 1                  # Optional UINT (1). Sets the number of PUCCH F2 resources available per cell for CSI. Supported: [1 - 10].
     f2_nof_symbols: 2                       # Optional UINT (2). Sets the number of symbols for PUCCH F2 resources. Supported: [1 - 2].
     f2_max_nof_rbs: 1                       # Optional UINT (1). Sets the max number of RBs for PUCCH F2 resources. Supported: [1 - 16].
     f2_max_payload:                         # Optional INT. Sets the max number of payload bits for PUCCH F2 resources. Supported [1 - 11].
@@ -313,7 +313,6 @@ buffer_pool:
   segment_size: 1024                    # Optional UINT (1024). Sets the size of each buffer pool segment in bytes. 
 
 test_mode: 
-  
   test_ue: 
     rnti: 0                                     # Optional ENUM (0). Sets the C-RNTI of the UE. Supported: [0 - 65519].
     pdsch_active: 1                             # Optional BOOLEAN (1). Enables the PDSCH of the UE.
@@ -326,7 +325,6 @@ test_mode:
     i_2: 0                                      # Optional INT (0). Sets the Precoder Matrix codebook index "i_2" to be forwarded to test UE, in the case of more than 2 antennas. Supported: [0 - 3].
    
 expert_execution:
-
   affinities: 
     l1_dl_cpus:                                 # Optional TEXT. Sets the number of CPU cores assigned to L1 downlink tasks. Supported: [1 - Number of available cores].
     l1_ul_cpus:                                 # Optional TEXT. Sets the number of CPU cores assigned to L1 uplink tasks. Supported: [1 - Number of available cores].

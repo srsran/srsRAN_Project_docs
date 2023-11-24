@@ -13,6 +13,24 @@ The gNB comes with a number of example configuration files, these can be found i
 These configuration file examples provide a basic set-up to get users up and running, users can easily modify these to suit their use-case.
 
 More example configuration files for various use cases can be found `here <https://github.com/srsran/srsRAN_Project/tree/main/configs>`_.
+These include sample supplementary configuration files for: 
+
+  - MIMO with a USRP
+  - Increasing QAM from 64 to 256
+  - Specific QOS configurations for voice, video, IMS, live-streaming and buffered video streaming
+  - Slicing support
+
+These are intended to be used in conjunction with other configuration files, for example you might run the MIMO example as follows: 
+
+.. code-block:: bash
+
+   sudo ./gnb -c gnb_rf_n310_fdd_n3_20mhz.yml -c mimo.yml
+
+Furthermore you may wish to use QAM256 in addition to the above. This can be done as follows: 
+
+.. code-block:: bash
+
+  sudo ./gnb -c gnb_rf_n310_fdd_n3_20mhz.yml -c mimo.yml -c qam256.yml
 
 ----
 
