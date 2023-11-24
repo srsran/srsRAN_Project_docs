@@ -44,7 +44,7 @@ Limitations
 The current srsUE implementation has a few feature limitations when running in 5G SA mode. The key feature limitations are as follows:
 
   - Limited to 15 kHz Sub-Carrier Spacing (SCS), which means only FDD bands can be used. 
-  - Limited to 10 MHz Bandwidth (BW)
+  - Limited to 5, 10, 15 or 20 MHz Bandwidth (BW)
 
 Open5GS
 =======
