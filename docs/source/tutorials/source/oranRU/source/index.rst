@@ -325,8 +325,8 @@ Once connected to the network you can use iPerf to generate traffic. The followi
 
 .. _supported_rus: 
 
-Supported O-RUs
-***************
+Supported RUs
+*************
 
 .. note::
    These guides should be used in conjunction with the documentation from your RU vendor, some settings may need to be adjusted for your local setup.
@@ -338,3 +338,13 @@ The following is a list of other O-RUs that have been tested with the srsRAN Pro
     - Picocom PC802 SCB
 
 Example configuration files for the srsRAN Project gNB for use with these O-RUs can be found `here <https://github.com/srsran/srsRAN_Project/tree/main/configs>`_.  
+
+-----
+
+.. toctree:: 
+    :maxdepth: 1
+    :caption: RU Integration Guide
+
+    ru_integration.rst
+
+
