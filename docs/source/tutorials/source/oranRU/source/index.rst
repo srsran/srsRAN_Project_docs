@@ -38,7 +38,7 @@ With the following software:
     - `Amarisoft UE <https://www.amarisoft.com/technology/ue-simulator/>`_  (2021-09-18 or later)
 
 .. image:: .imgs/generic_oru.png
-    :width: 75%
+    :width: 60%
     :align: center
 
 CU/DU 
