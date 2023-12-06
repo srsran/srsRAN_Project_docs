@@ -341,9 +341,11 @@ Example configuration files for the srsRAN Project gNB for use with these O-RUs 
 
 -----
 
+Integration Guide
+*****************
+
 .. toctree:: 
     :maxdepth: 1
-    :caption: RU Integration Guide
 
     ru_integration.rst
 

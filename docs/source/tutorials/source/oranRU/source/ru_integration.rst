@@ -1,10 +1,10 @@
 .. _ru_integration: 
 
-Integration Guide
-#################
+Overview
+########
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
    :caption: RU Specific Guides
 
    r550.rst
