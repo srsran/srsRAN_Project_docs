@@ -11,6 +11,8 @@ cells:                                  # Optional TEXT. Sets the cell configura
 
 qos:                                    # Optional TEXT. Configures RLC and PDCP radio bearers on a per 5QI basis. This can only be set via the configuration file
 
+srbs:                                   # Optional TEXT. Configures signaling radio bearers. 
+
 slicing:                                # Optional TEXT. Configure network slicing options. This can only be set via the configuration file.
   sst: 1                                    # Optional UINT (1). Sets the Slice Service Type. Supported: [0 - 255].
   sd: 0                                     # Optional UINT (0). Sets the Service Differentiator. Supported: [0-16777215].
@@ -18,7 +20,9 @@ slicing:                                # Optional TEXT. Configure network slici
 amf: 
   addr:                                 # Required TEXT. Sets the IP address or hostname of the AMF. Format: IPV4 or IPV6 IP address.
   port: 38412                           # Optional UINT (38412). Sets the AMF port. Format: integer between [20000 - 40000].
-  bind_addr:                           # Required TEXT. Sets the local IP address that the gNB binds to for receiving traffic from the AMF. Format: IPV4 or IPV6 IP address.
+  bind_addr:                            # Required TEXT. Sets the local IP address that the gNB binds to for receiving traffic from the AMF. Format: IPV4 or IPV6 IP address.
+  n2_bind_addr:                         # Optional TEXT. Sets local IP address to bind for N2 interface. Format: IPV4 or IPV6 IP address.
+  n3_bind_addr:                         # Optional TEXT. Sets local IP address to bind for N3 interface. Format: IPV4 or IPV6 IP address.
   sctp_rto_initial:                     # Optional INT. Sets the initial retransmission timeout when creating the SCTP connection.
   sctp_rto_min:                         # Optional INT. Sets the minimum retransmission timeout for the SCTP connection.
   sctp_rto_max:                         # Optional INT. Sets the maximum retransmission timeout for the SCTP connection.
@@ -42,11 +46,10 @@ e2:
 
 cu_cp: 
   inactivity_timer: 7200                # Optional INT (7200). Sets the UE/PDU Session/DRB inactivity timer in seconds. Supported: [1 - 7200].
-  ue_context_setup_timeout_s: 2         # Optional INT (2). Sets the timeout for the reception of an InitialContextSetupRequest after an InitialUeMessage was sent to the core, in seconds. If the value is reached, the UE will be released. 
+  ue_context_setup_timeout_s: 3         # Optional INT (3). Sets the timeout for the reception of an InitialContextSetupRequest after an InitialUeMessage was sent to the core, in seconds. If the value is reached, the UE will be released. 
 
   mobility: 
     trigger_handover_from_measurements: 0    # Optional BOOLEAN (0). Sets whether or not to start HO if neighbor cells become stronger. Supported: [0, 1].
-    
     cells:                                   # Optional TEXT. Sets the list of cells known to the CU-CP, their configs (if not provided over F1) and their respective neighbor cells.
       nr_cell_id:                               # Required UINT. The ID of this serving cell. 
       periodic_report_cfg_id:                   # Optional UINT. The periodical report configuration to use for this serving cell.
@@ -60,7 +63,6 @@ cu_cp:
       ssb_period:                               # Optional UINT. The SSB period of this serving cell in ms.  Must be present if not provided over F1. 
       ssb_offset:                               # Optional UINT. The SSB offset of this serving cell. Must be present if not provided over F1. 
       ssb_duration:                             # Optional UINT. The SSB duration of this serving cell in subframes. Must be present if not provided over F1. 
-
     report_configs:                          # Optional TEXT. Sets the list of report configurations to dynamically build a measurement configuration sent to the UEs using the below values.
       report_cfg_id:                            # Required UINT. The ID of this report configuration.
       report_type:                              # Required TEXT. The type of the report. Supported: [event_triggered, periodical]. Note that periodical reports are only supported for serving cells. 
@@ -72,14 +74,28 @@ cu_cp:
 
   rrc: 
     force_reestablishment_fallback: 0        # Optional BOOLEAN (0). Force RRC re-establishment fallback to RRC setup. Supported: [0, 1].
-    rrc_procedure_timeout_ms: 360            # Optional UINT (360). Sets the timeout in ms used for RRC message exchange with UE. It needs to suit the expected communication delay and account for potential retransmissions UE processing delays, SR delays, etc. Supported: [0 - inf]. 
+    rrc_procedure_timeout_ms: 720            # Optional UINT (720). Sets the timeout in ms used for RRC message exchange with UE. It needs to suit the expected communication delay and account for potential retransmissions UE processing delays, SR delays, etc. Supported: [0 - inf]. 
 
   security:
     integrity: not_needed                    # Optional TEXT (not_needed). Sets the default integrity protection indication for DRBs.
-    confidentiality: not_needed              # Optional TEXT (not_needed). Sets the default integrity confidentiality indication for DRBs.
+    confidentiality: required                # Optional TEXT (required). Sets the default integrity confidentiality indication for DRBs.
+    nea_pref_list: nea0,nea2,nea1            # Optional TEXT (nea0,nea2,nea1). Ordered preference list for the selection of encryption algorithm (NEA). Supported: [nea0,nea2,nea1,nea3].
+    nia_pref_list: nia2,nia1                 # Optional TEXT (nia2,nia1). Ordered preference list for the selection of encryption algorithm (NIA). Supported: [nia2,nia1,nia3].  
 
 cu_up: 
-  gtpu_queue_size: 2024                # Optional INT (2024). Sets the GTP-U queue size, in PDUs.
+  gtpu_queue_size: 2048                # Optional INT (2048). Sets the GTP-U queue size, in PDUs.
+  gtpu_reordering_timer: 0             # Optional INT (0). Sets the GTP-U RX reordering timer (in milliseconds). 
+
+ntn: 
+  cell_specific_koffset: 0             # Optional INT (0). Sets the cell-specific k-offset to be used for NTN. Supported: [0 - 1023].
+
+  ephemeris_info: 
+    pos_x: 0                              # Optional INT (0). Sets the X position of the satellite. Supported: [-67108864 - 67108863].
+    pos_y: 0                              # Optional INT (0). Sets the Y position of the satellite. Supported: [-67108864 - 67108863].
+    pos_z: 0                              # Optional INT (0). Sets the Z position of the satellite. Supported: [-67108864 - 67108863].
+    vel_x: 0                              # Optional INT (0). Sets the X velocity of the satellite. Supported: [-32768 - 32767].
+    vel_y: 0                              # Optional INT (0). Sets the Y velocity of the satellite. Supported: [
+    vel_z: 0                              # Optional INT (0). Sets the Z velocity of the satellite. Supported: [
 
 ru_ofh: 
 # Many of the following values are optional as they have default values. In practice, all of the following parameters should be defined by the user, as they will need
@@ -139,6 +155,8 @@ ru_sdr:
 
   expert_cfg:
     low_phy_dl_throttling: 0                # Optional FLOAT (0). Throttles the lower PHY DL baseband generation. Setting to 0 disables throttling. Supported: any value in the range [0 - 1].
+    discontinuous_tx: 0                     # Optional Boolean (0). Enables discontinuous transmission mode for the radio front-ends supporting it. Supported: [0, 1]. 
+    power_ramping_time_us: 0                # Optional FLOAT (0). Specifies the power ramping time in microseconds, it proactively initiates the transmission and mitigates transient effects. It is recommended to configure this parameter carefully, taking into account the characteristics of the transmit chain in order to achieve optimal performance
 
 cell_cfg: 
   pci: 1                                # Required UINT (1). Sets the Physical Cell ID. Supported: [0-1007].
@@ -180,8 +198,6 @@ cell_cfg:
     t311: 3000                              # Optional UINT (3000). Sets the RRC Connection Re-establishment procedure timer in ms. The timer starts upon initiating the RRC connection re-establishment procedure. Supported: [1000,3000,5000,10000,15000,20000,30000]. 
     n311: 1                                 # Optional UINT (1). Sets the In-sync counter. The counter is increased upon reception of the "in-sync" from lower layer while the timer T310 is running. Stops the timer T310, when configured value is reached.Supported: [1,2,3,4,5,6,8,10]. 
     t319: 1000                              # Optional UINT (1000). Sets the RRC Connection Resume timer in ms. The timer starts upon transmission of RRCResumeRequest or RRCResumeRequest1. Supported: [100,200,300,400,600,1000,1500,2000]. 
-    sib19:
-      distance_thres:                           # Optional TEXT. Sets the distance threshold for SIB19. Supported: [0 - 255]. 
 
   ul_common: 
     p_max:                                  # Optional TEXT. Sets maximum transmit power allowed in this serving cell. Supported: [-30 - +23].
@@ -191,6 +207,7 @@ cell_cfg:
       coreset0_index:                           # Optional INT. Sets the CORESET 0 index. Supported: [0 - 15].
       ss1_n_candidates: {0, 0, 1, 0, 0}         # Optional UINT ({0, 0, 1, 0, 0}). Sets the number of PDCCH candidates per aggregation level for SearchSpace#1. Supported: any 5 value array containing the following UINT values [0, 1, 2, 3, 4, 5, 6, 7, 8].
       ss0_index: 0                              # Optional UINT (0). Sets the SearchSpace#0 index. Supported: [0 - 15].
+      max_coreset0_duration:                    # Optional INT. Sets the maximum CORESET#0 duration in OFDM symbols to consider when deriving CORESET#0 index. Supported: [1 - 2]. 
     dedicated: 
       coreset1_rb_start: 1                      # Optional INT (0). Sets the starting common resource block (CRB) number for CORESET 1, relative to CRB0. Supported: [0 - 275].
       coreset1_l_crb:                           # Optional INT (Across entire BW of cell). Sets the length of CORESET 1 in number of CRBs. Supported: [0 - 275].
@@ -205,6 +222,7 @@ cell_cfg:
     fixed_rar_mcs: 0                        # Optional UINT (0). Sets a fixed RAR MCS value for all UEs. Supported: [0 - 28]. 
     fixed_sib1_mcs: 5                       # Optional UINT (5). Sets a fixed SIB1 MCS for all UEs. Supported: [0 - 28].
     nof_harqs: 16                           # Optional UNIT (16). Sets the number of Downlink HARQ processes. Supported [2, 4, 6, 8, 10, 12, 16]. 
+    max_nof_harq_retxs: 4                   # Optional UINT (4). Sets the maximum number times a DL HARQ can be retransmitted before it is discarded. Supported: [0 - 4]. 
     max_consecutive_kos: 100                # Optional UINT (100). Sets the maximum number of consecutive HARQ-ACK KOs before an RLF is reported. Supported: [0 - inf]. 
     rv_sequence: [0,2,3,1]                  # Optional UINT (0,2,3,1). Sets the redundancy version sequence to use for PDSCH. Supported: any combination of [0, 1, 2, 3].
     mcs_table: qam64                        # Optional TEXT (qam64). Sets the MCS table to use for PDSCH. Supported: [qam64, qam256].
@@ -273,18 +291,19 @@ cell_cfg:
     prach_frequency_start:                  # Optional INT. Set Offset of lowest PRACH transmission occasion in frequency domain respective to PRB 0, in PRBs. Supported: [0 - (MAX_NOF_PRB - 1)].
     preamble_rx_target_pw: -100             # Optional INT (-100). Sets the Target power level at the network receiver side, in dBm. Supported: multiples of 2 within range [-202, -60].
     preamble_trans_max:                     # Optional UINT. Sets the max number of RA preamble transmissions performed before declaring a failure. Supported: [3,4,5,6,7,8,10,20,50,100,200]. 
-    power_ramping_step_db:                  # Optional UINT. Sets the power ramping steps for PRACH. Supported: [0, 2, 4 , 6]. 
+    power_ramping_step_db:                  # Optional UINT. Sets the power ramping steps for PRACH. Supported: [0, 2, 4 , 6].
+    ports:                                  # Optional UINT. Sets the list of atenna ports. Expected value is a UINT string of antenna port IDs. 
 
   tdd_ul_dl_cfg: 
     dl_ul_tx_period: 10                     # Optional INT (10). Sets the TDD pattern periodicity in slots. The combination of this value and the chosen numerology must lead to a TDD periodicity of 0.5, 0.625, 1, 1.25, 2, 2.5, 3, 4, 5 or 10 milliseconds. Supported: [2 - 80].
     nof_dl_slots: 6                         # Optional INT (6). Number of consecutive full Downlink slots. Supported: [0-80].
-    nof_dl_symbols: 0                       # Optional INT (0). Number of Downlink symbols at the beginning of the slot following full Downlink slots. Supported: [0-13].
+    nof_dl_symbols: 8                       # Optional INT (8). Number of Downlink symbols at the beginning of the slot following full Downlink slots. Supported: [0-13].
     nof_ul_slots: 3                         # Optional INT (3). Number of consecutive full Uplink slots. Supported: [0 - 80].
     nof_ul_symbols: 0                       # Optional INT (0). Number of Uplink symbols at the end of the slot preceding the first full Uplink slot. Supported: [0-13].
     pattern2: 
       dl_ul_tx_period: 10                       # Optional INT (10). Sets the TDD pattern periodicity in slots. The combination of this value and the chosen numerology must lead to a TDD periodicity of 0.5, 0.625, 1, 1.25, 2, 2.5, 3, 4, 5 or 10 milliseconds. Supported: [2 - 80].
       nof_dl_slots: 6                           # Optional INT (6). Number of consecutive full Downlink slots. Supported: [0-80].
-      nof_dl_symbols: 0                         # Optional INT (0). Number of Downlink symbols at the beginning of the slot following full Downlink slots. Supported: [0-13]
+      nof_dl_symbols: 8                         # Optional INT (8). Number of Downlink symbols at the beginning of the slot following full Downlink slots. Supported: [0-13]
       nof_ul_slots: 3                           # Optional INT (3). Number of consecutive full Uplink slots. Supported: [0 - 80].
       nof_ul_symbols: 0                         # Optional INT (0). Number of Uplink symbols at the end of the slot preceding the first full Uplink slot. Supported: [0-13].
 
@@ -296,6 +315,7 @@ cell_cfg:
     nof_po_per_pf: 1                        # Optional UINT (1). Sets the number of paging occasions per paging frame. Supported: [1, 2, 4].
 
   csi: 
+    csi_rs_enabled: 1                       # Optional BOOLEAN (1). Enables CSI-RS resources and CSI reporting. Supported: [0, 1].
     csi_rs_period: 20                       # Optional UINT (20). Sets the CSI-RS period in milliseconds. Supported: [10, 20, 40, 80].
     meas_csi_rs_slot_offset: 2              # Optional UINT (2). Sets the slot offset of first CSI-RS resource used for measurement.
     tracking_csi_rs_slot_offset: 12         # Optional UINT (12). Sets the slot offset of the first CSI-RS slot used for tracking.
@@ -326,16 +346,17 @@ test_mode:
    
 expert_execution:
   affinities: 
-    l1_dl_cpus:                                 # Optional TEXT. Sets the number of CPU cores assigned to L1 downlink tasks. Supported: [1 - Number of available cores].
-    l1_ul_cpus:                                 # Optional TEXT. Sets the number of CPU cores assigned to L1 uplink tasks. Supported: [1 - Number of available cores].
-    l2_cell_cpus:                               # Optional TEXT. Sets the number of CPU cores assigned to L2 cells tasks. Supported: [1 - Number of available cores].
-    low_priority_cpus:                          # Optional TEXT. Sets the number of CPU cores assigned to low priority tasks. Supported: [1 - Number of available cores].
-    ru_cpus:                                    # Optional TEXT. Sets the number of CPU cores used for the Radio Unit tasks. Supported: [1 - Number of available cores].
+    l1_dl_cpus:                                 # Optional TEXT. Sets the CPU core(s) assigned to L1 downlink tasks. Supported: [1, 2, 3 , ..., N]. Where N is the number of total cores available. 
+    l1_ul_cpus:                                 # Optional TEXT. Sets the CPU core(s) assigned to L1 uplink tasks. Supported: [1, 2, 3 , ..., N].
+    l2_cell_cpus:                               # Optional TEXT. Sets the CPU core(s) assigned to L2 cells tasks. Supported: [1, 2, 3 , ..., N].
+    low_priority_cpus:                          # Optional TEXT. Sets the CPU core(s) assigned to low priority tasks. Supported: [1, 2, 3 , ..., N].
+    ru_cpus:                                    # Optional TEXT. Sets the CPU core(s) used for the Radio Unit tasks. Supported: [1, 2, 3 , ..., N].
     l1_dl_pinning:                              # Optional TEXT. Sets the policy used for assigning CPU cores to L1 downlink tasks.
     l1_ul_pinning:                              # Optional TEXT. Sets the policy used for assigning CPU cores to L1 uplink tasks. 
     l2_cell_pinning:                            # Optional TEXT. Sets the policy used for assigning CPU cores to L2 cell tasks.
     low_priority_pinning:                       # Optional TEXT. Sets the policy used for assigning CPU cores to low priority tasks.
     ru_pinning:                                 # Optional TEXT. Sets the policy used for assigning CPU cores to Radio Unity tasks.
+    ioslated_cpus:                              # Optional TEXT. Sets the CPU core(s) isolated for the gNB application. Supported: [1, 2, 3 , ..., N].
 
   threads: 
     upper_phy: 
@@ -375,8 +396,10 @@ log:
   sec_level: warning                    # Optional TEXT (warning). Sets security functions level
   lib_level: warning                    # Optional TEXT (warning). Sets generic log level
   hex_max_size: 0                       # Optional UINT (0). Sets maximum number of bytes to print for hex messages. Supported: [0 - 1024]
-  broadcast_enabled: false              # Optional BOOL (false). Enables logging in the PHY and MAC layer of broadcast messages and all PRACH opportunities
-  phy_rx_symbols_filename:              # Optional TEXT. Print received symbols to file. Symbols will be printed if a valid path is set. Format: file path. This file can be used in the srsRAN_matlab project
+  broadcast_enabled: 0                  # Optional BOOL (0). Enables logging in the PHY and MAC layer of broadcast messages and all PRACH opportunities. Supported: [0, 1].
+  phy_rx_symbols_filename:              # Optional TEXT. Print received symbols to file. Symbols will be printed if a valid path is set. Format: file path. This file can be used in the srsRAN_matlab project. 
+  phy_rx_symbols_port: 0                # Optional TEXT. Set to a valid receive port number to dump the IQ symbols from that port only, or set to "all" to dump the IQ symbols from all UL receive ports. Only works if "phy_rx_symbols_filename" is set. Supported: [NON-NEGATIVE or all]
+  phy_rx_symbols_prach: 0               # Optional BOOLEAN (0). Set to true to dump the IQ symbols from all the PRACH ports. Only works if "phy_rx_symbols_filename" is set. Supported: [0, 1]. 
   tracing_filename:                     # Optional TEXT. Set to a valid file name to enable tracing log. 
 
 pcap: 
@@ -386,6 +409,9 @@ pcap:
   e1ap_enable: false                    # Optional BOOL (false). Enable/disable E1AP packet capture.
   f1ap_filename: /tmp/gnb_f1ap.pcap     # Optional TEXT (/tmp/gnb_f1ap.pcap). Path for F1AP PCAPs. 
   f1ap_enable: false                    # Optional BOOL (false). Enable/disable F1AP packet capture.
+  rlc_filename: /tmp/gnb_rlc.pcap       # Optional TEXT (tmp/gnb_rlc.pcap). Path for RLC PCAPs. 
+  rlc_rb_type: all                      # Optional TEXT. Sets the RLC PCAP RB type. Supported: [all, srb, drb].
+  rlc_enable: false                     # Optional BOOL (false). Enable/disable RLC packet capture.  
   mac_filename: /tmp/gnb_mac.pcap       # Optional TEXT (/tmp/gnb_mac.pcap). Path for MAC PCAPs. 
   mac_type: udp                         # Optional TEXT (udp). Sets the MAC PCAP pcap type. Supported: [DLT or UDP].
   mac_enable: false                     # Optional BOOL (false). Enable/disable MAC packet capture.
