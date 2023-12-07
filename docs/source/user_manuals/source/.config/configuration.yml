@@ -94,8 +94,8 @@ ntn:
     pos_y: 0                              # Optional INT (0). Sets the Y position of the satellite. Supported: [-67108864 - 67108863].
     pos_z: 0                              # Optional INT (0). Sets the Z position of the satellite. Supported: [-67108864 - 67108863].
     vel_x: 0                              # Optional INT (0). Sets the X velocity of the satellite. Supported: [-32768 - 32767].
-    vel_y: 0                              # Optional INT (0). Sets the Y velocity of the satellite. Supported: [
-    vel_z: 0                              # Optional INT (0). Sets the Z velocity of the satellite. Supported: [
+    vel_y: 0                              # Optional INT (0). Sets the Y velocity of the satellite. Supported: [-32768 - 32767].
+    vel_z: 0                              # Optional INT (0). Sets the Z velocity of the satellite. Supported: [-32768 - 32767].
 
 ru_ofh: 
 # Many of the following values are optional as they have default values. In practice, all of the following parameters should be defined by the user, as they will need
