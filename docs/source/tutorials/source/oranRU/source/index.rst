@@ -1,6 +1,6 @@
 .. _oran_ru_tutorial: 
 
-ORAN 7.2 RU Guide
+O-RAN 7.2 RU Guide
 #################
 
 Overview
