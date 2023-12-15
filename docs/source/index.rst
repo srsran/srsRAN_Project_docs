@@ -22,7 +22,7 @@ Useful resources:
 
     * The srsRAN Project `source code <https://github.com/srsran/srsRAN_project>`_.
     * Explore the srsRAN Project `Discussions <https://github.com/srsran/srsran_project/discussions>`_ for news and user support.
-    * Discover the `srsRAN Enterprise solution <https://www.srs.io/products>`_ for Private 5G network deployments.
+    * Discover the `srsRAN Enterprise solution <https://srs.io/srsran-enterprise-5g/>`_ for Private 5G network deployments.
 
 
 ----
