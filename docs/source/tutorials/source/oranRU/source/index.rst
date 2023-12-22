@@ -91,6 +91,8 @@ Configuration
 CU/DU
 ===== 
 
+.. _nic_configuration: 
+
 NIC configuration
 -----------------
 
@@ -103,6 +105,8 @@ To set the jumbo frames in the NIC use the following command for a temporary con
    ifconfig <eth0> mtu 9600 up 
 
 Where ``eth0`` is the ethernet port for the SFP+ fiber cable that connects the DU to the Falcon-RX.
+
+.. _ptp_gnb_config: 
 
 PTP configuration
 -----------------
@@ -191,6 +195,7 @@ To expand on this, the following parameters are set in the ``cells`` field:
     
 ----
 
+.. _falcon_switch: 
 
 Falcon-RX Switch
 ================
@@ -307,6 +312,8 @@ If the DU connects to the RU successfully, you will see the following output:
     Type <t> to view trace
 
 ---- 
+
+.. _conn_network: 
 
 Connecting to the Network
 *************************

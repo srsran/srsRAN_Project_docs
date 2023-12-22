@@ -10,3 +10,4 @@ sphinx-toolbox
 sphinx-copybutton
 sphinx-hoverxref
 sphinxcontrib-plantuml
+sphinx-tabs==3.2.0

@@ -72,5 +72,7 @@ Useful resources:
    tutorials/source/srsUE/source/index.rst
    tutorials/source/cotsUE/source/index.rst
    tutorials/source/amariUE/source/index.rst
+   tutorials/source/k8s/source/index.rst
    tutorials/source/oranRU/source/index.rst
    tutorials/source/flexric/source/index.rst
+
