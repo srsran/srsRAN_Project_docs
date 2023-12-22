@@ -1,21 +1,22 @@
-gnb_id: 411                             # Optional UINT (411). Sets the numerical ID associated with the gNB.
+gnb_id: 411                         # Optional UINT (411). Sets the numerical ID associated with the gNB.
 
-gnb_id_bit_length:                      # Optional UNIT. Sets the bit length of the gnb_id above. Format: integer between [22 - 32]
+gnb_id_bit_length:                  # Optional UNIT. Sets the bit length of the gnb_id above. Format: integer between [22 - 32]
 
-ran_node_name: srsgnb01                 # Optional TEXT (srsgnb01). Sets the text ID associated with the gNB. Format: string without spaces.
+ran_node_name: srsgnb01             # Optional TEXT (srsgnb01). Sets the text ID associated with the gNB. Format: string without spaces.
 
-cells:                                  # Optional TEXT. Sets the cell configuration on a per cell basis, overwriting the default configuration defined by 
-                                        # cell_cfg. Contains a list of cells, each with parameters that overwrite the default config. This can only be 
-                                        # set via the configuration file. For more information see the relevant example configuration file:
-                                        # gnb_custom_cell_properties.yml.
+cells:                              # Optional TEXT. Sets the cell configuration on a per cell basis, overwriting the default configuration defined by 
+                                    # cell_cfg. Contains a list of cells, each with parameters that overwrite the default config. This can only be 
+                                    # set via the configuration file. For more information see the relevant example configuration file:
+                                    # gnb_custom_cell_properties.yml. Each list entry should begin with "-".
 
-qos:                                    # Optional TEXT. Configures RLC and PDCP radio bearers on a per 5QI basis. This can only be set via the configuration file
+qos:                                # Optional TEXT. Configures RLC and PDCP radio bearers on a per 5QI basis. This can only be set via the configuration file. Each list entry should begin with "-".
 
-srbs:                                   # Optional TEXT. Configures signaling radio bearers. 
+srbs:                               # Optional TEXT. Configures signaling radio bearers. Each list entry should begin with "-".
 
-slicing:                                # Optional TEXT. Configure network slicing options. This can only be set via the configuration file.
-  sst: 1                                    # Optional UINT (1). Sets the Slice Service Type. Supported: [0 - 255].
-  sd: 0                                     # Optional UINT (0). Sets the Service Differentiator. Supported: [0-16777215].
+slicing:                            # Optional TEXT. Configure network slicing options. This can only be set via the configuration file.
+  -                                     # Configure Slice 1
+    sst: 1                                  # Optional UINT (1). Sets the Slice Service Type. Supported: [0 - 255].
+    sd: 0                                   # Optional UINT (0). Sets the Service Differentiator. Supported: [0-16777215].
 
 amf: 
   addr:                                 # Required TEXT. Sets the IP address or hostname of the AMF. Format: IPV4 or IPV6 IP address.
@@ -51,26 +52,28 @@ cu_cp:
   mobility: 
     trigger_handover_from_measurements: 0    # Optional BOOLEAN (0). Sets whether or not to start HO if neighbor cells become stronger. Supported: [0, 1].
     cells:                                   # Optional TEXT. Sets the list of cells known to the CU-CP, their configs (if not provided over F1) and their respective neighbor cells.
-      nr_cell_id:                               # Required UINT. The ID of this serving cell. 
-      periodic_report_cfg_id:                   # Optional UINT. The periodical report configuration to use for this serving cell.
-      ncells:                                   # Required TEXT. List of neighbor cells.
-        nr_cell_id:                                 # Required UINT. The ID of this neighbor cell.
-        report_configs:                             # Required TEXT. List of report configurations to use for measurements of this neighbor cell.
-      gnb_id:                                   # Optional UINT. The ID of this gNB.
-      ssb_arfcn:                                # Optional UINT. The SSB ARFCN of this serving cell. Must be present if not provided over F1.
-      band:                                     # Optional UINT. The NR band of this serving cell cell. Must be present if not provided over F1. 
-      ssb_scs:                                  # Optional UINT. The SSB subcarrier spacing of this serving cell in KHz. Must be present if not provided over F1.
-      ssb_period:                               # Optional UINT. The SSB period of this serving cell in ms.  Must be present if not provided over F1. 
-      ssb_offset:                               # Optional UINT. The SSB offset of this serving cell. Must be present if not provided over F1. 
-      ssb_duration:                             # Optional UINT. The SSB duration of this serving cell in subframes. Must be present if not provided over F1. 
+      -                                         # Define Cell 1 
+        nr_cell_id:                               # Required UINT. The ID of this serving cell. 
+        periodic_report_cfg_id:                   # Optional UINT. The periodical report configuration to use for this serving cell.
+        ncells:                                   # Required TEXT. List of neighbor cells.
+          nr_cell_id:                                 # Required UINT. The ID of this neighbor cell.
+          report_configs:                             # Required TEXT. List of report configurations to use for measurements of this neighbor cell.
+        gnb_id:                                   # Optional UINT. The ID of this gNB.
+        ssb_arfcn:                                # Optional UINT. The SSB ARFCN of this serving cell. Must be present if not provided over F1.
+        band:                                     # Optional UINT. The NR band of this serving cell cell. Must be present if not provided over F1. 
+        ssb_scs:                                  # Optional UINT. The SSB subcarrier spacing of this serving cell in KHz. Must be present if not provided over F1.
+        ssb_period:                               # Optional UINT. The SSB period of this serving cell in ms.  Must be present if not provided over F1. 
+        ssb_offset:                               # Optional UINT. The SSB offset of this serving cell. Must be present if not provided over F1. 
+        ssb_duration:                             # Optional UINT. The SSB duration of this serving cell in subframes. Must be present if not provided over F1. 
     report_configs:                          # Optional TEXT. Sets the list of report configurations to dynamically build a measurement configuration sent to the UEs using the below values.
-      report_cfg_id:                            # Required UINT. The ID of this report configuration.
-      report_type:                              # Required TEXT. The type of the report. Supported: [event_triggered, periodical]. Note that periodical reports are only supported for serving cells. 
-      report_interval_ms: 1024                  # Optional UINT (1024). The report interval in ms.
-      a3_report_type:                           # Optional TEXT. A3 report type. Supported: [rsrp, rsrq, sinr].
-      a3_offset_db:                             # Optional UINT. A3 offset in dB used for measurement report trigger.
-      a3_hysteresis_db:                         # Optional UINT. A3 hysteresis in dB used for measurement report trigger.
-      a3_time_to_trigger_ms:                    # Optional UINT. Time in ms during which A3 condition must be met before measurement report trigger. 
+      -                                         # Define report configs for cell 1 
+        report_cfg_id:                            # Required UINT. The ID of this report configuration.
+        report_type:                              # Required TEXT. The type of the report. Supported: [event_triggered, periodical]. Note that periodical reports are only supported for serving cells. 
+        report_interval_ms: 1024                  # Optional UINT (1024). The report interval in ms.
+        a3_report_type:                           # Optional TEXT. A3 report type. Supported: [rsrp, rsrq, sinr].
+        a3_offset_db:                             # Optional UINT. A3 offset in dB used for measurement report trigger.
+        a3_hysteresis_db:                         # Optional UINT. A3 hysteresis in dB used for measurement report trigger.
+        a3_time_to_trigger_ms:                    # Optional UINT. Time in ms during which A3 condition must be met before measurement report trigger. 
 
   rrc: 
     force_reestablishment_fallback: 0        # Optional BOOLEAN (0). Force RRC re-establishment fallback to RRC setup. Supported: [0, 1].
@@ -122,16 +125,16 @@ ru_ofh:
   compr_bitwidth_prach: 16              # Optional UINT (16). Sets the PRACH compression bit width. Supported [1 - 16]. 
   enable_ul_static_compr_hdr: 1         # Optional BOOLEAN (1). Uplink static compression header enabled flag. Supported: [0 . 1].
   enable_dl_static_compr_hdr: 1         # Optional BOOLEAN (1). Downlink static compression header enabled flag. Supported: [0 . 1].
-  iq_scaling: 0.35                      # Optional FLOAT (0.35). Sets the IQ scaling factor. Supported: [0 - 1].
-  
+  iq_scaling: 0.35                      # Optional FLOAT (0.35). Sets the IQ scaling factor. Supported: [0 - 1].  
   cells:                                # Optional TEXT. Sets the hardware specific cell configuration on a per cell basis.
-    network_interface: enp1s0f0             # Optional TEXT (enp1s0f0). Sets the ethernet network interface name for the RU. Format: a string, e.g. [interface_name].
-    ru_mac_address: 70:b3:d5:e1:5b:06       # Optional TEXT (70:b3:d5:e1:5b:06). Sets the RU MAC address. Format: a string, e.g. [AA:BB:CC:DD:11:22:33].
-    du_mac_address: 00:11:22:33:00:77       # Optional TEXT (00:11:22:33:00:77). Sets the DU MAC address. Format: a string, e.g. [AA:BB:CC:DD:11:22:33].
-    vlan_tag: 1                             # Optional UINT (1). Sets the V-LAN tag control information field. Supported: [1 - 4094].
-    ru_prach_port_id: [4]                   # Optional UINT (4). Sets the RU PRACH eAxC port ID. Supported: [0 - 65535].
-    ru_dl_port_id: [0, 1]                   # Optional UINT (0, 1). Sets the RU downlink eAxC port ID. Format: vector containing all DL eXaC ports, e.g. [0, ...\ , N].
-    ru_ul_port_id: [0]                      # Optional UINT (0). Sets the RU uplink eAxC port ID. Supported: [0 - 65535].
+    -                                       # Cell 1
+      network_interface: enp1s0f0             # Optional TEXT (enp1s0f0). Sets the ethernet network interface name for the RU. Format: a string, e.g. [interface_name].
+      ru_mac_address: 70:b3:d5:e1:5b:06       # Optional TEXT (70:b3:d5:e1:5b:06). Sets the RU MAC address. Format: a string, e.g. [AA:BB:CC:DD:11:22:33].
+      du_mac_address: 00:11:22:33:00:77       # Optional TEXT (00:11:22:33:00:77). Sets the DU MAC address. Format: a string, e.g. [AA:BB:CC:DD:11:22:33].
+      vlan_tag: 1                             # Optional UINT (1). Sets the V-LAN tag control information field. Supported: [1 - 4094].
+      ru_prach_port_id: [4]                   # Optional UINT (4). Sets the RU PRACH eAxC port ID. Supported: [0 - 65535].
+      ru_dl_port_id: [0, 1]                   # Optional UINT (0, 1). Sets the RU downlink eAxC port ID. Format: vector containing all DL eXaC ports, e.g. [0, ...\ , N].
+      ru_ul_port_id: [0]                      # Optional UINT (0). Sets the RU uplink eAxC port ID. Supported: [0 - 65535].
 
 ru_sdr: 
   srate: 61.44                          # Required FLOAT (61.44). Sets the sampling rate of the RF-frontend in MHz. 
@@ -147,11 +150,10 @@ ru_sdr:
   otw_format: default                   # Optional TEXT (default). Specific the over-the-wire format. Supported: [default, sc8, sc12, sc16].
   time_alignment_calibration: auto      # Optional TEXT (auto). Compensates for any reception and transmission time misalignment inherent to the RF device. Positive values reduce the RF transmission delay with respect to the RF reception. Negative values have the opposite effect.
 
-  cells:                                # Optional TEXT. Sets the hardware specific cell configuration on a per cell basis. 
-    amplitude control: 
-      tx_gain_backoff: 12.0                     # Optional FLOAT (12.0). Sets baseband gain back-off in dB. This accounts for the signal PAPR and is applied regardless of clipping settings. Format: positive float.
-      enable_clipping: false                    # Optional BOOL (false). Sets clipping of the baseband samples on or off. If enabled, samples that exceed the power ceiling are clipped.
-      power_ceiling_dBFs: -0.1                  # Optional FLOAT (-0.1). Sets the power ceiling in dB, relative to the full scale amplitude of the radio. Format: negative float or 0.
+  amplitude control: 
+    tx_gain_backoff: 12.0                     # Optional FLOAT (12.0). Sets baseband gain back-off in dB. This accounts for the signal PAPR and is applied regardless of clipping settings. Format: positive float.
+    enable_clipping: false                    # Optional BOOL (false). Sets clipping of the baseband samples on or off. If enabled, samples that exceed the power ceiling are clipped.
+    ceiling: -0.1                             # Optional FLOAT (-0.1). Sets the power ceiling in dB, relative to the full scale amplitude of the radio. Format: negative float or 0.
 
   expert_cfg:
     low_phy_dl_throttling: 0                # Optional FLOAT (0). Throttles the lower PHY DL baseband generation. Setting to 0 disables throttling. Supported: any value in the range [0 - 1].
@@ -280,7 +282,8 @@ cell_cfg:
     f2_max_code_rate: dot35                 # Optional TEXT (dot35). Sets the PUCCH F2 max code rate. Supported: [dot08, dot15, dot25, dot35, dot45, dot60, dot80].
     f2_intraslot_freq_hop: 0                # Optional BOOLEAN (0). Enables intra-slot frequency hopping for PUCCH F2. Supported: [0, 1].
     min_k1: 4                               # Optional UINT (4). Sets the minimum value of K1 (difference in slots between PDSCH and HARQ-ACK). Lower k1 values will reduce latency, but place a stricter requirement on the UE decode latency. Supported: [1 - 4]. 
-    
+    max_consecutive_kos: 100                # Optional UINT (100). Sets the maximum number of consecutive undecoded PUCCH F2 for CSI before an Radio Link Failure is reported. 
+
   prach: 
     prach_config_index: 1                   # Optional UINT (1). Sets the PRACH configuration index. Supported: [0 - 255].
     prach_root_sequence_index: 1            # Optional UINT (1). Sets the PRACH Roost Sequence Index (RSI), which determines the Zadoff-Chu (ZC) sequence used. Supported: [0 - 837]. If the PRACH configuration index is larger than 86, you cannot set a PRACH RSI of more than 137.
@@ -327,6 +330,7 @@ expert_phy:
   pusch_dec_max_iterations: 6           # Optional UINT (6). Sets the number of PUSCH LDPC decoder iterations. Format: Positive integer greater than 0.
   pusch_dec_enable_early_stop: true     # Optional BOOL (true). Enables the PUSCH decoder early stopping mechanism.
   pusch_sinr_calc_method: evm           # Optional TEXT (evm). Sets the PUSCH SINR calculation method. Supported: [channel_estimator, post_equalization, evm]. 
+  max_request_headroom_slots: 0         # Optional UINT (0). Sets the maximum request headroom size in slots. Supported: [ 0 - 3]. 
 
 buffer_pool: 
   nof_segments: 524288                  # Optional UINT (524288). Sets the number of segments allocated by the buffer pool. 
@@ -376,29 +380,29 @@ hal:
 log: 
 # All gNB layers and components can be configured independently to output at various levels of detail. Logs can be configured to the following levels (from lowest to highest levels of detail):
 # none, error, warning, info, debug
-  filename:                             # Optional TEXT (/tmp/gnb.log). File path for logs
-  all_level: warning                    # Optional TEXT (warning). Sets a common log level across PHY, MAC, RLC, PDCP, RRC, SDAP, NGAP and GTPU layers
-  phy_level: warning                    # Optional TEXT (warning). Sets PHY log level
-  mac_level: warning                    # Optional TEXT (warning). Sets MAC log level
-  rlc_level: warning                    # Optional TEXT (warning). Sets RLC log level
-  pdcp_level: warning                   # Optional TEXT (warning). Sets PDCP log level
-  rrc_level: warning                    # Optional TEXT (warning). Sets RRC log level
-  sdap_level: warning                   # Optional TEXT (warning). Sets SDAP log level
-  ngap_level: warning                   # Optional TEXT (warning). Sets NGAP log level
-  gtpu_level: warning                   # Optional TEXT (warning). Sets GTPU log level
-  radio_level: info                     # Optional TEXT (info). Sets radio log level
-  fapi_level: warning                   # Optional TEXT (warning). Sets FAPI log level
-  ofh_level: warning                    # Optional TEXT (warning). Sets Open Fronthaul log level
-  f1ap_level: warning                   # Optional TEXT (warning). Sets F1AP log level
-  f1u_level: warning                    # Optional TEXT (warning). Sets F1u log level
-  du_level: warning                     # Optional TEXT (warning). Sets DU log level
-  cu_level: warning                     # Optional TEXT (warning). Sets CU log level
-  sec_level: warning                    # Optional TEXT (warning). Sets security functions level
-  lib_level: warning                    # Optional TEXT (warning). Sets generic log level
+  filename:                             # Optional TEXT (/tmp/gnb.log). File path for logs. Logs can be redirected to stdout by setting the filename to "stdout".
+  all_level: warning                    # Optional TEXT (warning). Sets a common log level across PHY, MAC, RLC, PDCP, RRC, SDAP, NGAP and GTPU layers. 
+  phy_level: warning                    # Optional TEXT (warning). Sets PHY log level.
+  mac_level: warning                    # Optional TEXT (warning). Sets MAC log level.
+  rlc_level: warning                    # Optional TEXT (warning). Sets RLC log level.
+  pdcp_level: warning                   # Optional TEXT (warning). Sets PDCP log level.
+  rrc_level: warning                    # Optional TEXT (warning). Sets RRC log level.
+  sdap_level: warning                   # Optional TEXT (warning). Sets SDAP log level.
+  ngap_level: warning                   # Optional TEXT (warning). Sets NGAP log level.
+  gtpu_level: warning                   # Optional TEXT (warning). Sets GTPU log level.
+  radio_level: info                     # Optional TEXT (info). Sets radio log level.
+  fapi_level: warning                   # Optional TEXT (warning). Sets FAPI log level.
+  ofh_level: warning                    # Optional TEXT (warning). Sets Open Fronthaul log level.
+  f1ap_level: warning                   # Optional TEXT (warning). Sets F1AP log level.
+  f1u_level: warning                    # Optional TEXT (warning). Sets F1u log level.
+  du_level: warning                     # Optional TEXT (warning). Sets DU log level.
+  cu_level: warning                     # Optional TEXT (warning). Sets CU log level.
+  sec_level: warning                    # Optional TEXT (warning). Sets security functions level.
+  lib_level: warning                    # Optional TEXT (warning). Sets generic log level.
   hex_max_size: 0                       # Optional UINT (0). Sets maximum number of bytes to print for hex messages. Supported: [0 - 1024]
   broadcast_enabled: 0                  # Optional BOOL (0). Enables logging in the PHY and MAC layer of broadcast messages and all PRACH opportunities. Supported: [0, 1].
   phy_rx_symbols_filename:              # Optional TEXT. Print received symbols to file. Symbols will be printed if a valid path is set. Format: file path. This file can be used in the srsRAN_matlab project. 
-  phy_rx_symbols_port: 0                # Optional TEXT. Set to a valid receive port number to dump the IQ symbols from that port only, or set to "all" to dump the IQ symbols from all UL receive ports. Only works if "phy_rx_symbols_filename" is set. Supported: [NON-NEGATIVE or all]
+  phy_rx_symbols_port: 0                # Optional TEXT. Set to a valid receive port number to dump the IQ symbols from that port only, or set to "all" to dump the IQ symbols from all UL receive ports. Only works if "phy_rx_symbols_filename" is set. Supported: [NON-NEGATIVE or all].
   phy_rx_symbols_prach: 0               # Optional BOOLEAN (0). Set to true to dump the IQ symbols from all the PRACH ports. Only works if "phy_rx_symbols_filename" is set. Supported: [0, 1]. 
   tracing_filename:                     # Optional TEXT. Set to a valid file name to enable tracing log. 
 
@@ -422,7 +426,10 @@ pcap:
 
 metrics: 
   rlc_report_period: 1000               # Optional UINT (1000). Sets the RLC metrics report period in milliseconds. Supported [0 - inf]
+  rlc_json_enable: 0                    # Optional BOOLEAN (0). Enable RLC JSON metrics reporting. Supported: [0, 1].
   cu_cp_statistics_report_period: 1     # Optional UINT (1). Sets the CU-CP statistics report period in seconds. Set this value to 0 to disable this feature. Supported: [0 - inf]. 
   cu_up_statistics_report_period: 1     # Optional UINT (1). Sets the CU-UP statistics report period in seconds. Set this value to 0 to disable this feature. Supported: [0 - inf]. 
-  enable_json_metrics:                  # Optional BOOLEAN. Enables JSON metrics reporting. Supported: [0, 1]. 
-  json_metrics_filename:                # Optional TEXT. Sets the JSON metrics output path.     
+  enable_json_metrics: 0                # Optional BOOLEAN (0). Enables JSON metrics reporting. Supported: [0, 1].
+  addr:                                 # Optional TEXT:IPV4. Sets the metrics address. Supported: IPV4 address. 
+  port: 55555                           # Optional UINT. Sets the metrics UPD port. Supported: [0 - 65535].
+  autostart_stdout_metrics: 0           # Optional BOOLEAN (0). Sets whether or note to autostart stdout metrics reporting. Supported [0, 1]. 

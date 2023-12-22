@@ -6,8 +6,8 @@
 srsRAN gNB with Amarisoft UE
 ############################
 
-Introduction
-************
+Overview
+********
 
 The Amarisoft UE simulator (AmariUE) is a commercial software radio solution that supports the simluation of up to 1000s of UE devices.
 This tutorial outlines how the AmariUE can be used to test and exercise srsRAN gNB. In this example, we will use the open5GS core network to complete the end-to-end 5G network. 

@@ -5,8 +5,8 @@
 O-RAN NearRT-RIC and xApp
 #########################
 
-Introduction
-************
+Overview
+********
 
 This application note shows how to use the E2 interface exposed by the srsRAN Project gNodeB.
 For this purpose, we use third-party `O-RAN Alliance <https://www.o-ran.org/>`_ compliant NearRT-RIC and xApp provided in `FlexRIC <https://gitlab.eurecom.fr/mosaic5g/flexric>`_ framework. 
