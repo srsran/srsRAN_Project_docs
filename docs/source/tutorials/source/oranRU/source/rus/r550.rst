@@ -1,0 +1,140 @@
+.. _r550:
+
+Benetel R550
+############
+
+.. warning::
+  This document is intended to be used as a guide. Variances in firmware and software versions in local setups may require the sample configuration files provided to be changed. As a result please closely follow the specific users guides of your RU in conjunction with this guide.
+
+Overview
+********
+
+This guide provides further details on connecting the srsRAN CU/DU to an RU using the OFH Lib. Specifically the `RAN550 <https://benetel.com/ran550/>`_ RU from Benetel. This is a Split 7.2x indoor RU.
+
+.. note::
+  Please refer to the `Benetel <https://www.benetel.com/>`_ User Guide Documentation for up-to-date configuration and usage guidelines, along with disclaimer and warranty information. Contact Benetel (sales@benetel.com) for more information.
+
+-----
+
+Configuration
+*************
+
+.. tip:: 
+  
+  For the most up-to-date configuration changes, troubleshooting and information on potential issues check the `GitHub Discussions <https://github.com/srsran/srsRAN_Project/discussions>`_ 
+
+CU/DU
+=====
+
+A sample configuration file for the DU can be downloaded from `here <https://github.com/srsran/srsRAN_Project/blob/main/configs/gnb_ru_ran550_tdd_n78_20mhz.yml>`_. This configuration is **specific** to the firmware version of the RU 
+being used for this guide. As a result, you may need to modify this slightly for your local setup. 
+
+The following excerpt shows how the DU is configured to communicate with the RU: 
+
+.. code-block:: yaml
+
+  ru_ofh:
+    ru_bandwidth_MHz: 100                # RU instantaneous bandwidth.
+    t1a_max_cp_dl: 500                   # Maximum T1a on Control-Plane for Downlink in microseconds.
+    t1a_min_cp_dl: 250                   # Minimum T1a on Control-Plane for Downlink in microseconds.
+    t1a_max_cp_ul: 465                   # Maximum T1a on Control-Plane for Uplink in microseconds.
+    t1a_min_cp_ul: 250                   # Minimum T1a on Control-Plane for Uplink in microseconds.
+    t1a_max_up: 250                      # Maximum T1a on User-Plane in microseconds.
+    t1a_min_up: 80                       # Minimum T1a on User-Plane in microseconds.
+    is_prach_cp_enabled: false           # Configures if Control-Plane messages should be used to receive PRACH messages.
+    is_dl_broadcast_enabled: true        # Set to true for a workaround over a firmware bug in the RAN550 when operating in SISO mode.
+    compr_method_ul: bfp                 # Uplink compression method.
+    compr_bitwidth_ul: 9                 # Uplink IQ samples bitwidth after compression.
+    compr_method_dl: bfp                 # Downlink compression method.
+    compr_bitwidth_dl: 9                 # Downlink IQ samples bitwidth after compression.
+    compr_method_prach: bfp              # PRACH compression method.
+    compr_bitwidth_prach: 9              # PRACH IQ samples bitwidth after compression.
+    enable_ul_static_compr_hdr: true     # Configures if the compression header is present for uplink User-Plane messages (false) or not present (true).
+    enable_dl_static_compr_hdr: true     # Configures if the compression header is present for downlink User-Plane messages (false) or not present (true).
+    iq_scaling: 1.5                      # IQ samples scaling factor applied before compression, should be a positive value smaller than 10.
+    cells:
+      - network_interface: enp1s0f0      # Ethernet interface name used to communicate with the RU.
+        ru_mac_addr: 70:b3:d5:e1:5b:06   # RU MAC address.
+        du_mac_addr: 80:61:5f:0d:df:aa   # DU MAC address.
+        vlan_tag: 5                      # VLAN tag value.
+        prach_port_id: [4]               # PRACH eAxC port value.
+        dl_port_id: [0]                 # Downlink eAxC port values.
+        ul_port_id: [0]                 # Uplink eAxC port values.
+
+To expand on this, the following parameters are set in the ``cells`` field:
+
+    - ``network_interface`` : Network interface used to send the OFH packets.
+    - ``ru_mac_addr`` : MAC address of the RAN550.
+    - ``du_mac_addr`` : MAC address of the interface used by the gNB (it should be connected directly to the RU or using a smart switch).
+    - ``vlan_tag`` : V-LAN identifier, should be set to the value configured in the switch settings
+
+RU 
+=====
+
+Refer to the Benetel User Guide documentation to apply the following configuration changes so that they match your local setup. The following information is purely a guide and may not work for your specific set up. 
+
+Ensure the RU is running before trying to make any configuration changes.
+
+``MAC Address`` : The MAC address of the DU must be configured in the RU for Control-Plane and User-Plane traffic. In our configuration we use the same MAC address for both planes. 
+
+``VLAN tag`` : In our setup the same VLAN ID is used for all network traffic, as only one MAC address is used.
+
+``Compression`` : Currently only static compression headers are supported for this setup. We use BFP9 compression for all uplink and downlink channels. Refer to the Benetel User Guide for details on how to configure compression in the RU. 
+
+``Transmission Power`` : Depending on your setup, you may need to alter the transmission power of the RU. For example, in a lab setting with the UE in close proximity to the RU, the default power settings may result in UE saturation.
+
+``PRACH format`` : We recommend using long PRACH format. Use `long_form_prach.sh` script on the RU or apply the required changes manually.
+
+``DL scaling`` : We use downlink scaling of 6dB.
+   
+``TDD pattern`` : The TDD pattern should be changed to 6-3 format (DDDDDDSUUU). Download it :download:`here <.configs/benetel_tdd.xml>`.
+
+The full init script we used for this set up can be found :download:`here <.configs/benetel_radio_init.sh>`.
+
+UE 
+=====
+
+You can download the specific amariUE configuration used for this set up :download:`here <.configs/amariUE_R550_20mhz.cfg>`.
+
+-----
+
+Initializing and connecting to the network
+******************************************
+
+Initializing and connecting to the network is done in the same way as outlined in the general 7.2 RU guide. 
+
+Initializing the network
+========================
+
+The following steps should be taken to initialize the network: 
+
+| 1. Ensure the R550 is online and that both the PTP process and RU synchronization are running correctly.
+| 
+| 2. Run the CU/DU, making sure that the PTP sync between the DU and the Falcon switch is successful as previously outlined.  
+
+.. code-block:: bash
+
+  sudo ./gnb -c du_R550_rf.yml
+
+If the DU connects to the RU successfully, you will see the following output: 
+
+.. code-block:: bash
+
+    --== srsRAN gNB (commit ) ==--
+
+    Connecting to AMF on 10.53.1.2:38412
+    Initializing Open Fronthaul Interface with ul_comp=[BFP,9], dl_comp=[BFP,9], prach_cp_enabled=false, downlink_broadcast=true.
+    Operating a 20MHz cell over a RU with instantaneous bandwidth of 100MHz.
+    Warning: Configured PRACH occasion collides with PUCCH RBs ([0..1) intersects [0..3)). Some interference between PUCCH and PRACH is expected.
+    Warning: Configured PRACH occasion collides with PUCCH RBs ([0..1) intersects [0..3)). Some interference between PUCCH and PRACH is expected.
+    Cell pci=1, bw=20 MHz, dl_arfcn=634548 (n78), dl_freq=3518.22 MHz, dl_ssb_arfcn=634464, ul_freq=3518.22 MHz
+
+    ==== gNodeB started ===
+    Type <t> to view trace
+
+Connecting to the network
+=========================
+
+You can now connect a UE to the network. This can either be done using a third party UE, such as amariUE, or a COTS UE. See the main RU guide for details on this. 
+
+The specific amariUE configuration file for this setup was provided above. 
