@@ -748,6 +748,244 @@ The following example trace was taken from the **gNB console** at the same time 
    1 4601   15   27   288k  349    0   0% |  65.5   28    14M  410    0   0%    0.0
 
 
+Multi-UE Emulation
+******************
+
+To connect multiple UEs to a single gNB using ZMQ-based RF devices, we need a **broker** that:
+
+  * receives DL signal from the gNB and sends its copy to each connected UE,
+  * receives UL signal from each connected UE, aggregates them, and sends the aggregated signal to the gNB.
+
+In this tutorial, we use **GNU-Radio Companion** to implement such a broker, as it allows easy integration with our ZMQ-based RF devices. Specifically, GNU-Radio Companion is a free and open-source software development toolkit that provides signal processing blocks, which can be simply connected to form a signal **flow graph**. By default, it also provides ZMQ-compatible blocks that allow connecting to external processes (acting as signal sources or sinks) over TCP sockets. We exploit the ZMQ blocks to connect with gNB and srsUE processes and transfer signal samples between them. 
+
+The following figure shows the signal flow graph of our broker: 
+
+.. figure:: .imgs/gr_flow_graph.png
+    :align: center
+    :scale: 50%
+
+The upper graph is responsible for handling Downlink signal samples, while the lower graph for Uplink signal samples.
+
+Note that here we only provide a simple broker that allows changing path loss separately for each connected UE. But thanks to the rich signal processing block library available in the GNU-Radio Companion, the provided flow graph can be easily extended with any signal processing, manipulation, and/or visualization. 
+
+As already mentioned, the GNU-Radio Companion connects over ZMQ sockets with the gNB and srsUE processes (i.e., their ZMQ-based RF devices).
+The following table lists port numbers are used in the example flow graph: 
+
+.. _grc_ports_table:
+
+.. list-table:: Ports Used in the GNU-Radio flow graph
+   :widths: 25 25 25 25 25
+   :header-rows: 1
+   :align: center
+
+   * - Port Direction
+     - gNB
+     - srsUE1
+     - srsUE2
+     - srsUE3
+   * - TX
+     - 2000
+     - 2101
+     - 2201
+     - 2301
+   * - Rx
+     - 2001
+     - 2100
+     - 2200
+     - 2300
+
+
+Configuration
+=============
+
+GNU-Radio Companion
+--------------------
+
+Please install GNU-Radio Companion following the instructions available `here <https://wiki.gnuradio.org/index.php/InstallingGR>`_. On Ubuntu it can be installed with the following command:: 
+
+  sudo apt-get install gnuradio
+
+GNU-Radio flow graph can be downloaded here:
+
+  * :download:`GNU-Radio flow graph <.config/multi_ue/multi_ue_scenario.grc>`
+
+Note that the flow graph allows connecting **three UEs**, but it can be easily adapted to support any (but reasonable) UE number.
+
+
+Open5GS Core
+------------
+
+By default, the subscriber database of the dockerized Open5GS Core is populated with only one UE. A file with a list of all UEs used in this example can be downloaded here:
+
+  * :download:`subscriber_db.csv <.config/multi_ue/subscriber_db.csv>`
+
+The file needs to be saved at: ``srsRAN_Project/docker/open5gs/``
+
+Then, edit the ``srsRAN_Project/docker/open5gs/open5gs.env`` file as follow:
+
+.. code-block:: diff
+
+    MONGODB_IP=127.0.0.1
+    OPEN5GS_IP=10.53.1.2
+    UE_IP_BASE=10.45.0
+    DEBUG=false
+   -SUBSCRIBER_DB=001010123456780,00112233445566778899aabbccddeeff,opc,63bfa50ee6523365ff14c1f45f88737d,8000,9,10.45.1.2
+   +SUBSCRIBER_DB="subscriber_db.csv"
+
+Alternatively, you can download already edited ``open5gs.env`` file :download:`here <.config/multi_ue/open5gs.env>`.
+
+gNB
+---
+The following gNB config files was modified to operate with a channel bandwidth of 10 MHz and use the ZMQ-based RF driver. 
+
+  * :download:`gNB config <.config/multi_ue/gnb_zmq.yaml>`
+
+In addition, the total number of available PRACH preambles was set to 63 to mitigate contention among UEs:
+
+.. code-block:: diff
+
+    prach:
+      prach_config_index: 1           # Sets PRACH config to match what is expected by srsUE
+  +   total_nof_ra_preambles: 63      # Sets number of available PRACH preambles 
+
+
+srsUE
+-----
+
+The following srsUE config files were modified to operate with a channel bandwidth of 10 MHz and use the ZMQ-based RF driver. In addition, the config files were modified to allow the execution of multiple srsUE processes on the same host PC. Specifically, each config file has different: 
+
+  * ports for the ZMQ connections, that match the those listed in :ref:`grc_ports_table`.
+  * pcap and log filenames,
+  * USIM data (IMSI, etc),
+  * network namespace name.
+
+You can download the srsUE configs here: 
+
+  * :download:`UE1 config <.config/multi_ue/ue1_zmq.conf>`
+  * :download:`UE2 config <.config/multi_ue/ue2_zmq.conf>`
+  * :download:`UE3 config <.config/multi_ue/ue3_zmq.conf>`
+
+
+--------
+
+Running the Network
+===================
+
+The following order must be used when running the network with multiple UEs:
+
+  1. Open5GS
+  2. gNB
+  3. **All** UEs
+  4. GNU-Radio flow graph.
+
+
+Open5GS Core
+------------
+
+Run Open5GS as follows:
+
+.. code-block:: bash
+
+  cd ./srsRAN_Project/docker
+  docker-compose up --build 5gc
+
+
+gNB
+---
+
+Run gNB directly from the build folder (the config file is also located there) with the following command:
+
+.. code-block:: bash
+
+  cd ./srsRAN_Project/build/apps/gnb
+  sudo ./gnb -c gnb_zmq.yaml
+
+
+srsUE
+-----
+
+First, a correct network namespace must be created for each UE:
+
+.. code-block:: bash
+
+   sudo ip netns add ue1
+   sudo ip netns add ue2
+   sudo ip netns add ue3
+
+Next, start three srsUE instances, each in a separate terminal window. This is also done directly from within the build folder, with the config files in the same location:
+
+.. code-block:: bash
+
+  cd ./srsRAN_4G/build/srsue/src
+  sudo ./srsue ./ue1_zmq.conf
+  sudo ./srsue ./ue2_zmq.conf
+  sudo ./srsue ./ue3_zmq.conf
+
+
+Note, UEs will not connect to the gNB until the GNU-Radio flow graph has been started, as the UL and DL channels are not directly connected between the UE and gNB.
+
+GNU-Radio Companion
+--------------------
+
+Run the GRC Flowgraph associated with the broker.
+
+.. code-block:: bash
+
+  sudo gnuradio-companion ./multi_ue_scenario.grc
+
+
+When gnuradio-companion is started, click on the play button (i.e., ``Execute the flow graph``). Now, the signal samples are transferred between gNB and UEs. 
+After a few seconds, all UE should attach and get an IP address. 
+If a srsUE connects successfully to the network, the following (or similar) should be displayed on the console:: 
+
+  ...
+  Random Access Transmission: prach_occasion=0, preamble_index=45, ra-rnti=0x39, tti=174
+  Random Access Complete.     c-rnti=0x4602, ta=0
+  RRC Connected
+  PDU Session Establishment successful. IP: 10.45.1.2
+  RRC NR reconfiguration successful.
+
+It is clear that the connection has been made successfully once the UE has been assigned an IP, this is seen in ``PDU Session Establishment successful. IP: 10.45.1.2``. 
+The NR connection is then confirmed with the ``RRC NR reconfiguration successful.`` message. 
+
+Now, you can start traffic (e.g., ping/iperf) to/from each UE using the commands described in the previous section.
+
+Notes:
+
+  * The gNB and **all** UEs have to be started before executing the GNU-Radio flow graph.
+  * You will also need to restart the GNU-Radio flow graph each time the network is restarted (i.e., click ``Kill the flow graph``, and then ``Execute the flow graph``)
+
+Path-loss Control
+-----------------
+
+The path loss can be controlled for each UE separately via sliders in the flow graph control panel (note, that the control panel pops up after starting the flow graph). 
+The following figure shows the path loss control panel:
+
+.. figure:: .imgs/gr_control_slider.png
+    :align: center
+    :scale: 50%
+
+You can check the impact of the path loss on the RSRP in each UE. To this end, please activate trace logging in the **srsUE console** by typing ``t``.
+The following example trace shows the changing RSRP that was measured by the UE when setting diverse values of the path loss in the flow graph control panel:: 
+
+  t
+  Enter t to stop trace.
+  ---------Signal-----------|-----------------DL-----------------|-----------UL-----------
+  rat  pci  rsrp   pl   cfo | mcs  snr  iter  brate  bler  ta_us | mcs   buff  brate  bler
+   nr    1    43    0 -4.5u |   0   65   0.0    0.0    0%    0.0 |   0    0.0    0.0    0%
+   nr    1    42    0 -1.4u |   0   65   0.0    0.0    0%    0.0 |   0    0.0    0.0    0%
+   nr    1    36    0  -2.3 |   0  n/a   0.0    0.0    0%    0.0 |   0    0.0    0.0    0%
+   nr    1     8    0  -12u |   0  n/a   0.0    0.0    0%    0.0 |   0    0.0    0.0    0%
+   nr    1     8    0  -16u |   0   84   0.0    0.0    0%    0.0 |   0    0.0    0.0    0%
+   nr    1    25    0  -20u |   0   82   0.0    0.0    0%    0.0 |   0    0.0    0.0    0%
+   nr    1    42    0  -11u |   0   65   0.0    0.0    0%    0.0 |   0    0.0    0.0    0%
+
+
+In addition, the control panel allows setting the ``Time Slow Down Ratio`` parameter, which controls how fast the samples are transferred between gNB and UEs (i.e., the higher the parameter value, the slower the samples are transferred). 
+Specifically, GNU-Radio allows to throttle how fast samples are passed between entities (using the **Throttle** object). By default, the Sample Rate of the Throttle object is set to ``samp_rate/slow_down_ratio``, where ``samp_rate = 11.52 MHz`` and ``slow_down_ratio=4``. Therefore, if a connected ZMQ-based RF device generates (and consumes) samples with a sampling rate of 11.52 MHz, it takes 4 seconds to pass them through the GNU-Radio flow graph. 
+
+Note that when samples are delivered at slower speeds, gNB and UE have more time to process them (hence lower average CPU load). Therefore, controlling the ``Time Slow Down Ratio`` parameter might be helpful when running the emulation on a slower host machine and/or with a high number of UEs. 
+You can check the impact of the ``Time Slow Down Ratio`` parameter on CPU load and network traffic volume on the loopback interface using ``htop`` and ``nload lo``, respectively. Also, a ping round-trip time (RTT) between the core network and UEs is impacted when changing this parameter.
 
 -----
 
