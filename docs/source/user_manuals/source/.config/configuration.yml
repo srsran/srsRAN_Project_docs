@@ -87,7 +87,8 @@ cu_cp:
 
 cu_up: 
   gtpu_queue_size: 2048                # Optional INT (2048). Sets the GTP-U queue size, in PDUs.
-  gtpu_reordering_timer: 0             # Optional INT (0). Sets the GTP-U RX reordering timer (in milliseconds). 
+  gtpu_reordering_timer: 0             # Optional INT (0). Sets the GTP-U RX reordering timer (in milliseconds).
+  warn_on_drop: 0                      # Optional BOOLEAN (0). Enables the option to log a warning for dropped packets in GTP-U and PDCP due to full queues. Supported: [0, 1].
 
 ntn: 
   cell_specific_koffset: 0             # Optional INT (0). Sets the cell-specific k-offset to be used for NTN. Supported: [0 - 1023].
@@ -116,7 +117,8 @@ ru_ofh:
   ta4_min: 85                           # Optional UINT (85). Sets the Ta4 maximum value for User-Plane. Supported: [0 - 1960].
   is_prach_cp_enabled: 0                # Optional BOOLEAN (0). Sets PRACH control-plane enabled flag. Supported: [0, 1].
   is_dl_broadcast_enabled: 0            # Optional BOOLEAN (0). Sets downlink broadcast enabled flag. Supported: [0, 1]. 
-  ignore_ecpri_payload_size: 0          # Optional BOOLEAN (0). Sets whether or not to ignore eCPRI payload size field value. Supported [0. 1].
+  ignore_ecpri_seq_id: 0                # Optional BOOLEAN (0). Sets whether or not to ignore eCPRI sequence ID field value. Supported [0, 1].
+  ignore_ecpri_payload_size: 0          # Optional BOOLEAN (0). Sets whether or not to ignore eCPRI payload size field value. Supported [0, 1].
   compr_method_ul: bfp                  # Optional TEXT (bfp). Sets the uplink compression method. Supported: [none, bfp, bfp selective, block scaling, mu law, modulation, modulation selective].
   compr_bitwidth_ul: 9                  # Optional UINT (9). Sets the uplink compression bit width. Supported: [1 - 16].
   compr_method_dl: bfp                  # Optional TEXT (bfp). Sets the downlink compression method. Supported: [none, bfp, bfp selective, block scaling, mu law, modulation, modulation selective].
@@ -203,6 +205,8 @@ cell_cfg:
 
   ul_common: 
     p_max:                                  # Optional TEXT. Sets maximum transmit power allowed in this serving cell. Supported: [-30 - +23].
+    max_pucchs_per_slot: 31                 # Optional INT (31). Sets the maximum number of PUCCH grants that can be allocated per slot. Supported: [1 - 64].
+    max_ul_grants_per_slot: 32                 # Optional INT (32). Sets the maximum number of UL grants that can be allocated per slot. Supported: [1 - 80].
 
   pdcch: 
     common: 
@@ -219,8 +223,8 @@ cell_cfg:
       ss2_type: ue_dedicated                    # Optional TEXT (ue_dedicated). Sets the SearchSpace type for UE dedicated SearchSpace#2. Supported: [common, ue_dedicated].
 
   pdsch: 
-    min_ue_mcs:                             # Optional UINT. Sets a minimum PDSCH MCS value to be used for all UEs. Supported: [0 - 28].
-    max_ue_mcs:                             # Optional UINT. Sets a maximum PDSCH MCS value to be used for all UEs. Supported: [0 - 28].
+    min_ue_mcs: 0                           # Optional UINT (0). Sets a minimum PDSCH MCS value to be used for all UEs. Supported: [0 - 28].
+    max_ue_mcs: 28                          # Optional UINT (28). Sets a maximum PDSCH MCS value to be used for all UEs. Supported: [0 - 28].
     fixed_rar_mcs: 0                        # Optional UINT (0). Sets a fixed RAR MCS value for all UEs. Supported: [0 - 28]. 
     fixed_sib1_mcs: 5                       # Optional UINT (5). Sets a fixed SIB1 MCS for all UEs. Supported: [0 - 28].
     nof_harqs: 16                           # Optional UNIT (16). Sets the number of Downlink HARQ processes. Supported [2, 4, 6, 8, 10, 12, 16]. 
@@ -241,8 +245,8 @@ cell_cfg:
     harq_la_ri_drop_threshold:              # Optional UINT. Sets the link Adaptation (LA) threshold for drop in nof. layers of the first HARQ transmission above which HARQ retransmission is cancelled. Set this value to 0 to disable this feature. Supported: [0 - 4]. 
 
   pusch: 
-    min_ue_mcs:                             # Optional UINT. Sets a minimum PUSCH MCS value to be used for all UEs. Supported: [0 - 28].
-    max_ue_mcs:                             # Optional UINT. Sets a maximum PUSCH MCS value to be used for all UEs. Supported: [0 - 28].
+    min_ue_mcs: 0                           # Optional UINT (0). Sets a minimum PUSCH MCS value to be used for all UEs. Supported: [0 - 28].
+    max_ue_mcs: 28                          # Optional UINT (28). Sets a maximum PUSCH MCS value to be used for all UEs. Supported: [0 - 28].
     max_consecutive_kos: 100                # Optional UINT (100). Sets the maximum number of consecutive CRC KOs before an RLF is reported. Supported: [0 - inf]. 
     rv_sequence: [0]                        # Optional UINT (0). Sets the redundancy version sequence to use for PUSCH. Supported: any combination of [0, 1, 2, 3].
     mcs_table: qam64                        # Optional TEXT (qam64). Sets the MCS table to use for PUSCH. Supported: [qam64, qam256].
@@ -365,8 +369,7 @@ expert_execution:
   threads: 
     upper_phy: 
       pdsch_processor_type: auto                    # Optional TEXT (auto). Sets the PDSCH processor type. Supported: [auto, generic, concurrent, lite].
-      nof_pdsch_threads: 4                          # Optional UINT (4). Sets the number of threads used to encode PDSCH.
-      nof_pusch_threads: 1                          # Optional UINT (1). Sets the number of threads used to encode PUSCH.
+      nof_pusch_decoder_threads: 1                          # Optional UINT (1). Sets the number of threads used to encode PUSCH.
       nof_ul_threads: 1                             # Optional UINT (1). Sets the number of upprt PHY threads to proccess uplink.
       nof_dl_threads: 2                             # Optional UINT (1). Sets the number of upprt PHY threads to proccess downlink.  
     lower_phy:
