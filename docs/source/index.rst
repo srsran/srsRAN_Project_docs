@@ -46,6 +46,7 @@ Useful resources:
    user_manuals/source/console_ref.rst
    user_manuals/source/outputs.rst
    user_manuals/source/config_ref.rst
+   user_manuals/source/grafana_gui.rst
    user_manuals/source/troubleshooting.rst
 
 .. toctree::
