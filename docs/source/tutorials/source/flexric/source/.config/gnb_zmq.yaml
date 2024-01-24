@@ -21,12 +21,15 @@ cell_cfg:
   common_scs: 15                    # Subcarrier spacing in kHz used for data.
   plmn: "00101"                     # PLMN broadcasted by the gNB.
   tac: 7                            # Tracking area code (needs to match the core configuration).
-  prach:
-    prach_config_index: 1           # Sets PRACH config to match what is expected by srsUE
   pdcch:
+    common:
+      ss0_index: 0                  # Set search space zero index to match srsUE capabilities
+      coreset0_index: 6             # Set search CORESET Zero index to match srsUE capabilities
     dedicated:
       ss2_type: common              # Search Space type, has to be set to common
       dci_format_0_1_and_1_1: false # Set correct DCI format (fallback)
+  prach:
+    prach_config_index: 1           # Sets PRACH config to match what is expected by srsUE
 
 log:
   filename: /tmp/gnb.log            # Path of the log file.
@@ -47,3 +50,7 @@ e2:
   addr: 127.0.0.1                   # RIC IP address
   #bind_addr: 127.0.0.100           # A local IP that the E2 agent binds to for traffic from the RIC. ONLY required if running the RIC on a separate machine. 
   port: 36421                       # RIC port
+
+metrics: 
+  rlc_json_enable: 1                # Enable RLC metrics reporting (need to deliver measurements to E2SM_KPM service model)
+  rlc_report_period: 1000           # Set reporting period to 1s

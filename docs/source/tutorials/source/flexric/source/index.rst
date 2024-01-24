@@ -48,22 +48,29 @@ Limitations
 
 While our ultimate goal is to fully support the E2 interface, it is still under development and its current version is limited in features and operation.
 Specifically, the current E2 interface implementation supports only E2SM_KPM and E2SM_RC service models with the following limitations:
-
-  - Only Control Service Style 2 is supported for E2SM_RC
-  - All Report Service Styles (1 - 5) are supported for E2SM_KPM
-  - The following 3 'dummy' DU metrics are exposed: 
-
-    - CQI
-    - RSRP
-    - RSRQ
-
-  - The following 5 ORAN defined metrics are expose: 
   
-    - UL packet success rate 
-    - UE UL throughput
-    - RLC DL packet drop rate
-    - RLC DL transmitted SDU volume
-    - RLC UL transmitted SDU volume
+  - E2SM_RC service model:
+
+    - Only Control Service Style 2 is supported
+  
+  - E2SM_KPM service model:
+
+    - All Report Service Styles (1 - 5) are supported
+    - Monitoring period limited to 1s
+    - The following 3 'dummy' DU metrics are exposed (they will be removed in future releases):
+
+      - CQI
+      - RSRP
+      - RSRQ
+
+    - The following 6 ORAN defined metrics are expose:
+
+      - ``DRB.UEThpDl`` - DL throughput
+      - ``DRB.UEThpUl`` - UL throughput
+      - ``DRB.RlcPacketDropRateDl`` - UL packet success rate 
+      - ``DRB.PacketSuccessRateUlgNBUu`` - RLC DL packet drop rate
+      - ``DRB.RlcSduTransmittedVolumeDL`` - RLC DL transmitted SDU volume
+      - ``DRB.RlcSduTransmittedVolumeUL`` - RLC UL transmitted SDU volume
 
 -----
 
@@ -75,28 +82,16 @@ FlexRIC
 The `FlexRIC <https://gitlab.eurecom.fr/mosaic5g/flexric>`_ framework provides `O-RAN Alliance <https://www.o-ran.org/>`_ compliant E2 node Agent emulators, a NearRT-RIC and xApps written in C/C++ and Python.
 For the purpose of presenting the usage of E2 interface exposed by srsRAN Project gNodeB, we use the NearRT-RIC and an example KPM monitoring xApp from the FlexRIC framework.
 
-The O-RAN specifications are evolving and FlexRIC is under development with multiple tracks (i.e. git branches). Therefore, different versions of E2 protocols (i.e. E2AP, E2SM, E2SM_KPM) and xApp examples 
-are present on different git branches. Currently the srsRAN Project gNB is **only** compatible with the ``e2ap-v2`` branch (commit: ``0eac86b9``). A patch must then be applied to this branch 
-to allow the E2 nodes in the gNB to connect correctly to the near-RT RIC. You can download the patch here: 
 
-  - :download:`Flexric.patch <.patch/flexric.patch>`
+The O-RAN specifications are evolving and FlexRIC is under development with multiple tracks (i.e. git branches).
+In this tutorial, we use ``br-flexric`` branch (commit: ``1a3903a7``).
 
-The patch does the following:
-
-  - Fixes issues with ASN1 criticality
-  - Allows for larger E2 Setup Request messages 
-  - Changes the name of the requested metric in the ``RIC Subscription Request`` message and prints the content of the RIC Indication message
-  - Report metric: RLC DL transmitted SDU volume (as defined by ORAN TS)
-
-Note, in this version of FlexRIC the name of the requested metric in the ``RIC Subscription Request`` is hard-coded and cannot be easily 
-changed in the xApp.
-
-FlexRIC requires the following dependencies to be installed (see `FlexRIC Installation Guide <https://gitlab.eurecom.fr/mosaic5g/flexric>`_ for details):
+FlexRIC requires the following dependencies to be installed (see `FlexRIC Installation Guide <https://gitlab.eurecom.fr/mosaic5g/flexric/-/tree/br-flexric>`_ for details):
 
 .. code-block:: bash
 
   sudo apt-get update
-  sudo apt-get install swig libsctp-dev cmake-curses-gui libpcre2-dev python3 python3-dev
+  sudo apt-get install swig libsctp-dev python3 cmake-curses-gui python3-dev pkg-config libconfig-dev libconfig++-dev
 
 
 The FlexRIC installation is performed as follows:
@@ -105,13 +100,13 @@ The FlexRIC installation is performed as follows:
 
   git clone https://gitlab.eurecom.fr/mosaic5g/flexric.git
   cd flexric
-  git checkout e2ap-v2
-  git apply -v ./flexric.patch
+  git checkout br-flexric
   mkdir build
   cd build
-  cmake ../
+  cmake -DKPM_VERSION=KPM_V2 -DXAPP_DB=NONE_XAPP ../
   make
-  make install
+  sudo make install
+
 
 Note that while by default Ubuntu 22.04.1 uses `gcc-11`, the used FlexRIC version can be built only with `gcc-10`. One possible way to switch `gcc` version is to use `update-alternatives` tool, for example:
 
@@ -238,25 +233,7 @@ It is recommended you use these files to avoid errors while changing configs man
 gNB
 ===
 
-The following changes need to be made to the gNB configuration file.
-
-Update the cell config to enable use with srsUE, namely the PRACH and PDCCH configuration: 
-
-.. code-block:: yaml
-
-  cell_cfg:
-    dl_arfcn: 368500                  # ARFCN of the downlink carrier (center frequency).
-    band: 3                           # The NR band.
-    channel_bandwidth_MHz: 10         # Bandwith in MHz. Number of PRBs will be automatically derived.
-    common_scs: 15                    # Subcarrier spacing in kHz used for data.
-    plmn: "00101"                     # PLMN broadcasted by the gNB.
-    tac: 7                            # Tracking area code (needs to match the core configuration).
-    prach:
-      prach_config_index: 1           # Sets PRACH config to match what is expected by srsUE
-    pdcch:
-      dedicated:
-        ss2_type: common              # Search Space type, has to be set to common
-        dci_format_0_1_and_1_1: false # Set correct DCI format (fallback)
+Here, we describe the gNB configuration parameters related to the E2 agent.
 
 Enable E2 agents in all DUs and enable E2SM_KPM service module:
 
@@ -265,7 +242,7 @@ Enable E2 agents in all DUs and enable E2SM_KPM service module:
   e2:
     enable_du_e2: true                # Enable DU E2 agent (one for each DU instance)
     e2sm_kpm_enabled: true            # Enable KPM service module
-    addr: 127.0.0.100                 # RIC IP address
+    addr: 127.0.0.1                   # RIC IP address
     port: 36421                       # RIC port
 
 Enable E2AP packet captures and set the name of the output pcap file:
@@ -275,6 +252,16 @@ Enable E2AP packet captures and set the name of the output pcap file:
   pcap:
     e2ap_enable: true                 # Set to true to enable E2AP PCAPs.
     e2ap_filename: /tmp/gnb_e2ap.pcap # Path where the E2AP PCAP is stored.
+
+
+Enable Enable RLC metrics reporting that will feed E2SM_KPM service model with measurements data:
+
+.. code-block:: yaml
+
+  metrics:
+    rlc_json_enable: 1                # Enable RLC metrics reporting
+    rlc_report_period: 1000           # Set reporting period to 1s
+
 
 --------
 
@@ -312,24 +299,30 @@ Start example NearRT-RIC provided in FlexRIC framework:
 
   ./flexric/build/examples/ric/nearRT-RIC
 
-The console output should be similar to:
+The NearRT-RIC console output should be similar to:
 
 .. code-block:: bash
 
-  Setting the config -c file to /usr/local/etc/flexric/flexric.conf
-  Setting path -p for the shared libraries to /usr/local/lib/flexric/
+  Setting the config -c file to /usr/local/etc/flexric/ric.conf
+  [LibConf]: loading service models from SM_DIR: /usr/local/lib/flexric/
+  [LibConf]: reading configuration for NearRT_RIC
+  [LibConf]: NearRT_RIC IP: 127.0.0.1
+  [LibConf]: E2_Port Port: 36421
+  [LibConf]: E42_Port Port: 36422
   [NEAR-RIC]: nearRT-RIC IP Address = 127.0.0.1, PORT = 36421
   [NEAR-RIC]: Initializing 
-  [NEAR-RIC]: Loading SM ID = 148 with def = GTP_STATS_V0 
-  [NEAR-RIC]: Loading SM ID = 147 with def = ORAN-E2SM-KPM 
-  [NEAR-RIC]: Loading SM ID = 143 with def = RLC_STATS_V0 
-  [NEAR-RIC]: Loading SM ID = 145 with def = SLICE_STATS_V0 
+  [NEAR-RIC]: Loading SM ID = 3 with def = ORAN-E2SM-RC 
   [NEAR-RIC]: Loading SM ID = 142 with def = MAC_STATS_V0 
-  [NEAR-RIC]: Loading SM ID = 144 with def = PDCP_STATS_V0 
+  [NEAR-RIC]: Loading SM ID = 148 with def = GTP_STATS_V0 
   [NEAR-RIC]: Loading SM ID = 146 with def = TC_STATS_V0 
+  [NEAR-RIC]: Loading SM ID = 145 with def = SLICE_STATS_V0 
+  [NEAR-RIC]: Loading SM ID = 143 with def = RLC_STATS_V0 
+  [NEAR-RIC]: Loading SM ID = 2 with def = ORAN-E2SM-KPM 
+  [NEAR-RIC]: Loading SM ID = 144 with def = PDCP_STATS_V0 
   [iApp]: Initializing ... 
   [iApp]: nearRT-RIC IP Address = 127.0.0.1, PORT = 36422
   fd created with 6 
+  [NEAR-RIC]: Initializing Task Manager with 2 threads
   
 gNB
 ===
@@ -340,14 +333,14 @@ We run gNB directly from the build folder (the config file is also located there
 
 	sudo ./gnb -c gnb_zmq.yaml
 
-The console output should be similar to:
+The gNB console output should be similar to:
 
 .. code-block:: bash
 
-  --== srsRAN gNB (commit 374200dee) ==--
+  --== srsRAN gNB (commit 0b2702cca) ==--
 
   Connecting to AMF on 10.53.1.2:38412
-  Available radio types: uhd and zmq.
+  Available radio types: zmq.
   Connecting to NearRT-RIC on 127.0.0.1:36421
   Cell pci=1, bw=10 MHz, dl_arfcn=368500 (n3), dl_freq=1842.5 MHz, dl_ssb_arfcn=368410, ul_freq=1747.5 MHz
 
@@ -360,10 +353,10 @@ If the connection attempt is successful, the following (or similar) will be disp
 
 .. code-block:: bash
 
-  Received message with id = 411, port = 15844 
+  Received message with id = 411, port = 1715 
   [E2AP] Received SETUP-REQUEST from PLMN   1. 1 Node ID 411 RAN type ngran_gNB
-  [NEAR-RIC]: Accepting RAN function ID 147 with def = `0ORAN-E2SM-KPM`
-  [NEAR-RIC]: Accepting interfaceType 0
+  [NEAR-RIC]: Accepting RAN function ID 2 with def = ORAN-E2SM-KPM 
+  [iApp]: no xApp connected, no need to generate E42 UPDATE-E2-NODE
 
 srsUE
 =====
@@ -387,7 +380,7 @@ If srsUE connects successfully to the network, the following (or similar) should
   Built in Release mode using commit fa56836b1 on branch master.
 
   Opening 1 channels in RF device=zmq with args=tx_port=tcp://127.0.0.1:2001,rx_port=tcp://127.0.0.1:2000,base_srate=11.52e6
-  Supported RF device list: UHD bladeRF zmq file
+  Supported RF device list: UHD zmq file
   CHx base_srate=11.52e6
   Current sample rate is 1.92 MHz with a base rate of 11.52 MHz (x6 decimation)
   CH0 rx_port=tcp://127.0.0.1:2000
@@ -401,14 +394,14 @@ If srsUE connects successfully to the network, the following (or similar) should
   RRC Connected
   PDU Session Establishment successful. IP: 10.45.1.2
   RRC NR reconfiguration successful.
-  
+
 It is clear that the connection has been made successfully once the UE has been assigned an IP, this is seen in ``PDU Session Establishment successful. IP: 10.45.1.2``. 
 The NR connection is then confirmed with the ``RRC NR reconfiguration successful.`` message. 
 
 IP Traffic with ping
 ====================
 
-Ping is the simplest tool to test the end-to-end connectivity in the network, i.e., it tests whether the UE and core can communicate. Here, we use it to generate traffic from UE, hence the gNB can measure its channel characteristics (e.g., ``RSRP``).
+Ping is the simplest tool to test the end-to-end connectivity in the network, i.e., it tests whether the UE and core can communicate. Here, we use it to generate traffic from UE, hence the gNB can measure data transmission-related metrics (e.g., throughput).
 
 To run ping from UE to the core, use:
 
@@ -481,94 +474,117 @@ Now ping the UE:
 
    ping -i 0.1 10.45.1.2
 
+In addition, `iperf` tool can be used to generate traffic at higher data rates than ping. For example, to send UL traffic from UE, one needs to run the following command:
+
+.. code-block:: bash
+
+    sudo ip netns exec ue1 iperf -c 10.45.1.1 -u -b 10M -i 1 -t 60
+
 
 xApp
 ====
 
-We use an example `xapp_kpm_moni` xApp from the FlexRIC framework. The application connects to NearRT-RIC and uses E2SM_KPM service module to subscribe for measurements of a single metric (i.e., RSRP).
+We use an example ``xapp_oran_moni`` xApp from the FlexRIC framework. The application connects to NearRT-RIC and uses E2SM_KPM service module to subscribe for measurement data using Report Service Style 1. The metric names are listed in the config file that has to be passed to the xApp:
+
+  * :download:`xapp_mon_e2sm_kpm.conf <.config/xapp_mon_e2sm_kpm.conf>`
+
+Specifically, with the provided config file, the xApp subscribes for two metrics, namely ``DRB.UEThpDl`` and ``DRB.UEThpUl``.
 
 Start the xApp with the following command:
 
 .. code-block:: bash
 
-  ./flexric/build/examples/xApp/c/monitor/xapp_kpm_moni
+  ./flexric/build/examples/xApp/c/monitor/xapp_oran_moni -c ./xapp_mon_e2sm_kpm.conf
 
-If xApp connects successfully to the NearRT-RIC, the following (or similar) should be displayed on the console:
+If xApp connects successfully to the NearRT-RIC, the following (or similar) should be displayed on the xApp console:
 
 .. code-block:: bash
 
-  Setting the config -c file to /usr/local/etc/flexric/flexric.conf
-  Setting path -p for the shared libraries to /usr/local/lib/flexric/
-  [xAapp]: Initializing ... 
+  Setting the config -c file to /home/pgawlowicz/workspace/srsran_project_docs/./docs/source/tutorials/source/flexric/source/.config/xapp_mon_e2sm_kpm.conf
+  [LibConf]: loading service models from SM_DIR: /usr/local/lib/flexric/
+  [LibConf]: reading configuration for xApp
+  [LibConf]: NearRT_RIC IP: 127.0.0.1
+  [LibConf]: E42_Port Port: 36422
+  [LibConf]: Sub_ORAN_SM Name: KPM, Time: 1000
+  [LibConf]: format 1, RAN type ngran_gNB, actions = DRB.UEThpDl DRB.UEThpUl 
+  [LibConf]: xApp_DB enable: 0
+  [LibConf]: xApp_DB user: (null), pass: (null)
+  [xAap]: Initializing ... 
   [xApp]: nearRT-RIC IP Address = 127.0.0.1, PORT = 36422
-  [E2 AGENT]: Opening plugin from path = /usr/local/lib/flexric/libgtp_sm.so 
-  [E2 AGENT]: Opening plugin from path = /usr/local/lib/flexric/libkpm_sm.so 
-  [E2 AGENT]: Opening plugin from path = /usr/local/lib/flexric/librlc_sm.so 
-  [E2 AGENT]: Opening plugin from path = /usr/local/lib/flexric/libslice_sm.so 
-  [E2 AGENT]: Opening plugin from path = /usr/local/lib/flexric/libmac_sm.so 
-  [E2 AGENT]: Opening plugin from path = /usr/local/lib/flexric/libpdcp_sm.so 
-  [E2 AGENT]: Opening plugin from path = /usr/local/lib/flexric/libtc_sm.so 
-  [NEAR-RIC]: Loading SM ID = 148 with def = GTP_STATS_V0 
-  [NEAR-RIC]: Loading SM ID = 147 with def = ORAN-E2SM-KPM 
-  [NEAR-RIC]: Loading SM ID = 143 with def = RLC_STATS_V0 
-  [NEAR-RIC]: Loading SM ID = 145 with def = SLICE_STATS_V0 
+  [E2-AGENT]: Opening plugin from path = /usr/local/lib/flexric/librc_sm.so 
+  [E2-AGENT]: Opening plugin from path = /usr/local/lib/flexric/libmac_sm.so 
+  [E2-AGENT]: Opening plugin from path = /usr/local/lib/flexric/libgtp_sm.so 
+  [E2-AGENT]: Opening plugin from path = /usr/local/lib/flexric/libtc_sm.so 
+  [E2-AGENT]: Opening plugin from path = /usr/local/lib/flexric/libslice_sm.so 
+  [E2-AGENT]: Opening plugin from path = /usr/local/lib/flexric/librlc_sm.so 
+  [E2-AGENT]: Opening plugin from path = /usr/local/lib/flexric/libkpm_sm.so 
+  [E2-AGENT]: Opening plugin from path = /usr/local/lib/flexric/libpdcp_sm.so 
+  [NEAR-RIC]: Loading SM ID = 3 with def = ORAN-E2SM-RC 
   [NEAR-RIC]: Loading SM ID = 142 with def = MAC_STATS_V0 
-  [NEAR-RIC]: Loading SM ID = 144 with def = PDCP_STATS_V0 
+  [NEAR-RIC]: Loading SM ID = 148 with def = GTP_STATS_V0 
   [NEAR-RIC]: Loading SM ID = 146 with def = TC_STATS_V0 
-  Filename = /tmp/xapp_db_1699269839764329 
-   [xApp]: E42 SETUP-REQUEST sent
-  adding event fd = 8 ev-> 4 
+  [NEAR-RIC]: Loading SM ID = 145 with def = SLICE_STATS_V0 
+  [NEAR-RIC]: Loading SM ID = 143 with def = RLC_STATS_V0 
+  [NEAR-RIC]: Loading SM ID = 2 with def = ORAN-E2SM-KPM 
+  [NEAR-RIC]: Loading SM ID = 144 with def = PDCP_STATS_V0 
+  [xApp]: DB_ENABLE = FALSE
+  [xApp]: do not initial database
+  [xApp]: E42 SETUP-REQUEST sent
+  adding event fd = 5 ev-> 5 
   [xApp]: E42 SETUP-RESPONSE received
   [xApp]: xApp ID = 7 
   Registered E2 Nodes = 1 
   Pending event size before remove = 1 
-  Connected E2 nodes = 1
-  Registered node 0 ran func id = 147 
-   Generated of req_id = 1 
+  Registered node 0 ran func id = 2 
+   [xApp]: reporting period = 1000 [ms]
 
 The following (or similar) will be displayed on the NearRT-RIC console:
 
 .. code-block:: bash
 
-  Received message with id = 411, port = 15844 
-  [E2AP] Received SETUP-REQUEST from PLMN   1. 1 Node ID 411 RAN type ngran_gNB
-  [NEAR-RIC]: Accepting RAN function ID 147 with def = `0ORAN-E2SM-KPM` 
-  [NEAR-RIC]: Accepting interfaceType 0
   [iApp]: E42 SETUP-REQUEST received
   [iApp]: E42 SETUP-RESPONSE sent
-  [iApp]: SUBSCRIPTION-REQUEST xapp_ric_id->ric_id.ran_func_id 147  
-  [E2AP] SUBSCRIPTION REQUEST generated
-  [NEAR-RIC]: nb_id 411 port = 15844 
 
-Finally, the xApp sends the ``RIC Subscription Request`` message and periodically receives RIC Indication messages with the recent measurements of a specific metric. The following (or similar) should be displayed on the console:
+Next, the xApp sends the ``RIC Subscription Request`` message and upon successful subscription, it will periodically receive ``RIC Indication messages`` with the recent measurements of the requested metrics. The following (or similar) should be displayed on the xApp console:
 
 .. code-block:: bash
 
+  Generated of req_id = 1 
+  E42_RIC_SUBSCRIPTION_REQUEST 31 
+  adding event fd = 5 ev-> 6 
   [xApp]: RIC SUBSCRIPTION REQUEST sent
-  adding event fd = 8 ev-> 5 
   [xApp]: SUBSCRIPTION RESPONSE received
   Pending event size before remove = 1 
-  [xApp]: Successfully SUBSCRIBED to ran function = 147 
-  Received RIC Indication: 
-  ---Metric: DRB.RlcSduTransmittedVolumeDL: Value: 10
-  Received RIC Indication: 
-  ---Metric: DRB.RlcSduTransmittedVolumeDL: Value: 9
-  Received RIC Indication: 
-  ---Metric: DRB.RlcSduTransmittedVolumeDL: Value: 8
-  Received RIC Indication: 
-  ---Metric: DRB.RlcSduTransmittedVolumeDL: Value: 9
-  Received RIC Indication: 
-  ---Metric: DRB.RlcSduTransmittedVolumeDL: Value: 9
-  Received RIC Indication: 
-  ---Metric: DRB.RlcSduTransmittedVolumeDL: Value: 10
-  Received RIC Indication: 
-  ---Metric: DRB.RlcSduTransmittedVolumeDL: Value: 11
+  [xApp]: Successfully SUBSCRIBED to ran function = 2 
+        1, KPM v2 ind_msg latency > 943897800 s (minimum time unit is in second) from E2-node type 2 ID 411
+  meas record INTEGER_MEAS_VALUE value 28
+  meas record INTEGER_MEAS_VALUE value 8312
+        2, KPM v2 ind_msg latency > 927120585 s (minimum time unit is in second) from E2-node type 2 ID 411
+  meas record INTEGER_MEAS_VALUE value 4
+  meas record INTEGER_MEAS_VALUE value 11544
+        3, KPM v2 ind_msg latency > 910343370 s (minimum time unit is in second) from E2-node type 2 ID 411
+  meas record INTEGER_MEAS_VALUE value 4
+  meas record INTEGER_MEAS_VALUE value 11411
+        4, KPM v2 ind_msg latency > 893566155 s (minimum time unit is in second) from E2-node type 2 ID 411
+  meas record INTEGER_MEAS_VALUE value 4
+  meas record INTEGER_MEAS_VALUE value 11746
+  ...
+
+Note that the metrics' names are not shown in this xApp, but their order should be the same as the order of metric listed in the `xapp_mon_e2sm_kpm.conf` config file (i.e., "DRB.UEThpDl" and "DRB.UEThpUl").
+
+The xApp can be stopped with `CTRL+C` signal. In such case, the following (or similar) should be displayed on the xApp console:
+
+.. code-block:: bash
+
+  ^Csignal 2 received !
+  CTRL+C detect
   Remove handle number = 1 
-  E42 RIC_SUBSCRIPTION_DELETE_REQUEST  sdr->ric_id.ran_func_id 147  sdr->ric_id.ric_req_id 1 
+  E42 RIC_SUBSCRIPTION_DELETE_REQUEST  sdr->ric_id.ran_func_id 2  sdr->ric_id.ric_req_id 1 
   [xApp]: E42 SUBSCRIPTION-DELETE sent 
-  adding event fd = 8 ev-> 7 
-  Received RIC Indication: 
-  ---Metric: DRB.RlcSduTransmittedVolumeDL: Value: 11
+  adding event fd = 5 ev-> 8 
+        9, KPM v2 ind_msg latency > 809680080 s (minimum time unit is in second) from E2-node type 2 ID 411
+  meas record INTEGER_MEAS_VALUE value 0
+  meas record INTEGER_MEAS_VALUE value 0
   [xApp]: E42 SUBSCRIPTION DELETE RESPONSE received
   Pending event size before remove = 1 
   [xApp]: Successfully received SUBSCRIPTION-DELETE-RESPONSE 
@@ -576,7 +592,19 @@ Finally, the xApp sends the ``RIC Subscription Request`` message and periodicall
   [xApp]: Sucessfully stopped 
   Test xApp run SUCCESSFULLY
 
-The xApp clearly displays the requested metric ``DRB.RlcSduTransmittedVolumeDL``, and shows it changing between each reporting period. 
+
+The following (or similar) will be displayed on the NearRT-RIC console:
+
+.. code-block:: bash
+
+  [iApp]: SUBSCRIPTION-REQUEST xapp_ric_id->ric_id.ran_func_id 2  
+  [E2AP] SUBSCRIPTION REQUEST generated
+  [NEAR-RIC]: nb_id 411 port = 1715  
+  [NEAR-RIC]: nb_id 411 port = 1715  
+  [NEAR-RIC]: SUBSCRIPTION DELETE REQUEST tx
+
+  [iApp]: RIC_SUBSCRIPTION_DELETE_REQUEST sent 
+  [iApp]: RIC_SUBSCRIPTION_DELETE_RESPONSE sent
 
 -----
 
@@ -724,5 +752,4 @@ In addition, you might need to disable the `ogstun` interface with the following
 RIC running on a different machine
 ==================================
 
-If you are running your RIC on a different machine, you will need to correctly configure the E2 ``bind_addr`` parameter in the gNB config file. This is shown in the example config, with the line commented out. If you are running 
-the RIC on a separate machine simply uncomment this option. 
+If you are running your RIC on a different machine, you will need to correctly configure the E2 ``bind_addr`` parameter in the gNB config file. This is shown in the example config, with the line commented out. If you are running the RIC on a separate machine simply uncomment this option.
