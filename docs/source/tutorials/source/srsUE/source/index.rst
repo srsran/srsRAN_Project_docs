@@ -273,7 +273,7 @@ srsRAN Project provides a dockerized version of the Open5GS. It is a convenient 
 .. code-block:: bash
 
   cd ./srsRAN_Project/docker
-  docker-compose up --build 5gc
+  docker compose up --build 5gc
 
 Note that we have already configured Open5GS to operate correctly with srsRAN Project gNB. Moreover, the UE database is populated with the credentials used by our srsUE.
 	
