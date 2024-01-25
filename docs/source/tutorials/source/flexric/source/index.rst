@@ -286,7 +286,7 @@ srsRAN Project provides a dockerized version of the Open5GS. It is a convenient 
 .. code-block:: bash
 
   cd ./srsRAN_Project/docker
-  docker-compose up --build 5gc
+  docker compose up --build 5gc
 
 Note that we have already configured Open5GS to operate correctly with srsRAN Project gNB. Moreover, the UE database is populated with the credentials used by our srsUE. 
 
@@ -658,7 +658,7 @@ If the dockerized version of Open5Gs fails to run it may be due to the ports set
   ERROR: for 5gc  Cannot start service 5gc: driver failed programming external connectivity on endpoint open5gs_5gc (2919e37332feb0a3001c44985b7e3d310ae82b7adb0e2cb1d9c214ed29ff39fa): Error starting userland proxy: listen tcp4 0.0.0.0:3000: bind: address already in use
   ERROR: Encountered errors while bringing up the project
 
-In this case, the docker-compose file can be modified so that a different host port is used as ``3000`` is already in use. To do this, line 40 of the docker-compose.yml file can be update to use ``3001`` as the host port: 
+In this case, the docker-compose file can be modified so that a different host port is used as ``3000`` is already in use. To do this, line 40 of the *docker-compose.yml* file can be update to use ``3001`` as the host port: 
 
 .. code-block:: diff
 
