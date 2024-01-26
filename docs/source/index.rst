@@ -77,4 +77,5 @@ Useful resources:
    tutorials/source/dpdk/source/index.rst   
    tutorials/source/oranRU/source/index.rst
    tutorials/source/flexric/source/index.rst
+   tutorials/source/matlab/source/index.rst
 

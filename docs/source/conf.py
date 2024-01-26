@@ -346,4 +346,4 @@ texinfo_documents = [
 todo_include_todos = True
 
 # Include numbers in figures
-numfig = True
+#numfig = True
