@@ -220,9 +220,7 @@ Then, the **[rat.nr]** options need to be configured for 5G SA mode operation::
   max_nof_prb = 106
   nof_prb = 106
 
-
 The `max_nof_prb` and `nof_prb` parameters have to be adapted for the used bandwidth according to the following table:
-
 
 =====  ======
  BW     PRBs 
@@ -887,8 +885,7 @@ Run Open5GS as follows:
 .. code-block:: bash
 
   cd ./srsRAN_Project/docker
-  docker-compose up --build 5gc
-
+  docker compose up --build 5gc
 
 gNB
 ---
