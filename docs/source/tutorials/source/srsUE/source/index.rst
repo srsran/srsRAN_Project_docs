@@ -364,6 +364,7 @@ Testing the Network
 
 Here, we demonstrate how to use ping and iPerf3 tools to test the connectivity and throughput in the network.
 
+.. _ota_routing:
 
 Routing Configuration
 ---------------------
@@ -388,6 +389,7 @@ It should contain the following entries (note that Iface names might be differen
     0.0.0.0         192.168.0.1     0.0.0.0         UG    100    0        0 eno1
     10.45.0.0       10.53.1.2       255.255.0.0     UG    0      0        0 br-dfa5521eb807
     10.53.1.0       0.0.0.0         255.255.255.0   U     0      0        0 br-dfa5521eb807
+    ...
 
 Next, add a default route for the UE as follows:
 
@@ -440,7 +442,7 @@ In this example, we generate traffic in the uplink direction. To this end, we ru
 
 * **Network-side**
 
-Start the iPerf3 server:: 
+Start the iPerf3 server the machine running the core network (i.e., Open5GS docker container):: 
 
   iperf3 -s -i 1 
 
@@ -450,10 +452,14 @@ The server listens for traffic coming from the UE. After the client connects, th
 
 With the network and the iPerf3 server up and running, the client can be run from the UE's machine with the following command:: 
 
-  iperf3 -c 10.45.1.1 -b 10M -i 1 -t 60 
+  # TCP
+  iperf3 -c 10.53.1.1 -i 1 -t 60
+  # or UDP
+  iperf3 -c 10.53.1.1 -i 1 -t 60 -u -b 10M
 
 Traffic will now be sent from the UE to the network. This will be shown in both the server and client consoles. Additionaly, we will observe console traces of the UE and the gNB. 
 
+**Note:** All routes have to be configured as presented in  :ref:`Routing Configuration for USRP-based setup <ota_routing>` section.
 
 * **Iperf3 Output**
 
@@ -475,7 +481,7 @@ Example **server** iPerf3 output::
 
 Example **client** iPerf3 output:: 
 
-  # iperf3 -c 10.45.1.1 -b 10M -i 1 -t 60 
+  # iperf3 -c 10.53.1.1 -i 1 -t 60 -u -b 10M
   Connecting to host 10.45.1.1, port 5201
   [  5] local 10.45.1.2 port 40546 connected to 10.45.1.1 port 5201
   [ ID] Interval           Transfer     Bitrate         Retr  Cwnd
@@ -585,8 +591,12 @@ Running the Network
 Once the config files are updated, the network can be set up on a single host machine, using the same commands as in the case of the over-the-air setup.
 
 
+.. _zmq_testing:
+
 Testing the Network
 ===================
+
+.. _zmq_routing:
 
 Routing Configuration
 ---------------------
@@ -672,25 +682,30 @@ In this example, we generate traffic in the uplink direction. To this end, we ru
 
 * **Network-side**
 
-Start the iPerf3 server:: 
+Start the iPerf3 server the machine running the core network (i.e., Open5GS docker container):: 
 
-  iperf3 -s -i 1 
+  iperf3 -s -i 1
 
 The server listens for traffic coming from the UE. After the client connects, the server prints flow measurements every second.
 
 * **UE-side**
 
 With the network and the iPerf3 server up and running, the client can be run from the UE's machine with the following command:: 
-
-  sudo ip netns exec ue1 iperf3 -c 10.45.1.1 -b 10M -i 1 -t 60  
+  
+  # TCP
+  sudo ip netns exec ue1 iperf3 -c 10.53.1.1 -i 1 -t 60
+  # or UDP
+  sudo ip netns exec ue1 iperf3 -c 10.53.1.1 -i 1 -t 60 -u -b 10M
 
 Traffic will now be sent from the UE to the network. This will be shown in both the server and client consoles. Additionaly, we will observe console traces of the UE and the gNB. 
+
+**Note:** All routes have to be configured as presented in  :ref:`Routing Configuration for ZMQ-based setup <zmq_routing>` section.
 
 * **Iperf3 Output**
 
 Example **server** iPerf3 output:: 
 
-  # iperf3 -s -i 1 
+  # iperf3 -s -i 1
   -----------------------------------------------------------
   Server listening on 5201
   -----------------------------------------------------------
@@ -706,7 +721,7 @@ Example **server** iPerf3 output::
 
 Example **client** iPerf3 output:: 
 
-  # sudo ip netns exec ue1 iperf3 -c 10.45.1.1 -b 10M -i 1 -t 60
+  #sudo ip netns exec ue1 iperf3 -c 10.53.1.1 -i 1 -t 60 -u -b 10M
   Connecting to host 10.45.1.1, port 5201
   [  5] local 10.45.1.2 port 39184 connected to 10.45.1.1 port 5201
   [ ID] Interval           Transfer     Bitrate         Retr  Cwnd
@@ -984,6 +999,12 @@ Specifically, GNU-Radio allows to throttle how fast samples are passed between e
 Note that when samples are delivered at slower speeds, gNB and UE have more time to process them (hence lower average CPU load). Therefore, controlling the ``Time Slow Down Ratio`` parameter might be helpful when running the emulation on a slower host machine and/or with a high number of UEs. 
 You can check the impact of the ``Time Slow Down Ratio`` parameter on CPU load and network traffic volume on the loopback interface using ``htop`` and ``nload lo``, respectively. Also, a ping round-trip time (RTT) between the core network and UEs is impacted when changing this parameter.
 
+
+Testing the Network
+===================
+Once the setup is ready, you can start data traffic by following :ref:`Testing the Network <zmq_testing>` section for the ZMQ-based setup. Note that here we have three UEs (hence, three network namespaces, namely ue1,ue2,ue3), and the default route has to be configured for each of them. 
+
+
 -----
 
 Troubleshooting
@@ -1003,6 +1024,48 @@ If you encounter issues with the srsUE not finding the cell and/or not being abl
 =================
 
 By default, Open5GS uses 5QI = 9. If the **qos** section is not provided in the gNB config file, the default one with 5QI = 9 will be generated and the UE should connect to the network. If one needs to change the 5QI, please harmonize these settings between gNB and Open5GS config files, as otherwise, a UE will not be able to connect.
+
+UE does not get IP address
+==========================
+
+If the UE successfully performs RACH procedure, gets into `RRC Connected` state, but finally disconnects with `RRC Release`, this might indicate that the UE database in the core network is not filled properly.
+Specifically, in such case, the srsUE console output will look similar to this:
+
+.. code-block:: bash
+
+    Attaching UE...
+    Random Access Transmission: prach_occasion=0, preamble_index=8, ra-rnti=0x39, tti=174
+    Random Access Complete.     c-rnti=0x4601, ta=0
+    RRC Connected
+    Received RRC Release
+
+You can also check core network logs, for more information on the cause of this event. For example, Open5gs might show the following information in its log output:
+
+.. code-block:: bash
+
+  open5gs_5gc  | 02/02 09:06:13.742: [amf] INFO: InitialUEMessage (../src/amf/ngap-handler.c:372)
+  open5gs_5gc  | 02/02 09:06:13.742: [amf] INFO: [Added] Number of gNB-UEs is now 2 (../src/amf/context.c:2327)
+  open5gs_5gc  | 02/02 09:06:13.742: [amf] INFO:     RAN_UE_NGAP_ID[2] AMF_UE_NGAP_ID[3] TAC[7] CellID[0x19b0] (../src/amf/ngap-handler.c:533)
+  open5gs_5gc  | 02/02 09:06:13.742: [amf] INFO: [suci-0-001-01-0000-0-0-0123456791] Unknown UE by SUCI (../src/amf/context.c:1634)
+  open5gs_5gc  | 02/02 09:06:13.742: [amf] INFO: [Added] Number of AMF-UEs is now 2 (../src/amf/context.c:1419)
+  open5gs_5gc  | 02/02 09:06:13.742: [gmm] INFO: Registration request (../src/amf/gmm-sm.c:985)
+  open5gs_5gc  | 02/02 09:06:13.742: [gmm] INFO: [suci-0-001-01-0000-0-0-0123456791]    SUCI (../src/amf/gmm-handler.c:149)
+  open5gs_5gc  | 02/02 09:06:13.743: [dbi] INFO: [imsi-001010123456791] Cannot find IMSI in DB (../lib/dbi/subscription.c:56)
+
+From the above, it is clear that UE data is not present in the subscriber database.
+
+Please check and populate the UE database if needed.
+
+In case you are using Open5gs, you can open `http://localhost:3000/ <http://localhost:3000/>`_  in your browser and log in to its WebUI (user: admin, passwd: 1423). You should see an entry for each IMSI present in a UE database. If the required IMSI is not present, you can add it manually by clicking on the **+** button in the lower right corner. **Note:** the WebUI is available when running Open5gs using the docker image we provide. If installed manually, one needs to install the WebUI separately.
+
+In the case of the ZMQ-based setup, please check if you have properly added network namespace for each emulated UE, i.e.::
+
+    sudo ip netns add ue1
+
+To verify the new "ue1" network namespace exists, run::   
+
+    sudo ip netns list
+
 
 UE IP Forwarding
 ================
