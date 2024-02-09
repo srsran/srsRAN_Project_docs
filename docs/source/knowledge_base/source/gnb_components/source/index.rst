@@ -45,8 +45,8 @@ The DU has the following architecture:
 
 The DU is composed of L1 and L2 functional blocks which communicate using the FAPI+ interface.
 
-There are two approaches to how the low-PHY is implemented, it can either be in the DU-low or the RU. If split 7.2x is being used 
-then the low-PHY will be located in the DU-low, if split 8 is being used it will be located in the RU. 
+There are two approaches to how the low-PHY is implemented, it can either be in the DU-low or the RU. If split 8 is being used 
+then the low-PHY will be located in the DU-low, if split 7.2x is being used it will be located in the RU. 
 
 
 DU-high
