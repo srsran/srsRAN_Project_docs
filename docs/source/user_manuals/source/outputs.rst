@@ -78,18 +78,34 @@ MAC
 
 To analyze a MAC-layer PCAP using Wireshark, you will need to configure User DLT 149 for UDP and enable the mac_nr_udp protocol:
 
-#. Go to Edit->Preferences->Protocols->DLT_USER->Edit and add an entry with DLT=149 and Payload protocol=udp.
-#. Go to Analyze->Enabled Protocols->MAC-NR and enable mac_nr_udp
+  #. Go to Edit->Preferences->Protocols->DLT_USER->Edit and add an entry with DLT=149 and Payload protocol=udp.
+  #. Go to Analyze->Enabled Protocols->MAC-NR and enable mac_nr_udp
+  #. Go to Edit->Preferences->Protocols->MAC-NR: Enable both checkboxes "Attempt to..."; Set LCID->DRB mapping to "From configuration protocol".
 
 .. image:: .imgs/mac_pcap.png
+
+RLC
+===
+
+.. note:: 
+
+  To correctly view the RLC PCAPs you will need Wireshark v4.3.x or later. 
+
+To analyze a RLC-layer PCAP using Wireshark, you will need to configure User DLT 149 for UDP and enable the rlc_nr_udp protocol:
+
+  #. Go to Edit->Preferences->Protocols->DLT_USER->Edit and add an entry with DLT=149 and Payload protocol=udp.
+  #. Go to Analyze->Enabled Protocols->RLC-NR and enable rlc_nr_udp
+  #. Go to Edit->Preferences->Protocols->RLC-NR and configure according to your needs.
+
+.. image:: .imgs/rlc_pcap.png
 
 NGAP
 ====
 
 To analyze an NGAP-layer PCAP using Wireshark, you will need to configure User DLT 152 for NGAP and enable detection and decoding 5G-EA0 ciphered messages:
 
-#. Go to Edit->Preferences->Protocols->DLT_USER->Edit and add an entry with DLT=152 and Payload protocol=ngap.
-#. Go to Edit->Preferences->Protocols->NAS-5GS and enable "Try to detect and decode 5G-EA0 ciphered messages".
+  #. Go to Edit->Preferences->Protocols->DLT_USER->Edit and add an entry with DLT=152 and Payload protocol=ngap.
+  #. Go to Edit->Preferences->Protocols->NAS-5GS and enable "Try to detect and decode 5G-EA0 ciphered messages".
 
 .. image:: .imgs/ngap_pcap.png
 
