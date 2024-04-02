@@ -1,6 +1,6 @@
-.. srsRAN gNB with FlexRIC
+.. srsRAN gNB with Near-RT RIC
 
-.. _flexric_appnote:
+.. _near_rt_ric_appnote:
 
 O-RAN NearRT-RIC and xApp
 #########################
@@ -25,7 +25,7 @@ Setup Overview
 
 The following diagram presents the setup architecture used in this application note:
 
-.. figure:: .imgs/gNB_srsUE_zmq_flexRIC.png
+.. figure:: .imgs/gNB_srsUE_zmq_near_rt_RIC.png
   :align: center
 
 

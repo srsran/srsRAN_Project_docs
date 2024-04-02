@@ -21,7 +21,7 @@ from docs.source.conf import *
 
 # -- Project information -----------------------------------------------------
 
-project = u'FlexRIC & gNB App Note'
+project = u'RIC & gNB App Note'
 #copyright = u'2019-2023, SRS'
 #author = u'SRS'
 
@@ -35,7 +35,7 @@ project = u'FlexRIC & gNB App Note'
 # -- Options for HTMLHelp output ---------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'FlexRIC_gNB_app_note'
+htmlhelp_basename = 'near_rt_RIC_gNB_app_note'
 
 
 # -- Options for LaTeX output ------------------------------------------------
@@ -62,7 +62,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'FlexRIC_gNB_app_note.tex', u'FlexRIC & gNB App Note',
+    (master_doc, 'near_rt_RIC_gNB_app_note.tex', u'Near-RT RIC & gNB App Note',
      u'SRS', 'manual'),
 ]
 
@@ -72,7 +72,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'FlexRIC_gNB_app_note', u'FlexRIC & gNB App Note',
+    (master_doc, 'near_rt_RIC_gNB_app_note', u'Near-RT RIC & gNB App Note',
      [author], 1)
 ]
 
@@ -83,8 +83,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'FlexRIC_gNB_app_note', u'FlexRIC & gNB App Note',
-     author, 'FlexRIC_gNB_app_note', 'One line description of project.',
+    (master_doc, 'near_rt_RIC_gNB_app_note', u'Near-RT RIC & gNB App Note',
+     author, 'near_rt_RIC_gNB_app_note', 'One line description of project.',
      'Miscellaneous'),
 ]
 
