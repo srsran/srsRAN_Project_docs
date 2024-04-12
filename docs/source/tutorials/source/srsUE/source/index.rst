@@ -1056,7 +1056,7 @@ From the above, it is clear that UE data is not present in the subscriber databa
 
 Please check and populate the UE database if needed.
 
-In case you are using Open5gs, you can open `http://localhost:3000/ <http://localhost:3000/>`_  in your browser and log in to its WebUI (user: admin, passwd: 1423). You should see an entry for each IMSI present in a UE database. If the required IMSI is not present, you can add it manually by clicking on the **+** button in the lower right corner. **Note:** the WebUI is available when running Open5gs using the docker image we provide. If installed manually, one needs to install the WebUI separately.
+In case you are using Open5gs, you can open `http://localhost:9999/ <http://localhost:9999/>`_  in your browser and log in to its WebUI (user: admin, passwd: 1423). You should see an entry for each IMSI present in a UE database. If the required IMSI is not present, you can add it manually by clicking on the **+** button in the lower right corner. **Note:** the WebUI is available when running Open5gs using the docker image we provide. If installed manually, one needs to install the WebUI separately.
 
 In the case of the ZMQ-based setup, please check if you have properly added network namespace for each emulated UE, i.e.::
 

@@ -326,20 +326,20 @@ Wait until all Pods are running. You can check the status with the following com
    kubectl get pods -n open5gs
 
 Once all components are started you can edit the subscribers via the webui. For that, you need
-to forward port ``3000`` of the ``open5gs-webui`` service to your local machine:
+to forward port ``9999`` of the ``open5gs-webui`` service to your local machine:
 
 .. code-block:: bash
 
-   kubectl port-forward svc/open5gs-webui 3000:3000 -n open5gs
+   kubectl port-forward svc/open5gs-webui 9999:9999 -n open5gs
 
 You should see the following output:
 
 .. code-block:: bash
 
-   Forwarding from 127.0.0.1:3000 -> 3000
-   Forwarding from [::1]:3000 -> 3000
+   Forwarding from 127.0.0.1:9999 -> 9999
+   Forwarding from [::1]:9999 -> 9999
 
-Don't close the shell and open your browser at `http://localhost:3000 <http://localhost:3000>`_. ``Username: admin,  Password: 1423``
+Don't close the shell and open your browser at `http://localhost:9999 <http://localhost:9999>`_. ``Username: admin,  Password: 1423``
 Once you are logged in you can edit the subscribers.
 
 DU
