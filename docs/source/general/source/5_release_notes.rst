@@ -3,6 +3,14 @@
 Release Notes
 #############
 
+24.4
+****
+
+ * Allow multiple cells per gNB
+ * Added Intra-gNB handover
+ * Added NTN support for GEO
+ * Other bug-fixes and improved stability and performance in all parts
+
 23.10
 *****
 
