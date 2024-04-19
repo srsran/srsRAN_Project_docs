@@ -34,3 +34,36 @@ Crosscall,Core Z5,,,,n78 - 20MHz,,,"..
 Google,Pixel 7 Pro,,,,n78 - 40 MHz to 60 MHz,,X310,"| SISO
 .. reporter: mrouili
 .. channel: https://github.com/srsran/srsRAN_Project/discussions/36"
+Realme, 9,,,, n78,,,"| MCC 001, MNC 01, 001, 02, 03
+.. reporter: improperaffo
+.. channel: https://github.com/srsran/srsRAN_Project/discussions/219"
+Xiaomi, Redmi Note 12 5G,,,, n78,,,"| MCC 001, MNC 01, 001, 02, 03
+.. reporter: improperaffo
+.. channel: https://github.com/srsran/srsRAN_Project/discussions/219"
+Motorola, Moto G54,,,, n78,,,"| MCC 001, MNC 01, 001, 02, 03
+.. reporter: improperaffo
+.. channel: https://github.com/srsran/srsRAN_Project/discussions/219"
+Nokia, G42 5G,,,, n78,,,"| MCC 001, MNC 01, 001, 02, 03
+.. reporter: improperaffo
+.. channel: https://github.com/srsran/srsRAN_Project/discussions/219"
+Oppo, A78 5G,,,, n78,,,"| MCC 001, MNC 01, 001, 02, 03
+.. reporter: improperaffo
+.. channel: https://github.com/srsran/srsRAN_Project/discussions/219"
+Samsung, A15 5G,,,, n78,,,"| MCC 001, MNC 01, 001, 02, 03
+.. reporter: improperaffo
+.. channel: https://github.com/srsran/srsRAN_Project/discussions/219"
+Samsung, A23 5G,,,, n78,,,"| MCC 001, MNC 01, 001, 02, 03
+.. reporter: improperaffo
+.. channel: https://github.com/srsran/srsRAN_Project/discussions/219"
+Google, Pixel 7 Pro,,,, n28,,B200 (no external clock),"| PLMN 00101
+.. reporter: Bourascom
+.. channel: https://github.com/srsran/srsRAN_Project/discussions/219"
+Samsung, S23 Ultra, SM-S91B/DS,,, n28,,B200 (no external clock),"| PLMN 00101
+.. reporter: Bourascom
+.. channel: https://github.com/srsran/srsRAN_Project/discussions/219"
+Samsung, S22 Ultra, SM-S908B/DS,,, n28,,B200 (no external clock),"| PLMN 00101
+.. reporter: Bourascom
+.. channel: https://github.com/srsran/srsRAN_Project/discussions/219"
+Samsung, Z Flip 4, SM-F721B,,, n28,,B200 (no external clock),"| PLMN 00101
+.. reporter: Bourascom
+.. channel: https://github.com/srsran/srsRAN_Project/discussions/219"
