@@ -81,7 +81,7 @@ For the purpose of presenting the usage of E2 interface exposed by srsRAN Projec
 
 .. tabs:: 
 
-   .. tab:: ORAN SC RIC 
+   .. group-tab:: ORAN SC RIC 
 
       `O-RAN Software Community (SC) Near-Real-time RIC <https://docs.o-ran-sc.org/en/latest/>`_ is a reference platform that aligns with the architecture and specifications created in the O-RAN Alliance working groups.
 
@@ -100,7 +100,7 @@ For the purpose of presenting the usage of E2 interface exposed by srsRAN Projec
         docker compose up
 
 
-   .. tab:: FlexRIC  
+   .. group-tab:: FlexRIC  
 
       The `FlexRIC <https://gitlab.eurecom.fr/mosaic5g/flexric>`_ framework provides `O-RAN Alliance <https://www.o-ran.org/>`_ compliant E2 node Agent emulators, a NearRT-RIC and xApps written in C/C++ and Python.
 
@@ -316,7 +316,7 @@ NearRT-RIC
 
 .. tabs:: 
 
-   .. tab:: ORAN SC RIC 
+   .. group-tab:: ORAN SC RIC 
 
      To start the ORAN SC RIC platform as a multi-container application, please run the following command from the ``oran-sc-ric`` directory:
 
@@ -331,7 +331,7 @@ NearRT-RIC
         
         ric_submgr          | RMR is ready now ...
 
-   .. tab:: FlexRIC  
+   .. group-tab:: FlexRIC  
 
       Start example NearRT-RIC provided in FlexRIC framework:
 
@@ -400,13 +400,13 @@ If the connection attempt is successful, the following (or similar) will be disp
 
 .. tabs:: 
 
-   .. tab:: ORAN SC RIC 
+   .. group-tab:: ORAN SC RIC 
 
       .. code-block:: bash
 
         ric_rtmgr_sim       | 2024/04/02 11:07:39 POST /ric/v1/handles/associate-ran-to-e2t  body: [{"E2TAddress":"10.0.2.10:38000","ranNamelist":["gnb_001_001_00019b"]}] elapsed: 10.77µs
 
-   .. tab:: FlexRIC  
+   .. group-tab:: FlexRIC  
 
       .. code-block:: bash
 
@@ -543,7 +543,7 @@ xApps
 
 .. tabs:: 
 
-   .. tab:: ORAN SC RIC 
+   .. group-tab:: ORAN SC RIC 
 
     To start the provided example ``kpm_mon_xapp.py``, please run the following command from the ``oran-sc-ric`` directory:
 
@@ -580,7 +580,7 @@ xApps
         ric_rtmgr_sim       | 2024/04/02 13:35:40 DELETE /ric/v1/handles/xapp-subscription-handle  body: {"address":"10.0.2.20","port":4560,"subscription_id":1} elapsed: 27.513µs
 
 
-   .. tab:: FlexRIC  
+   .. group-tab:: FlexRIC  
 
       We use an example ``xapp_oran_moni`` xApp from the FlexRIC framework. The application connects to NearRT-RIC and uses E2SM_KPM service module to subscribe for measurement data using Report Service Style 1. The metric names are listed in the config file that has to be passed to the xApp:
 
