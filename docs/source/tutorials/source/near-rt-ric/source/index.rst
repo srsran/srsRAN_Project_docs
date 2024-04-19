@@ -38,7 +38,7 @@ For this application note, the following hardware and software are used:
     - `srsRAN Project <https://github.com/srsran/srsRAN_project>`_
     - `srsRAN UE <https://github.com/srsran/srsRAN_4G>`_ (srsRAN 4G 23.04 or later)
     - `ZeroMQ <https://zeromq.org/>`_
-    - `ORAN SC RIC <https://docs.o-ran-sc.org/en/latest/projects.html#near-realtime-ran-intelligent-controller-ric>`_ or `FlexRIC <https://gitlab.eurecom.fr/mosaic5g/flexric>`_
+    - `ORAN SC RIC <https://docs.o-ran-sc.org/en/latest/projects.html#near-realtime-ran-intelligent-controller-ric>`_ **or** `FlexRIC <https://gitlab.eurecom.fr/mosaic5g/flexric>`_
     - `Open5GS 5G Core <https://open5gs.org/>`_
     - Wireshark (Version 4.0.7 or later)
 
@@ -52,7 +52,8 @@ Specifically, the current E2 interface implementation supports only E2SM_KPM and
   - E2SM_RC service model:
 
     - Only Control Service Style 2 is supported
-  
+
+
   - E2SM_KPM service model:
 
     - All Report Service Styles (1 - 5) are supported
@@ -79,16 +80,20 @@ Installation
 
 For the purpose of presenting the usage of E2 interface exposed by srsRAN Project gNodeB, we use the NearRT-RIC and an example KPM monitoring xApps from the ORAN SC RIC and FlexRIC frameworks.
 
+.. note::
+
+  Depending on which RIC you are using, you should select the appropriate instructions from the tabs below. The tabs are grouped throughout the tutorial, so you only need to select the appropriate instructions in this section. 
+
 .. tabs:: 
 
    .. group-tab:: ORAN SC RIC 
 
       `O-RAN Software Community (SC) Near-Real-time RIC <https://docs.o-ran-sc.org/en/latest/>`_ is a reference platform that aligns with the architecture and specifications created in the O-RAN Alliance working groups.
 
-      The ORAN SC RIC platform is an advanced software framework with a plethora of functionalities (including platform health monitoring, alarms, etc). 
-      Since it relies on Kubernetes and Helm for deployment, reliability, and scalability, its installation (`installation guide <https://docs.o-ran-sc.org/projects/o-ran-sc-it-dep/en/latest/installation-guides.html>`_) is quite complex, involves many steps, and requires a high level of knowledge and expertise in those frameworks.
+      The ORAN SC RIC platform is an advanced software framework with a functionality that includes platform health monitoring, alarms, etc. 
+      Since it relies on Kubernetes and Helm for deployment, reliability, and scalability, its vanilla installation is quite complex, involves many steps, and requires a high level of knowledge and expertise in those frameworks.
 
-      In this application note, however, we use a minimal version of the O-RAN Software Community (SC) Near-Real-time RIC (``i-release``), that can be easily deployed as a multi-container application using a single Docker command, eliminating the necessity for Kubernetes or Helm.
+      In this application note, we use a minimal version of the O-RAN SC near-RT RIC (``i-release``), that can be easily deployed as a multi-container application using a single Docker command, eliminating the necessity for Kubernetes or Helm.
       Specifically, we will deploy ORAN SC RIC using Docker and configuration files provided in this `repository <https://github.com/srsran/oran-sc-ric>`_.
 
       The ORAN SC RIC deployment is performed as follows:
@@ -318,7 +323,7 @@ NearRT-RIC
 
    .. group-tab:: ORAN SC RIC 
 
-     To start the ORAN SC RIC platform as a multi-container application, please run the following command from the ``oran-sc-ric`` directory:
+     To start the ORAN SC RIC platform as a multi-container application, run the following command from the ``oran-sc-ric`` directory:
 
       .. code-block:: bash
 
@@ -545,7 +550,7 @@ xApps
 
    .. group-tab:: ORAN SC RIC 
 
-    To start the provided example ``kpm_mon_xapp.py``, please run the following command from the ``oran-sc-ric`` directory:
+    To start the provided example ``kpm_mon_xapp.py``, run the following command from the ``oran-sc-ric`` directory:
 
     .. code-block:: bash
 
