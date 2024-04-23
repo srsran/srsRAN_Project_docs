@@ -32,6 +32,9 @@ cell_cfg:
     prach_config_index: 1           # Sets PRACH config to match what is expected by srsUE
     total_nof_ra_preambles: 63      # Sets number of available PRACH preambles
 
+cu_cp:
+  inactivity_timer: 7200            # Sets the UE/PDU Session/DRB inactivity timer to 7200 seconds. Supported: [1 - 7200].
+
 log:
   filename: /tmp/gnb.log            # Path of the log file.
   all_level: info                   # Logging level applied to all layers.
