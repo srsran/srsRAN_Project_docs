@@ -19,7 +19,7 @@ Current Features
  * 4x4 MIMO
  * Slicing 
  * HW Acceleration Support
- * NTN LEO support
+ * NTN GEO support
 
 Coming Soon
 -----------

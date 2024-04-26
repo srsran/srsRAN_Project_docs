@@ -73,8 +73,9 @@ Useful resources:
    tutorials/source/srsUE/source/index.rst
    tutorials/source/cotsUE/source/index.rst
    tutorials/source/amariUE/source/index.rst
-   tutorials/source/k8s/source/index.rst
    tutorials/source/dpdk/source/index.rst   
+   tutorials/source/k8s/source/index.rst
+   tutorials/source/handover/source/index.rst
    tutorials/source/oranRU/source/index.rst
    tutorials/source/near-rt-ric/source/index.rst
    tutorials/source/matlab/source/index.rst

@@ -1,4 +1,4 @@
-.. _grafana:  
+.. _grafana_gui:
 
 Grafana Metrics GUI
 ###################
