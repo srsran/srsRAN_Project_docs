@@ -6,8 +6,8 @@ Outputs
 Logs
 ****
 
-| The srsRAN Project gNB application provides a highly configurable logging mechanism, with per-layer and per-component log levels.
-| Set the log file path and log levels in the gNB config file. See the :ref:`Configuration Reference<manual_config_ref>` for more details.
+The srsRAN Project gNB application provides a highly configurable logging mechanism, with per-layer and per-component log levels. Set the log file path and log levels in the gNB config 
+file. See the :ref:`Configuration Reference<manual_config_ref>` for more details.
 
 The format used for all log messages is as follows:
 
@@ -148,3 +148,29 @@ To analyze an E2AP PCAP using Wireshark, you will need to configure User DLT 155
 .. figure:: .imgs/e2ap_pcap.png
   :scale: 40%
   :align: center
+
+-----
+
+JSON Metrics
+************
+
+srsRAN Projects supports the reporting of the console metrics to a JSON file over UDP socket. This is used to generate the output seen in the :ref:`GrafanaGUI <grafana_gui>`. 
+
+The metrics can be received and written to a file using a Python script. To do this a Python UDP receiver is needed. 
+
+Firstly, the metrics output can be enabled by adding the following to your configuration file: 
+
+.. code-block:: yaml 
+
+  metrics: 
+    enable_json_metrics: true
+
+With this enabled, the metrics will be sent to ``127.0.0.1:55555``. The metrics can be written to a file in real-time while the gNB is running using the following Python code: 
+
+.. literalinclude:: .scripts/metrics_udp_receiver.py
+  :language: python
+
+This application will need to be run in parallel with the gNB to successfully write the metrics. The metrics will be written to a file called ``gnb_metrics.json``, which will be stored in 
+the same location as where the Python application was run. 
+
+You can download the source-code for the above Python application :download:`here <.scripts/metrics_udp_receiver.py>`. 
