@@ -78,7 +78,7 @@ To configure srsRAN Project to enable handover between cells, the following step
   - Add the two cells to the ``cells`` list 
   - Update the ``cu_cp`` ``mobility`` options 
 
-A sample configuration file can be downloaded here: :download:`handover_x310.yml <.config/handover_x310.yaml>` 
+A sample configuration file can be downloaded here: :download:`handover_x310.yml <.config/handover_x310.yml>`
 
 A detailed breakdown of the changes to the configuration is as follows. 
 
