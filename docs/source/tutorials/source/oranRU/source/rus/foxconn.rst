@@ -33,7 +33,7 @@ Configuration
 CU/DU
 =====
 
-A sample configuration file for the DU can be downloaded from `here <https://github.com/srsran/srsRAN_Project/blob/main/configs/gnb_ru_rpqn4800e_tdd_n78_20mhz_2x2.yml>`_. This configuration is **specific** to the firmware version of the RU (v3_1_13q_551p1)
+A sample configuration file for the DU can be downloaded from `here <https://github.com/srsran/srsRAN_Project/blob/main/configs/gnb_ru_rpqn4800e_tdd_n78_20mhz.yml>`_. This configuration is **specific** to the firmware version of the RU (v3_1_13q_551p1)
 being used for this guide. As a result, you may need to modify this slightly for your local setup. 
 
 The following excerpt shows how the DU is configured to communicate with the RU: 
