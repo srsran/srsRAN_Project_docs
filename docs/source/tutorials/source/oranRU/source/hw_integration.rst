@@ -21,8 +21,11 @@ RUs
 .. toctree:: 
     :maxdepth: 1
 
-    rus/r550.rst
     rus/foxconn.rst
+    rus/picocom.rst
+    rus/liteon.rst
+    rus/vvdn.rst
+    rus/r550.rst
 
 Switches
 ########
