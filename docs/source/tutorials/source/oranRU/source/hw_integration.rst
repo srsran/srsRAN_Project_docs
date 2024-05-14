@@ -22,6 +22,7 @@ RUs
     :maxdepth: 1
 
     rus/r550.rst
+    rus/foxconn.rst
 
 Switches
 ########

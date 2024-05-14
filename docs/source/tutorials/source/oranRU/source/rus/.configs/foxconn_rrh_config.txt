@@ -1,0 +1,84 @@
+<!--                          -->
+<!--            Common        -->
+<!--                          -->
+<!-- RRH_DST_MAC_ADDR: Destination MAC address, fill with 6 bytes and separate each others by colon -->
+RRH_DST_MAC_ADDR = 50:7c:6f:55:bd:f8
+<!-- RRH_SRC_MAC_ADDR: Source MAC address, fill with 6 bytes and separate each others by colon -->
+RRH_SRC_MAC_ADDR = aa:bb:cc:dd:ee:ff
+<!-- RRH_EN_EAXC_ID: Enable using eAxC ID field defined in O-RAN spec.                            -->
+<!--                 When 0 is set, RU port ID=0,1,2,3 are used for PDSCH/PUSCH if RRH_TRX_EN_BIT_MASK = 0x0F -->
+<!--                 When 0 is set, RU port ID=4,5,6,7 are used for PRACH       if RRH_TRX_EN_BIT_MASK = 0x0F -->
+<!--                 When 0 is set, RU port ID=0,1     are used for PDSCH/PUSCH if RRH_TRX_EN_BIT_MASK = 0x03 -->
+<!--                 When 0 is set, RU port ID=2,3     are used for PRACH       if RRH_TRX_EN_BIT_MASK = 0x03 -->
+RRH_EN_EAXC_ID = 0
+<!-- RRH_EAXC_ID_TYPE1: Specify the eAxC ID for type1 message -->
+RRH_EAXC_ID_TYPE1 = 0x0, 0x1, 0x2, 0x3
+<!-- RRH_EAXC_ID_TYPE3: Specify the eAxC ID for type3 message -->
+RRH_EAXC_ID_TYPE3 = 0x8, 0x9, 0xA, 0xB
+<!-- RRH_EN_SPC: Enable SPC or not, 0:OFF, 1:ON -->
+RRH_EN_SPC = 1
+<!-- RRH_RRH_LTE_OR_NR: Indicate the spec of xRAN, 0:LTE, 1:NR -->
+RRH_RRH_LTE_OR_NR = 1
+<!-- RRH_TRX_EN_BIT_MASK: Bit-mask of 4 TRx, bit 0: TRx0, bit1: TRx1, bit2: TRx2, bit3: TRx3 -->
+RRH_TRX_EN_BIT_MASK = 0x0f
+<!-- RRH_RF_EN_BIT_MASK: Bit-mask of 4 PA/LNA, bit0: PA0/LNA0, bit1: PA1/LNA1, bit2: PA2/LNA2, bit3: PA3/LNA3 -->
+RRH_RF_EN_BIT_MASK = 0x0f
+<!-- RRH_CMPR_HDR_PRESENT: Indicate the UdCompHdr/reserved field is present or not, 0:no present; 1:present -->
+RRH_CMPR_HDR_PRESENT = 1
+<!-- RRH_CMPR_TYPE: Indicate compress type. 1st for PDSCH/PUSCH, 2nd for PRACH. 0: No Cmpr; 1:block-floating; 2:u-law -->
+RRH_CMPR_TYPE = 1, 1
+<!-- RRH_CMPR_BIT_LENGTH: Indicate the bit length after compression. 1st for PDSCH/PUSCH, 2nd for PRACH. -->
+RRH_CMPR_BIT_LENGTH = 9, 9
+<!-- RRH_UL_INIT_SYM_ID: Initial symbol ID in UL message -->
+RRH_UL_INIT_SYM_ID = 0
+<!-- RRH_TX_TRUNC_BITS: The extra truncation in fractional part of IFFT output -->
+RRH_TX_TRUNC_BITS = 4
+<!-- RRH_RX_TRUNC_BITS: The extra truncation in fractional part of FFT output -->
+RRH_RX_TRUNC_BITS = 4
+<!-- RRH_MAX_PRB: Maximum PRBs -->
+RRH_MAX_PRB = 51
+<!-- RRH_C_PLANE_VLAN_TAG: C-plane V-LAN tag express by hex number -->
+RRH_C_PLANE_VLAN_TAG = 0x0002
+<!-- RRH_U_PLANE_VLAN_TAG: U-plane V-LAN tag express by hex number -->
+RRH_U_PLANE_VLAN_TAG = 0x0002
+<!-- RRH_SLOT_TICKS_IN_SEC: Number of slot tick in a second (2000 slots for u=1) -->
+RRH_SLOT_TICKS_IN_SEC = 2000
+<!-- RRH_SLOT_PERIOD_IN_SAMPLE: Slot period in 122.88MHz (61440 for u=1) -->
+RRH_SLOT_PERIOD_IN_SAMPLE = 61440
+<!-- RRH_LO_FREQUENCY_KHZ: Tx and Rx PLL LO Frequency in kHz(internal or external LO) -->
+RRH_LO_FREQUENCY_KHZ = 3600000, 0
+<!-- RRH_TX_POWER: Target Tx power (Default=24dBm. Range:24dBm ~ 4dBm.  It can be applied only when Tx power of a RRH is calibrated) -->
+RRH_TX_POWER = 10, 10
+<!-- RRH_TX_ATTENUATION: Tx attenuation value with 1-digit fraction for each layer (>10dB. NOTE: The attenuation value must be larget than 10dB) -->
+RRH_TX_ATTENUATION = 12.0, 12.0, 12.0, 12.0
+<!-- RRH_RX_ATTENUATION: Rx attenuation value with 1-digit fraction for each layer (<30dB) -->
+RRH_RX_ATTENUATION = 0.0, 0.0, 0.0, 0.0
+<!-- RRH_BB_GENERAL_CTRL: General control words for Baseband      -->
+<!-- Bit[0] of 1st word: Enable the filtering of MAC address      -->
+<!-- Bit[1] of 1st word: Enable the UL slot tick packets per port -->
+<!-- Others: Reserved                                             -->
+RRH_BB_GENERAL_CTRL = 0x0, 0x0, 0x0, 0x0
+<!-- RRH_RF_GENERAL_CTRL: General control words for RF            -->
+<!-- Bit[0] and Bit[1] of 1st word: 3=DPD ON, 0=DPD off           -->
+<!-- Bit[0] of 2st word: 1=CLGC ON, 0=CLGC off                    -->
+<!-- Bit[0] of 4th word: 1=for N77, 0=else                        -->
+RRH_RF_GENERAL_CTRL = 0x3, 0x1, 0x0, 0x0
+<!--                           -->
+<!--            PTPV2 Related  -->
+<!--                           -->
+<!-- RRH_PTPV2_GRAND_MASTER_MODE: 0: Unicast over 1G, 1:Multicast over 1G; 2: Unicast over 10G; 3: Multicast over 10G -->
+RRH_PTPV2_GRAND_MASTER_MODE = 3
+<!-- RRH_PTPV2_JITTER_LEVEL: The estimated jitter of PTP time packets. 0:direct connection to GM/BC, 1:light, 2:medium, 3:heavy -->
+RRH_PTPV2_JITTER_LEVEL = 0
+<!-- RRH_PTPV2_VLAN_ID: VLAN ID of PTPv2.  0/1: No VLAN of PTPv2; [2~4092]: valid VLAN of PTPv2; >4092: Invalid and no VLAN will be applied -->
+RRH_PTPV2_VLAN_ID = 0
+<!-- RRH_PTPV2_IP_MODE: 4: IPv4 (default); 6: IPv6.  Note: this configuration must be defined before RRH_PTPV2_GRAND_MASTER_IP -->
+RRH_PTPV2_IP_MODE = 4
+<!-- RRH_PTPV2_GRAND_MASTER_IP: IP address of grand-master -->
+RRH_PTPV2_GRAND_MASTER_IP = 192.167.27.150
+<!-- RRH_PTPV2_SUB_DOMAIN_NUM: The sub-domain number -->
+RRH_PTPV2_SUB_DOMAIN_NUM = 24
+<!-- RRH_PTPV2_ACCEPTED_CLOCK_CLASS: The acceptable clockClass threshold [6~248] -->
+RRH_PTPV2_ACCEPTED_CLOCK_CLASS = 135
+<!-- RRH_TRACE_PERIOD: The period of trace log. It can be applied only when the start-trace-logs of M-plane is enabled -->
+RRH_TRACE_PERIOD = 10
