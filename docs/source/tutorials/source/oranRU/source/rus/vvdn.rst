@@ -1,7 +1,7 @@
-.. _picocom:
+.. _vvdn:
 
-Picocom
-#######
+VVDN
+####
 
 .. note:: 
 

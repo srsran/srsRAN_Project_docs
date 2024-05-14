@@ -1,7 +1,7 @@
-.. _picocom:
+.. _liteon:
 
-Picocom
-#######
+LiteOn FlexFi
+#############
 
 .. note:: 
 
