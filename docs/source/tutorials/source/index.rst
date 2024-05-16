@@ -11,3 +11,4 @@ Tutorials
    amariUE/source/index.rst
    oranRU/source/index.rst
    near-rt-ric/source/index.rst
+   ntn/source/index.rst

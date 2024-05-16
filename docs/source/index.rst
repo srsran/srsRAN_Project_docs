@@ -76,7 +76,7 @@ Useful resources:
    tutorials/source/dpdk/source/index.rst   
    tutorials/source/k8s/source/index.rst
    tutorials/source/handover/source/index.rst
+   tutorials/source/ntn/source/index.rst
    tutorials/source/oranRU/source/index.rst
    tutorials/source/near-rt-ric/source/index.rst
-   tutorials/source/matlab/source/index.rst
-
+   tutorials/source/matlab/source/index.rst   

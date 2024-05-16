@@ -1,0 +1,31 @@
+cell_cfg:
+  sib:
+    si_window_length: 40            # Set SI Window Length.
+    si_sched_info:
+      - si_period: 16               # Set SIB19 period.
+        sib_mapping: 19             # Enable SIB19.
+  pucch:
+    sr_period_ms: 320               # Set Scheduling Request period.
+  csi:
+    csi_rs_period: 80               # Set CSI-RS report period.
+  pdsch:
+    nof_harqs: 16                   # Sets the number of Downlink HARQ processes.
+    max_nof_harq_retxs: 0           # Disable HARQ retransmissions.
+  prach:
+    prach_config_index: 31          # Use Preamble Format 1 to improve the timing robustness
+    max_msg3_harq_retx: 0           # Disable Msg3 HARQ retransmissions.
+
+cu_cp:
+  rrc:
+    rrc_procedure_timeout_ms: 12800 # Set high RRC timeout value.
+
+ntn:
+  cell_specific_koffset:  239       # Cell-specific k-offset.
+  ta_common:  0                     # TA common offset.
+  ephemeris_info_ecef:              # Satellite ephemeris in position and velocity state vector format.
+    pos_x:  -28105880
+    pos_y:  31509747
+    pos_z:  -1691895
+    vel_x:  34
+    vel_y:  9
+    vel_z:  -385
