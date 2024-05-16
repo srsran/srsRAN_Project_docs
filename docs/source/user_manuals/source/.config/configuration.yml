@@ -170,8 +170,8 @@ ru_sdr:
   freq_offset: 0                        # Optional FLOAT (0). Sets the frequency offset in Hertz.
   clock_ppm: 0                          # Optional FLOAT (0). Sets the clock calibration in Parts Per Million (PPM).
   lo_offset: 0                          # Optional FLOAT (0). Shifts the local oscillator frequency in MHz away from the center frequency to move LO leakage out of the channel. 
-  clock: default                        # Optional TEXT (default). Specify the RF device clock source. Supported: [default, internal, external, gpsdo].
-  sync: default                         # Optional TEXT (default). Specify the RF device time synchronization source. Supported: [default, internal, external, gpsdo].
+  clock: default                        # Optional TEXT (default). Specify the RF device clock source (i.e., 10MHz reference oscillator). Supported: [default, internal, external, gpsdo].
+  sync: default                         # Optional TEXT (default). Specify the RF device time synchronization source (i.e., 1PPS reference). Supported: [default, internal, external, gpsdo].
   otw_format: default                   # Optional TEXT (default). Specific the over-the-wire format. Supported: [default, sc8, sc12, sc16].
   time_alignment_calibration: auto      # Optional TEXT (auto). Compensates for any reception and transmission time misalignment inherent to the RF device. Positive values reduce the RF transmission delay with respect to the RF reception. Negative values have the opposite effect.
 

@@ -109,7 +109,7 @@ For srsRAN Project, the following commands can be used to download and build fro
   cmake ../ -DENABLE_EXPORT=ON -DENABLE_ZEROMQ=ON
   make -j`nproc`
 
-ZeroMQ is disbaled by default, this is enabled when running ``cmake`` by including ``-DENABLE_EXPORT=ON -DENABLE_ZEROMQ=ON``. 
+ZeroMQ is disabled by default, this is enabled when running ``cmake`` by including ``-DENABLE_EXPORT=ON -DENABLE_ZEROMQ=ON``. 
 
 Pay extra attention to the cmake console output. Make sure you read the following line:
 
@@ -163,8 +163,7 @@ Next, we have to configure the RF front-end device::
   ru_sdr:
     device_driver: uhd                # The RF driver name.
     device_args: type=b200            # Optionally pass arguments to the selected RF driver.
-    clock: external                   # Specify the clock source used by the RF.
-    sync: external                    # Specify the sync source used by the RF.
+    #sync: external                   # If using a reference clock, uncomment this line. 
     srate: 23.04                      # RF sample rate might need to be adjusted according to selected bandwidth.
     tx_gain: 75                       # Transmit gain of the RF might need to adjusted to the given situation.
     rx_gain: 75                       # Receive gain of the RF might need to adjusted to the given situation.
@@ -203,7 +202,7 @@ First, the following parameters need to be changed under the **[rf]** options so
   nof_antennas = 1
 
   device_name = uhd
-  device_args = clock=external
+  #device_args = sync=external       # If using a reference clock, uncomment this line.  
   time_adv_nsamples = 300
 
 The next set of changes need to be made to the **[rat.eutra]** options. The LTE carrier is disabled, to force the UE to use a 5G NR carrier:: 

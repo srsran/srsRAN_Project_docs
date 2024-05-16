@@ -113,9 +113,8 @@ To configure the connection between the core and the gNB, you need to set the AM
         ru_sdr:
           device_driver: uhd                                            # The RF driver name.
           device_args: type=b200,num_recv_frames=64,num_send_frames=64  # Optionally pass arguments to the selected RF driver.
-    -     clock:                                                        # Specify the clock source used by the RF.
-    +     clock: external
-          sync:                                                         # Specify the sync source used by the RF.
+    -     clock:                                                        # Specify the clock source used by the RF. 
+    +     clock: external                                               # Set to external as using Leo Bodnar GPSDO as 10 MHz reference. 
           srate: 23.04                                                  # RF sample rate might need to be adjusted according to selected bandwidth.
           otw_format: sc12
           tx_gain: 50                                                   # Transmit gain of the RF might need to adjusted to the given situation.
