@@ -292,7 +292,26 @@ This configuration tells DPDK that EAL threads [0 - 1] should use cores [0 - 23]
 Running srsRAN with DPDK 
 ************************
 
-Once DPDK has been installed and configured, running srsRAN is the same as a vanilla configuration. If DPDK is running with srsRAN correctly you should see the following console output: 
+Once DPDK has been installed and configured you will need to create a clean build of srsRAN Project to enable the use of DPDK. 
+
+If you have not done so already, download the code-base with the following command: 
+
+.. code-block:: bash 
+
+   git clone https://github.com/srsRAN/srsRAN_Project.git
+
+Then build the code-base, making sure to include the correct flags when running cmake: 
+
+.. code-block:: bash 
+
+    cd srsRAN_Project
+    mkdir build
+    cd build
+    cmake -DENABLE_DPDK=True -DASSERT_LEVEL=MINIMAL ..
+    make -j $(nproc)
+    make test -j $(nproc) 
+
+You can now run srsRAN as normal. If everything is running correctly you should see the following console output:
 
 .. code-block:: bash 
 
