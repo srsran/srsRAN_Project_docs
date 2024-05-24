@@ -53,11 +53,6 @@ COTS UE
 
 You should make sure your device is capable of operating in 5G SA mode and that it operates in the bands supported by the srsRAN Project gNB. 
 
-The following bands are not currently supported by srsRAN: 
-
-    - Band 79 (both 15 and 30 kHz sub-carrier-spacing)
-    - Band 34, 38, 39 (15 kHz sub-carrier-spacing) 
-
 External Clock
 ==============
 
@@ -130,6 +125,11 @@ To configure the connection between the core and the gNB, you need to set the AM
     +     plmn: "90170"
           tac: 7                                                        # Tracking area code (needs to match the core configuration).
           pci: 1                                                        # Physical cell ID.
+
+.. note:: 
+
+    srsRAN Project supports all NR bands up to Rel. 17. Not all BWs are supported in all bands, to confirm that your configuration is correct, you should 
+    reference *Table 5.3.5-1* in `TS 38.104 <https://www.etsi.org/deliver/etsi_ts/138100_138199/138104/16.06.00_60/ts_138104v160600p.pdf>`_.
 
 ISIM
 =====
