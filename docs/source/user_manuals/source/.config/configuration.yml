@@ -26,6 +26,7 @@ amf:
   n2_bind_interface: auto               # Optional TEXT. Sets the network device to bind to for N2 interface. 
   n3_bind_addr:                         # Optional TEXT. Sets local IP address to bind for N3 interface. Format: IPV4 or IPV6 IP address.
   n3_bind_interface: auto               # Optional TEXT. Sets the network device to bind to for N3 interface.
+  n3_ext_addr:                          # Optional TEXT. Sets the external IP address that is advertised to receive GTP-U packets from UPF via N3 interface. Format: IPV4 address. 
   sctp_rto_initial:                     # Optional INT. Sets the initial retransmission timeout when creating the SCTP connection.
   sctp_rto_min:                         # Optional INT. Sets the minimum retransmission timeout for the SCTP connection.
   sctp_rto_max:                         # Optional INT. Sets the maximum retransmission timeout for the SCTP connection.
@@ -52,7 +53,7 @@ cu_cp:
   max_nof_dus:                          # Optional UINT. Maximum number of DU connections that the CU-CP may accept.
   max_nof_cu_ups:                       # Optional UINT. Maximum number of CU-UP connections that the CU-CP may accept.
   inactivity_timer: 120                 # Optional INT (7200). Sets the UE/PDU Session/DRB inactivity timer in seconds. Supported: [1 - 7200].
-  ue_context_setup_timeout_s: 3         # Optional INT (3). Sets the timeout for the reception of an InitialContextSetupRequest after an InitialUeMessage was sent to the core, in seconds. If the value is reached, the UE will be released. 
+  pdu_session_setup_timeout: 3         # Optional INT (3). Timeout for the setup of a PDU session after an InitialUeMessage was sent to the core, in seconds. The timeout must be larger than T310. If the value is reached, the UE will be released 
 
   mobility: 
     trigger_handover_from_measurements: 0    # Optional BOOLEAN (0). Sets whether or not to start HO if neighbor cells become stronger. Supported: [0, 1].
@@ -182,7 +183,7 @@ ru_sdr:
 
   expert_cfg:
     low_phy_dl_throttling: 0                # Optional FLOAT (0). Throttles the lower PHY DL baseband generation. Setting to 0 disables throttling. Supported: any value in the range [0 - 1].
-    discontinuous_tx: 0                     # Optional Boolean (0). Enables discontinuous transmission mode for the radio front-ends supporting it. Supported: [0, 1]. 
+    tx_mode: continuous                     # Optional TEXT (continuous). Selects a radio transmission mode. Discontinuous modes are not supported by all radios. Supported: [continuous, discontinuous, same-port]
     power_ramping_time_us: 0                # Optional FLOAT (0). Specifies the power ramping time in microseconds, it proactively initiates the transmission and mitigates transient effects. It is recommended to configure this parameter carefully, taking into account the characteristics of the transmit chain in order to achieve optimal performance
     dl_buffer_size_policy: auto             # Optional TEXT (auto). Sets the size of the policy of the baseband buffers that pass the DL samples from the lower PHY to the radio.
 
@@ -264,6 +265,8 @@ cell_cfg:
     mcs_table: qam64                        # Optional TEXT (qam64). Sets the MCS table to use for PDSCH. Supported: [qam64, qam256].
     min_rb_size: 1                          # Optional UINT (1). Sets the minimum RB size for the UE PDSCH resource allocation. Supported: [1 - 275].
     max_rb_size: 275                        # Optional UINT (275). Sets the maximum RB size for the UE PDSCH resource allocation. Supported: [1 - 275].
+    start_rb: 0                             # Optional UINT (0). Sets the start RB for resource allocation of UE PDSCHs. Supported [0 - 275].
+    end_rb: 275                             # Optional UINT (275). Sets the end RB for resource allocation of UE PDSCHs. Supported [0 - 275].
     max_pdschs_per_slot: 35                 # Optional UINT (35). Sets the maximum number of PDSCH grants per slot, including SIB, RAR, Paging and UE data grants. Supported: [1 - 35].
     max_alloc_attempts: 35                  # Optional UINT (35). Sets the maximum number of DL or UL PDCCH grant allocation attempts per slot before scheduler skips the slot. Supported: [1 - 35].
     olla_cqi_inc_step: 0.001                # Optional FLOAT (0.001). Sets the outer-loop link adaptation (OLLA) increment value. The value 0 means that OLLA is disabled. Supported: [0 - 1].
@@ -299,19 +302,23 @@ cell_cfg:
     olla_target_bler: 0.01                  # Optional FLOAT (0.01). Sets the target UL BLER set in Outer-loop link adaptation (OLLA) algorithm. sUPPORTED: [0 - 0.5]. 
     olla_max_snr_offset: 5                  # Optional FLOAT (5). Sets the maximum offset that the Outer-loop link adaptation (OLLA) can apply to estimate the UL SNR. Supported: positive float.
     dmrs_additional_position:               # Optional UINT. Sets the PUSCH DMRS additional position. Supported: [0 - 3].
-
+    min_rb_size: 1                          # Optional UINT (1). Sets the minimum RB size for the UE PUSCH resource allocation. Supported: [1 - 275].
+    max_rb_size: 275                        # Optional UINT (275). Sets the maximum RB size for the UE PUSCH resource allocation. Supported: [1 - 275].
+    start_rb: 0                             # Optional UINT (0). Sets the start RB for resource allocation of UE PUSCHs. Supported [0 - 275].
+    end_rb: 275                             # Optional UINT (275). Sets the end RB for resource allocation of UE PUSCHs. Supported [0 - 275].
+  
   pucch: 
     p0_nominal: -90                         # Optional UINT (-90). Sets the power control parameter P0 for PUCCH transmissions in dBm. Supported: multiples of 2 and within the [-202, 24] interval.
-    sr_period_ms: 40                        # Optional UINT (40). Sets the SR period in milliseconds. Supported: [1,2,4,8,10,16,20,40,80,160,320].
-    f1_nof_ue_res_harq: 3                   # Optional UINT (3). Sets the number of PUCCH F1 resources available per UE for HARQ. Supported: [1 - 8].
-    f1_nof_cell_res_sr: 2                   # Optional UINT (2). Sets the number of PUCCH F1 resources available per cell for SR. Supported: [1 - 10].
+    sr_period_ms: 20                        # Optional UINT (20). Sets the SR period in milliseconds. Supported: [1,2,4,8,10,16,20,40,80,160,320].
+    f1_nof_ue_res_harq: 8                   # Optional UINT (8). Sets the number of PUCCH F1 resources available per UE for HARQ. Supported: [1 - 8].
+    f1_nof_cell_res_sr: 8                   # Optional UINT (8). Sets the number of PUCCH F1 resources available per cell for SR. Supported: [1 - 50].
     f1_nof_symbols: 14                      # Optional UINT (14). Sets the number of symbols for PUCCH F1 resources. Supported: [4 - 14].
-    f1_enable_occ: 0                        # Optional BOOLEAN (0). Enables OCC for PUCCH F1. Supported: [0, 1].
-    f1_nof_cyclic_shifts: 1                 # Optional UINT (1). Sets the number of possible cyclic shifts available for PUCCH F1 resources. Supported: [1,2,3,4,6,12].
+    f1_enable_occ: 1                        # Optional BOOLEAN (1). Enables OCC for PUCCH F1. Supported: [0, 1].
+    f1_nof_cyclic_shifts: 2                 # Optional UINT (2). Sets the number of possible cyclic shifts available for PUCCH F1 resources. Supported: [1,2,3,4,6,12].
     f1_intraslot_freq_hop: 0                # Optional BOOLEAN (0). Enables intra-slot frequency hopping for PUCCH F1. Supported: [0, 1].
-    nof_cell_harq_pucch_res_sets: 1         # Optional UINT (1). Sets the number of separate PUCCH resource sets for HARQ-ACK that are available in the cell. The higher the number of sets, the lower the chances UEs have to share the same PUCCH resources. Supported: [1 - 10].
+    nof_cell_harq_pucch_res_sets: 2         # Optional UINT (2). Sets the number of separate PUCCH resource sets for HARQ-ACK that are available in the cell. The higher the number of sets, the lower the chances UEs have to share the same PUCCH resources. Supported: [1 - 10].
     f2_nof_ue_res_harq: 6                   # Optional UINT (6). Sets the number of PUCCH F2 resources available per UE for HARQ. Supported: [1 - 8].
-    f2_nof_cell_res_csi: 1                  # Optional UINT (1). Sets the number of PUCCH F2 resources available per cell for CSI. Supported: [1 - 10].
+    f2_nof_cell_res_csi: 8                  # Optional UINT (8). Sets the number of PUCCH F2 resources available per cell for CSI. Supported: [0 - 50].
     f2_nof_symbols: 2                       # Optional UINT (2). Sets the number of symbols for PUCCH F2 resources. Supported: [1 - 2].
     f2_max_nof_rbs: 1                       # Optional UINT (1). Sets the max number of RBs for PUCCH F2 resources. Supported: [1 - 16].
     f2_max_payload:                         # Optional INT. Sets the max number of payload bits for PUCCH F2 resources. Supported [1 - 11].
@@ -358,8 +365,8 @@ cell_cfg:
   csi: 
     csi_rs_enabled: 1                       # Optional BOOLEAN (1). Enables CSI-RS resources and CSI reporting. Supported: [0, 1].
     csi_rs_period: 20                       # Optional UINT (20). Sets the CSI-RS period in milliseconds. Supported: [10, 20, 40, 80].
-    meas_csi_rs_slot_offset: 2              # Optional UINT (2). Sets the slot offset of first CSI-RS resource used for measurement.
-    tracking_csi_rs_slot_offset: 12         # Optional UINT (12). Sets the slot offset of the first CSI-RS slot used for tracking.
+    meas_csi_rs_slot_offset:                # Optional TEXT Sets the slot offset of first CSI-RS resource used for measurement.
+    tracking_csi_rs_slot_offset:            # Optional TEXT. Sets the slot offset of the first CSI-RS slot used for tracking.
     zp_csi_rs_slot_offset:                  # Optional TEXT. Sets the slot offset of the ZP CSI-RS resources.     
     pwr_ctrl_offset: 0                      # Optional INT (0). Sets the power offset of PDSCH RE to NZP CSI-RS RE in dB. Supported: [-8 - 15].
 
@@ -410,7 +417,7 @@ expert_execution:
       pdsch_processor_type: auto              # Optional TEXT (auto). Sets the PDSCH processor type. Supported: [auto, generic, concurrent, lite].
       nof_pusch_decoder_threads: 1            # Optional UINT (1). Sets the number of threads used to encode PUSCH.
       nof_ul_threads: 1                       # Optional UINT (1). Sets the number of upprt PHY threads to proccess uplink.
-      nof_dl_threads: 2                       # Optional UINT (1). Sets the number of upprt PHY threads to proccess downlink.  
+      nof_dl_threads: 4                       # Optional UINT (1). Sets the number of upprt PHY threads to proccess downlink.  
     lower_phy:
       execution_profile:                      # Optional TEXT. Sets the lower physical layer executor profile. Supported: [single, dual, quad].
     ofh: 
@@ -447,6 +454,7 @@ log:
   phy_rx_symbols_port: 0                # Optional TEXT. Set to a valid receive port number to dump the IQ symbols from that port only, or set to "all" to dump the IQ symbols from all UL receive ports. Only works if "phy_rx_symbols_filename" is set. Supported: [NON-NEGATIVE or all].
   phy_rx_symbols_prach: 0               # Optional BOOLEAN (0). Set to true to dump the IQ symbols from all the PRACH ports. Only works if "phy_rx_symbols_filename" is set. Supported: [0, 1]. 
   tracing_filename:                     # Optional TEXT. Set to a valid file name to enable tracing log. 
+  f1ap_json_enabled: 0                  # Optional BOOL (0). Enables the JSON logging of F1AP PDUs. Supported: [0, 1].
 
 pcap: 
   ngap_filename: /tmp/gnb_ngap.pcap     # Optional TEXT (/tmp/gnb_ngap.pcap). Path for NGAP PCAPs. 
