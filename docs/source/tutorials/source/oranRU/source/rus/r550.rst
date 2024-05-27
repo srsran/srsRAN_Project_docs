@@ -20,17 +20,21 @@ This guide provides further details on connecting the srsRAN CU/DU to an RU usin
 Configuration
 *************
 
-.. tip:: 
-  
-  For the most up-to-date configuration changes, troubleshooting and information on potential issues check the `GitHub Discussions <https://github.com/srsran/srsRAN_Project/discussions>`_ 
+.. tip::
+
+  For the most up-to-date configuration changes, troubleshooting and information on potential issues check the `GitHub Discussions <https://github.com/srsran/srsRAN_Project/discussions>`_
 
 CU/DU
 =====
 
-A sample configuration file for the DU can be downloaded from `here <https://github.com/srsran/srsRAN_Project/blob/main/configs/gnb_ru_ran550_tdd_n78_100mhz_4x2.yml>`_. This configuration is **specific** to the firmware version of the RU (version 1.0.4)
-being used for this guide. As a result, you may need to modify this slightly for your local setup. 
+Sample configuration files for the DU can be downloaded from below, for two different system configurations:
 
-The following excerpt shows how the DU is configured to communicate with the RU: 
+- :download:`2x2 MIMO configuration with 20 MHz bandwidth <.configs/gnb_ru_ran550_tdd_n78_20mhz_2x2.yml>`.
+- `4x2 MIMO configuration with 100 MHz bandwidth <https://github.com/srsran/srsRAN_Project/blob/main/configs/gnb_ru_ran550_tdd_n78_100mhz_4x2.yml>`_
+
+These configurations are **specific** to the firmware version of the RU (version 1.0.4) being used for this guide. As a result, you may need to modify this slightly for your local setup.
+
+The following excerpt shows how the DU is configured to communicate with the RU (for a 4x2 MIMO configuration):
 
 .. code-block:: yaml
 
@@ -58,7 +62,7 @@ The following excerpt shows how the DU is configured to communicate with the RU:
         ru_mac_addr: 70:b3:d5:e1:5b:06   # RU MAC address.
         du_mac_addr: 80:61:5f:0d:df:aa   # DU MAC address.
         vlan_tag_cp: 5                   # VLAN tag value for CP.
-        vlan_tag_up: 5                   # VLAN tag value for UP.    
+        vlan_tag_up: 5                   # VLAN tag value for UP.
         prach_port_id: [4, 5]            # PRACH eAxC port value.
         dl_port_id: [0, 1, 2, 3]         # Downlink eAxC port values.
         ul_port_id: [0, 1]               # Uplink eAxC port values.
@@ -70,55 +74,64 @@ To expand on this, the following parameters are set in the ``cells`` field:
 - ``du_mac_addr`` : MAC address of the interface used by the gNB (it should be connected directly to the RU or using a smart switch).
 - ``vlan_tag_up/vlan_tag_cp`` : V-LAN identifier, should be set to the value configured in the switch settings
 
-RU 
+RU
 =====
 
-Refer to the Benetel User Guide documentation to apply the following configuration changes so that they match your local setup. The following information is purely a guide and may not work for your specific set up. 
+Refer to the Benetel User Guide documentation to apply the following configuration changes so that they match your local setup. The following information is purely a guide and may not work for your specific set up.
 
 We currently recommend to use the following RU configuration as other parameter combinations are untested and seem to
 cause issues with Benetel RUs:
-   
-- 100 MHz bandwidth
-- 4x2 MIMO configuration
+
+- 2x2 MIMO configuration with 20 MHz bandwidth
+- 4x2 MIMO configuration with 100 MHz bandwitdh
 - Long PRACH format
 
 Ensure the RU is running before trying to make any configuration changes. Some
 of the values can be set/modified in the `/etc/ru_config.cfg` file, but some others need to be modified
 
-- ``MAC Address`` : The MAC address of the DU must be configured in the RU for Control-Plane and User-Plane traffic. In our configuration we use the same MAC address for both planes. 
+- ``MAC Address`` : The MAC address of the DU must be configured in the RU for Control-Plane and User-Plane traffic. In our configuration we use the same MAC address for both planes.
 - ``VLAN tag`` : In our setup the same VLAN ID is used for all network traffic, as only one MAC address is used.
-- ``Compression`` : Currently only static compression headers are supported for this setup. We use BFP9 compression for all uplink and downlink channels. Refer to the Benetel User Guide for details on how to configure compression in the RU. 
+- ``Compression`` : Currently only static compression headers are supported for this setup. We use BFP9 compression for all uplink and downlink channels. Refer to the Benetel User Guide for details on how to configure compression in the RU.
 - ``Transmission Power`` : Depending on your setup, you may need to alter the transmission power of the RU. For example, in a lab setting with the UE in close proximity to the RU, the default power settings may result in UE saturation.
 - ``PRACH format`` : We recommend using long PRACH format.
-- ``DL scaling`` : We use downlink scaling of 6dB.
+- ``DL scaling`` : We use downlink scaling of 0dB for 2x2 MIMO configuration with 20 MHz bandwidth and of 6dB for 4x2 MIMO configuration with 100 MHz bandwidth.
 - ``TDD pattern`` : The TDD pattern should be set to the 7-2 format (DDDDDDDSUU). Download it :download:`here <.configs/benetel_tdd.xml>`.
 
-The full configuration file we used for this set up can be found :download:`here <.configs/ru_config.cfg>`.
+The full configuration files we used for these set ups can be found below:
+
+- :download:`2x2 MIMO configuration with 20 MHz bandwidth  <.configs/ru_config_20.cfg>`.
+- :download:`4x2 MIMO configuration with 100 MHz bandwidth <.configs/ru_config.cfg>`.
+
+In the case of using the 2x2 MIMO configuration with 20 MHz bandwith, the Msg1 offset needs to be manually set by writing to the ``0xc0324`` register. It can be done by writing the following command in the RU control console:
+
+.. code-block:: bash
+
+  registercontrol -w c0324 -x 0xef780000
 
 -----
 
 Initializing and connecting to the network
 ******************************************
 
-Initializing and connecting to the network is done in the same way as outlined in the general 7.2 RU guide. 
+Initializing and connecting to the network is done in the same way as outlined in the general 7.2 RU guide.
 
 Initializing the network
 ========================
 
-The following steps should be taken to initialize the network: 
+The following steps should be taken to initialize the network:
 
-1. Ensure the RX50 is online and that both the PTP process and RU synchronization are running correctly. 
+1. Ensure the RX50 is online and that both the PTP process and RU synchronization are running correctly.
 
-2. Run the CU/DU, making sure that the PTP sync between the DU and the Falcon switch is successful as previously outlined.  
+2. Run the CU/DU, making sure that the PTP sync between the DU and the Falcon switch is successful as previously outlined.
 
     .. code-block:: bash
-    
+
       sudo ./gnb -c gnb_ru_ran550_tdd_n78_100mhz_4x2.yml
 
-  If the DU connects to the RU successfully, you will see the following output: 
+  If the DU connects to the RU successfully, you will see the following output:
 
     .. code-block:: bash
-    
+
         The PRACH detector will not meet the performance requirements with the configuration {Format 0, ZCZ 0, SCS 1.25kHz, Rx ports 1}.
 
         --== srsRAN gNB (commit 96f185389) ==--
@@ -135,4 +148,11 @@ The following steps should be taken to initialize the network:
 Connecting to the network
 =========================
 
-You can now connect a UE to the network. This can either be done using e.g. a COTS UE. See the main RU guide for details on this. 
+You can now connect a UE to the network. This can either be done using e.g. a COTS UE. See the main RU guide for details on this.
+
+An example Amarisoft UE configuration file can be found below:
+
+- :download:`UE configuration (2x2 MIMO configuration with 20 MHz bandwidth)  <.configs/amariUE_R550_20mhz_2x2.cfg>`.
+- :download:`RF configuration (2x2 MIMO configuration with 20 MHz bandwidth)  <.configs/rf_config_amariUE_R550_20mhz_2x2.cfg>`.
+
+This configuration was tested with a R550 and a **specific** Amarisoft UE version (``lteue-linux-2023-09-08``), whilst using a cabled setup with RF splitters and 30 dB attenuation between the Rx ports of the SDR cards and the R550 antenna ports.
