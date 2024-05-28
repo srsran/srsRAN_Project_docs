@@ -410,7 +410,7 @@ expert_execution:
   affinities: 
     low_priority_cpus:                    # Optional TEXT. Sets the CPU core(s) assigned to low priority tasks. Supported: [1, 2, 3 , ..., N].
     low_priority_pinning:                 # Optional TEXT. Sets the policy used for assigning CPU cores to low priority tasks.
-    ioslated_cpus:                        # Optional TEXT. Sets the CPU core(s) isolated for the gNB application. Supported: [1, 2, 3 , ..., N].
+    isolated_cpus:                        # Optional TEXT. Sets the CPU core(s) isolated for the gNB application. Supported: [1, 2, 3 , ..., N].
   threads: 
     non_rt: 
       nof_non_rt_threads: 4                   # Optional UINT (4). Sets the number of non real time threads for processing of CP and UP data in upper layers. 
