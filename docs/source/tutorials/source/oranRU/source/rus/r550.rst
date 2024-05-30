@@ -29,8 +29,8 @@ CU/DU
 
 Sample configuration files for the DU can be downloaded from below, for two different system configurations:
 
-- :download:`2x2 MIMO configuration with 20 MHz bandwidth <.configs/gnb_ru_ran550_tdd_n78_20mhz_2x2.yml>`.
-- `4x2 MIMO configuration with 100 MHz bandwidth <https://github.com/srsran/srsRAN_Project/blob/main/configs/gnb_ru_ran550_tdd_n78_100mhz_4x2.yml>`_
+- :download:`2x2 MIMO configuration with 20 MHz bandwidth and using a short PRACH format <.configs/gnb_ru_ran550_tdd_n78_20mhz_2x2.yml>`.
+- `4x2 MIMO configuration with 100 MHz bandwidth and using a long PRACH format <https://github.com/srsran/srsRAN_Project/blob/main/configs/gnb_ru_ran550_tdd_n78_100mhz_4x2.yml>`_
 
 These configurations are **specific** to the firmware version of the RU (version 1.0.4) being used for this guide. As a result, you may need to modify this slightly for your local setup.
 
@@ -84,7 +84,7 @@ cause issues with Benetel RUs:
 
 - 2x2 MIMO configuration with 20 MHz bandwidth
 - 4x2 MIMO configuration with 100 MHz bandwitdh
-- Long PRACH format
+- Long PRACH format; the 2x2 MIMO with 20 MHz bandwith also supports the short PRACH format, but shows a limited UL performance
 
 Ensure the RU is running before trying to make any configuration changes. Some
 of the values can be set/modified in the `/etc/ru_config.cfg` file, but some others need to be modified
@@ -99,10 +99,10 @@ of the values can be set/modified in the `/etc/ru_config.cfg` file, but some oth
 
 The full configuration files we used for these set ups can be found below:
 
-- :download:`2x2 MIMO configuration with 20 MHz bandwidth  <.configs/ru_config_20.cfg>`.
-- :download:`4x2 MIMO configuration with 100 MHz bandwidth <.configs/ru_config.cfg>`.
+- :download:`2x2 MIMO configuration with 20 MHz bandwidth and using a short PRACH format <.configs/ru_config_20.cfg>`.
+- :download:`4x2 MIMO configuration with 100 MHz bandwidth and using a long PRACH format <.configs/ru_config.cfg>`.
 
-In the case of using the 2x2 MIMO configuration with 20 MHz bandwith, the Msg1 offset needs to be manually set by writing to the ``0xc0324`` register. It can be done by writing the following command in the RU control console:
+Note that in case of using a long PRACH format, the Msg1 offset needs to be manually set by writing to the ``0xc0324`` register. It can be done by writing the following command in the RU control console:
 
 .. code-block:: bash
 
@@ -153,6 +153,5 @@ You can now connect a UE to the network. This can either be done using e.g. a CO
 An example Amarisoft UE configuration file can be found below:
 
 - :download:`UE configuration (2x2 MIMO configuration with 20 MHz bandwidth)  <.configs/amariUE_R550_20mhz_2x2.cfg>`.
-- :download:`RF configuration (2x2 MIMO configuration with 20 MHz bandwidth)  <.configs/rf_config_amariUE_R550_20mhz_2x2.cfg>`.
 
 This configuration was tested with a R550 and a **specific** Amarisoft UE version (``lteue-linux-2023-09-08``), whilst using a cabled setup with RF splitters and 30 dB attenuation between the Rx ports of the SDR cards and the R550 antenna ports.
