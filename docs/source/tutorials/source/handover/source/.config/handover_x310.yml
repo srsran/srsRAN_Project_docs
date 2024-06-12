@@ -44,12 +44,12 @@ cu_cp:
         periodic_report_cfg_id: 1
         ncells:
           - nr_cell_id: 0x19B1
-            report_configs: [ 1 ]
+            report_configs: [ 2 ]
       - nr_cell_id: 0x19B1
         periodic_report_cfg_id: 1
         ncells:
           - nr_cell_id: 0x19B0
-            report_configs: [ 1 ]
+            report_configs: [ 2 ]
     report_configs:
       - report_cfg_id: 1
         report_type: periodical
