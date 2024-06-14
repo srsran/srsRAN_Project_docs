@@ -1,10 +1,10 @@
 .. _general_feature_list:
 
 Features and Roadmap
-====================
+####################
 
 Current Features
-----------------
+****************
 
  * 3GPP release 17 aligned
  * FDD/TDD supported, all FR1 bands
@@ -22,7 +22,7 @@ Current Features
  * NTN GEO support
 
 Coming Soon
------------
+***********
 
  * CU/DU split deployment
  * FR2

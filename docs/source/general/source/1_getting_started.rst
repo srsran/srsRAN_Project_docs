@@ -1,7 +1,7 @@
 .. _general_getting_started:
 
 Getting Started
----------------
+###############
 
 | Install srsRAN Project on your computer:
 |   - :ref:`Installation <manual_installation>`

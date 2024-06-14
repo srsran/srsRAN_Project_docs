@@ -1,7 +1,7 @@
 .. _general_reporting:
 
-Reporting
-#########
+Reporting Issues
+################
 
 Issues
 ******
@@ -12,8 +12,7 @@ For contributing code and reporting issues, use Github's `pull request <https://
 Vulnerabilities
 ***************
 
-| For issues or fixes that could potentially affect software security, please use the dedicated ``security@srs.io`` email for submissions.
-| Our target initial response time for any vulnerability report is less than 7 days.
+For issues or fixes that could potentially affect software security, please use the dedicated ``security@srs.io`` email for submissions. Our target initial response time for any vulnerability report is less than 7 days.
 
 Support
 *******
