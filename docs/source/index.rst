@@ -36,6 +36,7 @@ Useful resources:
    general/source/3_contributions.rst
    general/source/4_reporting.rst
    general/source/5_release_notes.rst
+   general/source/6_dev_status.rst
 
 .. toctree::
    :maxdepth: 1
