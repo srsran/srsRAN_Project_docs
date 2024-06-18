@@ -21,6 +21,8 @@ slicing:                            # Optional TEXT. Configure network slicing o
     sst: 1                                  # Optional UINT (1). Sets the Slice Service Type. Supported: [0 - 255].
     sd: 0                                   # Optional UINT (0). Sets the Service Differentiator. Supported: [0-16777215].
 
+gnb_du_id: 0                        # Optional UINT (0). Sets the gNB DU ID. Supported: [0 - 68719476735].
+
 amf: 
   addr:                                 # Required TEXT. Sets the IP address or hostname of the AMF. Format: IPV4 or IPV6 IP address.
   port: 38412                           # Optional UINT (38412). Sets the AMF port. Format: integer between [20000 - 40000].
@@ -56,6 +58,8 @@ cu_cp:
   max_nof_dus:                          # Optional UINT. Maximum number of DU connections that the CU-CP may accept.
   max_nof_cu_ups:                       # Optional UINT. Maximum number of CU-UP connections that the CU-CP may accept.
   inactivity_timer: 120                 # Optional INT (7200). Sets the UE/PDU Session/DRB inactivity timer in seconds. Supported: [1 - 7200].
+  plmns:                                # Optional TEXT. Text list containing all allowed PLMNs. 
+  tacs:                                 # Optional TEXT. Text list containing all allowed TACs. 
   pdu_session_setup_timeout: 3          # Optional INT (3). Timeout for the setup of a PDU session after an InitialUeMessage was sent to the core, in seconds. The timeout must be larger than T310. If the value is reached, the UE will be released 
 
   mobility: 
@@ -96,6 +100,7 @@ cu_cp:
 
   f1ap: 
     ue_context_setup_timeout: 1000           # Optional INT (1000). Sets the UE context setup timeout in milliseconds. 
+    f1c_bind_address: 127.0.10.1             # Required TEXT (127.0.10.1). Sets the F1-C bind address. Format: IP address. 
 
 cu_up: 
   gtpu_queue_size: 2048                # Optional INT (2048). Sets the GTP-U queue size, in PDUs.
@@ -141,7 +146,7 @@ ru_ofh:
   t1a_min_up: 85                        # Optional INT (85). Sets T1a minimum value for user-plane. Supported: [0 - 1960].
   ta4_max: 300                          # Optional UINT (300). Sets the Ta4 maximum value for User-Plane. Supported: [0 - 1960].
   ta4_min: 85                           # Optional UINT (85). Sets the Ta4 maximum value for User-Plane. Supported: [0 - 1960].
-  is_prach_cp_enabled: false            # Optional BOOLEAN (false). Sets PRACH control-plane enabled flag. Supported: [false, true].
+  is_prach_cp_enabled: true             # Optional BOOLEAN (true). Sets PRACH control-plane enabled flag. Supported: [false, true].
   is_dl_broadcast_enabled: false        # Optional BOOLEAN (false). Sets downlink broadcast enabled flag. Supported: [false, true]. 
   ignore_ecpri_seq_id: false            # Optional BOOLEAN (false). Sets whether or not to ignore eCPRI sequence ID field value. Supported [false, true].
   ignore_ecpri_payload_size: false      # Optional BOOLEAN (false). Sets whether or not to ignore eCPRI payload size field value. Supported [false, true].
@@ -150,8 +155,8 @@ ru_ofh:
   compr_bitwidth_ul: 9                  # Optional UINT (9). Sets the uplink compression bit width. Supported: [1 - 16].
   compr_method_dl: bfp                  # Optional TEXT (bfp). Sets the downlink compression method. Supported: [none, bfp, bfp selective, block scaling, mu law, modulation, modulation selective].
   compr_bitwidth_dl: 9                  # Optional UINT (9). Sets the downlink compression bit width. Supported: [1 - 16].
-  compr_method_prach: none              # Optional TEXT (none). Sets the PRACH compression method. Supported: [none, bfp, bfp selective, block scaling, mu law, modulation, modulation selective].
-  compr_bitwidth_prach: 16              # Optional UINT (16). Sets the PRACH compression bit width. Supported [1 - 16]. 
+  compr_method_prach: bfp               # Optional TEXT (bfp). Sets the PRACH compression method. Supported: [none, bfp, bfp selective, block scaling, mu law, modulation, modulation selective].
+  compr_bitwidth_prach: 9               # Optional UINT (9). Sets the PRACH compression bit width. Supported [1 - 16]. 
   enable_ul_static_compr_hdr: true      # Optional BOOLEAN (true). Uplink static compression header enabled flag. Supported: [false, true].
   enable_dl_static_compr_hdr: true      # Optional BOOLEAN (true). Downlink static compression header enabled flag. Supported: [false, true].
   iq_scaling: 0.35                      # Optional FLOAT (0.35). Sets the IQ scaling factor. Supported: [0 - 1].  
@@ -452,17 +457,21 @@ log:
   cu_level: warning                     # Optional TEXT (warning). Sets CU log level.
   sec_level: warning                    # Optional TEXT (warning). Sets security functions level.
   lib_level: warning                    # Optional TEXT (warning). Sets generic log level.
+  config_level: none                    # Optional TEXT (none). Sets the config log level. 
+  metrics_level: none                   # Optional TEXT (none). Sets the metrics log level.
   hex_max_size: 0                       # Optional UINT (0). Sets maximum number of bytes to print for hex messages. Supported: [0 - 1024]
   broadcast_enabled: false              # Optional BOOLEAN (false). Enables logging in the PHY and MAC layer of broadcast messages and all PRACH opportunities. Supported: [false, true].
   phy_rx_symbols_filename:              # Optional TEXT. Print received symbols to file. Symbols will be printed if a valid path is set. Format: file path. This file can be used in the srsRAN_matlab project. 
   phy_rx_symbols_port: 0                # Optional TEXT. Set to a valid receive port number to dump the IQ symbols from that port only, or set to "all" to dump the IQ symbols from all UL receive ports. Only works if "phy_rx_symbols_filename" is set. Supported: [NON-NEGATIVE or all].
   phy_rx_symbols_prach: false           # Optional BOOLEAN (false). Set to true to dump the IQ symbols from all the PRACH ports. Only works if "phy_rx_symbols_filename" is set. Supported: [false, true]. 
   tracing_filename:                     # Optional TEXT. Set to a valid file name to enable tracing log. 
-  f1ap_json_enabled: false              # Optional BOOLEAN (false). Enables the JSON logging of F1AP PDUs. Supported: [false, true].
+  f1ap_json_enabled: false              # Optional BOOLEAN (false). Enables the JSON logging of F1AP PDUs. Supported: [false, true]. 
 
 pcap: 
   ngap_filename: /tmp/gnb_ngap.pcap     # Optional TEXT (/tmp/gnb_ngap.pcap). Path for NGAP PCAPs. 
   ngap_enable: false                    # Optional BOOLEAN (false). Enable/disable NGAP packet capture. Supported: [false, true].
+  n3_filename: /tmp/gnb_n3.pcap         # Optional TEXT (/tmp/gnb_n3.pcap). Path for N3 PCAPs. 
+  n3_enable: false                      # Optional BOOLEAN (false). Enable/disable N3 packet capture. Supported: [false, true].
   e1ap_filename: /tmp/gnb_e1ap.pcap     # Optional TEXT (/tmp/gnb_e1ap.pcap). Path for E1AP PCAPs. 
   e1ap_enable: false                    # Optional BOOLEAN (false). Enable/disable E1AP packet capture. Supported: [false, true].
   f1ap_filename: /tmp/gnb_f1ap.pcap     # Optional TEXT (/tmp/gnb_f1ap.pcap). Path for F1AP PCAPs. 
@@ -488,3 +497,4 @@ metrics:
   addr:                                 # Optional TEXT:IPV4. Sets the metrics address. Supported: IPV4 address. 
   port: 55555                           # Optional UINT. Sets the metrics UPD port. Supported: [0 - 65535].
   autostart_stdout_metrics: false       # Optional BOOLEAN (false). Sets whether or note to autostart stdout metrics reporting. Supported [false, true]. 
+  std_metrics_period:                   # Optional UINT (1). Sets the DU statistics report period in milliseconds. This metrics sets the console output period. Supported: [0 - inf]. 
