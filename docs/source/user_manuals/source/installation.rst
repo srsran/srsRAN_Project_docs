@@ -6,7 +6,7 @@ Installation Guide
 The following steps need to be taken in order to download and build the srsRAN Project:
 
     1. Install dependencies
-    2. Install RF driver
+    2. Install RF driver (only required for Split 8 deployments)
     3. Clone the repository
     4. Build the codebase
 
@@ -18,7 +18,7 @@ The following steps need to be taken in order to download and build the srsRAN P
 Build Tools and Dependencies
 ****************************
 
-The srsRAN Project uses CMake and C++14. We recommend the following build tools:
+The srsRAN Project uses CMake and C++17. We recommend the following build tools:
 
     - `cmake <https://cmake.org/>`_
     - `gcc <https://gcc.gnu.org/>`_ (v9.4.0 or later) **OR** `Clang <https://clang.llvm.org/>`_ (v10.0.0 or later)
@@ -33,23 +33,25 @@ The srsRAN Project has the following necessary dependencies:
 
 You can install the required build tools and dependencies for various distributions as follows: 
 
-Ubuntu 22.04:
+.. tabs::
 
-.. code-block:: bash
+    .. tab:: Ubuntu 22.04
 
-    sudo apt-get install cmake make gcc g++ pkg-config libfftw3-dev libmbedtls-dev libsctp-dev libyaml-cpp-dev libgtest-dev
+        .. code-block:: bash
 
-Fedora:
+            sudo apt-get install cmake make gcc g++ pkg-config libfftw3-dev libmbedtls-dev libsctp-dev libyaml-cpp-dev libgtest-dev
 
-.. code-block:: bash
+    .. tab:: Fedora
 
-    sudo yum install cmake make gcc gcc-c++ fftw-devel lksctp-tools-devel yaml-cpp-devel mbedtls-devel gtest-devel
+        .. code-block:: bash
 
-Arch Linux:
+            sudo yum install cmake make gcc gcc-c++ fftw-devel lksctp-tools-devel yaml-cpp-devel mbedtls-devel gtest-devel
 
-.. code-block:: bash
+    .. tab:: Arch Linux
 
-    sudo pacman -S cmake make base-devel fftw mbedtls yaml-cpp lksctp-tools gtest
+        .. code-block:: bash
+
+            sudo pacman -S cmake make base-devel fftw mbedtls yaml-cpp lksctp-tools gtest
 
 It is also recommended users install the following (although they are not required): 
 
@@ -62,15 +64,16 @@ It is also recommended users install the following (although they are not requir
 RF-drivers
 **********
 
-| The srsRAN Project uses RF drivers to support different radio types. 
-| Currently, only UHD is supported however additional drivers are under development:
+.. note:: 
+
+    UHD and/or ZMQ are only required for Split 8 deployments, if you are planning on using a Split 7.2 deployment you may skip this step. 
+
+The srsRAN Project uses RF drivers to support different radio types. Currently, only UHD and ZMQ are supported:
 
 .. _Drivers:
 
-  * `UHD <https://github.com/EttusResearch/uhd>`_ 
-
-.. note::
-	We recommended the LTS version of UHD, i.e. either 3.15 or 4.0.
+  * `UHD <https://github.com/EttusResearch/uhd>`_ (We recommended the LTS version of UHD, i.e. either 3.15 or 4.0.)
+  * `ZMQ <https://zeromq.org/>`_
 
 ----
 
@@ -79,28 +82,15 @@ RF-drivers
 Clone and Build
 ***************
 
-First, clone the srsRAN Project repository: 
+.. tabs:: 
 
-.. code-block:: bash
+   .. tab:: Vanilla Installation 
 
-    git clone https://github.com/srsRAN/srsRAN_Project.git
+      .. include:: installation_vanilla.rst
 
-Then build the code-base: 
+   .. tab:: ZMQ Enabled Installation   
 
-.. code-block:: bash 
-
-    cd srsRAN_Project
-    mkdir build
-    cd build
-    cmake ../ 
-    make -j $(nproc)
-    make test -j $(nproc) 
-
-You can now run the gNB from ``srsRAN_Project/build/apps/gnb/``. If you wish to install the srsRAN Project gNB, you can use the following command: 
-
-.. code-block:: bash
-
-    sudo make install
+      .. include:: installation_zmq.rst 
 
 The :ref:`Running srsRAN Project <manual_running>` section of the documentation further discusses how to configure and run the gNB application. 
 
@@ -111,35 +101,35 @@ Packages
 
 srsRAN Project is available to download directly from packages for various linux distributions. Users looking for a simple installation who do not wish to edit the source code should use the package installation.
 
-Ubuntu
-======
+.. tabs:: 
 
-Ubuntu users can download the srsRAN Project packages using the following commands: 
+    .. tab:: Ubuntu 
 
-.. code-block:: bash
+        Ubuntu users can download the srsRAN Project packages using the following commands: 
 
-    sudo add-apt-repository ppa:softwareradiosystems/srsran-project
-    sudo apt-get update
-    sudo apt-get install srsran-project -y
+        .. code-block:: bash
 
-The application can then be run with the: 
+            sudo add-apt-repository ppa:softwareradiosystems/srsran-project
+            sudo apt-get update
+            sudo apt-get install srsran-project -y
+
+    .. tab:: Arch Linux
+
+        Arch Linux users can download the srsRAN Project packages using an AUR helper, e.g. 'yay', using the following command: 
+
+        .. code-block:: bash
+
+            yay -Sy srsran-project-git
+
+This will build and install the latest version of srsRAN Project from git. 
+
+When installed from packages, srsRAN Project example configs can be found in ``/usr/share/srsran``. For info on these config files, see :ref:`here <manual_config_ref>`
+
+The application can then be run using: 
 
 .. code-block:: bash
 
    sudo gnb -c <config file>
-
-Arch Linux
-==========
-
-Arch Linux users can download the srsRAN Project packages using an AUR helper, e.g. 'yay', using the following command: 
-
-.. code-block:: bash
-
-   yay -Sy srsran-project-git
-
-This will build and install the latest version of srsRAN Project from git. 
-
-When installed from packages srsRAN Project example configs can be found in ``/usr/share/srsran``. For info on these config files, see :ref:`here <manual_config_ref>`
 
 ---- 
 
