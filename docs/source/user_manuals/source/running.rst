@@ -3,6 +3,10 @@
 Running srsRAN Project
 ######################
 
+.. note:: 
+
+   This guide outlines running srsRAN Project in a Split 8 deployment with a USRP, for Split 7.2 deployments see :ref:`here <oran_ru_tutorial>`. 
+
 Baseline Requirements
 *********************
 
@@ -28,7 +32,7 @@ System Preparation
 
 Before running the gNB application, we recommend tuning your system for best performance. We provide a script to configure known performance parameters:
 
-   - `srsran_performance <https://github.com/srsran/srsRAN_Project/tree/main/scripts/srsran_performance>`_
+   - `srsRAN performance script <https://github.com/srsran/srsRAN_Project/tree/main/scripts/srsran_performance>`_
    
 
 The script does the following: 
@@ -48,8 +52,9 @@ Run the script as follows from the main project folder:
 Running the gNB
 ***************
 
-| If the gNB has been installed using ``sudo make install`` or installed from packages then you will be able to run the gNB from anywhere on your machine. 
-| If you built the gNB from source and have not installed it, then you can run the gNB from: ``/srsRAN_Project/build/apps/gnb``. In this folder you will find the gNB application binary. 
+If the gNB has been installed using ``sudo make install`` or installed from packages then you will be able to run the gNB from anywhere on your machine. 
+
+If you built the gNB from source and have not installed it, then you can run the gNB from: ``/srsRAN_Project/build/apps/gnb``. In this folder you will find the gNB application binary. 
 
 Run the gNB as follows, passing the YAML configuration file:  
 
@@ -57,9 +62,9 @@ Run the gNB as follows, passing the YAML configuration file:
 
    sudo gnb -c gnb_rf_b200_tdd_n78_10mhz.yml
    
-| Run the gNB with sudo to ensure threads are configured with the correct priority. 
-| Run the gNB with an explicit configuration file. See the :ref:`configuration reference <manual_config_ref>` for more details.
-| Example configuration files can be found in the ``configs/`` folder in the srsRAN Project codebase.
+Run the gNB with ``sudo`` to ensure threads are configured with the correct priority. 
+
+Example configuration files can be found in the ``configs/`` folder in the srsRAN Project codebase. For more information on the configuration files and the available parameters see the :ref:`configuration reference <manual_config_ref>`.
 
 When running, the gNB should generate the following console output:
 
