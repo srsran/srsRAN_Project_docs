@@ -62,65 +62,7 @@ For the purpose of this application note, we will use a dockerized Open5GS versi
 ZeroMQ
 ======
 
-On Ubuntu, ZeroMQ development libraries can be installed with:
-
-.. code::
-
-  sudo apt-get install libzmq3-dev
-  
-Alternatively, ZeroMQ can also be built from source. 
-
-First, one needs to install libzmq:
-
-.. code::
-
-  git clone https://github.com/zeromq/libzmq.git
-  cd libzmq
-  ./autogen.sh
-  ./configure
-  make
-  sudo make install
-  sudo ldconfig
-
-Second, install czmq:
-
-.. code::
-
-  git clone https://github.com/zeromq/czmq.git
-  cd czmq
-  ./autogen.sh
-  ./configure
-  make
-  sudo make install
-  sudo ldconfig
-
-Finally, you need to compile srsRAN Project and srsRAN 4G (assuming you have already installed all the required dependencies). 
-Note, if you have already built and installed srsRAN 4G and srsRAN Project prior to installing ZMQ and other dependencies you 
-will have to re-build both to ensure the ZMQ drivers have been recognized correctly. 
-
-For srsRAN Project, the following commands can be used to download and build from source: 
-
-.. code::
-
-  git clone https://github.com/srsran/srsRAN_Project.git
-  cd srsRAN_Project
-  mkdir build
-  cd build
-  cmake ../ -DENABLE_EXPORT=ON -DENABLE_ZEROMQ=ON
-  make -j`nproc`
-
-ZeroMQ is disabled by default, this is enabled when running ``cmake`` by including ``-DENABLE_EXPORT=ON -DENABLE_ZEROMQ=ON``. 
-
-Pay extra attention to the cmake console output. Make sure you read the following line:
-
-.. code::
-
-  ...
-  -- FINDING ZEROMQ.
-  -- Checking for module 'ZeroMQ'
-  --   No package 'ZeroMQ' found
-  -- Found libZEROMQ: /usr/local/include, /usr/local/lib/libzmq.so
-  ...
+For a guide on installing ZMQ and building srsRAN Project correctly, see :ref:`here <manual_installation_build>`. 
 
 ----- 
 
