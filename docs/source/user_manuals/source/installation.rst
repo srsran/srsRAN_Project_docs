@@ -28,7 +28,7 @@ The srsRAN Project has the following necessary dependencies:
     - `libfftw <https://www.fftw.org/>`_
     - `libsctp <https://github.com/sctp/lksctp-tools>`_
     - `yaml-cpp <https://github.com/jbeder/yaml-cpp>`_
-    - `PolarSSL/mbedTLS <https://www.trustedfirmware.org/projects/mbed-tls/>`_
+    - `mbedTLS <https://www.trustedfirmware.org/projects/mbed-tls/>`_
     - `googletest <https://github.com/google/googletest/>`_
 
 You can install the required build tools and dependencies for various distributions as follows: 
