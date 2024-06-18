@@ -7,9 +7,9 @@ ran_node_name: srsgnb01             # Optional TEXT (srsgnb01). Sets the text ID
 cells:                              # Optional TEXT. Sets the cell configuration on a per cell basis, overwriting the default configuration defined by cell_cfg. Contains a list of cells, each with parameters that overwrite the default config. This can only be 
                                     # set via the configuration file. For more information see the relevant example configuration file: gnb_custom_cell_properties.yml. Each list entry should begin with "-".
   - pci: 1                          # Optional TEXT. Override the PCI defined by the default cell in cell_cfg.
-    dl_arfcn: 536020                # Optional TEXT.Set the ARFCN for the above PCI. Note, this must match the value used in the cell_cfg section.
-  - pci: 2                          # Optional TEXT.Set the PCI of the second cell.
-    dl_arfcn: 532020                # Optional TEXT.Set the ARFCN of the second cell. Note, this must match the value used in the cell_cfg section. 
+    dl_arfcn: 536020                # Optional TEXT. Set the ARFCN for the above PCI. Note, this must match the value used in the cell_cfg section.
+  - pci: 2                          # Optional TEXT. Set the PCI of the second cell.
+    dl_arfcn: 532020                # Optional TEXT. Set the ARFCN of the second cell. Note, this must match the value used in the cell_cfg section. 
 
 
 qos:                                # Optional TEXT. Configures RLC and PDCP radio bearers on a per 5QI basis. This can only be set via the configuration file. Each list entry should begin with "-".
