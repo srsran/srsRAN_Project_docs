@@ -121,7 +121,7 @@ srsRAN Project is available to download directly from packages for various linux
 
             yay -Sy srsran-project-git
 
-This will build and install the latest version of srsRAN Project from git. 
+This will install the latest version of srsRAN Project from git. 
 
 When installed from packages, srsRAN Project example configs can be found in ``/usr/share/srsran``. For info on these config files, see :ref:`here <manual_config_ref>`
 
