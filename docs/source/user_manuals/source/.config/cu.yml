@@ -1,0 +1,127 @@
+gnb_id: 411                         # Optional UINT (411). Sets the numerical ID associated with the gNB.
+gnb_id_bit_length:                  # Optional UNIT. Sets the bit length of the gnb_id above. Format: integer between [22 - 32]
+ran_node_name: cu_cp_01             # Optional TEXT (srsgnb01). Sets the text ID associated with the gNB. Format: string without spaces.
+
+qos:                                # Optional TEXT. Configures RLC and PDCP radio bearers on a per 5QI basis. This can only be set via the configuration file. Each list entry should begin with "-".
+
+slicing:                            # Optional TEXT. Configure network slicing options. This can only be set via the configuration file.
+  -                                     # Configure Slice 1
+    sst: 1                                  # Optional UINT (1). Sets the Slice Service Type. Supported: [0 - 255].
+    sd: 0                                   # Optional UINT (0). Sets the Service Differentiator. Supported: [0-16777215].
+
+amf: 
+  addr:                                 # Required TEXT. Sets the IP address or hostname of the AMF. Format: IPV4 or IPV6 IP address.
+  port: 38412                           # Optional UINT (38412). Sets the AMF port. Format: integer between [20000 - 40000].
+  bind_addr:                            # Required TEXT. Sets the local IP address that the gNB binds to for receiving traffic from the AMF. Format: IPV4 or IPV6 IP address.
+  n2_bind_addr:                         # Optional TEXT. Sets local IP address to bind for N2 interface. Format: IPV4 or IPV6 IP address.
+  n2_bind_interface: auto               # Optional TEXT. Sets the network device to bind to for N2 interface. 
+  n3_bind_addr:                         # Optional TEXT. Sets local IP address to bind for N3 interface. Format: IPV4 or IPV6 IP address.
+  n3_bind_interface: auto               # Optional TEXT. Sets the network device to bind to for N3 interface.
+  n3_ext_addr:                          # Optional TEXT. Sets the external IP address that is advertised to receive GTP-U packets from UPF via N3 interface. Format: IPV4 address. 
+  sctp_rto_initial:                     # Optional INT. Sets the initial retransmission timeout when creating the SCTP connection.
+  sctp_rto_min:                         # Optional INT. Sets the minimum retransmission timeout for the SCTP connection.
+  sctp_rto_max:                         # Optional INT. Sets the maximum retransmission timeout for the SCTP connection.
+  sctp_initial_max_attempts:            # Optional INT. Sets the maximum retransmission attempts for the initial SCTP connection.
+  sctp_max_init_timeo:                  # Optional INT. Sets the maximum retransmission timeout for the initial SCTP connection.
+  sctp_nodelay: false                   # Optional BOOLEAN (false). Setting to true allows the gNB to send SCTP messages as soon as possible without any Nagle-like algorithm. Supported: [false, true].
+  udp_max_rx_msgs:                      # Optional INT. Sets the maximum amount of messages RX in a single syscall. 
+  no_core: false                        # Optional BOOLEAN (false). Setting to true allows the gNB to run without a core. Supported: [false, true].
+
+cu_cp:
+  max_nof_dus:                          # Optional UINT. Maximum number of DU connections that the CU-CP may accept.
+  max_nof_cu_ups:                       # Optional UINT. Maximum number of CU-UP connections that the CU-CP may accept.
+  inactivity_timer: 120                 # Optional INT (120). Sets the UE/PDU Session/DRB inactivity timer in seconds. Supported: [1 - 7200].
+  plmns:                                # Optional TEXT. Text list containing all allowed PLMNs. 
+  tacs:                                 # Optional TEXT. Text list containing all allowed TACs. 
+  pdu_session_setup_timeout: 3          # Optional INT (3). Timeout for the setup of a PDU session after an InitialUeMessage was sent to the core, in seconds. The timeout must be larger than T310. If the value is reached, the UE will be released 
+
+  mobility: 
+    trigger_handover_from_measurements: false   # Optional BOOLEAN (false). Sets whether or not to start HO if neighbor cells become stronger. Supported: [false, true].
+    cells:                                      # Optional TEXT. Sets the list of cells known to the CU-CP, their configs (if not provided over F1) and their respective neighbor cells.
+      -                                         # Define Cell 1 
+        nr_cell_id:                               # Required UINT. The ID of this serving cell. 
+        periodic_report_cfg_id:                   # Optional UINT. The periodical report configuration to use for this serving cell.
+        ncells:                                   # Required TEXT. List of neighbor cells.
+          nr_cell_id:                                 # Required UINT. The ID of this neighbor cell.
+          report_configs:                             # Required TEXT. List of report configurations to use for measurements of this neighbor cell.
+        gnb_id:                                   # Optional UINT. The ID of this gNB.
+        ssb_arfcn:                                # Optional UINT. The SSB ARFCN of this serving cell. Must be present if not provided over F1.
+        band:                                     # Optional UINT. The NR band of this serving cell cell. Must be present if not provided over F1. 
+        ssb_scs:                                  # Optional UINT. The SSB subcarrier spacing of this serving cell in KHz. Must be present if not provided over F1.
+        ssb_period:                               # Optional UINT. The SSB period of this serving cell in ms.  Must be present if not provided over F1. 
+        ssb_offset:                               # Optional UINT. The SSB offset of this serving cell. Must be present if not provided over F1. 
+        ssb_duration:                             # Optional UINT. The SSB duration of this serving cell in subframes. Must be present if not provided over F1. 
+    report_configs:                             # Optional TEXT. Sets the list of report configurations to dynamically build a measurement configuration sent to the UEs using the below values.
+      -                                         # Define report configs for cell 1 
+        report_cfg_id:                            # Required UINT. The ID of this report configuration.
+        report_type:                              # Required TEXT. The type of the report. Supported: [event_triggered, periodical]. Note that periodical reports are only supported for serving cells. 
+        report_interval_ms: 1024                  # Optional UINT (1024). The report interval in ms.
+        a3_report_type:                           # Optional TEXT. A3 report type. Supported: [rsrp, rsrq, sinr].
+        a3_offset_db:                             # Optional UINT. A3 offset in dB used for measurement report trigger.
+        a3_hysteresis_db:                         # Optional UINT. A3 hysteresis in dB used for measurement report trigger.
+        a3_time_to_trigger_ms:                    # Optional UINT. Time in ms during which A3 condition must be met before measurement report trigger. 
+
+  rrc: 
+    force_reestablishment_fallback: false    # Optional BOOLEAN (false). Force RRC re-establishment fallback to RRC setup. Supported: [false, true].
+    rrc_procedure_timeout_ms: 720            # Optional UINT (720). Sets the timeout in ms used for RRC message exchange with UE. It needs to suit the expected communication delay and account for potential retransmissions UE processing delays, SR delays, etc. Supported: [0 - inf]. 
+
+  security:
+    integrity: not_needed                    # Optional TEXT (not_needed). Sets the default integrity protection indication for DRBs.
+    confidentiality: required                # Optional TEXT (required). Sets the default integrity confidentiality indication for DRBs.
+    nea_pref_list: nea0,nea2,nea1            # Optional TEXT (nea0,nea2,nea1). Ordered preference list for the selection of encryption algorithm (NEA). Supported: [nea0,nea2,nea1,nea3].
+    nia_pref_list: nia2,nia1                 # Optional TEXT (nia2,nia1). Ordered preference list for the selection of encryption algorithm (NIA). Supported: [nia2,nia1,nia3].  
+
+  f1ap: 
+    bind_address: 127.0.10.1                 # Optional TEXT (127.0.10.1). Sets the bind address used by the F1-C interface.
+    ue_context_setup_timeout: 1000           # Optional INT (1000). Sets the UE context setup timeout in milliseconds. 
+
+cu_up: 
+  gtpu_queue_size: 2048                # Optional INT (2048). Sets the GTP-U queue size, in PDUs.
+  gtpu_reordering_timer: 0             # Optional INT (0). Sets the GTP-U RX reordering timer (in milliseconds).
+  warn_on_drop: false                  # Optional BOOLEAN (false). Enables the option to log a warning for dropped packets in GTP-U and PDCP due to full queues. Supported: [false, true].
+
+  nru:                                 # Configure NR-U parameters
+    bind_addr: 127.0.10.1                 # Optional TEXT (127.0.10.1). Sets the bind address used by the F1-U interface. 
+    udp_max_rx_msgs: 256                  # Optional INT (256). Sets the max number of UDP packets received by a single syscall on the F1-U interface. 
+
+
+buffer_pool: 
+  nof_segments: 1048576                 # Optional UINT (1048576). Sets the number of segments allocated by the buffer pool. 
+  segment_size: 2048                    # Optional UINT (2048). Sets the size of each buffer pool segment in bytes. 
+
+log: 
+# All gNB layers and components can be configured independently to output at various levels of detail. Logs can be configured to the following levels (from lowest to highest levels of detail):
+# none, error, warning, info, debug
+  filename:                             # Optional TEXT (/tmp/gnb.log). File path for logs. Logs can be redirected to stdout by setting the filename to "stdout".
+  all_level: warning                    # Optional TEXT (warning). Sets a common log level across PHY, MAC, RLC, PDCP, RRC, SDAP, NGAP and GTPU layers.
+  cu_level: warning                     # Optional TEXT (warning). Sets the CU log level. 
+  rrc_level: warning                    # Optional TEXT (warning). Sets RRC log level.
+  sdap_level: warning                   # Optional TEXT (warning). Sets SDAP log level.
+  ngap_level: warning                   # Optional TEXT (warning). Sets NGAP log level.
+  gtpu_level: warning                   # Optional TEXT (warning). Sets GTPU log level.
+  f1ap_level: warning                   # Optional TEXT (warning). Sets F1AP log level.
+  sec_level: warning                    # Optional TEXT (warning). Sets security functions level.
+  lib_level: warning                    # Optional TEXT (warning). Sets generic log level.
+  config_level: none                    # Optional TEXT (none). Sets the config log level.
+  metrics_level: none                   # Optional TEXT (none). Sets the metrics log level.
+  tracing_filename:                     # Optional TEXT. Set to a valid file name to enable tracing log.
+  f1ap_json_enabled: false              # Optional BOOLEAN (false). Enables the JSON logging of F1AP PDUs.
+  hex_max_size: 0                       # Optional UINT (0). Sets maximum number of bytes to print for hex messages. Supported: [0 - 1024]
+  f1u_level: warning                    # Optional TEXT (warning). Sets F1u log level.
+
+pcap: 
+  ngap_filename: /tmp/gnb_ngap.pcap     # Optional TEXT (/tmp/gnb_ngap.pcap). Path for NGAP PCAPs. 
+  ngap_enable: false                    # Optional BOOLEAN (false). Enable/disable NGAP packet capture. Supported: [false, true].
+  n3_filename: /tmp/gnb_n3.pcap         # Optional TEXT (/tmp/gnb_n3.pcap). Path for N3 PCAPs. 
+  n3_enable: false                      # Optional BOOLEAN (false). Enable/disable N3 packet capture. Supported: [false, true].
+  e1ap_filename: /tmp/gnb_e1ap.pcap     # Optional TEXT (/tmp/gnb_e1ap.pcap). Path for E1AP PCAPs. 
+  e1ap_enable: false                    # Optional BOOLEAN (false). Enable/disable E1AP packet capture. Supported: [false, true].
+  f1ap_filename: /tmp/gnb_f1ap.pcap     # Optional TEXT (/tmp/gnb_f1ap.pcap). Path for F1AP PCAPs. 
+  f1ap_enable: false                    # Optional BOOLEAN (false). Enable/disable F1AP packet capture. Supported: [false, true].
+  f1u_filename: /tmp/gnb_f1u.pcap      # Optional TEXT (/tmp/gnb_f1u.pcap). Path for F1-U (NRU) PCAPs. 
+  f1u_enable: false                     # Optional BOOLEAN (false). Enable/disable F1-U (NRU) packet capture. Supported: [false, true].
+
+metrics: 
+  pdcp_report_period: 0                 # Optional UINT (0). Sets the PDCP metrics report period. 
+  cu_cp_statistics_report_period: 1     # Optional UINT (1). Sets the CU-CP statistics report period in seconds. Set this value to 0 to disable this feature. Supported: [0 - inf]. 
+  cu_up_statistics_report_period: 1     # Optional UINT (1). Sets the CU-UP statistics report period in seconds. Set this value to 0 to disable this feature. Supported: [0 - inf]. 
