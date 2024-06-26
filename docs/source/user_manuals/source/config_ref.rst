@@ -34,18 +34,28 @@ Furthermore you may wish to use QAM256 in addition to the above. This can be don
 
 ----
 
-Format
-******
+Configuration Reference
+***********************
 
 All configuration parameters are presented here below in the following format:
 
-*parameter*
-  - Optional/Required *TYPE* (*default*). *Description*. Format: *format description*. Supported: *supported values*.
+.. code-block:: yaml 
 
-----
+  parameter: default_value         # Optional/Required TYPE (default value). Parameter description. Format: <format description> OR Supported: <supported values>.
 
-Configuration Parameters
-************************
+.. tabs:: 
 
-.. literalinclude:: .config/configuration.yml
-  :language: yaml 
+  .. tab:: gNB
+
+    .. literalinclude:: .config/configuration.yml
+      :language: yaml 
+
+  .. tab:: srsCU
+
+    .. literalinclude:: .config/cu.yml
+      :language: yaml 
+
+  .. tab:: srsDU
+
+    .. literalinclude:: .config/du.yml
+      :language: yaml 
