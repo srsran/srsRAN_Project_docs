@@ -1,8 +1,7 @@
 gnb_id: 411                         # Optional UINT (411). Sets the numerical ID associated with the gNB.
-
 gnb_id_bit_length:                  # Optional UNIT. Sets the bit length of the gnb_id above. Format: integer between [22 - 32]
-
 ran_node_name: srsgnb01             # Optional TEXT (srsgnb01). Sets the text ID associated with the gNB. Format: string without spaces.
+gnb_du_id: 0                        # Optional UINT (0). Sets the gNB DU ID. Supported: [0 - 68719476735].
 
 cells:                              # Optional TEXT. Sets the cell configuration on a per cell basis, overwriting the default configuration defined by cell_cfg. Contains a list of cells, each with parameters that overwrite the default config. This can only be 
                                     # set via the configuration file. For more information see the relevant example configuration file: gnb_custom_cell_properties.yml. Each list entry should begin with "-".
@@ -10,7 +9,6 @@ cells:                              # Optional TEXT. Sets the cell configuration
     dl_arfcn: 536020                # Optional TEXT. Set the ARFCN for the above PCI. Note, this must match the value used in the cell_cfg section.
   - pci: 2                          # Optional TEXT. Set the PCI of the second cell.
     dl_arfcn: 532020                # Optional TEXT. Set the ARFCN of the second cell. Note, this must match the value used in the cell_cfg section. 
-
 
 qos:                                # Optional TEXT. Configures RLC and PDCP radio bearers on a per 5QI basis. This can only be set via the configuration file. Each list entry should begin with "-".
 
@@ -20,8 +18,6 @@ slicing:                            # Optional TEXT. Configure network slicing o
   -                                     # Configure Slice 1
     sst: 1                                  # Optional UINT (1). Sets the Slice Service Type. Supported: [0 - 255].
     sd: 0                                   # Optional UINT (0). Sets the Service Differentiator. Supported: [0-16777215].
-
-gnb_du_id: 0                        # Optional UINT (0). Sets the gNB DU ID. Supported: [0 - 68719476735].
 
 amf: 
   addr:                                 # Required TEXT. Sets the IP address or hostname of the AMF. Format: IPV4 or IPV6 IP address.
@@ -100,7 +96,6 @@ cu_cp:
 
   f1ap: 
     ue_context_setup_timeout: 1000           # Optional INT (1000). Sets the UE context setup timeout in milliseconds. 
-    f1c_bind_address: 127.0.10.1             # Required TEXT (127.0.10.1). Sets the F1-C bind address. Format: IP address. 
 
 cu_up: 
   gtpu_queue_size: 2048                # Optional INT (2048). Sets the GTP-U queue size, in PDUs.
@@ -180,8 +175,7 @@ ru_sdr:
   freq_offset: 0                        # Optional FLOAT (0). Sets the frequency offset in Hertz.
   clock_ppm: 0                          # Optional FLOAT (0). Sets the clock calibration in Parts Per Million (PPM).
   lo_offset: 0                          # Optional FLOAT (0). Shifts the local oscillator frequency in MHz away from the center frequency to move LO leakage out of the channel. 
-  clock: default                        # Optional TEXT (default). Specify the RF device clock source (i.e., 10MHz reference oscillator). Supported: [default, internal, external, gpsdo].
-  sync: default                         # Optional TEXT (default). Specify the RF device time synchronization source (i.e., 1PPS reference). Supported: [default, internal, external, gpsdo].
+  clock: default                        # Optional TEXT (default). Specify the RF devivalidatorhe RF device time synchronization source (i.e., 1PPS reference). Supported: [default, internal, external, gpsdo].
   otw_format: default                   # Optional TEXT (default). Specific the over-the-wire format. Supported: [default, sc8, sc12, sc16].
   time_alignment_calibration: auto      # Optional TEXT (auto). Compensates for any reception and transmission time misalignment inherent to the RF device. Positive values reduce the RF transmission delay with respect to the RF reception. Negative values have the opposite effect.
 
