@@ -5,12 +5,12 @@ Running srsRAN Project
 
 .. note:: 
 
-   This guide outlines running srsRAN Project in a Split 8 deployment with a USRP, for Split 7.2 deployments see :ref:`here <oran_ru_tutorial>`. 
+   This guide outlines running srsRAN Project applications in a Split 8 deployment with a USRP, for Split 7.2 deployments see :ref:`here <oran_ru_tutorial>`. 
 
 Baseline Requirements
 *********************
 
-To successfully run the srsRAN Project gNB you will need the following: 
+To successfully run an end-to-end network the srsRAN Project applications you will need the following: 
 
     - A PC with a Linux based OS (Ubuntu 20.04 or later)
     - A USRP device
@@ -30,10 +30,9 @@ This is discussed further in the relevant app note.
 System Preparation
 ******************
 
-Before running the gNB application, we recommend tuning your system for best performance. We provide a script to configure known performance parameters:
+Before running any of the srsRAN Project applications, we recommend tuning your system for best performance. We provide a script to configure known performance parameters:
 
    - `srsRAN performance script <https://github.com/srsran/srsRAN_Project/tree/main/scripts/srsran_performance>`_
-   
 
 The script does the following: 
 
@@ -49,42 +48,21 @@ Run the script as follows from the main project folder:
 
 ----
 
-Running the gNB
-***************
+Running srsRAN Project
+**********************
 
-If the gNB has been installed using ``sudo make install`` or installed from packages then you will be able to run the gNB from anywhere on your machine. 
+.. tabs:: 
 
-If you built the gNB from source and have not installed it, then you can run the gNB from: ``/srsRAN_Project/build/apps/gnb``. In this folder you will find the gNB application binary. 
+   .. tab:: srsGNB 
 
-Run the gNB as follows, passing the YAML configuration file:  
+      .. include:: running_gnb.rst
 
-.. code-block:: bash
+   .. tab:: srsCU  
 
-   sudo gnb -c gnb_rf_b200_tdd_n78_10mhz.yml
-   
-Run the gNB with ``sudo`` to ensure threads are configured with the correct priority. 
+      .. include:: running_cu.rst 
 
-Example configuration files can be found in the ``configs/`` folder in the srsRAN Project codebase. For more information on the configuration files and the available parameters see the :ref:`configuration reference <manual_config_ref>`.
+   .. tab:: srsDU  
 
-When running, the gNB should generate the following console output:
+      .. include:: running_du.rst 
 
-.. code-block:: bash
-
-   Available radio types: uhd.
-
-   --== srsRAN gNB (commit 77be7d339) ==--
-
-   [INFO] [UHD] linux; GNU C++ version 9.4.0; Boost_107100; UHD_4.2.0.HEAD-0-g197cdc4f
-   Making USRP object with args 'type=b200'
-   Cell pci=1, bw=10 MHz, dl_arfcn=632628 (n78), dl_freq=3489.42 MHz, dl_ssb_arfcn=632640, ul_freq=3489.42 MHz
-
-   ==== gNodeB started ===
-   Type <t> to view trace
-
-Entering ``t`` will enable the console trace, see :ref:`here <manual_console_ref>` for more details. 
-
-Configuration parameters can also be passed on the command line. To see the list of options, use: 
-
-.. code-block:: bash
-
-   ./gnb --help
+For more information on running srsRAN Project, and configuring for various use-cases see the :ref:`full list of tutorials <tutorials>`.  
