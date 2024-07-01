@@ -5,6 +5,7 @@ DU-high
 
 .. figure:: .imgs/DU_high.png
    :scale: 60%
+   :align: center
 
    srsRAN Project DU-high implementation
 

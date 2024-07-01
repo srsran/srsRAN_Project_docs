@@ -5,6 +5,7 @@ CU-UP
 
 .. figure:: .imgs/CU_UP.png
     :width: 30%
+    :align: center
 
     srsRAN Project CU-UP implementation.
 

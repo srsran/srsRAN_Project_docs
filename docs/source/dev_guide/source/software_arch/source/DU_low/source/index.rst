@@ -5,6 +5,7 @@ DU-low
 
 .. figure:: .imgs/DU_low.png
    :scale: 60%
+   :align: center
 
    srsRAN Project DU-low implementation
 

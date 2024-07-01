@@ -5,6 +5,7 @@ CU-CP
 
 .. figure:: .imgs/CU_CP.png
     :width: 40%
+    :align: center
 
     srsRAN Project CU-CP implementation. 
 
