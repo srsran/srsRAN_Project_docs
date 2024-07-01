@@ -3,6 +3,10 @@
 Grafana Metrics GUI
 ###################
 
+.. note:: 
+
+    The GrafanaGUI works with both the monolithic gNB and srsDU applications. The configuration changes required are the same for both applications. 
+
 srsRAN allows the reporting and visualization of the CU/DU metrics to a `Grafana <https://grafana.com/oss/grafana/>`_ WebUI. This is done through the use 
 of a `Docker <https://www.docker.com/>`_ container that comes as standard with the srsRAN code base, located in the ``~/srsRAN/docker/`` folder. This container allows users 
 to bring up the Grafana dashboard in a single command. 
@@ -16,7 +20,7 @@ to bring up the Grafana dashboard in a single command.
 Configuration
 *************
 
-To use the Grafana webUI, you will first need to have Docker installed on your system, you will also need to modify the srsRAN CU/DU configuration file to allow the 
+To use the Grafana webUI, you will first need to have Docker installed on your system, you will also need to modify the srsRAN gNB or DU configuration file to allow the 
 reporting of the metrics to the necessary JSON format for use in the webUI. 
 
 Docker
@@ -33,7 +37,7 @@ the `Docker documentation <https://docs.docker.com/desktop/install/linux-install
 srsRAN
 ======
 
-To enable the correct reporting of metrics to the Grafana UI, the srsRAN configuration files needs to be updated to allow the metrics to be output in the correct JSON format and then sent through a udp-socket to the metrics-server,
+To enable the correct reporting of metrics to the Grafana UI, the srsRAN gNB or DU configuration files needs to be updated to allow the metrics to be output in the correct JSON format and then sent through a udp-socket to the metrics-server,
 where it can be parsed and displayed correctly by the GUI.
 
 .. code-block:: yaml

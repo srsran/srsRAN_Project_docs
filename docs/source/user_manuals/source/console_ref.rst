@@ -3,7 +3,7 @@
 Console Reference
 #################
 
-The gNB application runs in the console. When running, type ``t`` in the console to enable the metrics trace.
+Both the gNB and DU applications run in the console. When running, type ``t`` in the console to enable the metrics trace.
 
 A sample output showing bi-directional traffic can be seen here:
 
