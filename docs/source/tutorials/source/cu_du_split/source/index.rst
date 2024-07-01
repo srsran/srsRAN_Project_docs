@@ -12,7 +12,8 @@ O-RAN CU-DU Split
 Overview
 ********
 
-This tutorial outlines the steps required to configure and run the srsCU and srsDU applications, to create an E2E O-RAN compliant network with a CU-DU split. In this tutorial a USRP is used as the RF-frontend, resulting in this being a `Split 8 <https://www.rcrwireless.com/20210317/5g/exploring-functional-splits-in-5g-ran-tradeoffs-and-use-cases-reader-forum#:~:text=Split%208%3A%20PHY%2DRF%20split.%C2%A0>`_ configuration. 
+This tutorial outlines the steps required to configure and run the srsCU and srsDU applications, to create an E2E O-RAN compliant network with a CU-DU split. In this tutorial a USRP is used as the RF-frontend, resulting in this 
+being a `Split 8 <https://www.rcrwireless.com/20210317/5g/exploring-functional-splits-in-5g-ran-tradeoffs-and-use-cases-reader-forum#:~:text=Split%208%3A%20PHY%2DRF%20split.%C2%A0>`_ configuration. 
 To implement a Split 7.2x configuration, use this guide in conjunction with the :ref:`RU Guide <oran_ru_tutorial>`. 
 
 .. figure:: .imgs/cu_du_split.png
@@ -66,7 +67,7 @@ For more information on connecting a COTS UEs to srsRAN Project, see the :ref:`f
 Configuration
 *************
 
-For the CU-DU split two configuration files are needed, one for the srsCU and one for the srsDU. These configuration files are explained in detail :ref:`here <manual_config_ref>`. 
+For the CU-DU split two configuration files are needed, one for srsCU and one for srsDU. These configuration files are explained in detail :ref:`here <manual_config_ref>`. 
 
 Core
 ====
@@ -119,7 +120,7 @@ To configure srsDU, the ``f1ap`` parameters must be configured, as well as the `
     tac: 7
     pci: 1
 
-In this example. the DU is configured to work with a USRP B210, and to create a 20 MHz cell. The specifics of the RU being used and the desired cell can be changed as needed. The ``f1ap`` configuration must remain constant with the associated configuration in the CU. 
+In this example, the DU is configured to work with a USRP B210, and to create a 20 MHz cell. The specifics of the RU being used and the desired cell can be changed as needed. The ``f1ap`` configuration must remain constant with the associated configuration in the CU. 
 
 ------
 
