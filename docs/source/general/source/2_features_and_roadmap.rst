@@ -20,10 +20,10 @@ Current Features
  * Slicing 
  * HW Acceleration Support
  * NTN GEO support
+ * CU-DU Split
 
 Coming Soon
 ***********
 
- * CU/DU split deployment
  * FR2
  * 8-layer MIMO
