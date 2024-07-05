@@ -87,7 +87,7 @@ To configure srsCU, the ``amf`` and ``f1ap`` (f1-c) bind addresses must be confi
 
   cu_cp:
     f1ap:
-      bind_address: 127.0.10.1   
+      bind_addr: 127.0.10.1   
 
 The ``amf`` parameters are specific to the local configuration of the core. If you are running Open5GS via the docker scripts provided with srsRAN Project, your configuration will be different. The same is true if you have 
 made any other local changes to how Open5GS has been configured.  
