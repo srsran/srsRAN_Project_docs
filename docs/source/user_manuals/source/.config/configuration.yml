@@ -53,6 +53,7 @@ e2:
 cu_cp:
   max_nof_dus:                          # Optional UINT. Maximum number of DU connections that the CU-CP may accept.
   max_nof_cu_ups:                       # Optional UINT. Maximum number of CU-UP connections that the CU-CP may accept.
+  max_nof_ues:                          # Optional UINT. Maximum number of UEs that the CU-CP may accept. 
   inactivity_timer: 120                 # Optional INT (120). Sets the UE/PDU Session/DRB inactivity timer in seconds. Supported: [1 - 7200].
   plmns:                                # Optional TEXT. Text list containing all allowed PLMNs. 
   tacs:                                 # Optional TEXT. Text list containing all allowed TACs. 
@@ -175,8 +176,9 @@ ru_sdr:
   freq_offset: 0                        # Optional FLOAT (0). Sets the frequency offset in Hertz.
   clock_ppm: 0                          # Optional FLOAT (0). Sets the clock calibration in Parts Per Million (PPM).
   lo_offset: 0                          # Optional FLOAT (0). Shifts the local oscillator frequency in MHz away from the center frequency to move LO leakage out of the channel. 
-  clock: default                        # Optional TEXT (default). Specify the RF devivalidatorhe RF device time synchronization source (i.e., 1PPS reference). Supported: [default, internal, external, gpsdo].
-  otw_format: default                   # Optional TEXT (default). Specific the over-the-wire format. Supported: [default, sc8, sc12, sc16].
+  clock: default                        # Optional TEXT (default). Specify the RF device time synchronization source (i.e., 1PPS reference). Supported: [default, internal, external, gpsdo].
+  sync: default                         # Optional TEXT (default). Specify the RF device time reference source (if using a reference clock). Supported: [default, internal, external, gpsdo].
+  otw_format: default                   # Optional TEXT (default). Specify the over-the-wire format. Supported: [default, sc8, sc12, sc16].
   time_alignment_calibration: auto      # Optional TEXT (auto). Compensates for any reception and transmission time misalignment inherent to the RF device. Positive values reduce the RF transmission delay with respect to the RF reception. Negative values have the opposite effect.
 
   amplitude_control: 
@@ -279,7 +281,7 @@ cell_cfg:
                                             # set "outside" to define that the DC offset falls outside the DL carrier or "undetermined" in the case the DC offset is unknown. Supported: [-1650 - 1649] OR [outside,undetermined,center]. 
     harq_la_cqi_drop_threshold:             # Optional UINT. Sets the link Adaptation (LA) threshold for drop in CQI of the first HARQ transmission above which HARQ retransmissions are cancelled. Set this value to 0 to disable this feature. Supported: [0 - 15]. 
     harq_la_ri_drop_threshold:              # Optional UINT. Sets the link Adaptation (LA) threshold for drop in nof. layers of the first HARQ transmission above which HARQ retransmission is cancelled. Set this value to 0 to disable this feature. Supported: [0 - 4]. 
-    dmrs_additional_position:               # Optional UINT. Sets the PDSCH DMRS additional position. Supported: [0 - 3].
+    dmrs_additional_position: 2             # Optional UINT (2). Sets the PDSCH DMRS additional position. Supported: [0 - 3].
 
   pusch: 
     min_ue_mcs: 0                           # Optional UINT (0). Sets a minimum PUSCH MCS value to be used for all UEs. Supported: [0 - 28].
@@ -373,6 +375,11 @@ cell_cfg:
     zp_csi_rs_slot_offset:                  # Optional TEXT. Sets the slot offset of the ZP CSI-RS resources.     
     pwr_ctrl_offset: 0                      # Optional INT (0). Sets the power offset of PDSCH RE to NZP CSI-RS RE in dB. Supported: [-8 - 15].
 
+  sched_expert_cfg: 
+    policy_sched_cfg:
+      pf_sched: 
+        pf_sched_fairness_coeff: 2              # Optional FLOAT [2]. Sets the fairness Coefficient to use in Proportional Fair policy scheduler. 
+
 expert_phy: 
   max_proc_delay: 5                         # Optional INT (5). Sets the maximum allowed DL processing delay in slots. Supported: [1 - 30].
   pusch_dec_max_iterations: 6               # Optional UINT (6). Sets the number of PUSCH LDPC decoder iterations. Format: Positive integer greater than 0.
@@ -451,6 +458,7 @@ log:
   cu_level: warning                     # Optional TEXT (warning). Sets CU log level.
   sec_level: warning                    # Optional TEXT (warning). Sets security functions level.
   lib_level: warning                    # Optional TEXT (warning). Sets generic log level.
+  e2ap_level: warning                   # Optional TEXT (warning). Sets E2AP log level.
   config_level: none                    # Optional TEXT (none). Sets the config log level. 
   metrics_level: none                   # Optional TEXT (none). Sets the metrics log level.
   hex_max_size: 0                       # Optional UINT (0). Sets maximum number of bytes to print for hex messages. Supported: [0 - 1024]
@@ -470,6 +478,8 @@ pcap:
   e1ap_enable: false                    # Optional BOOLEAN (false). Enable/disable E1AP packet capture. Supported: [false, true].
   f1ap_filename: /tmp/gnb_f1ap.pcap     # Optional TEXT (/tmp/gnb_f1ap.pcap). Path for F1AP PCAPs. 
   f1ap_enable: false                    # Optional BOOLEAN (false). Enable/disable F1AP packet capture. Supported: [false, true].
+  f1u_filename: /tmp/gnb_f1u.pcap       # Optional TEXT (/tmp/gnb_f1ap.pcap). Path for F1AP PCAPs. 
+  f1u_enable: false                     # Optional BOOLEAN (false). Enable/disable F1AP packet capture. Supported: [false, true].
   rlc_filename: /tmp/gnb_rlc.pcap       # Optional TEXT (tmp/gnb_rlc.pcap). Path for RLC PCAPs. 
   rlc_rb_type: all                      # Optional TEXT. Sets the RLC PCAP RB type. Supported: [all, srb, drb].
   rlc_enable: false                     # Optional BOOLEAN (false). Enable/disable RLC packet capture. Supported: [false, true].  
@@ -478,8 +488,6 @@ pcap:
   mac_enable: false                     # Optional BOOLEAN (false). Enable/disable MAC packet capture. Supported: [false, true].
   e2ap_filename: /tmp/gnb_e2ap.pcap     # Optional TEXT (/tmp/gnb_e2ap.pcap). Path for E2AP PCAPs. 
   e2ap_enable: false                    # Optional BOOLEAN (false). Enable/disable E2AP packet capture. Supported: [false, true].
-  gtpu_filename: /tmp/gnb_gtpu.pcap     # Optional TEXT (/tmp/gnb_gtpu.pcap). Path for GTPU PCAPs. 
-  gtpu_enable: false                    # Optional BOOLEAN (false). Enable/disable GTPU packet capture. Supported: [false, true].
 
 metrics: 
   rlc_report_period: 1000               # Optional UINT (1000). Sets the RLC metrics report period in milliseconds. Supported [0 - inf]
@@ -488,7 +496,7 @@ metrics:
   cu_cp_statistics_report_period: 1     # Optional UINT (1). Sets the CU-CP statistics report period in seconds. Set this value to 0 to disable this feature. Supported: [0 - inf]. 
   cu_up_statistics_report_period: 1     # Optional UINT (1). Sets the CU-UP statistics report period in seconds. Set this value to 0 to disable this feature. Supported: [0 - inf]. 
   enable_json_metrics: false            # Optional BOOLEAN (false). Enables JSON metrics reporting. Supported: [false, true].
-  addr:                                 # Optional TEXT:IPV4. Sets the metrics address. Supported: IPV4 address. 
+  addr: 127.0.0.1                       # Optional TEXT:IPV4 (127.0.0.1). Sets the metrics address. Supported: IPV4 address. 
   port: 55555                           # Optional UINT. Sets the metrics UPD port. Supported: [0 - 65535].
   autostart_stdout_metrics: false       # Optional BOOLEAN (false). Sets whether or note to autostart stdout metrics reporting. Supported [false, true]. 
-  std_metrics_period:                   # Optional UINT (1). Sets the DU statistics report period in milliseconds. This metrics sets the console output period. Supported: [0 - inf]. 
+  stdout_metrics_period:                # Optional UINT (1). Sets the DU statistics report period in milliseconds. This metrics sets the console output period. Supported: [0 - inf]. 
