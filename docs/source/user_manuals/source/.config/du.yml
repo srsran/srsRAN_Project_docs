@@ -211,8 +211,8 @@ cell_cfg:
     olla_max_cqi_offset: 4                  # Optional FLOAT (4). Sets the maximum offset that the Outer-loop link adaptation (OLLA) can apply to CQI. Supported: positive float. 
     dc_offset:                              # Optional TEXT. Sets the direct Current (DC) Offset in number of subcarriers, using the common SCS as reference for carrier spacing, and the center of the gNB DL carrier as DC offset value 0. The user can additionally 
                                             # set "outside" to define that the DC offset falls outside the DL carrier or "undetermined" in the case the DC offset is unknown. Supported: [-1650 - 1649] OR [outside,undetermined,center]. 
-    harq_la_cqi_drop_threshold:             # Optional UINT. Sets the link Adaptation (LA) threshold for drop in CQI of the first HARQ transmission above which HARQ retransmissions are cancelled. Set this value to 0 to disable this feature. Supported: [0 - 15]. 
-    harq_la_ri_drop_threshold:              # Optional UINT. Sets the link Adaptation (LA) threshold for drop in nof. layers of the first HARQ transmission above which HARQ retransmission is cancelled. Set this value to 0 to disable this feature. Supported: [0 - 4]. 
+    harq_la_cqi_drop_threshold: 3           # Optional UINT (3). Sets the link Adaptation (LA) threshold for drop in CQI of the first HARQ transmission above which HARQ retransmissions are cancelled. Set this value to 0 to disable this feature. Supported: [0 - 15]. 
+    harq_la_ri_drop_threshold: 1            # Optional UINT (1). Sets the link Adaptation (LA) threshold for drop in nof. layers of the first HARQ transmission above which HARQ retransmission is cancelled. Set this value to 0 to disable this feature. Supported: [0 - 4]. 
     dmrs_additional_position: 2             # Optional UINT (2). Sets the PDSCH DMRS additional position. Supported: [0 - 3].
 
   pusch: 
@@ -238,25 +238,26 @@ cell_cfg:
     olla_snr_inc_step: 0.001                # Optional FLOAT (0.001). Sets the outer-loop link adaptation (OLLA) increment value. The value 0 means that OLLA is disabled. Supported: [0 - 1].
     olla_target_bler: 0.01                  # Optional FLOAT (0.01). Sets the target UL BLER set in Outer-loop link adaptation (OLLA) algorithm. sUPPORTED: [0 - 0.5]. 
     olla_max_snr_offset: 5                  # Optional FLOAT (5). Sets the maximum offset that the Outer-loop link adaptation (OLLA) can apply to estimate the UL SNR. Supported: positive float.
-    dmrs_additional_position:               # Optional UINT. Sets the PUSCH DMRS additional position. Supported: [0 - 3].
+    dmrs_additional_position: 2             # Optional UINT (2). Sets the PUSCH DMRS additional position. Supported: [0 - 3].
     min_rb_size: 1                          # Optional UINT (1). Sets the minimum RB size for the UE PUSCH resource allocation. Supported: [1 - 275].
     max_rb_size: 275                        # Optional UINT (275). Sets the maximum RB size for the UE PUSCH resource allocation. Supported: [1 - 275].
-    start_rb: 0                             # Optional UINT (0). Sets the start RB for resource allocation of UE PUSCHs. Supported [0 - 275].
-    end_rb: 275                             # Optional UINT (275). Sets the end RB for resource allocation of UE PUSCHs. Supported [0 - 275].
+    start_rb: 0                             # Optional UINT (0). Sets the start RB for resource allocation of UE PUSCHs. Supported: [0 - 275].
+    end_rb: 275                             # Optional UINT (275). Sets the end RB for resource allocation of UE PUSCHs. Supported: [0 - 275].
   
   pucch: 
+    pucch_resource_common: 11               # Optional UINT (11). Index of PUCCH resource set for the common configuration. Supported: [0 - 15]. 
+    use_format_0: false                     # Optional BOOLEAN (false). Enables the use of Format 0 for PUCCH resources from resource set 0. Supported: [false, true].
     p0_nominal: -90                         # Optional UINT (-90). Sets the power control parameter P0 for PUCCH transmissions in dBm. Supported: multiples of 2 and within the [-202, 24] interval.
     sr_period_ms: 20                        # Optional UINT (20). Sets the SR period in milliseconds. Supported: [1,2,4,8,10,16,20,40,80,160,320].
-    f1_nof_ue_res_harq: 8                   # Optional UINT (8). Sets the number of PUCCH F1 resources available per UE for HARQ. Supported: [1 - 8].
-    f1_nof_cell_res_sr: 8                   # Optional UINT (8). Sets the number of PUCCH F1 resources available per cell for SR. Supported: [1 - 50].
-    f1_nof_symbols: 14                      # Optional UINT (14). Sets the number of symbols for PUCCH F1 resources. Supported: [4 - 14].
+    f0_intraslot_freq_hop: false            # Optional BOOLEAN (false). Enables intra-slot frequency hopping for PUCCH F0. Supported: [false, true].
+    f0_or_f1_nof_ue_res_harq: 8             # Optional UINT (8). Sets the number of PUCCH F1 resources available per UE for HARQ. Supported: [1 - 8].
+    f0_or_f1_nof_cell_res_sr: 8             # Optional UINT (8). Sets the number of PUCCH F0 or F1 resources available per cell for SR. Supported: [1 - 50].
     f1_enable_occ: true                     # Optional BOOLEAN (true). Enables OCC for PUCCH F1. Supported: [false, true].
     f1_nof_cyclic_shifts: 2                 # Optional UINT (2). Sets the number of possible cyclic shifts available for PUCCH F1 resources. Supported: [1,2,3,4,6,12].
     f1_intraslot_freq_hop: false            # Optional BOOLEAN (false). Enables intra-slot frequency hopping for PUCCH F1. Supported: [false, true].
     nof_cell_harq_pucch_res_sets: 2         # Optional UINT (2). Sets the number of separate PUCCH resource sets for HARQ-ACK that are available in the cell. The higher the number of sets, the lower the chances UEs have to share the same PUCCH resources. Supported: [1 - 10].
     f2_nof_ue_res_harq: 6                   # Optional UINT (6). Sets the number of PUCCH F2 resources available per UE for HARQ. Supported: [1 - 8].
     f2_nof_cell_res_csi: 8                  # Optional UINT (8). Sets the number of PUCCH F2 resources available per cell for CSI. Supported: [0 - 50].
-    f2_nof_symbols: 2                       # Optional UINT (2). Sets the number of symbols for PUCCH F2 resources. Supported: [1 - 2].
     f2_max_nof_rbs: 1                       # Optional UINT (1). Sets the max number of RBs for PUCCH F2 resources. Supported: [1 - 16].
     f2_max_payload:                         # Optional INT. Sets the max number of payload bits for PUCCH F2 resources. Supported [1 - 11].
     f2_max_code_rate: dot35                 # Optional TEXT (dot35). Sets the PUCCH F2 max code rate. Supported: [dot08, dot15, dot25, dot35, dot45, dot60, dot80].
