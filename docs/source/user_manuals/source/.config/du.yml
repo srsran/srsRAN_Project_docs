@@ -24,14 +24,14 @@ nru:                                # Interface between CU and CU-UP
 
 e2: 
   enable_du_e2: false                   # Optional BOOLEAN (false). Enables the DU E2 agent. Supported: [false, true].
-  addr:                                 # Optional TEXT. Sets the RIC IP address.
+  addr: 127.0.0.1                       # Optional TEXT (127.0.0.1). Sets the RIC IP address.
   port: 36421                           # Optional UINT (36421). Sets the RIC Port. Supported: [20000 - 40000].
-  bind_addr:                            # Optional TEXT. Sets the local IP address to bind for RIC connection. Supported: IPv4 address.
-  sctp_rto_initial:                     # Optional INT. Sets the initial retransmission timeout when creating the SCTP connection.
-  sctp_rto_min:                         # Optional INT. Sets the minimum retransmission timeout for the SCTP connection.
-  sctp_rto_max:                         # Optional INT. Sets the maximum retransmission timeout for the SCTP connection.
-  sctp_initial_max_attempts:            # Optional INT. Sets the maximum retransmission attempts for the initial SCTP connection.
-  sctp_max_init_timeo:                  # Optional INT. Sets the maximum retransmission timeout for the initial SCTP connection.
+  bind_addr: 127.0.0.1                  # Optional TEXT (127.0.0.1). Sets the local IP address to bind for RIC connection. Supported: IPv4 address.
+  sctp_rto_initial: 120                 # Optional INT (120). Sets the initial retransmission timeout when creating the SCTP connection.
+  sctp_rto_min: 120                     # Optional INT (120). Sets the minimum retransmission timeout for the SCTP connection.
+  sctp_rto_max: 500                     # Optional INT (500). Sets the maximum retransmission timeout for the SCTP connection.
+  sctp_initial_max_attempts: 3          # Optional INT (3). Sets the maximum retransmission attempts for the initial SCTP connection.
+  sctp_max_init_timeo: 500              # Optional INT (500). Sets the maximum retransmission timeout for the initial SCTP connection.
   e2sm_kpm_enabled: false               # Optional BOOLEAN (false). Enabled the E2SM KPM service module. Supported: [false, true].
   e2sm_rc_enabled: false                # Optional BOOLEAN (false). Enabled the E2SM RC service module. Supported: [false, true].
 
@@ -132,6 +132,7 @@ fapi:
 
 cell_cfg: 
   pci: 1                                # Required UINT (1). Sets the Physical Cell ID. Supported: [0-1007].
+    sector_id: 0                          # Optional UINT (0). Sets the Sector ID (4-14 bits). This value is concatenated with the gNB Id to form the NR Cell Identity (NCI). If not specified, a unique value for the DU is automatically derived. Supported: [0 - 16383].
   dl_arfcn: 536020                      # Required UINT (536020). Sets the Downlink ARFCN.
   band: auto                            # Optional TEXT (auto). Sets the NR band being used for the cell. If not specified, will be set automatically based on ARFCN. Supported: all release 17 bands.
   common_scs: 15                        # Required UINT (15). Sets the subcarrier spacing in KHz to be used by the cell. Supported: [15, 30].
@@ -143,7 +144,8 @@ cell_cfg:
   q_rx_lev_min: -70                     # Optional INT (-70). Sets the required minimum received RSRP level for cell selection/re-selection, in dBm. Supported: [-70 - -22].
   q_qual_min: -20                       # Optional INT (-20). Sets the required minimum received RSRQ level for cell selection/re-selection, in dB. Supported: [-43 - -12].
   pcg_p_nr_fr1: 10                      # Optional INT (10). Sets the maximum total TX power to be used by the UE in this NR cell group across in FR1. Supported: [-30 - +23].
-
+  slicing:                              # Optional TEXT. Configure the network slicing configuration. 
+  
   mac_cell_group:
     bsr_cfg:                                # Buffer status report configuration parameters
       periodic_bsr_timer: 10                    # Optional UINT (10). Sets the periodic Buffer Status Report Timer value in nof. subframes. Value 0 equates to infinity. Supported: [1, 5, 10, 16, 20, 32, 40, 64, 80, 128, 160, 320, 640, 1280, 2560, 0]. 
@@ -248,6 +250,7 @@ cell_cfg:
     pucch_resource_common: 11               # Optional UINT (11). Index of PUCCH resource set for the common configuration. Supported: [0 - 15]. 
     use_format_0: false                     # Optional BOOLEAN (false). Enables the use of Format 0 for PUCCH resources from resource set 0. Supported: [false, true].
     p0_nominal: -90                         # Optional UINT (-90). Sets the power control parameter P0 for PUCCH transmissions in dBm. Supported: multiples of 2 and within the [-202, 24] interval.
+    pucch_resource_common: 11               # Optional UINT (11). Sets the index of PUCCH resource used for the common configuration. Supported: [0 - 15].
     sr_period_ms: 20                        # Optional UINT (20). Sets the SR period in milliseconds. Supported: [1,2,4,8,10,16,20,40,80,160,320].
     f0_intraslot_freq_hop: false            # Optional BOOLEAN (false). Enables intra-slot frequency hopping for PUCCH F0. Supported: [false, true].
     f0_or_f1_nof_ue_res_harq: 8             # Optional UINT (8). Sets the number of PUCCH F1 resources available per UE for HARQ. Supported: [1 - 8].

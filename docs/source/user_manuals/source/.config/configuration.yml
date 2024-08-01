@@ -200,6 +200,7 @@ fapi:
 
 cell_cfg: 
   pci: 1                                # Required UINT (1). Sets the Physical Cell ID. Supported: [0-1007].
+  sector_id: 0                          # Optional UINT (0). Sets the Sector ID (4-14 bits). This value is concatenated with the gNB Id to form the NR Cell Identity (NCI). If not specified, a unique value for the DU is automatically derived. Supported: [0 - 16383].
   dl_arfcn: 536020                      # Required UINT (536020). Sets the Downlink ARFCN.
   band: auto                            # Optional TEXT (auto). Sets the NR band being used for the cell. If not specified, will be set automatically based on ARFCN. Supported: all release 17 bands.
   common_scs: 15                        # Required UINT (15). Sets the subcarrier spacing in KHz to be used by the cell. Supported: [15, 30].
@@ -211,6 +212,7 @@ cell_cfg:
   q_rx_lev_min: -70                     # Optional INT (-70). Sets the required minimum received RSRP level for cell selection/re-selection, in dBm. Supported: [-70 - -22].
   q_qual_min: -20                       # Optional INT (-20). Sets the required minimum received RSRQ level for cell selection/re-selection, in dB. Supported: [-43 - -12].
   pcg_p_nr_fr1: 10                      # Optional INT (10). Sets the maximum total TX power to be used by the UE in this NR cell group across in FR1. Supported: [-30 - +23].
+  slicing:                              # Optional TEXT. Configure the network slicing configuration. 
 
   mac_cell_group:
     bsr_cfg:                                # Buffer status report configuration parameters
@@ -316,6 +318,7 @@ cell_cfg:
     pucch_resource_common: 11               # Optional UINT (11). Index of PUCCH resource set for the common configuration. Supported: [0 - 15]. 
     use_format_0: false                     # Optional BOOLEAN (false). Enables the use of Format 0 for PUCCH resources from resource set 0. Supported: [false, true].
     p0_nominal: -90                         # Optional UINT (-90). Sets the power control parameter P0 for PUCCH transmissions in dBm. Supported: multiples of 2 and within the [-202, 24] interval.
+    pucch_resource_common: 11               # Optional UINT (11). Sets the index of PUCCH resource used for the common configuration. Supported: [0 - 15].
     sr_period_ms: 20                        # Optional UINT (20). Sets the SR period in milliseconds. Supported: [1,2,4,8,10,16,20,40,80,160,320].
     f0_intraslot_freq_hop: false            # Optional BOOLEAN (false). Enables intra-slot frequency hopping for PUCCH F0. Supported: [false, true].
     f0_or_f1_nof_ue_res_harq: 8             # Optional UINT (8). Sets the number of PUCCH F1 resources available per UE for HARQ. Supported: [1 - 8].
@@ -393,6 +396,12 @@ buffer_pool:
   segment_size: 2048                    # Optional UINT (2048). Sets the size of each buffer pool segment in bytes. 
 
 test_mode: 
+  enable: false                          # Optional BOOLEAN (false). Set to true to enable CU-UP test mode. Supported: [true, false].
+  integrity_enable: false                # Optional BOOLEAN (false). Set to true to enable PDCP integrity testing. Supported: [true, false].
+  ciphering_enable: false                # Optional BOOLEAN (false). Set to true to enable PDCP ciphering testing. Supported: [true, false].
+  nea_algo: 2                            # Optional UINT (2). Sets the NEA algo to use for testing. Supported: [0, 1, 2, 3].
+  nia_algo: 2                            # Optional UINT (2). Sets the NIA algo to use for testing. Supported: [1, 2, 3].
+
   test_ue: 
     rnti: 0                               # Optional ENUM (0). Sets the C-RNTI of the UE. Supported: [0 - 65519].
     nof_ues: 1                            # Optonal UINT (1). Sets the number of test UE(s) created. Supported [0 - 1024].
@@ -421,6 +430,7 @@ expert_execution:
     low_priority_cpus:                    # Optional TEXT. Sets the CPU core(s) assigned to low priority tasks. Supported: [1, 2, 3 , ..., N].
     low_priority_pinning:                 # Optional TEXT. Sets the policy used for assigning CPU cores to low priority tasks.
     isolated_cpus:                        # Optional TEXT. Sets the CPU core(s) isolated for the gNB application. Supported: [1, 2, 3 , ..., N].
+    ru_timing_cpu:                        # Optional TEXT. Sets the CPU used for timing in the Radio Unity. 
   threads: 
     non_rt: 
       nof_non_rt_threads: 4                   # Optional UINT (4). Sets the number of non real time threads for processing of CP and UP data in upper layers. 

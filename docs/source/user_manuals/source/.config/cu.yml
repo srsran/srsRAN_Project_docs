@@ -74,7 +74,7 @@ cu_cp:
 
   f1ap: 
     bind_addr: 127.0.10.1                    # Optional TEXT (127.0.10.1). Sets the bind address used by the F1-C interface. 
-    ue_context_setup_timeout: 1000           # Optional INT (1000). Sets the UE context setup timeout in milliseconds. 
+    procedure_timeout: 1000                  # Optional INT (1000). Sets the time that the F1AP waits for the DU to respond in milliseconds. 
 
 cu_up: 
   gtpu_queue_size: 2048                # Optional INT (2048). Sets the GTP-U queue size, in PDUs.
@@ -89,6 +89,13 @@ cu_up:
 buffer_pool: 
   nof_segments: 1048576                 # Optional UINT (1048576). Sets the number of segments allocated by the buffer pool. 
   segment_size: 2048                    # Optional UINT (2048). Sets the size of each buffer pool segment in bytes. 
+
+test_mode: 
+  enable: false                          # Optional BOOLEAN (false). Set to true to enable CU-UP test mode. Supported: [true, false].
+  integrity_enable: false                # Optional BOOLEAN (false). Set to true to enable PDCP integrity testing. Supported: [true, false].
+  ciphering_enable: false                # Optional BOOLEAN (false). Set to true to enable PDCP ciphering testing. Supported: [true, false].
+  nea_algo: 2                            # Optional UINT (2). Sets the NEA algo to use for testing. Supported: [0, 1, 2, 3].
+  nia_algo: 2                            # Optional UINT (2). Sets the NIA algo to use for testing. Supported: [1, 2, 3].
 
 log: 
 # All gNB layers and components can be configured independently to output at various levels of detail. Logs can be configured to the following levels (from lowest to highest levels of detail):
