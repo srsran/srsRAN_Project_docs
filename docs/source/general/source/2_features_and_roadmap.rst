@@ -18,7 +18,6 @@ Current Features
  * Support for QAM-256
  * 4x4 MIMO
  * Slicing 
- * HW Acceleration Support
  * NTN GEO support
  * CU-DU Split
 
