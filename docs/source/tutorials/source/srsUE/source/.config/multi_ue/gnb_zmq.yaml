@@ -30,7 +30,9 @@ cell_cfg:
       dci_format_0_1_and_1_1: false # Set correct DCI format (fallback)
   prach:
     prach_config_index: 1           # Sets PRACH config to match what is expected by srsUE
-    total_nof_ra_preambles: 63      # Sets number of available PRACH preambles
+    total_nof_ra_preambles: 64      # Sets number of available PRACH preambles
+    nof_ssb_per_ro: 1               # Sets the number of SSBs per RACH occasion.
+    nof_cb_preambles_per_ssb: 64    # Sets the number of contention based preambles per SSB.
 
 cu_cp:
   inactivity_timer: 7200            # Sets the UE/PDU Session/DRB inactivity timer to 7200 seconds. Supported: [1 - 7200].

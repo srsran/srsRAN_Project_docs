@@ -800,7 +800,9 @@ In addition, the total number of available PRACH preambles was set to 63 to miti
 
     prach:
       prach_config_index: 1           # Sets PRACH config to match what is expected by srsUE
-  +   total_nof_ra_preambles: 63      # Sets number of available PRACH preambles 
+  +   total_nof_ra_preambles: 64      # Sets number of available PRACH preambles
+  +   nof_ssb_per_ro: 1               # Sets the number of SSBs per RACH occasion.
+  +   nof_cb_preambles_per_ssb: 64    # Sets the number of contention based preambles per SSB.
 
 
 srsUE
