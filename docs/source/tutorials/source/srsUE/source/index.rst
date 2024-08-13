@@ -105,7 +105,7 @@ Next, we have to configure the RF front-end device::
   ru_sdr:
     device_driver: uhd                # The RF driver name.
     device_args: type=b200            # Optionally pass arguments to the selected RF driver.
-    #sync: external                   # If using a reference clock, uncomment this line. 
+    clock: external                   # Use external reference clock with USRP B210.
     srate: 23.04                      # RF sample rate might need to be adjusted according to selected bandwidth.
     tx_gain: 75                       # Transmit gain of the RF might need to adjusted to the given situation.
     rx_gain: 75                       # Receive gain of the RF might need to adjusted to the given situation.
@@ -144,7 +144,7 @@ First, the following parameters need to be changed under the **[rf]** options so
   nof_antennas = 1
 
   device_name = uhd
-  #device_args = sync=external       # If using a reference clock, uncomment this line.  
+  device_args = clock=external       # Use external reference clock with USRP B210.
   time_adv_nsamples = 300
 
 The next set of changes need to be made to the **[rat.eutra]** options. The LTE carrier is disabled, to force the UE to use a 5G NR carrier:: 
@@ -1079,7 +1079,7 @@ In the srsUE config file, the following parameters have to changed:
   ...
   srate = 30.72e6
   ...
-  device_args = type=x300,addr=X.X.X.X,master_clock_rate=184.32e6,send_frame_size=8000,recv_frame_size=8000,clock=external,sync=external
+  device_args = type=x300,addr=X.X.X.X,master_clock_rate=184.32e6,send_frame_size=8000,recv_frame_size=8000,clock=external
   ...
   [expert]
   lte_sample_rates = true
