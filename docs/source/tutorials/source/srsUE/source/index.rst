@@ -1054,6 +1054,26 @@ In addition, you might need to disable the `ogstun` interface with the following
 
     sudo ifconfig ogstun 0.0.0.0 down
 
+Multiple gNBs connected to a single Docker-based Open5gs
+========================================================
+To connect the 2nd gNB to the same Open5gs running in docker, one need to add a second IP address to the bridge interface connecting to the Open5gs docker container.
+
+1. Get the name of the Open5gs docker bridge:
+
+.. code-block:: bash
+
+    ip -o addr show | grep "10.53.1.1"
+
+2. Add a second IP address to the bridge:
+
+.. code-block:: bash
+
+    sudo ip addr add 10.53.1.3/24 dev BRIDGE_NAME
+
+3. Use the `IP:10.53.1.3` as ``amf.bind_addr`` in the 2nd gNB config.
+
+4. Remember to use different ZMQ ports for the gNB-UE pairs. Also, the UE has to have different IMSI, that need to be added to the Open5gs database. 
+
 
 USRP X300/X310
 ==============
