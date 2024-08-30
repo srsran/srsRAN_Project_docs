@@ -1079,7 +1079,7 @@ If you want to run gnb and srsUE on two host machines, you need to adapt the IP 
 
 Multiple gNBs connected to a single Docker-based Open5gs
 ========================================================
-To connect the 2nd gNB to the same Open5gs running in docker, one need to add a second IP address to the bridge interface connecting to the Open5gs docker container.
+To connect the 2nd gNB to the same Open5gs running in docker, one needs to add a second IP address to the bridge interface connecting to the Open5gs docker container.
 
 1. Get the name of the Open5gs docker bridge:
 
