@@ -1054,6 +1054,29 @@ In addition, you might need to disable the `ogstun` interface with the following
 
     sudo ifconfig ogstun 0.0.0.0 down
 
+Run ZMQ-based setup on two host machines
+========================================
+If you want to run gnb and srsUE on two host machines, you need to adapt the IP addresses used for the ZMQ connection as follows:
+
+1. gNB config:
+
+.. code-block:: yaml
+
+    ru_sdr:
+      device_driver: zmq                # The RF driver name.
+      device_args: tx_port=tcp://0.0.0.0:2000,rx_port=tcp://<UE_PC_IP_ADDRESS>:2001,base_srate=23.04e6
+      ...
+
+2. srsUE config:
+
+.. code-block::
+
+    [rf]
+    ...
+    device_name = zmq
+    device_args = tx_port=tcp://0.0.0.0:2001,rx_port=tcp://<GNB_PC_IP_ADDRESS>:2000,base_srate=23.04e6
+
+
 Multiple gNBs connected to a single Docker-based Open5gs
 ========================================================
 To connect the 2nd gNB to the same Open5gs running in docker, one need to add a second IP address to the bridge interface connecting to the Open5gs docker container.
