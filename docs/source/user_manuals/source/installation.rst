@@ -139,18 +139,18 @@ PHY testvectors
 A number of PHY tests are based on MATLAB generated testvectors. By default, those tests are disabled.
 The following steps are required to enable them:
 
-1. Download the `PHY testvector set <https://github.com/srsran/srsRAN_Project/releases>`_.
-2. Copy the PHY testvectors to its location within srsRAN:
+1. Download the latest `PHY testvector set <https://github.com/srsran/srsRAN_Project/releases>`_.
+2. Extract the PHY testvectors to their location within the srsRAN working directory:
 
 .. code-block:: bash
 
-    tar -xzf phy_testvectors.tar.gz -C /path_to_your_local_repository/srsgnb/
+    tar -xf phy_testvectors.tar -C /path_to_your_local_repository/srsRAN_Project
 
-3. Enable the use of PHY testvectors by modifying the root CMakeLists.txt as shown below:
+3. Enable the use of the PHY testvectors by regenerating the CMake build system:
 
 .. code-block:: bash
 
-    option(USE_PHY_TESTVECTORS   "Enable testvector PHY tests"              ON)
+    cmake -B build -DUSE_PHY_TESTVECTORS=ON
 
 4. Rebuild srsRAN Project. 
 
