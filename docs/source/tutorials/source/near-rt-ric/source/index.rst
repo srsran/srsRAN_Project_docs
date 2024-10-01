@@ -416,7 +416,7 @@ If the connection attempt is successful, the following (or similar) will be disp
       .. code-block:: bash
 
         Received message with id = 411, port = 1715 
-        [E2AP] Received SETUP-REQUEST from PLMN   1. 1 Node ID 411 RAN type ngran_gNB
+        [E2AP] Received SETUP-REQUEST from PLMN   1. 1 Node ID 411 RAN type ngran_gNB_DU
         [NEAR-RIC]: Accepting RAN function ID 2 with def = ORAN-E2SM-KPM 
         [iApp]: no xApp connected, no need to generate E42 UPDATE-E2-NODE
 
@@ -609,7 +609,7 @@ xApps
         [LibConf]: NearRT_RIC IP: 127.0.0.1
         [LibConf]: E42_Port Port: 36422
         [LibConf]: Sub_ORAN_SM Name: KPM, Time: 1000
-        [LibConf]: format 1, RAN type ngran_gNB, actions = DRB.UEThpDl DRB.UEThpUl 
+        [LibConf]: format 1, RAN type ngran_gNB_DU, actions = DRB.UEThpDl DRB.UEThpUl
         [LibConf]: xApp_DB enable: 0
         [LibConf]: xApp_DB user: (null), pass: (null)
         [xAap]: Initializing ... 
