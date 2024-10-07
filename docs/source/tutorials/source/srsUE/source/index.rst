@@ -96,9 +96,18 @@ The following changes need to be made to the gNB configuration file.
 
 The gNB has to connect to AMF in the 5G core network, therefore we need to provide two IP addresses::
 
-  amf:
-    addr: 10.53.1.2                  # The address of the AMF. Check Open5GS config -> amf -> ngap -> addr
-    bind_addr: 10.53.1.1             # A local IP that the gNB binds to for traffic from the AMF.
+  cu_cp:
+    amf:
+      addr: 10.53.1.2                 # The address or hostname of the AMF. Check Open5GS config -> amf -> ngap -> addr
+      port: 38412
+      bind_addr: 10.53.1.1            # A local IP that the gNB binds to for traffic from the AMF.
+      supported_tracking_areas:
+        - tac: 7
+          plmn_list:
+            - plmn: "00101"
+              tai_slice_support_list:
+                - sst: 1
+    inactivity_timer: 7200            # Sets the UE/PDU Session/DRB inactivity timer to 7200 seconds. Supported: [1 - 7200].
 
 Next, we have to configure the RF front-end device::
 
