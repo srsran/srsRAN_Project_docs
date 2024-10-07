@@ -372,7 +372,7 @@ NearRT-RIC
 gNB
 ===
 
-We run gNB directly from the build folder (the config file is also located there) with the following command:
+We run gNB directly from the build folder, i.e., ``./srsRAN_Project/build/apps/gnb/``, (the config file is also located there) with the following command:
 
 .. code-block:: bash
 
@@ -429,7 +429,7 @@ First, the correct network namespace must be created for the UE:
 
    sudo ip netns add ue1
 
-Next, we start srsUE. This is also done directly from within the build folder, with the config file in the same location:
+Next, we start srsUE. This is also done directly from within the build folder (i.e., ``/srsRAN_4G/build/srsue/``), with the config file in the same location:
 
 .. code-block:: bash
 

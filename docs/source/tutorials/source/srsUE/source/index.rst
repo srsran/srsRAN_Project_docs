@@ -219,7 +219,7 @@ Note that we have already configured Open5GS to operate correctly with srsRAN Pr
 gNB
 ---
 
-We run gNB directly from the build folder (the config file is also located there) with the following command::
+We run gNB directly from the build folder, i.e., ``./srsRAN_Project/build/apps/gnb/``, (the config file is also located there) with the following command::
 	
 	sudo ./gnb -c ./gnb.yaml
 	
@@ -258,7 +258,7 @@ If the connection attempt is successful, the following (or similar) will be disp
 srsUE
 -----
 
-Finally, we start srsUE. This is also done directly from within the build folder, with the config file in the same location::
+Finally, we start srsUE. This is also done directly from within the build folder (i.e., ``/srsRAN_4G/build/srsue/``), with the config file in the same location::
 
 	sudo ./srsue ue_rf.conf
 
