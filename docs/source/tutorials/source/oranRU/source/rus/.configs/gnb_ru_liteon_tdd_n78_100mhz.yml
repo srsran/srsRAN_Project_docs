@@ -1,6 +1,13 @@
-amf:
-  addr: 127.0.1.100
-  bind_addr: 127.0.0.1
+cu_cp:
+  amf:
+    addr: 127.0.0.10                                            # The address or hostname of the AMF.
+    bind_addr: 127.0.0.1                                        # A local IP that the gNB binds to for traffic from the AMF.
+    supported_tracking_areas:                                   # Configure the TA associated with the CU-CP
+      - tac: 7                        
+        plmn_list:
+          - plmn: "00101"
+            tai_slice_support_list:
+              - sst: 1    
 
 ru_ofh:
   t1a_max_cp_dl: 350

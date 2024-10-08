@@ -195,13 +195,20 @@ Details of the modifications made are outlined in following sections.
 srsRAN Project gNB
 ------------------
 
-Modify the ``amf`` section with IP of AMF and IP to which gNB need to bind in order to connect to AMF:
+Modify the ``amf`` within the ``cu_cp`` section with the IP of AMF and IP to which gNB needs to bind in order to connect to AMF. You will also need to define the TA list for the CU-cp:
 
 .. code-block:: yaml
 
-  amf:
-    addr:      172.22.0.10
-    bind_addr: 172.22.0.1
+  cu_cp:
+    amf:
+      addr: 127.22.0.10                 # The address or hostname of the AMF.
+      bind_addr: 127.22.0.1             # A local IP that the gNB binds to for traffic from the AMF.
+      supported_tracking_areas:         # Configure the TA associated with the CU-CP
+        - tac: 7                        
+          plmn_list:
+            - plmn: "00101"
+              tai_slice_support_list:
+                - sst: 1
 
 Modify the ``ru_sdr`` section with IPs from which gNB sends and receives radio samples via ZMQ driver:
 

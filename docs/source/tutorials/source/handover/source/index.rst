@@ -99,35 +99,44 @@ A ``cells`` list is created containing two cells. Each is given a different Phys
       prach_root_sequence_index: 64       # Set the PRACH root sequence index
 
 The cells and mobility information must also be added to the ``cu_cp``, under the ``mobility`` options. Firstly the ``cells`` list needs to be updated with each of the cells, the ``report_configs`` must also be updated 
-with the necessary information for each of the cells and the conditions for triggering handover. 
+with the necessary information for each of the cells and the conditions for triggering handover. As usual, the ``amf`` is also configured within the ``cu_cp``. 
 
 .. code-block:: yaml
 
   cu_cp:
-  mobility:
-    trigger_handover_from_measurements: true  # Set the CU-CP to trigger handover when neighbor cell measurements arrive
-    cells:                                    # List of cells available for handover known to the cu-cp
-      - nr_cell_id: 0x19B0                      # Cell ID for cell 1 
-        periodic_report_cfg_id: 1               # 
-        ncells:                                 # Neighbor cell(s) available for handover
-          - nr_cell_id: 0x19B1                    # Cell ID of neighbor cell available for handover
-            report_configs: [ 1 ]                 # Report configurations to configure for this neighbor cell
-      - nr_cell_id: 0x19B1                      # Cell ID for cell 2
-        periodic_report_cfg_id: 1               #
-        ncells:                                 # Neighbor cell(s) available for handover 
-          - nr_cell_id: 0x19B0                    # Cell ID of neighbor cell available for handover
-            report_configs: [ 1 ]                 # Report configurations to configure for this neighbor cell
-    report_configs:                           # Sets the report configuration for triggering handover
-      - report_cfg_id: 1                        # Report config ID 1 
-        report_type: periodical                 # Sets the report type as periodical
-        report_interval_ms: 480                 # Sets to report every 480ms 
-      - report_cfg_id: 2                        # Report config ID 2
-        report_type: event_triggered            # Sets the report type as event triggered 
-        a3_report_type: rsrp                    # Sets the A3 report type to RSRP
-        a3_offset_db: 3                         # A3 offset in dB used for measurement report trigger. Note the actual value is field value * 0.5 dB
-        a3_hysteresis_db: 0                     # A3 hysteresis in dB used for measurement report trigger. Note the actual value is field value * 0.5 dB
-        a3_time_to_trigger_ms: 100              # Time in ms during which A3 condition must be met before measurement report trigger
-
+    amf:
+      addr: 127.0.0.10                                            # The address or hostname of the AMF.
+      bind_addr: 127.0.0.1                                        # A local IP that the gNB binds to for traffic from the AMF.
+      supported_tracking_areas:                                   # Configure the TA associated with the CU-CP
+        - tac: 7                        
+          plmn_list:
+            - plmn: "90170"
+              tai_slice_support_list:
+                - sst: 1      
+    mobility:
+      trigger_handover_from_measurements: true  # Set the CU-CP to trigger handover when neighbor cell measurements arrive
+      cells:                                    # List of cells available for handover known to the cu-cp
+        - nr_cell_id: 0x19B0                      # Cell ID for cell 1 
+          periodic_report_cfg_id: 1               # 
+          ncells:                                 # Neighbor cell(s) available for handover
+            - nr_cell_id: 0x19B1                    # Cell ID of neighbor cell available for handover
+              report_configs: [ 1 ]                 # Report configurations to configure for this neighbor cell
+        - nr_cell_id: 0x19B1                      # Cell ID for cell 2
+          periodic_report_cfg_id: 1               #
+          ncells:                                 # Neighbor cell(s) available for handover 
+            - nr_cell_id: 0x19B0                    # Cell ID of neighbor cell available for handover
+              report_configs: [ 1 ]                 # Report configurations to configure for this neighbor cell
+      report_configs:                           # Sets the report configuration for triggering handover
+        - report_cfg_id: 1                        # Report config ID 1 
+          report_type: periodical                 # Sets the report type as periodical
+          report_interval_ms: 480                 # Sets to report every 480ms 
+        - report_cfg_id: 2                        # Report config ID 2
+          report_type: event_triggered            # Sets the report type as event triggered 
+          a3_report_type: rsrp                    # Sets the A3 report type to RSRP
+          a3_offset_db: 3                         # A3 offset in dB used for measurement report trigger. Note the actual value is field value * 0.5 dB
+          a3_hysteresis_db: 0                     # A3 hysteresis in dB used for measurement report trigger. Note the actual value is field value * 0.5 dB
+          a3_time_to_trigger_ms: 100              # Time in ms during which A3 condition must be met before measurement report trigger
+  
 A3 events defined as events when intra-frequency handover should be triggered. In the above configuration the conditions under which such an event 
 should be triggered are set as when the neighbor cell's RSRP measurement is 1.5 dB better than serving cell. The hysteresis is set to 0, which means that handover 
 is triggered when an offset exactly 1.5 dB is met. Once these conditions are met, the UE will handover between the cells. This is true for handover in each direction. 

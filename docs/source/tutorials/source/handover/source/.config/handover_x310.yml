@@ -1,9 +1,39 @@
 gnb_id: 411
 gnb_id_bit_length: 32
 
-amf:
-  addr: 10.53.1.2                  # The address of the AMF. Check Open5GS config -> amf -> ngap -> addr
-  bind_addr: 10.53.1.1             # A local IP that the gNB binds to for traffic from the AMF.
+cu_cp:
+  amf:
+    addr: 127.0.0.10                                            # The address or hostname of the AMF.
+    bind_addr: 127.0.0.1                                        # A local IP that the gNB binds to for traffic from the AMF.
+    supported_tracking_areas:                                   # Configure the TA associated with the CU-CP
+      - tac: 7                        
+        plmn_list:
+          - plmn: "90170"
+            tai_slice_support_list:
+              - sst: 1        
+  mobility:
+    trigger_handover_from_measurements: true                    # Set the CU-CP to trigger handover when neighbor cell measurements arrive
+    cells:                                                      # List of cells available for handover known to the cu-cp
+      - nr_cell_id: 0x19B0                                        # Cell ID for cell 1 
+        periodic_report_cfg_id: 1                                 # 
+        ncells:                                                   # Neighbor cell(s) available for handover
+          - nr_cell_id: 0x19B1                                      # Cell ID of neighbor cell available for handover
+            report_configs: [ 1 ]                                   # Report configurations to configure for this neighbor cell
+      - nr_cell_id: 0x19B1                                        # Cell ID for cell 2
+        periodic_report_cfg_id: 1                                 #
+        ncells:                                                   # Neighbor cell(s) available for handover 
+          - nr_cell_id: 0x19B0                                      # Cell ID of neighbor cell available for handover
+            report_configs: [ 1 ]                                   # Report configurations to configure for this neighbor cell
+    report_configs:                                             # Sets the report configuration for triggering handover
+      - report_cfg_id: 1                                          # Report config ID 1 
+        report_type: periodical                                   # Sets the report type as periodical
+        report_interval_ms: 480                                   # Sets to report every 480ms 
+      - report_cfg_id: 2                                          # Report config ID 2
+        report_type: event_triggered                              # Sets the report type as event triggered 
+        a3_report_type: rsrp                                      # Sets the A3 report type to RSRP
+        a3_offset_db: 3                                           # A3 offset in dB used for measurement report trigger. Note the actual value is field value * 0.5 dB
+        a3_hysteresis_db: 0                                       # A3 hysteresis in dB used for measurement report trigger. Note the actual value is field value * 0.5 dB
+        a3_time_to_trigger_ms: 100                                # Time in ms during which A3 condition must be met before measurement report trigger
 
 ru_sdr:
   device_driver: uhd
@@ -35,31 +65,6 @@ cells:
     pci: 2
     prach:
       prach_root_sequence_index: 64
-
-cu_cp:
-  mobility:
-    trigger_handover_from_measurements: true
-    cells:
-      - nr_cell_id: 0x19B0
-        periodic_report_cfg_id: 1
-        ncells:
-          - nr_cell_id: 0x19B1
-            report_configs: [ 2 ]
-      - nr_cell_id: 0x19B1
-        periodic_report_cfg_id: 1
-        ncells:
-          - nr_cell_id: 0x19B0
-            report_configs: [ 2 ]
-    report_configs:
-      - report_cfg_id: 1
-        report_type: periodical
-        report_interval_ms: 480
-      - report_cfg_id: 2
-        report_type: event_triggered
-        a3_report_type: rsrp
-        a3_offset_db: 3
-        a3_hysteresis_db: 0
-        a3_time_to_trigger_ms: 100
 
 log:
   all_level: warning

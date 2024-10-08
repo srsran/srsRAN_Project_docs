@@ -77,17 +77,23 @@ As previously stated, Open5GS is running bare metal for this example. No configu
 srsCU
 =====
 
-To configure srsCU, the ``amf`` and ``f1ap`` (f1-c) bind addresses must be configured. Unless otherwise specified, setting the f1-c address will also set the f1-u address. The following configuration file shows the minimum requirements to configure srsCU: 
+To configure srsCU, the ``amf`` and ``f1ap`` (f1-c) bind addresses must be configured in the ``cu_up``. Unless otherwise specified, setting the f1-c address will also set the f1-u address. The following configuration file shows the minimum requirements to configure srsCU: 
 
 .. code-block:: yaml
 
-  amf:
-    addr: 127.0.1.100
-    bind_addr: 127.0.10.2
-
   cu_cp:
+    amf:
+      addr: 127.0.0.10                                            # The address or hostname of the AMF.
+      bind_addr: 127.0.0.1                                        # A local IP that the gNB binds to for traffic from the AMF.
+      supported_tracking_areas:                                   # Configure the TA associated with the CU-CP
+        - tac: 7                        
+          plmn_list:
+            - plmn: "90170"
+              tai_slice_support_list:
+                - sst: 1
     f1ap:
-      bind_addr: 127.0.10.1   
+      bind_addr: 127.0.10.1                                       # Configure the F1AP bind address, this will enable the CU-cp to connect to the DU
+
 
 The ``amf`` parameters are specific to the local configuration of the core. If you are running Open5GS via the docker scripts provided with srsRAN Project, your configuration will be different. The same is true if you have 
 made any other local changes to how Open5GS has been configured.  
@@ -101,6 +107,9 @@ To configure srsDU, the ``f1ap`` parameters must be configured, as well as the `
 
   f1ap:
     cu_cp_addr: 127.0.10.1
+    bind_addr: 127.0.10.2
+
+  nru: 
     bind_addr: 127.0.10.2
 
   ru_sdr:

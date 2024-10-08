@@ -2,9 +2,17 @@
 # with the Benetel R550 RU. This config will create a single TDD MIMO cell transmitting in band 78, with 20 MHz bandwidth and 30 kHz sub-carrier-spacing.
 # The parameters used to configure the RU are found in the `ru_ofh` sub-section. This configuration makes used of the OFH Lib from SRS to enable split 7.2.
 gnb_id: 1
-amf:
-  addr: 127.0.1.100                                               # The address or hostname of the AMF.
-  bind_addr: 127.0.0.1                                            # A local IP that the gNB binds to for traffic from the AMF.
+
+cu_cp:
+  amf:
+    addr: 127.0.0.10                                            # The address or hostname of the AMF.
+    bind_addr: 127.0.0.1                                        # A local IP that the gNB binds to for traffic from the AMF.
+    supported_tracking_areas:                                   # Configure the TA associated with the CU-CP
+      - tac: 7                        
+        plmn_list:
+          - plmn: "00101"
+            tai_slice_support_list:
+              - sst: 1    
 
 ru_ofh:
   t1a_max_cp_dl: 500                                              # Maximum T1a on Control-Plane for Downlink in microseconds.

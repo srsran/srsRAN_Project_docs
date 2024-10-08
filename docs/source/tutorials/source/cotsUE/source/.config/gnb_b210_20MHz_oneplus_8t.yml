@@ -4,14 +4,21 @@
 # To run the srsRAN Project gNB with this config, use the following command: 
 #   sudo ./gnb -c gnb_b210_20MHz_oneplus_8t.yaml
 
-amf:
-  addr: 127.0.1.100                                             # The address or hostname of the AMF.
-  bind_addr: 127.0.0.1                                          # A local IP that the gNB binds to for traffic from the AMF.
+cu_cp:
+  amf:
+    addr: 127.0.0.10                                            # The address or hostname of the AMF.
+    bind_addr: 127.0.0.1                                        # A local IP that the gNB binds to for traffic from the AMF.
+    supported_tracking_areas:                                   # Configure the TA associated with the CU-CP
+      - tac: 7                        
+        plmn_list:
+          - plmn: "90170"
+            tai_slice_support_list:
+              - sst: 1
 
 ru_sdr:
   device_driver: uhd                                            # The RF driver name.
   device_args: type=b200,num_recv_frames=64,num_send_frames=64  # Optionally pass arguments to the selected RF driver.
-  clock: external                                               # Specify the clock source used by the RF. NOTE: Set to internal if NOT using an external 10 MHz reference clock.
+  clock: internal                                               # Specify the clock source used by the RF. NOTE: Set to internal if NOT using an external 10 MHz reference clock.
   srate: 23.04                                                  # RF sample rate might need to be adjusted according to selected bandwidth.
   otw_format: sc12
   tx_gain: 80                                                   # Transmit gain of the RF might need to adjusted to the given situation.

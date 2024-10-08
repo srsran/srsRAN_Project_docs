@@ -91,7 +91,7 @@ The gNB is configured using the base configuration example found `here <https://
 
 The configuration has the following modifications from the original example: 
 
-    - Set the clock source of the USRP to ``external``. 
+    - Set the clock source of the USRP to ``internal``. If you are using an external clock source (such as the Leo Bodnar GPSDO) set this to ``external``. 
     - Set the ARFCN of the cell to ``627340``. This ensured the gNB was broadcasting in a free area of spectrum with a BW of 20 MHz in our location.
     - The PLMN is changed to ``90170``. Using the OnePlus 8t, we have found that by forcing a roaming scenario, the phone sees the network and attaches more reliably. A roaming scenario is forced by setting different PLMNs in the cell and the ISIM in the phone.
 
@@ -101,15 +101,22 @@ To configure the connection between the core and the gNB, you need to set the AM
 
 .. code-block:: diff
 
+        cu_cp:
         amf:
-          addr: 127.0.1.100                                             # The address or hostname of the AMF.
-          bind_addr: 127.0.0.1                                          # A local IP that the gNB binds to for traffic from the AMF.
+            addr: 127.0.0.10                                            # The address or hostname of the AMF.
+            bind_addr: 127.0.0.1                                        # A local IP that the gNB binds to for traffic from the AMF.
+            supported_tracking_areas:                                   # Configure the TA associated with the CU-CP
+            - tac: 7                        
+                plmn_list:
+                - plmn: "90170"
+                    tai_slice_support_list:
+                    - sst: 1
 
         ru_sdr:
           device_driver: uhd                                            # The RF driver name.
           device_args: type=b200,num_recv_frames=64,num_send_frames=64  # Optionally pass arguments to the selected RF driver.
     -     clock:                                                        # Specify the clock source used by the RF. 
-    +     clock: external                                               # Set to external as using Leo Bodnar GPSDO as 10 MHz reference. 
+    +     clock: internal                                               # Set to external only if using Leo Bodnar GPSDO as 10 MHz reference. 
           srate: 23.04                                                  # RF sample rate might need to be adjusted according to selected bandwidth.
           otw_format: sc12
           tx_gain: 50                                                   # Transmit gain of the RF might need to adjusted to the given situation.
