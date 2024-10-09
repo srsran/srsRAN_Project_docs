@@ -58,6 +58,7 @@ Useful resources:
    dev_guide/source/software_arch/source/index.rst
    dev_guide/source/code_guide/source/index.rst
    dev_guide/source/testing_policy/source/index.rst
+   dev_guide/source/logging_guide/source/index.rst
 
 .. toctree::
    :maxdepth: 1
