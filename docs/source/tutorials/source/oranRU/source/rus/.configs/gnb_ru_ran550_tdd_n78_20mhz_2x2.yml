@@ -5,7 +5,7 @@ gnb_id: 1
 
 cu_cp:
   amf:
-    addr: 127.0.0.10                                            # The address or hostname of the AMF.
+    addr: 127.0.0.100                                           # The address or hostname of the AMF.
     bind_addr: 127.0.0.1                                        # A local IP that the gNB binds to for traffic from the AMF.
     supported_tracking_areas:                                   # Configure the TA associated with the CU-CP
       - tac: 7                        
@@ -23,15 +23,15 @@ ru_ofh:
   t1a_min_up: 300                                                 # Minimum T1a on User-Plane in microseconds.
   ta4_max: 200                                                    # Maximum Ta4 on User-Plane in microseconds.
   ta4_min: 0                                                      # Minimum Ta4 on User-Plane in microseconds.
-  is_prach_cp_enabled: true                                      # Configures if Control-Plane messages should be used to receive PRACH messages.
+  is_prach_cp_enabled: true                                       # Configures if Control-Plane messages should be used to receive PRACH messages.
   compr_method_ul: bfp                                            # Uplink compression method.
   compr_bitwidth_ul: 9                                            # Uplink IQ samples bitwidth after compression.
   compr_method_dl: bfp                                            # Downlink compression method.
   compr_bitwidth_dl: 9                                            # Downlink IQ samples bitwidth after compression.
   compr_method_prach: bfp                                         # PRACH compression method.
   compr_bitwidth_prach: 9                                         # PRACH IQ samples bitwidth after compression.
-  enable_ul_static_compr_hdr: false                                # Configures if the compression header is present for uplink User-Plane messages (false) or not present (true).
-  enable_dl_static_compr_hdr: false                                # Configures if the compression header is present for downlink User-Plane messages (false) or not present (true).
+  enable_ul_static_compr_hdr: false                               # Configures if the compression header is present for uplink User-Plane messages (false) or not present (true).
+  enable_dl_static_compr_hdr: false                               # Configures if the compression header is present for downlink User-Plane messages (false) or not present (true).
   iq_scaling: 4.5                                                 # IQ samples scaling factor applied before compression, should be a positive value smaller than 10.
   cells:
   - network_interface: enp1s0f1                                   # Ethernet interface name used to communicate with the RU.

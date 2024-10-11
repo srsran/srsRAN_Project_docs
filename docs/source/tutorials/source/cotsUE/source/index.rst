@@ -102,8 +102,8 @@ To configure the connection between the core and the gNB, you need to set the AM
 .. code-block:: diff
 
         cu_cp:
-        amf:
-            addr: 127.0.0.10                                            # The address or hostname of the AMF.
+          amf:
+            addr: 127.0.1.100                                            # The address or hostname of the AMF.
             bind_addr: 127.0.0.1                                        # A local IP that the gNB binds to for traffic from the AMF.
             supported_tracking_areas:                                   # Configure the TA associated with the CU-CP
             - tac: 7                        

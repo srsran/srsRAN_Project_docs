@@ -201,8 +201,8 @@ Modify the ``amf`` within the ``cu_cp`` section with the IP of AMF and IP to whi
 
   cu_cp:
     amf:
-      addr: 127.22.0.10                 # The address or hostname of the AMF.
-      bind_addr: 127.22.0.1             # A local IP that the gNB binds to for traffic from the AMF.
+      addr: 172.22.0.10                 # The address or hostname of the AMF.
+      bind_addr: 172.22.0.1             # A local IP that the gNB binds to for traffic from the AMF.
       supported_tracking_areas:         # Configure the TA associated with the CU-CP
         - tac: 7                        
           plmn_list:

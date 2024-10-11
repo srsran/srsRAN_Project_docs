@@ -83,16 +83,16 @@ To configure srsCU, the ``amf`` and ``f1ap`` (f1-c) bind addresses must be confi
 
   cu_cp:
     amf:
-      addr: 127.0.0.10                                            # The address or hostname of the AMF.
-      bind_addr: 127.0.0.1                                        # A local IP that the gNB binds to for traffic from the AMF.
-      supported_tracking_areas:                                   # Configure the TA associated with the CU-CP
+      addr: 127.0.0.100                                            # The address or hostname of the AMF.
+      bind_addr: 127.0.10.2                                        # A local IP that the gNB binds to for traffic from the AMF.
+      supported_tracking_areas:                                    # Configure the TA associated with the CU-CP
         - tac: 7                        
           plmn_list:
-            - plmn: "90170"
+            - plmn: "00101"
               tai_slice_support_list:
                 - sst: 1
     f1ap:
-      bind_addr: 127.0.10.1                                       # Configure the F1AP bind address, this will enable the CU-cp to connect to the DU
+      bind_addr: 127.0.10.1                                        # Configure the F1AP bind address, this will enable the CU-cp to connect to the DU
 
 
 The ``amf`` parameters are specific to the local configuration of the core. If you are running Open5GS via the docker scripts provided with srsRAN Project, your configuration will be different. The same is true if you have 

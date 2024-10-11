@@ -1,5 +1,5 @@
 gnb_id: 411                         # Optional UINT (411). Sets the numerical ID associated with the gNB.
-gnb_id_bit_length:                  # Optional UNIT. Sets the bit length of the gnb_id above. Format: integer between [22 - 32]
+gnb_id_bit_length: 22               # Optional UNIT (22). Sets the bit length of the gnb_id above. Format: integer between [22 - 32]
 ran_node_name: srsgnb01             # Optional TEXT (srsgnb01). Sets the text ID associated with the gNB. Format: string without spaces.
 gnb_du_id: 0                        # Optional UINT (0). Sets the gNB DU ID. Supported: [0 - 68719476735].
 
@@ -24,7 +24,7 @@ upf:
   bind_interface: auto                  # Optional TEXT. Sets network device to bind for N3 interface. Format: IPV4 or IPV6 IP address.
   ext_addr: auto                        # Optional TEXT. Sets external IP address that is advertised to receive GTP-U packets from UPF via N3 interface. Format: IPV4 or IPV6 IP address.
   udp_max_rx_msgs: 256                  # Optional INT. Sets the maximum amount of messages RX in a single syscall.
-  pool_threshold: 0.9                   # Optional FLOAT. Sets the pool accupancy threshold after which packets are dropped. Supported: [0.0 - 1.0].
+  pool_threshold: 0.9                   # Optional FLOAT. Sets the pool occupancy threshold after which packets are dropped. Supported: [0.0 - 1.0].
   no_core: false                        # Optional BOOLEAN. Setting to true allows the gNB to run without a core. Supported: [0, 1].
 
 e2:
@@ -190,9 +190,9 @@ ru_sdr:
   time_alignment_calibration: auto      # Optional TEXT (auto). Compensates for any reception and transmission time misalignment inherent to the RF device. Positive values reduce the RF transmission delay with respect to the RF reception. Negative values have the opposite effect.
 
   amplitude_control:
-    tx_gain_backoff: 12.0                     # Optional FLOAT (12.0). Sets baseband gain back-off in dB. This accounts for the signal PAPR and is applied regardless of clipping settings. Format: positive float.
-    enable_clipping: false                    # Optional BOOLEAN (false). Sets clipping of the baseband samples on or off. If enabled, samples that exceed the power ceiling are clipped.
-    ceiling: -0.1                             # Optional FLOAT (-0.1). Sets the power ceiling in dB, relative to the full scale amplitude of the radio. Format: negative float or 0.
+    tx_gain_backoff: 12.0                   # Optional FLOAT (12.0). Sets baseband gain back-off in dB. This accounts for the signal PAPR and is applied regardless of clipping settings. Format: positive float.
+    enable_clipping: false                  # Optional BOOLEAN (false). Sets clipping of the baseband samples on or off. If enabled, samples that exceed the power ceiling are clipped.
+    ceiling: -0.1                           # Optional FLOAT (-0.1). Sets the power ceiling in dB, relative to the full scale amplitude of the radio. Format: negative float or 0.
 
   expert_cfg:
     low_phy_dl_throttling: 0                # Optional FLOAT (0). Throttles the lower PHY DL baseband generation. Setting to 0 disables throttling. Supported: any value in the range [0 - 1].
@@ -252,7 +252,7 @@ cell_cfg:
   ul_common:
     p_max:                                  # Optional TEXT. Sets maximum transmit power allowed in this serving cell. Supported: [-30 - +23].
     max_pucchs_per_slot: 31                 # Optional INT (31). Sets the maximum number of PUCCH grants that can be allocated per slot. Supported: [1 - 64].
-    max_ul_grants_per_slot: 32                 # Optional INT (32). Sets the maximum number of UL grants that can be allocated per slot. Supported: [1 - 80].
+    max_ul_grants_per_slot: 32              # Optional INT (32). Sets the maximum number of UL grants that can be allocated per slot. Supported: [1 - 80].
 
   pdcch:
     common:
@@ -400,8 +400,8 @@ expert_phy:
   max_request_headroom_slots: 0             # Optional UINT (0). Sets the maximum request headroom size in slots. Supported: [0 - 3].
 
 buffer_pool:
-  nof_segments: 1048576                 # Optional UINT (1048576). Sets the number of segments allocated by the buffer pool.
-  segment_size: 2048                    # Optional UINT (2048). Sets the size of each buffer pool segment in bytes.
+  nof_segments: 1048576                  # Optional UINT (1048576). Sets the number of segments allocated by the buffer pool.
+  segment_size: 2048                     # Optional UINT (2048). Sets the size of each buffer pool segment in bytes.
 
 test_mode:
   enable: false                          # Optional BOOLEAN (false). Set to true to enable CU-UP test mode. Supported: [true, false].
@@ -411,17 +411,17 @@ test_mode:
   nia_algo: 2                            # Optional UINT (2). Sets the NIA algo to use for testing. Supported: [1, 2, 3].
 
   test_ue:
-    rnti: 0                               # Optional ENUM (0). Sets the C-RNTI of the UE. Supported: [0 - 65519].
-    nof_ues: 1                            # Optonal UINT (1). Sets the number of test UE(s) created. Supported [0 - 1024].
-    auto_ack_indication_delay:            # Optional TEXT. Sets the delay before the UL and DL HARQs are automatically ACKed. This feature should only be used if the UL PHY is not operational.
-    pdsch_active: true                    # Optional BOOLEAN (true). Enables the PDSCH of the UE. Supported: [false, true].
-    pusch_active: true                    # Optional BOOLEAN (true). Enables the PUSCH of the UE. Supported: [false, true].
-    cqi: 15                               # Optional UINT (15). Sets the Channel Quality Information to be forwarded to the test UE. Supported: [1 - 15].
-    pmi: 0                                # Optional UINT (0). Sets the Precoder Matrix Indicator to be forwarded to test UE. Supported: [0 - 3].
-    ri: 1                                 # Optional UINT (1). Sets the Rank Indicator to be forwarded to the test UE. Supported: [1 - 4].
-    i_1_1: 0                              # Optional INT (0). Sets the Precoder Matrix codebook index "i_1_1" to be forwarded to test UE, in the case of more than 2 antennas. Supported: [0 - 7].
-    i_1_3: 0                              # Optional INT (0). Sets the Precoder Matrix codebook index "i_1_3" to be forwarded to test UE, in the case of more than 2 antennas. Supported: [0 - 1].
-    i_2: 0                                # Optional INT (0). Sets the Precoder Matrix codebook index "i_2" to be forwarded to test UE, in the case of more than 2 antennas. Supported: [0 - 3].
+    rnti: 0                                # Optional ENUM (0). Sets the C-RNTI of the UE. Supported: [0 - 65519].
+    nof_ues: 1                             # Optonal UINT (1). Sets the number of test UE(s) created. Supported [0 - 1024].
+    auto_ack_indication_delay:             # Optional TEXT. Sets the delay before the UL and DL HARQs are automatically ACKed. This feature should only be used if the UL PHY is not operational.
+    pdsch_active: true                     # Optional BOOLEAN (true). Enables the PDSCH of the UE. Supported: [false, true].
+    pusch_active: true                     # Optional BOOLEAN (true). Enables the PUSCH of the UE. Supported: [false, true].
+    cqi: 15                                # Optional UINT (15). Sets the Channel Quality Information to be forwarded to the test UE. Supported: [1 - 15].
+    pmi: 0                                 # Optional UINT (0). Sets the Precoder Matrix Indicator to be forwarded to test UE. Supported: [0 - 3].
+    ri: 1                                  # Optional UINT (1). Sets the Rank Indicator to be forwarded to the test UE. Supported: [1 - 4].
+    i_1_1: 0                               # Optional INT (0). Sets the Precoder Matrix codebook index "i_1_1" to be forwarded to test UE, in the case of more than 2 antennas. Supported: [0 - 7].
+    i_1_3: 0                               # Optional INT (0). Sets the Precoder Matrix codebook index "i_1_3" to be forwarded to test UE, in the case of more than 2 antennas. Supported: [0 - 1].
+    i_2: 0                                 # Optional INT (0). Sets the Precoder Matrix codebook index "i_2" to be forwarded to test UE, in the case of more than 2 antennas. Supported: [0 - 3].
 
 expert_execution:
   cell_affinities:                      # Optional TEXT. Sets the cell CPU affinities configuration on a per cell basis. Entry order is the same as the order in the defined cell list.
@@ -480,13 +480,14 @@ log:
   e2ap_level: warning                   # Optional TEXT (warning). Sets E2AP log level.
   config_level: none                    # Optional TEXT (none). Sets the config log level.
   metrics_level: none                   # Optional TEXT (none). Sets the metrics log level.
+  hal_level: warning                    # Optional TEXT (warning). Sets the HAL log level.
   hex_max_size: 0                       # Optional UINT (0). Sets maximum number of bytes to print for hex messages. Supported: [0 - 1024]
   broadcast_enabled: false              # Optional BOOLEAN (false). Enables logging in the PHY and MAC layer of broadcast messages and all PRACH opportunities. Supported: [false, true].
   phy_rx_symbols_filename:              # Optional TEXT. Print received symbols to file. Symbols will be printed if a valid path is set. Format: file path. This file can be used in the srsRAN_matlab project.
   phy_rx_symbols_port: 0                # Optional TEXT. Set to a valid receive port number to dump the IQ symbols from that port only, or set to "all" to dump the IQ symbols from all UL receive ports. Only works if "phy_rx_symbols_filename" is set. Supported: [NON-NEGATIVE or all].
   phy_rx_symbols_prach: false           # Optional BOOLEAN (false). Set to true to dump the IQ symbols from all the PRACH ports. Only works if "phy_rx_symbols_filename" is set. Supported: [false, true].
   tracing_filename:                     # Optional TEXT. Set to a valid file name to enable tracing log.
-  f1ap_json_enabled: false              # Optional BOOLEAN (false). Enables the JSON logging of F1AP PDUs. Supported: [false, true].
+  f1ap_json_enabled: false              # Optional BOOLEAN (false). Enables the JSON logging of F1AP PDUs. Supported: [false, true]. 
 
 pcap:
   ngap_filename: /tmp/gnb_ngap.pcap     # Optional TEXT (/tmp/gnb_ngap.pcap). Path for NGAP PCAPs.
@@ -509,13 +510,13 @@ pcap:
   e2ap_enable: false                    # Optional BOOLEAN (false). Enable/disable E2AP packet capture. Supported: [false, true].
 
 metrics:
-  rlc_report_period: 1000               # Optional UINT (1000). Sets the RLC metrics report period in milliseconds. Supported [0 - inf]
-  rlc_json_enable: false                # Optional BOOLEAN (false). Enable RLC JSON metrics reporting. Supported: [false, true].
-  pdcp_report_period: 0                 # Optional UINT (0). Sets the PDCP metrics report period.
-  cu_cp_statistics_report_period: 1     # Optional UINT (1). Sets the CU-CP statistics report period in seconds. Set this value to 0 to disable this feature. Supported: [0 - inf].
-  cu_up_statistics_report_period: 1     # Optional UINT (1). Sets the CU-UP statistics report period in seconds. Set this value to 0 to disable this feature. Supported: [0 - inf].
-  enable_json_metrics: false            # Optional BOOLEAN (false). Enables JSON metrics reporting. Supported: [false, true].
   addr: 127.0.0.1                       # Optional TEXT:IPV4 (127.0.0.1). Sets the metrics address. Supported: IPV4 address.
   port: 55555                           # Optional UINT. Sets the metrics UPD port. Supported: [0 - 65535].
-  autostart_stdout_metrics: false       # Optional BOOLEAN (false). Sets whether or note to autostart stdout metrics reporting. Supported [false, true].
   stdout_metrics_period:                # Optional UINT (1). Sets the DU statistics report period in milliseconds. This metrics sets the console output period. Supported: [0 - inf].
+  cu_cp_statistics_report_period: 1     # Optional UINT (1). Sets the CU-CP statistics report period in seconds. Set this value to 0 to disable this feature. Supported: [0 - inf].
+  cu_up_statistics_report_period: 1     # Optional UINT (1). Sets the CU-UP statistics report period in seconds. Set this value to 0 to disable this feature. Supported: [0 - inf].
+  pdcp_report_period: 0                 # Optional UINT (0). Sets the PDCP metrics report period.
+  rlc_report_period: 1000               # Optional UINT (1000). Sets the RLC metrics report period in milliseconds. Supported [0 - inf]
+  rlc_json_enable: false                # Optional BOOLEAN (false). Enable RLC JSON metrics reporting. Supported: [false, true].
+  enable_json_metrics: false            # Optional BOOLEAN (false). Enables JSON metrics reporting. Supported: [false, true].
+  autostart_stdout_metrics: false       # Optional BOOLEAN (false). Sets whether or note to autostart stdout metrics reporting. Supported [false, true].
