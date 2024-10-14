@@ -83,7 +83,7 @@ To configure srsCU, the ``amf`` and ``f1ap`` (f1-c) bind addresses must be confi
 
   cu_cp:
     amf:
-      addr: 127.0.0.100                                            # The address or hostname of the AMF.
+      addr: 127.0.1.100                                            # The address or hostname of the AMF.
       bind_addr: 127.0.10.2                                        # A local IP that the gNB binds to for traffic from the AMF.
       supported_tracking_areas:                                    # Configure the TA associated with the CU-CP
         - tac: 7                        
