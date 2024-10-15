@@ -24,5 +24,9 @@ Current Features
 Coming Soon
 ***********
 
- * FR2
+ * CU-CP CU-CP separation 
+ * QoS
+ * Sounding-RS 
+ * FR2, 120 kHz
  * 8-layer MIMO
+ * Carrier aggregation, dual connectivity 

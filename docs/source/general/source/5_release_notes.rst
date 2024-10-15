@@ -3,6 +3,14 @@
 Release Notes
 #############
 
+24.10
+*****
+
+ * Added CU/DU split
+ * Added RAN slicing
+ * Added Compile time selection of split 7 and split 8
+ * Added E2 support in the CU
+
 24.4
 ****
 
