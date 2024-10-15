@@ -12,6 +12,9 @@ The following steps need to be taken in order to download and build the srsRAN P
 
 ----
 
+.. note:: 
+
+    srsRAN Project requires a Linux-based OS, we recommend Ubuntu (22.04 or later).
 
 .. _manual_installation_dependencies: 
 
@@ -21,7 +24,7 @@ Build Tools and Dependencies
 The srsRAN Project uses CMake and C++17. We recommend the following build tools:
 
     - `cmake <https://cmake.org/>`_
-    - `gcc <https://gcc.gnu.org/>`_ (v9.4.0 or later) **OR** `Clang <https://clang.llvm.org/>`_ (v10.0.0 or later)
+    - `gcc <https://gcc.gnu.org/>`_ (v11.4.0 or later) **OR** `Clang <https://clang.llvm.org/>`_ (v14.0.0 or later)
 
 The srsRAN Project has the following necessary dependencies: 
 
@@ -35,7 +38,7 @@ You can install the required build tools and dependencies for various distributi
 
 .. tabs::
 
-    .. tab:: Ubuntu 22.04
+    .. tab:: Ubuntu 22.04 (or later)
 
         .. code-block:: bash
 
@@ -82,11 +85,21 @@ The srsRAN Project uses RF drivers to support different radio types. Currently, 
 Clone and Build
 ***************
 
+srsRAN Project can be built with certain features enabled or disabled. This is done during the build process by using CMake flags and/or by downloading third party dependencies prior to building the code. The following sections outline these various build options. 
+
 .. tabs:: 
 
    .. tab:: Vanilla Installation 
 
       .. include:: installation_vanilla.rst
+
+   .. tab:: Split 7.2 Only Configuration   
+
+      .. include:: installation_split_7_2.rst 
+
+   .. tab:: Split 8 Only Configuration   
+
+      .. include:: installation_split_8.rst 
 
    .. tab:: ZMQ Enabled Installation   
 
