@@ -268,6 +268,7 @@ Enable E2 agents in all DUs and enable E2SM_KPM service module:
   e2:
     enable_du_e2: true                # Enable DU E2 agent (one for each DU instance)
     e2sm_kpm_enabled: true            # Enable KPM service module
+    e2sm_rc_enabled: true             # Enable RC service module
     addr: 127.0.0.1                   # RIC IP address
     port: 36421                       # RIC port
 
