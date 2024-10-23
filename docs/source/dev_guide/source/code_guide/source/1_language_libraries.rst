@@ -14,11 +14,11 @@ for toolchains where this feature is not available.
 
 srsRAN Project is compiled and tested using the following toolchains with the following minimum requirements:
 
-  * GCC 9.4.0
-  * Clang 10.0.0
+  * GCC v11.4.0 (or later)
+  * Clang v14.0.0 (or later)
 
 .. note::
-   We recommend using Ubuntu 22.04, with GCC 11.3.0 and Clang 14.0.0 
+   We recommend using Ubuntu 22.04, with GCC 11.4.0 and Clang 14.0.0 
 
 
 Use of the C++ standard library
