@@ -77,6 +77,9 @@ cell_cfg:
   q_qual_min: -20                       # Optional INT (-20). Sets the required minimum received RSRQ level for cell selection/re-selection, in dB. Supported: [-43 - -12].
   pcg_p_nr_fr1: 10                      # Optional INT (10). Sets the maximum total TX power to be used by the UE in this NR cell group across in FR1. Supported: [-30 - +23].
   slicing:                              # Optional TEXT. Configure network slicing.
+      -                                     # Configure Slice 1
+      sst: 1                                  # Optional UINT (1). Sets the Slice Service Type. Supported: [0 - 255].
+      sd: 0                                   # Optional UINT (0). Sets the Service Differentiator. Supported: [0-16777215].
 
   mac_cell_group:
     bsr_cfg:                                # Buffer status report configuration parameters
