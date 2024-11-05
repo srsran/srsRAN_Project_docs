@@ -79,7 +79,7 @@ cell_cfg:
   slicing:                              # Optional TEXT. Configure network slicing.
       -                                     # Configure Slice 1
       sst: 1                                  # Optional UINT (1). Sets the Slice Service Type. Supported: [0 - 255].
-      sd: 0                                   # Optional UINT (0). Sets the Service Differentiator. Supported: [0-16777215].
+      sd: 0xffffff                            # Optional UINT (0xffffff). Sets the Service Differentiator. Supported: [0-16777215].
 
   mac_cell_group:
     bsr_cfg:                                # Buffer status report configuration parameters

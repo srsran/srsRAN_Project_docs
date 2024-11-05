@@ -115,8 +115,8 @@ cell_cfg:
   slicing:                              # Optional TEXT. Configure network slicing options. This can only be set via the configuration file.
     -                                     # Configure Slice 1
       sst: 1                                  # Optional UINT (1). Sets the Slice Service Type. Supported: [0 - 255].
-      sd: 0                                   # Optional UINT (0). Sets the Service Differentiator. Supported: [0-16777215].
-      
+      sd: 0xffffff                            # Optional UINT (0xffffff). Sets the Service Differentiator. Supported: [0-16777215].
+
   mac_cell_group:
     bsr_cfg:                                # Buffer status report configuration parameters
       periodic_bsr_timer: 10                    # Optional UINT (10). Sets the periodic Buffer Status Report Timer value in nof. subframes. Value 0 equates to infinity. Supported: [1, 5, 10, 16, 20, 32, 40, 64, 80, 128, 160, 320, 640, 1280, 2560, 0].
