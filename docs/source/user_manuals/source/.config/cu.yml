@@ -26,12 +26,15 @@ cu_cp:
     sctp_nodelay: false                   # Optional BOOLEAN. Setting to true allows the gNB to send SCTP messages as soon as possible without any Nagle-like algorithm. Supported: [false, true].
     no_core: false                        # Optional BOOLEAN. Setting to true allows the gNB to run without a core. Supported: [0, 1].
     supported_tracking_areas:             # Required TEXT. Sets the list of tracking areas supported by this AMF.
-      tac: 7                                # Required UINT. Sets the Tracking Area Code.
-      plmn_list:                            # Required TEXT. Sets the list of PLMN items supported for this Tracking Area.
-        plmn: "00101"                         # Required TEXT. Sets the Public Land Mobile Network code. Format: 7-digit PLMN code containing MCC & MNC.
-        tai_slice_support_list:               # Required TEXT. Sets the list of TAI slices for this PLMN item.
-          sst: 1                                # Optional UINT. Sets the Slice Service Type. Supported: [0 - 255].
-          sd:                                   # Optional UINT. Sets the Service Differentiator. Supported: [0-16777215].
+      -                                     # Supported TAC #1
+        tac: 7                                # Required UINT. Sets the Tracking Area Code.
+        plmn_list:                            # Required TEXT. Sets the list of PLMN items supported for this Tracking Area.
+          -                                     # Supported PLMN #1
+            plmn: "00101"                         # Required TEXT. Sets the Public Land Mobile Network code. Format: 7-digit PLMN code containing MCC & MNC.
+            tai_slice_support_list:               # Required TEXT. Sets the list of TAI slices for this PLMN item.
+              -                                     # Supported TAI Slice(s) for PLMN
+                sst: 1                                # Optional UINT. Sets the Slice Service Type. Supported: [0 - 255].
+                sd:                                   # Optional UINT. Sets the Service Differentiator. Supported: [0-16777215].                              # Optional UINT. Sets the Service Differentiator. Supported: [0-16777215].
 
   mobility:
     trigger_handover_from_measurements: false   # Optional BOOLEAN (false). Sets whether or not to start HO if neighbor cells become stronger. Supported: [false, true].
