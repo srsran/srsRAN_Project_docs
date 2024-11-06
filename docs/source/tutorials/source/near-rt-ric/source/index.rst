@@ -129,7 +129,7 @@ For the purpose of presenting the usage of E2 interface exposed by srsRAN Projec
         git checkout br-flexric
         mkdir build
         cd build
-        cmake -DKPM_VERSION=KPM_V3 -DXAPP_DB=NONE_XAPP ../
+        cmake -DKPM_VERSION=KPM_V3_00 -DXAPP_DB=NONE_XAPP ../
         make
         sudo make install
 
