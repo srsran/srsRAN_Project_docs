@@ -5,7 +5,7 @@ cell_cfg:
       - si_period: 16               # Set SIB19 period.
         sib_mapping: 19             # Enable SIB19.
   pucch:
-    sr_period_ms: 320               # Set Scheduling Request period.
+    sr_period_ms: 80                # Set Scheduling Request period.
   csi:
     csi_rs_period: 80               # Set CSI-RS report period.
   pdsch:
