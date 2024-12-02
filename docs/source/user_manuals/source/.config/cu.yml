@@ -21,7 +21,7 @@ cu_cp:
     sctp_rto_initial: 120                 # Optional INT. Sets the initial retransmission timeout when creating the SCTP connection.
     sctp_rto_min: 120                     # Optional INT. Sets the minimum retransmission timeout for the SCTP connection.
     sctp_rto_max: 500                     # Optional INT. Sets the maximum retransmission timeout for the SCTP connection.
-    sctp_initial_max_attempts: 3          # Optional INT. Sets the maximum retransmission attempts for the initial SCTP connection.
+    sctp_init_max_attempts: 3          # Optional INT. Sets the maximum retransmission attempts for the initial SCTP connection.
     sctp_max_init_timeo: 500              # Optional INT. Sets the maximum retransmission timeout for the initial SCTP connection.
     sctp_nodelay: false                   # Optional BOOLEAN. Setting to true allows the gNB to send SCTP messages as soon as possible without any Nagle-like algorithm. Supported: [false, true].
     no_core: false                        # Optional BOOLEAN. Setting to true allows the gNB to run without a core. Supported: [0, 1].
@@ -103,7 +103,7 @@ e2:
   sctp_rto_initial: 120                 # Optional INT. Sets the initial retransmission timeout when creating the SCTP connection.
   sctp_rto_min: 120                     # Optional INT. Sets the minimum retransmission timeout for the SCTP connection.
   sctp_rto_max: 500                     # Optional INT. Sets the maximum retransmission timeout for the SCTP connection.
-  sctp_initial_max_attempts: 3          # Optional INT. Sets the maximum retransmission attempts for the initial SCTP connection.
+  sctp_init_max_attempts: 3          # Optional INT. Sets the maximum retransmission attempts for the initial SCTP connection.
   sctp_max_init_timeo: 500              # Optional INT. Sets the maximum retransmission timeout for the initial SCTP connection.
   e2sm_kpm_enabled: false               # Optional BOOLEAN (false). Enabled the E2SM KPM service module. Supported: [false, true].
   e2sm_rc_enabled: false                # Optional BOOLEAN (false). Enabled the E2SM RC service module. Supported: [false, true].

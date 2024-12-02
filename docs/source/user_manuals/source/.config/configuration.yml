@@ -31,7 +31,7 @@ cu_cp:
     sctp_rto_initial: 120                 # Optional INT. Sets the initial retransmission timeout when creating the SCTP connection.
     sctp_rto_min: 120                     # Optional INT. Sets the minimum retransmission timeout for the SCTP connection.
     sctp_rto_max: 500                     # Optional INT. Sets the maximum retransmission timeout for the SCTP connection.
-    sctp_initial_max_attempts: 3          # Optional INT. Sets the maximum retransmission attempts for the initial SCTP connection.
+    sctp_init_max_attempts: 3          # Optional INT. Sets the maximum retransmission attempts for the initial SCTP connection.
     sctp_max_init_timeo: 500              # Optional INT. Sets the maximum retransmission timeout for the initial SCTP connection.
     sctp_nodelay: false                   # Optional BOOLEAN. Setting to true allows the gNB to send SCTP messages as soon as possible without any Nagle-like algorithm. Supported: [false, true].
     no_core: false                        # Optional BOOLEAN. Setting to true allows the gNB to run without a core. Supported: [0, 1].
@@ -39,7 +39,7 @@ cu_cp:
       -                                     # Supported TAC #1
         tac: 7                                # Required UINT. Sets the Tracking Area Code.
         plmn_list:                            # Required TEXT. Sets the list of PLMN items supported for this Tracking Area.
-          -                                     # Supported PLMN #1
+          -                                     # Sup ported PLMN #1
             plmn: "00101"                         # Required TEXT. Sets the Public Land Mobile Network code. Format: 7-digit PLMN code containing MCC & MNC.
             tai_slice_support_list:               # Required TEXT. Sets the list of TAI slices for this PLMN item.
               -                                     # Supported TAI Slice(s) for PLMN
@@ -315,7 +315,7 @@ e2:
   sctp_rto_initial: 120                 # Optional INT. Sets the initial retransmission timeout when creating the SCTP connection.
   sctp_rto_min: 120                     # Optional INT. Sets the minimum retransmission timeout for the SCTP connection.
   sctp_rto_max: 500                     # Optional INT. Sets the maximum retransmission timeout for the SCTP connection.
-  sctp_initial_max_attempts: 3          # Optional INT. Sets the maximum retransmission attempts for the initial SCTP connection.
+  sctp_init_max_attempts: 3          # Optional INT. Sets the maximum retransmission attempts for the initial SCTP connection.
   sctp_max_init_timeo: 500              # Optional INT. Sets the maximum retransmission timeout for the initial SCTP connection.
   e2sm_kpm_enabled: false               # Optional BOOLEAN (false). Enabled the E2SM KPM service module. Supported: [false, true].
   e2sm_rc_enabled: false                # Optional BOOLEAN (false). Enabled the E2SM RC service module. Supported: [false, true].
@@ -369,7 +369,7 @@ ru_ofh:
   compr_bitwidth_prach: 9               # Optional UINT (9). Sets the PRACH compression bit width. Supported [1 - 16].
   enable_ul_static_compr_hdr: true      # Optional BOOLEAN (true). Uplink static compression header enabled flag. Supported: [false, true].
   enable_dl_static_compr_hdr: true      # Optional BOOLEAN (true). Downlink static compression header enabled flag. Supported: [false, true].
-  iq_scaling: 0.35                      # Optional FLOAT (0.35). Sets the IQ scaling factor. Supported: [0 - 1].
+  iq_scaling: 0.35                      # Optional FLOAT (0.35). Sets the IQ scaling factor. Supported: [0 - 20].
   cells:                                # Optional TEXT. Sets the hardware specific cell configuration on a per cell basis.
     -                                       # Cell 1
       network_interface: enp1s0f0             # Optional TEXT (enp1s0f0). Sets the ethernet network interface name for the RU or PCIe identifier when using DPDK. Format: a string, e.g. [interface_name].
@@ -555,8 +555,8 @@ metrics:
   cu_cp_statistics_report_period: 1     # Optional UINT (1). Sets the CU-CP statistics report period in seconds. Set this value to 0 to disable this feature. Supported: [0 - inf].
   cu_up_statistics_report_period: 1     # Optional UINT (1). Sets the CU-UP statistics report period in seconds. Set this value to 0 to disable this feature. Supported: [0 - inf].
   pdcp_report_period: 0                 # Optional UINT (0). Sets the PDCP metrics report period.
-  rlc_report_period: 1000               # Optional UINT (1000). Sets the RLC metrics report period in milliseconds. Supported [0 - inf]
+  rlc_report_period: 0                  # Optional UINT (0). Sets the RLC metrics report period in milliseconds. Supported [0 - inf]
   rlc_json_enable: false                # Optional BOOLEAN (false). Enable RLC JSON metrics reporting. Supported: [false, true].
   enable_json_metrics: false            # Optional BOOLEAN (false). Enables JSON metrics reporting. Supported: [false, true].
   autostart_stdout_metrics: false       # Optional BOOLEAN (false). Sets whether or note to autostart stdout metrics reporting. Supported [false, true].
-  stdout_metrics_period:                # Optional UINT (1). Sets the DU statistics report period in milliseconds. This metrics sets the console output period. Supported: [0 - inf].
+  sched_report_period: 1000             # Optional UINT (1000). Sets the DU statistics report period in milliseconds. This metric sets the console output period. Supported: [0 - inf].
