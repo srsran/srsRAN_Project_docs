@@ -1,15 +1,15 @@
-.. _tutorials: 
+.. _tutorials:
 
 Tutorials
 #########
 
 .. toctree::
    :maxdepth: 1
-   
+
    srsUE/source/index.rst
    cotsUE/source/index.rst
    amariUE/source/index.rst
-   dpdk/source/index.rst   
+   dpdk/source/index.rst
    k8s/source/index.rst
    handover/source/index.rst
    ntn/source/index.rst
@@ -17,3 +17,4 @@ Tutorials
    oranRU/source/index.rst
    near-rt-ric/source/index.rst
    matlab/source/index.rst
+   tuning/source/index.rst

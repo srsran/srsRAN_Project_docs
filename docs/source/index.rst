@@ -10,7 +10,7 @@ srsRAN Project Documentation
 
 The srsRAN Project is an open-source 5G CU/DU from `SRS <https://www.srs.io>`_.
 
-It is a complete RAN solution compliant with 3GPP and O-RAN Alliance specifications. The srsRAN Project includes the full L1/2/3 stack with minimal external dependencies. The software is portable across processor architectures and 
+It is a complete RAN solution compliant with 3GPP and O-RAN Alliance specifications. The srsRAN Project includes the full L1/2/3 stack with minimal external dependencies. The software is portable across processor architectures and
 scalable from low-power embedded systems to cloudRAN, providing a powerful platform for mobile wireless research and development.
 
 Get started with the srsRAN Project:
@@ -75,11 +75,12 @@ Useful resources:
    tutorials/source/srsUE/source/index.rst
    tutorials/source/cotsUE/source/index.rst
    tutorials/source/amariUE/source/index.rst
-   tutorials/source/dpdk/source/index.rst   
+   tutorials/source/dpdk/source/index.rst
    tutorials/source/k8s/source/index.rst
    tutorials/source/handover/source/index.rst
    tutorials/source/ntn/source/index.rst
    tutorials/source/cu_du_split/source/index.rst
    tutorials/source/oranRU/source/index.rst
    tutorials/source/near-rt-ric/source/index.rst
-   tutorials/source/matlab/source/index.rst   
+   tutorials/source/matlab/source/index.rst
+   tutorials/source/tuning/source/index.rst
