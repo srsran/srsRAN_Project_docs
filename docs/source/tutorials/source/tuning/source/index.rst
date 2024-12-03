@@ -19,7 +19,7 @@ TuneD
 The approach to performance tuning outlined here utilizes `TuneD <https://tuned-project.org/>`_, a system tuning service for Linux that uses ``udev`` to monitor connected devices and 
 dynamically adjust system settings according to user-definable profiles. TuneD provides both static and adaptive tuning capabilities, allowing users to optimize 
 the performance of the system for specific workloads or environments. For that, the user-definable profiles, amongst others, can include ``GRUB`` 
-command-line arguments, CPU tuning parameters and sysf-exposed kernel parameters (``kobject``s).
+command-line arguments, CPU tuning parameters and sysf-exposed kernel parameters (e.g. ``kobject``).
 
 Installation
 ============
