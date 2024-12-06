@@ -11,9 +11,9 @@ cu_cp:
   max_nof_drbs_per_ue:                  # Optional UINT. Maximum number of DRBs per UE. Supported: [1 - 29].
   inactivity_timer: 120                 # Optional INT (120). Sets the UE/PDU Session/DRB inactivity timer in seconds. Supported: [1 - 7200].
   pdu_session_setup_timeout: 3          # Optional INT (3). Timeout for the setup of a PDU session after an InitialUeMessage was sent to the core, in seconds. The timeout must be larger than T310. If the value is reached, the UE will be released
-  load_plugins: false                   # Optional BOOLEAN (false). Attempt to load plugin library to enable srsRAN_Enterprise features.
 
   amf:
+    no_core: false                        # Optional BOOLEAN. Setting to true allows the gNB to run without a core. Supported: [0, 1].
     addr:                                 # Required TEXT. Sets the IP address or hostname of the AMF. Format: IPV4 or IPV6 IP address.
     port: 38412                           # Optional UINT. Sets the AMF port. Format: integer between [20000 - 40000].
     bind_addr: 127.0.0.1                  # Optional TEXT. Sets local IP address to bind for N2 interface. Format: IPV4 or IPV6 IP address.
@@ -24,7 +24,6 @@ cu_cp:
     sctp_init_max_attempts: 3          # Optional INT. Sets the maximum retransmission attempts for the initial SCTP connection.
     sctp_max_init_timeo: 500              # Optional INT. Sets the maximum retransmission timeout for the initial SCTP connection.
     sctp_nodelay: false                   # Optional BOOLEAN. Setting to true allows the gNB to send SCTP messages as soon as possible without any Nagle-like algorithm. Supported: [false, true].
-    no_core: false                        # Optional BOOLEAN. Setting to true allows the gNB to run without a core. Supported: [0, 1].
     supported_tracking_areas:             # Required TEXT. Sets the list of tracking areas supported by this AMF.
       -                                     # Supported TAC #1
         tac: 7                                # Required UINT. Sets the Tracking Area Code.
@@ -96,7 +95,8 @@ cu_up:
     pool_threshold:                       # Optional FLOAT. Sets the pool occupancy threshold after which packets are dropped. Supported: [0 - 1]. 
 
 e2:
-  enable_cu_e2: false                   # Optional BOOLEAN (false). Enables the CU E2 agent for both CU-cp and CU-up. Supported: [false, true]. 
+  enable_cu_cp_e2: false                # Optional BOOLEAN (false). Enables the CU-CP E2 agent. Supported: [false, true]. 
+  enable_cu_up_e2: false                # Optional BOOLEAN (false). Enables the CU-UP E2 agent. Supported: [false, true]. 
   addr: 127.0.0.1                       # Optional TEXT (127.0.0.1). Sets the RIC IP address.
   port: 36421                           # Optional UINT (36421). Sets the RIC Port. Supported: [20000 - 40000].
   bind_addr: 127.0.0.1                  # Optional TEXT (127.0.0.1). Sets the local IP address to bind for RIC connection. Supported: IPv4 address.
@@ -112,6 +112,16 @@ buffer_pool:
   nof_segments: 1048576                 # Optional UINT (1048576). Sets the number of segments allocated by the buffer pool. 
   segment_size: 2048                    # Optional UINT (2048). Sets the size of each buffer pool segment in bytes. 
 
+expert_execution:
+  affinities:
+    isolated_cpus:                        # Optional TEXT. Sets the CPU core(s) isolated for the CU application. Supported: [1, 2, 3 , ..., N].
+    low_priority_cpus:                    # Optional TEXT. Sets the CPU core(s) assigned to low priority tasks. Supported: [1, 2, 3 , ..., N].
+    low_priority_pinning:                 # Optional TEXT. Sets the policy used for assigning CPU cores to low priority tasks.   
+  threads:
+    non_rt:
+      nof_non_rt_threads: 4                   # Optional UINT (4). Sets the number of non real time threads for processing of CP and UP data in upper layers.
+      non_rt_task_queue_size: 2048            # Optional UINT (2048). Sets the non real time task worker queue size. 
+
 test_mode: 
   enable: false                          # Optional BOOLEAN (false). Set to true to enable CU-UP test mode. Supported: [true, false].
   integrity_enable: false                # Optional BOOLEAN (false). Set to true to enable PDCP integrity testing. Supported: [true, false].
@@ -122,12 +132,12 @@ test_mode:
 log: 
 # All gNB layers and components can be configured independently to output at various levels of detail. Logs can be configured to the following levels (from lowest to highest levels of detail):
 # none, error, warning, info, debug
+  metrics_level: none                   # Optional TEXT (none). Sets the metrics log level.
   filename:                             # Optional TEXT (/tmp/gnb.log). File path for logs. Logs can be redirected to stdout by setting the filename to "stdout".
   all_level: warning                    # Optional TEXT (warning). Sets a common log level across PHY, MAC, RLC, PDCP, RRC, SDAP, NGAP and GTPU layers.
   lib_level: warning                    # Optional TEXT (warning). Sets generic log level.
   e2ap_level: warning                   # Optional TEXT (warning). Sets E2AP log level.
   config_level: none                    # Optional TEXT (none). Sets the config log level.
-  metrics_level: none                   # Optional TEXT (none). Sets the metrics log level.
   tracing_filename:                     # Optional TEXT. Set to a valid file name to enable tracing log.
   rrc_level: warning                    # Optional TEXT (warning). Sets RRC log level.
   ngap_level: warning                   # Optional TEXT (warning). Sets NGAP log level.
@@ -142,7 +152,8 @@ log:
   hex_max_size: 0                       # Optional UINT (0). Sets maximum number of bytes to print for hex messages. Supported: [0 - 1024]
 
 pcap: 
-  e2ap_filename: /tmp/gnb_e2ap.pcap     # Optional TEXT (/tmp/gnb_e2ap.pcap). Path for E2AP PCAPs. 
+  e2ap_cu_cp_filename: /tmp/cu_cp_e2ap.pcap # Optional TEXT (/tmp/cu_cp_e2ap.pcap). Path for E2AP CU-CP PCAPs.
+  e2ap_cu_up_filename: /tmp/cu_up_e2ap.pcap # Optional TEXT (/tmp/cu_up_e2ap.pcap). Path for E2AP CU-UP PCAPs. 
   e2ap_enable: false                    # Optional BOOLEAN (false). Enable/disable E2AP packet capture. Supported: [false, true].
   ngap_filename: /tmp/gnb_ngap.pcap     # Optional TEXT (/tmp/gnb_ngap.pcap). Path for NGAP PCAPs. 
   ngap_enable: false                    # Optional BOOLEAN (false). Enable/disable NGAP packet capture. Supported: [false, true].
@@ -150,7 +161,7 @@ pcap:
   f1ap_enable: false                    # Optional BOOLEAN (false). Enable/disable F1AP packet capture. Supported: [false, true].
   n3_filename: /tmp/gnb_n3.pcap         # Optional TEXT (/tmp/gnb_n3.pcap). Path for N3 PCAPs. 
   n3_enable: false                      # Optional BOOLEAN (false). Enable/disable N3 packet capture. Supported: [false, true].
-  f1u_filename: /tmp/gnb_f1u.pcap      # Optional TEXT (/tmp/gnb_f1u.pcap). Path for F1-U (NRU) PCAPs. 
+  f1u_filename: /tmp/gnb_f1u.pcap       # Optional TEXT (/tmp/gnb_f1u.pcap). Path for F1-U (NRU) PCAPs. 
   f1u_enable: false                     # Optional BOOLEAN (false). Enable/disable F1-U (NRU) packet capture. Supported: [false, true].
   e1ap_filename: /tmp/gnb_e1ap.pcap     # Optional TEXT (/tmp/gnb_e1ap.pcap). Path for E1AP PCAPs. 
   e1ap_enable: false                    # Optional BOOLEAN (false). Enable/disable E1AP packet capture. Supported: [false, true].
