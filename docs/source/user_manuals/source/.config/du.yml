@@ -3,6 +3,8 @@ gnb_id: 411                         # Optional UINT (411). Sets the numerical ID
 gnb_id_bit_length:                  # Optional UNIT. Sets the bit length of the gnb_id above. Format: integer between [22 - 32]
 gnb_du_id: 0                        # Optional UINT (0). Sets the gNB DU ID. Supported: [0 - 68719476735].
 
+du_multicell_enabled: false         # Optional BOOLEAN (false). Sets the DU multi-cell enable flag. Supported: [false, true].
+
 cells:                              # Optional TEXT. Sets the cell configuration on a per cell basis, overwriting the default configuration defined by cell_cfg. Contains a list of cells, each with parameters that overwrite the default config. This can only be 
                                     # set via the configuration file. For more information see the relevant example configuration file: gnb_custom_cell_properties.yml. Each list entry should begin with "-".
   - pci: 1                          # Optional TEXT. Override the PCI defined by the default cell in cell_cfg.
@@ -76,13 +78,14 @@ cell_cfg:
   q_rx_lev_min: -70                     # Optional INT (-70). Sets the required minimum received RSRP level for cell selection/re-selection, in dBm. Supported: [-70 - -22].
   q_qual_min: -20                       # Optional INT (-20). Sets the required minimum received RSRQ level for cell selection/re-selection, in dB. Supported: [-43 - -12].
   pcg_p_nr_fr1: 10                      # Optional INT (10). Sets the maximum total TX power to be used by the UE in this NR cell group across in FR1. Supported: [-30 - +23].
-  slicing:                              # Optional TEXT. Configure network slicing.
-      -                                     # Configure Slice 1
+  slicing:                              # Optional TEXT. Configure network slicing options. This can only be set via the configuration file.
+    -                                     # Configure Slice 1
       sst: 1                                  # Optional UINT (1). Sets the Slice Service Type. Supported: [0 - 255].
       sd: 0                                   # Optional UINT (0). Sets the Service Differentiator. Supported: [0-16777215].
       sched_cfg:                              # Scheduler configuration for the slice
         min_prb_policy_ratio: 0                 # Optional UINT (0). Sets the minimum percentage of PRBs to be allocated to the slice. Supported [0 - 100].
         max_prb_policy_ratio: 100               # Optional UINT (100). Sets the maximum percentage of PRBs to be allocated to the slice. Supported [1 - 100].
+
 
   mac_cell_group:
     bsr_cfg:                                # Buffer status report configuration parameters
@@ -161,13 +164,14 @@ cell_cfg:
     max_consecutive_kos: 100                # Optional UINT (100). Sets the maximum number of consecutive CRC KOs before an RLF is reported. Supported: [0 - inf].
     rv_sequence: [0]                        # Optional UINT (0). Sets the redundancy version sequence to use for PUSCH. Supported: any combination of [0, 1, 2, 3].
     mcs_table: qam64                        # Optional TEXT (qam64). Sets the MCS table to use for PUSCH. Supported: [qam64, qam256].
+    max_rank: 4                             # Optional UINT (4). Sets the maximum number of PUSCH transmission layers. The actual maximum is limited by the number of receive ports and UE capabilities. Supported: [0 - 4].
     msg3_delta_preamble: 6                  # Optional INT (6). Sets the MSG3 DeltaPreamble power offset between MS3 and RACH preamble transmission. Supported: [-1 - 6].
     p0_nominal_with_grant: -76              # Optional INT (-76). Sets the P0 value for PUSCH grant (except MSG3), in dBm. Supported: multiples of 2 within the range [-202, 24].
     msg3_delta_power: 8                     # Optional INT (8). Sets the target power level at the network receiver side, in dBm. Supported: multiples of 2 within the range [-6, 8].
     max_puschs_per_slot: 16                 # Optional UINT (16). Sets the maximum number of PUSCH grants per slot. Supprted: [1 - 16].
-    b_offset_ack_idx_1: 9                   # Optional UINT (9). Sets the betaOffsetACK-Index1 part of UCI-OnPUSCH. Supported: [0 - 31].
-    b_offset_ack_idx_2: 9                   # Optional UINT (9). Sets the betaOffsetACK-Index2 part of UCI-OnPUSCH. Supported: [0 - 31].
-    b_offset_ack_idx_3: 9                   # Optional UINT (9). Sets the betaOffsetACK-Index3 part of UCI-OnPUSCH. Supported: [0 - 31].
+    beta_offset_ack_idx_1: 9                   # Optional UINT (9). Sets the betaOffsetACK-Index1 part of UCI-OnPUSCH. Supported: [0 - 31].
+    beta_offset_ack_idx_2: 9                   # Optional UINT (9). Sets the betaOffsetACK-Index2 part of UCI-OnPUSCH. Supported: [0 - 31].
+    beta_offset_ack_idx_3: 9                   # Optional UINT (9). Sets the betaOffsetACK-Index3 part of UCI-OnPUSCH. Supported: [0 - 31].
     beta_offset_csi_p1_idx_1: 9             # Optional UINT (9). Sets the b_offset_csi_p1_idx_1 part of UCI-OnPUSCH. Supported: [0 - 31].
     beta_offset_csi_p1_idx_2: 9             # Optional UINT (9). Sets the b_offset_csi_p1_idx_2 part of UCI-OnPUSCH. Supported: [0 - 31].
     beta_offset_csi_p2_idx_1: 9             # Optional UINT (9). Sets the b_offset_csi_p2_idx_1 part of UCI-OnPUSCH. Supported: [0 - 31].
@@ -183,6 +187,9 @@ cell_cfg:
     max_rb_size: 275                        # Optional UINT (275). Sets the maximum RB size for the UE PUSCH resource allocation. Supported: [1 - 275].
     start_rb: 0                             # Optional UINT (0). Sets the start RB for resource allocation of UE PUSCHs. Supported: [0 - 275].
     end_rb: 275                             # Optional UINT (275). Sets the end RB for resource allocation of UE PUSCHs. Supported: [0 - 275].
+    target_sinr: 10                         # Optional FLOAT (10). Sets the target SINR in dB. Supported: [-5 - 30].
+    ref_path_loss: 70                       # Optional FLOAT (70). Sets the reference path-loss for target PUSCH SINR in dB. Supported: [50 - 120].
+    pl_compensation_factor: 1               # Optional FLOAT (1). Sets the fractional path-loss compensation factor in PUSCH power control. Supported: [0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1].
     enable_transform_precoding: false       # Optional BOOLEAN (false). Enables transform precoding for PUSCH. Supported: [false, true]
 
   pucch:
@@ -224,7 +231,7 @@ cell_cfg:
     preamble_rx_target_pw: -100             # Optional INT (-100). Sets the Target power level at the network receiver side, in dBm. Supported: multiples of 2 within range [-202, -60].
     preamble_trans_max: 7                   # Optional UINT (7). Sets the max number of RA preamble transmissions performed before declaring a failure. Supported: [3, 4, 5, 6, 7, 8, 10, 20, 50, 100, 200].
     power_ramping_step_db: 4                # Optional UINT (4). Sets the power ramping steps for PRACH. Supported: [0, 2, 4 , 6].
-    ports:                                  # Optional UINT. Sets the list of atenna ports. Expected value is a UINT string of antenna port IDs.
+    ports: 0                                # Optional UINT (0). Sets the list of atenna ports. Expected value is a UINT string of antenna port IDs.
     nof_ssb_per_ro: 1                       # Optional FLOAT (1). Sets the number of SSBs per RACH occasion. Supported: [1/8, 1/4, 1/2, 1, 2, 4, 8, 16].
     nof_cb_preambles_per_ssb: 4             # Optional UINT (4). Sets the number of contention based preambles per SSB. Supported: [1 - 64].
     ra_resp_window:                         # Optional UINT. Sets the RA-response window length in number of slots. Supported: {1, 2, 4, 8, 10, 20, 40, 80}.
@@ -264,7 +271,13 @@ cell_cfg:
     ta_sched_cfg:
         ta_measurement_slot_period: 80              # Optional UINT (80). Sets the measurements periodicity in nof. slots over which the new Timing Advance Command is computed.
         ta_cmd_offset_threshold: 1                  # Optional INT (1). Sets the timing Advance Command (T_A) offset threshold above which Timing Advance Command is triggered. If set to less than zero, issuing of TA Command is disabled. Supported: [-1 - 31].
+        ta_target: 0                                # Optional INT (0). Sets the timing advance target in units of TA. Supported: [-30 - 30].
         ta_update_measurement_ul_sinr_threshold: 0  # Optional FLOAT (0). Sets the UL SINR threshold (in dB) above which reported N_TA update measurement is considered valid. 
+
+  drx: 
+    on_duration_timer: 10                   # Optional UINT (10). Sets the minimum duration in milliseconds that the UE stays in active mode, when DRX is configured. Supported: [1, 2, 3, 4, 5, 6, 8, 10, 20, 30, 40, 50, 60, 80, 100, 200, 300, 400, 500, 600, 800, 1000, 1200, 1600]. 
+    inactivity_timer: 0                     # Optional UINT (0). Sets the duration in milliseconds that the UE stays active after PDCCH reception, when DRX is configured. Supported: [0, 1, 2, 3, 4, 5, 6, 8, 10, 20, 30, 40, 50, 60, 80, 100, 200, 300, 500, 750, 1280, 1920, 2560].
+    long_cycle: 0                           # Optional UINT (0). Sets the duration in milliseconds between UE DRX long cycles. The value 0 is used to disable DRX. Supported: [10, 20, 32, 40, 60, 64, 70, 80, 128, 160, 256, 320, 512, 640, 1024, 1280, 2048, 2560, 5120, 10240] OR [0]. 
 
 fapi: 
   l2_nof_slots_ahead: 0                 # Optional UINT (0). Sets the number of slots the L2 is running ahead of the L1. Supported: [0 - 5]. 
@@ -342,7 +355,7 @@ expert_phy:
   pusch_dec_max_iterations: 6               # Optional UINT (6). Sets the number of PUSCH LDPC decoder iterations. Format: Positive integer greater than 0.
   pusch_dec_enable_early_stop: true         # Optional BOOLEAN (true). Enables the PUSCH decoder early stopping mechanism.
   pusch_sinr_calc_method: post_equalization # Optional TEXT (evm). Sets the PUSCH SINR calculation method. Supported: [channel_estimator, post_equalization, evm]. 
-  max_request_headroom_slots: 0             # Optional UINT (0). Sets the maximum request headroom size in slots. Supported: [0 - 3]. 
+  max_request_headroom_slots: 0             # Optional UINT (0). Sets the maximum request headroom size in slots. Supported: [0 - 30]. 
 
 buffer_pool: 
   nof_segments: 1048576                 # Optional UINT (1048576). Sets the number of segments allocated by the buffer pool. 
@@ -360,7 +373,7 @@ expert_execution:
       ru_cpus:                              # Optional TEXT. Sets the CPU core(s) used for the Radio Unit tasks. Supported: [1, 2, 3 , ..., N].
       ru_pinning:                           # Optional TEXT. Sets the policy used for assigning CPU cores to Radio Unity tasks.
   affinities:
-    isolated_cpus:                        # Optional TEXT. Sets the CPU core(s) isolated for the gNB application. Supported: [1, 2, 3 , ..., N].
+    isolated_cpus:                        # Optional TEXT. Sets the CPU core(s) isolated for the DU application. Supported: [1, 2, 3 , ..., N].
     low_priority_cpus:                    # Optional TEXT. Sets the CPU core(s) assigned to low priority tasks. Supported: [1, 2, 3 , ..., N].
     low_priority_pinning:                 # Optional TEXT. Sets the policy used for assigning CPU cores to low priority tasks.   
     ru_timing_cpu:                        # Optional TEXT. Sets the CPU used for timing in the Radio Unity.
@@ -368,6 +381,7 @@ expert_execution:
   threads:
     non_rt:
       nof_non_rt_threads: 4                   # Optional UINT (4). Sets the number of non real time threads for processing of CP and UP data in upper layers.
+      non_rt_task_queue_size: 2048            # Optional UINT (2048). Sets the non real time task worker queue size. 
     upper_phy:
       pdsch_processor_type: auto              # Optional TEXT (auto). Sets the PDSCH processor type. Supported: [auto, generic, concurrent, lite].
       nof_pusch_decoder_threads: 1            # Optional UINT (1). Sets the number of threads used to encode PUSCH.
@@ -382,7 +396,6 @@ hal:
   eal_args:                             # Optional TEXT. EAL configuration parameters used to initialize DPDK.
 
   bbdev_hwacc:
-    bbdev_acc_type: srs                   # Optional TEXT (srs). Type of BBDEV implementation. 
     hwacc_type:                           # Optional TEXT. Type of BBDEV hardware-accelerator. 
     id: 0                                 # Optional UINT (0). Sets the ID of the BBDEV-based hawdware-accelerator.
     msg_mbuf_size:                        # Optional UINT. Sets the size of mbufs storing unencoded and unrate-matched messaged in bytes. Supported: [0 - 64000]   
@@ -428,21 +441,21 @@ log:
   f1u_level: warning                    # Optional TEXT (warning). Sets the F1u log level.
   gtpu_level: warning                   # Optional TEXT (warning). Sets the GTPU log level.
   du_level: warning                     # Optional TEXT (warning). Sets the DU log level.
-  metrics_level: none                   # Optional TEXT (none). Sets the metrics log level.
   f1ap_json_enabled: false              # Optional BOOLEAN (false). Enables the JSON logging of F1AP PDUs. Supported: [false, true].
+  high_latency_diagnostics_enabled: false # Optional BOOLEAN (false). Enables logging of performance diagnostics when high computational latencies are detected. Supported: [false, true].
+  fapi_level: warning                   # Optional TEXT (warning). Sets FAPI log level.
   hal_level: warning                    # Optional TEXT (warning). Sets the HAL log level.
   broadcast_enabled: false              # Optional BOOLEAN (false). Enables logging in the PHY and MAC layer of broadcast messages and all PRACH opportunities. Supported: [false, true].
   phy_rx_symbols_filename:              # Optional TEXT. Print received symbols to file. Symbols will be printed if a valid path is set. Format: file path. This file can be used in the srsRAN_matlab project.
   phy_rx_symbols_port: 0                # Optional TEXT. Set to a valid receive port number to dump the IQ symbols from that port only, or set to "all" to dump the IQ symbols from all UL receive ports. Only works if "phy_rx_symbols_filename" is set. Supported: [NON-NEGATIVE or all].
   phy_rx_symbols_prach: false           # Optional BOOLEAN (false). Set to true to dump the IQ symbols from all the PRACH ports. Only works if "phy_rx_symbols_filename" is set. Supported: [false, true].
   hex_max_size: 0                       # Optional UINT (0). Sets maximum number of bytes to print for hex messages. Supported: [0 - 1024]
-  fapi_level: warning                   # Optional TEXT (warning). Sets FAPI log level.
   ofh_level: warning                    # Optional TEXT (warning). Sets Open Fronthaul log level.
   radio_level: info                     # Optional TEXT (info). Sets radio log level.
   phy_level: warning                    # Optional TEXT (warning). Sets PHY log level.
 
 pcap: 
-  e2ap_filename: /tmp/gnb_e2ap.pcap     # Optional TEXT (/tmp/gnb_e2ap.pcap). Path for E2AP PCAPs.
+  e2ap_du_filename: /tmp/du_e2ap.pcap   # Optional TEXT (/tmp/du_e2ap.pcap). Path for E2AP DU PCAPs.
   e2ap_enable: false                    # Optional BOOLEAN (false). Enable/disable E2AP packet capture. Supported: [false, true].
   f1ap_filename: /tmp/gnb_f1ap.pcap     # Optional TEXT (/tmp/gnb_f1ap.pcap). Path for F1AP PCAPs.
   f1ap_enable: false                    # Optional BOOLEAN (false). Enable/disable F1AP packet capture. Supported: [false, true].
@@ -459,7 +472,6 @@ metrics:
   addr: 127.0.0.1                       # Optional TEXT:IPV4 (127.0.0.1). Sets the metrics address. Supported: IPV4 address.
   port: 55555                           # Optional UINT. Sets the metrics UPD port. Supported: [0 - 65535].
   rlc_report_period: 0                  # Optional UINT (0). Sets the RLC metrics report period in milliseconds. Supported [0 - inf]
-  rlc_json_enable: false                # Optional BOOLEAN (false). Enable RLC JSON metrics reporting. Supported: [false, true].
   enable_json_metrics: false            # Optional BOOLEAN (false). Enables JSON metrics reporting. Supported: [false, true].
   autostart_stdout_metrics: false       # Optional BOOLEAN (false). Sets whether or note to autostart stdout metrics reporting. Supported [false, true].
   sched_report_period: 1000             # Optional UINT (1000). Sets the DU statistics report period in milliseconds. This metric sets the console output period. Supported: [0 - inf].
