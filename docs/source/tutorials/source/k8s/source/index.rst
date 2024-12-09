@@ -521,4 +521,4 @@ Cleaning up the deployment
 Supported O-RUs
 ************************
 
-For more information on supported O-RUs, see :ref:`this section <supported_rus>` of the RU tutorial.
+For more information on supported O-RUs, see :ref:`this section <hw_integration>` of the RU tutorial.
