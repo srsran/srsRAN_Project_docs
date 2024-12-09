@@ -260,7 +260,7 @@ You should see an output similar to the following:
 Search for a Pod called ``open5gs-amf-*`` and set ``amf_addr`` to the ``IP`` value of the Pod.
 
 For more information on the configuration of the CU/DU please refer to the `srsRAN gNB with COTS UEs Tutorial <https://docs.srsran.com/projects/project/en/latest/tutorials/source/cotsUE/source/index.html#setup-considerations>`_.
-For more information on the parameters of the ``values.yaml`` file refer to ``charts/srsran-project/README.md`` in `this repositthat the nodes under 
+For more information on the parameters of the ``values.yaml`` file refer to ``charts/srsran-project/README.md`` in `this repository <https://github.com/srsran/srsRAN_Project_helm/tree/main/charts/srsran-project>`_.
 Docker images are available on `Docker Hub <https://hub.docker.com/u/softwareradiosystems>`_. Dockerfiles for the 
 srsRAN Project container can be found in ``images/srsran-project`` in `this repository <https://github.com/srsran/srsRAN_Project_helm/tree/main/images>`_.
 
