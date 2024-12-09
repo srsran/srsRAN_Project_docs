@@ -48,7 +48,7 @@ This tutorial uses the following hardware:
       - CPU: AMD Ryzen 7 5700G
       - MEM: 64GB
       - NIC: Intel Corporation 82599ES 10-Gigabit
-      - OS: Ubuntu 22.04 (5.15.0-1037-realtime)
+      - OS: Ubuntu 22.04 (5.15.0-1067-realtime)
    
    - Falcon-RX/812/G xHaul Switch (w/ PTP grandmaster)
    - Foxconn RPQN-7800E (v3.1.13q.551p1) 
@@ -163,12 +163,12 @@ Install the srsRAN Helm repositories with the following command:
 
    helm repo add srsran https://srsran.github.io/srsRAN_Project_helm/
 
-To deploy Open5GS on Kubernetes we use the Helm charts from the `Openverso Project <https://github.com/Gradiant/openverso-charts>`_.
-Install the Openverso Helm repository with the following command:
+To deploy Open5GS on Kubernetes we use the Helm charts from the `Gradiant 5G Charts <https://gradiant.github.io/5g-charts/open5gs-srsran-5g-zmq.html>`_.
+Install the Gradiant Helm repository with the following command:
 
 .. code-block:: bash
 
-   helm repo add openverso https://gradiant.github.io/openverso-charts/
+   helm pull oci://registry-1.docker.io/gradiant/open5gs --version 2.2.0
 
 LinuxPTP Helm Chart
 -------------------
@@ -228,7 +228,7 @@ You should see an output similar to the following:
 
    $ kubectl get nodes -o wide
    NAME        STATUS   ROLES           AGE   VERSION   INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION         CONTAINER-RUNTIME
-   preskit-1   Ready    control-plane   52d   v1.26.5   10.12.1.223   <none>        Ubuntu 22.04.3 LTS   5.15.0-1032-realtime   containerd://1.7.1
+   preskit-1   Ready    control-plane   52d   v1.26.5   10.12.1.223   <none>        Ubuntu 22.04.3 LTS   5.15.0-1067-realtime   containerd://1.7.1
 
 Set ``bind_addr`` to the ``INTERNAL-IP`` value of the Kubernetes worker node where you want to deploy the srsRAN Project CU/DU. Obtain the IP 
 address of the Open5GS AMF with the following command:
@@ -260,8 +260,7 @@ You should see an output similar to the following:
 Search for a Pod called ``open5gs-amf-*`` and set ``amf_addr`` to the ``IP`` value of the Pod.
 
 For more information on the configuration of the CU/DU please refer to the `srsRAN gNB with COTS UEs Tutorial <https://docs.srsran.com/projects/project/en/latest/tutorials/source/cotsUE/source/index.html#setup-considerations>`_.
-For more information on the parameters of the ``values.yaml`` file refer to ``charts/srsran-project/README.md`` in `this repository <https://github.com/srsran/srsRAN_Project_helm/tree/main/charts/srsran-project>`_.
-
+For more information on the parameters of the ``values.yaml`` file refer to ``charts/srsran-project/README.md`` in `this repositthat the nodes under 
 Docker images are available on `Docker Hub <https://hub.docker.com/u/softwareradiosystems>`_. Dockerfiles for the 
 srsRAN Project container can be found in ``images/srsran-project`` in `this repository <https://github.com/srsran/srsRAN_Project_helm/tree/main/images>`_.
 
@@ -306,14 +305,16 @@ Obtain and configure the ``values.yaml`` file like described above. After that, 
 
 .. code-block:: bash
 
-   helm install open5gs openverso/open5gs --version 2.0.8 --values=5gSA-values.yaml -n open5gs --create-namespace --set mongodb.persistence.enabled=false
+   helm install open5gs oci://registry-1.docker.io/gradiant/open5gs --version 2.2.0 -f 5gSA-values.yaml -n open5gs --create-namespace --set mongodb.persistence.enabled=false
 
 You should see the following output: 
 
 .. code-block:: bash
 
+   Pulled: registry-1.docker.io/gradiant/open5gs:2.2.0
+   Digest: sha256:99d49ab6bb2d4a5c78be31dd2c3a99a0780de79bd22d0bfa9df734ca2705940a
    NAME: open5gs
-   LAST DEPLOYED: Tue Nov 21 16:55:12 2023
+   LAST DEPLOYED: Mon Dec  9 11:09:17 2024
    NAMESPACE: open5gs
    STATUS: deployed
    REVISION: 1
@@ -325,7 +326,7 @@ Wait until all Pods are running. You can check the status with the following com
 
    kubectl get pods -n open5gs
 
-Once all components are started you can edit the subscribers via the webui. For that, you need
+Once all components are started and running you can edit the subscribers via the Open5GS WebUI. For that, you need
 to forward port ``9999`` of the ``open5gs-webui`` service to your local machine:
 
 .. code-block:: bash
@@ -340,7 +341,7 @@ You should see the following output:
    Forwarding from [::1]:9999 -> 9999
 
 Don't close the shell and open your browser at `http://localhost:9999 <http://localhost:9999>`_. ``Username: admin,  Password: 1423``
-Once you are logged in you can edit the subscribers.
+Once you are logged in you can edit the subscribers. Alternatively, you can set the subscriber details in the ``5gSA-values.yaml`` file.
 
 DU
 ==
@@ -348,40 +349,32 @@ DU
 PTP
 ---
 
-Obtain and configure the ``values.yaml`` file like described above. After that, deploy LinuxPTP container with the following command:
+Obtain and configure the ``values.yaml`` file like described above. Make sure that the nodeSelector field is correctly set, otherwise 
+the Linuxptp Daemonset will be deployed on all machines in the cluster. After that, deploy LinuxPTP container with the following command:
 
 .. code-block:: bash
 
-   helm install linuxptp srsran/linuxptp --values=values.yaml -n ptp --create-namespace
+   helm install linuxptp srsran/linuxptp -f values.yaml -n srsran --create-namespace
    
 You should see the following output: 
 
 .. code-block:: bash
 
    NAME: linuxptp
-   LAST DEPLOYED: Tue Nov 21 16:53:36 2023
+   LAST DEPLOYED: Mon Dec  9 11:13:10 2024
    NAMESPACE: ptp
    STATUS: deployed
    REVISION: 1
    TEST SUITE: None
 
 To verify that the deployment is working properly we need to get the name of
-our LinuxPTP Pod. Therefore, use ``kubectl get pods -A`` to list all Pods
+our LinuxPTP Pod. Therefore, use ``kubectl get pods -n srsran`` to list all Pods
 in the cluster. You should see an output similar to the following:
 
 .. code-block:: bash
    
    NAMESPACE     NAME                                        READY   STATUS    RESTARTS       AGE
-   ptp           linuxptp-854f797f64-vnmdt                   1/1     Running   0              23d
-   kube-system   calico-kube-controllers-6dfcdfb99-xmdmx     1/1     Running   0              22d
-   kube-system   calico-node-292sr                           1/1     Running   0              23d
-   kube-system   coredns-645b46f4b6-lggfs                    1/1     Running   0              22d
-   kube-system   dns-autoscaler-756ff885f8-7d6hr             1/1     Running   0              22d
-   kube-system   kube-apiserver-preskit-1                    1/1     Running   0              22d
-   kube-system   kube-controller-manager-preskit-1           1/1     Running   0              22d
-   kube-system   kube-proxy-5mbbm                            1/1     Running   0              23d
-   kube-system   kube-scheduler-preskit-1                    1/1     Running   0              22d
-   kube-system   nodelocaldns-bfx77                          1/1     Running   0              23d
+   srsran        linuxptp-854f797f64-vnmdt                   1/1     Running   0              23d
 
 The name of the Pod in our example is ``linuxptp-854f797f64-vnmdt``. Now we
 can get logs from that Pod with this command:
@@ -417,14 +410,14 @@ CU/DU
 -----
 
 Obtain and configure the ``values.yaml`` file like described above. PTP sync needs to be established 
-on RU and DU, and the Kubernetes worker node needs to be configured before the deployment. 
+on RU and DU server, and the Kubernetes worker node needs to be configured before the deployment. 
 Furthermore, the 5G core must be up and running.
 
 Deploy the srsRAN Project with the following commands:
 
 .. code-block:: bash
 
-   helm install srsran-project srsran/srsran-cu-du --values=values.yaml -n srsran --create-namespace
+   helm install srsran-project srsran/srsran-cu-du -f values.yaml -n srsran --create-namespace
 
 You should see the following output: 
 
@@ -443,23 +436,15 @@ To verify that the srsRAN Project Pod is working properly you can extract logs u
 
       .. code-block:: bash
       
-         kubectl get pods -A
+         kubectl get pods -n srsran
 
       You should see an output similar to the following:
 
       .. code-block:: bash
    
          NAMESPACE     NAME                                        READY   STATUS    RESTARTS       AGE
-         default       srsran-project-l647c                        1/1     Running   0              23d
-         kube-system   calico-kube-controllers-6dfcdfb99-xmdmx     1/1     Running   0              22d
-         kube-system   calico-node-292sr                           1/1     Running   0              23d
-         kube-system   coredns-645b46f4b6-lggfs                    1/1     Running   0              22d
-         kube-system   dns-autoscaler-756ff885f8-7d6hr             1/1     Running   0              22d
-         kube-system   kube-apiserver-preskit-1                    1/1     Running   0              22d
-         kube-system   kube-controller-manager-preskit-1           1/1     Running   0              22d
-         kube-system   kube-proxy-5mbbm                            1/1     Running   0              23d
-         kube-system   kube-scheduler-preskit-1                    1/1     Running   0              22d
-         kube-system   nodelocaldns-bfx77                          1/1     Running   0              23d
+         srsran        linuxptp-854f797f64-vnmdt                   1/1     Running   0               5m
+         srsran        srsran-project-l647c                        1/1     Running   0               5m
 
    2. Find the Pod, in this example it is ``srsran-project-l647c``. The logs can now be extracted with: 
 
@@ -507,6 +492,29 @@ Once the network has been configured and is running, connecting the UE to the ne
 The UE does not require any further modification or configuration outside of the normally required steps. You can follow the 
 `COTS UE tutorial <COTS_UE_tutorial>`_ to learn how to connect a COTS UE to the network. From the UEs perspective, it does not matter if an RU or 
 USRP is being used as the frontend or if the CU/DU and 5GC are running on bare-metal or in Kubernetes containers.
+
+-----
+
+Cleaning up the deployment
+**************************
+
+   1. To delete the srsRAN Project deployment, use the following command:
+
+      .. code-block:: bash
+
+         helm uninstall srsran-project -n srsran
+
+   2. To delete the LinuxPTP deployment, use the following command:
+
+      .. code-block:: bash
+
+         helm uninstall linuxptp -n ptp
+
+   3. To delete the Open5GS deployment, use the following command:
+
+      .. code-block:: bash
+
+         helm uninstall open5gs -n open5gs
 
 -----
 
