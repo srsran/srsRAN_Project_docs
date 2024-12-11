@@ -6,7 +6,9 @@ Rules
 Rule 1: Lists of fields only need to be separated by a whitespace “ “
 *********************************************************************
 
-rnti=0x4602 h_id=0 prb=[3, 21) symb=[0, 14) mod=QPSK rv=0 tbs=437 crc=OK iter=2.0 snr=12.8dB t=145.5us
+.. code-block:: c++ 
+
+  rnti=0x4602 h_id=0 prb=[3, 21) symb=[0, 14) mod=QPSK rv=0 tbs=437 crc=OK iter=2.0 snr=12.8dB t=145.5us
 
 Rule 2: Maintain the order between classes of fields consistent
 *********************************************************************
@@ -18,31 +20,41 @@ fields that represent a one-time event (e.g. “Received InitialContextSetupRequ
 
 Each logging message should have the following structure:
 
-<timestamp> [layer] [log_level] <contextual fields>: <one-time event>. <value fields>
+.. code-block:: c++ 
+
+  <timestamp> [layer] [log_level] <contextual fields>: <one-time event>. <value fields>
 
 E.g.
 
-2023-05-22T15:36:33.070813 [RLC     ] [I] DL ue=5 SRB1: TX PDU. dc=data p=1 si=full sn=0 so=0 pdu_len=11 grant_len=11
+.. code-block:: c++ 
+  
+  2023-05-22T15:36:33.070813 [RLC     ] [I] DL ue=5 SRB1: TX PDU. dc=data p=1 si=full sn=0 so=0 pdu_len=11 grant_len=11
 
 Rule 3: Order of contextual fields
 *********************************************************************
 
 Contextual fields should always follow the order of lower granularity to highest granularity:
 
-E.g.
-<direction> <ue ids> <bearer ids> proc=\”<procedure>\”.
+.. code-block:: c++ 
 
+  <direction> <ue ids> <bearer ids> proc=\”<procedure>\”.
 
-DL ue=5 SRB1:…
+E.g.:
 
-ue=5 proc=”UE Context Release”:…
+.. code-block:: c++ 
+  
+  DL ue=5 SRB1:…
+
+  ue=5 proc=”UE Context Release”:…
 
 Rule 4: For one time events, provide a cause whenever it’s unclear what it might be
 *********************************************************************
 
 E.g.
 
-2023-05-22T15:36:33.070813 [MAC     ] [I] ue=5: Unable to forward UL-CCCH message to upper layers. Cause: task queue is full.
+.. code-block:: c++ 
+
+  2023-05-22T15:36:33.070813 [MAC     ] [I] ue=5: Unable to forward UL-CCCH message to upper layers. Cause: task queue is full.
 
 Rule 5: ASN.1 Messages should be represented using the respective ASN.1 type name.
 *********************************************************************
