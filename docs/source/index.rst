@@ -85,3 +85,4 @@ Useful resources:
    tutorials/source/near-rt-ric/source/index.rst
    tutorials/source/matlab/source/index.rst
    tutorials/source/tuning/source/index.rst
+   tutorials/source/testmode/source/index.rst
