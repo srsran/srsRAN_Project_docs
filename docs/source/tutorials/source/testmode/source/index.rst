@@ -72,21 +72,22 @@ Create a new configuration file called ``emu.yaml`` with the following content:
     ru_emu:
         cells:
         - bandwidth: 100                          # Bandwidth of the cell
-          ru_mac_addr: 00:33:22:33:00:11
-          du_mac_addr: 00:33:22:33:00:66
-          enable_promiscuous: false
-          vlan_tag: 33
-          dl_port_id: [0, 1, 2, 3]
-          ul_port_id: [0, 1, 2, 3]
-          prach_port_id: [4, 5]
-          compr_method_ul: "bfp"
-          compr_bitwidth_ul: 9
-          t2a_max_cp_dl: 470
-          t2a_min_cp_dl: 350
-          t2a_max_cp_ul: 200
-          t2a_min_cp_ul: 90
-          t2a_max_up: 345
-          t2a_min_up: 70
+          network_interface: ens2f1               # Use BDF instead of interface name for DPDK
+          ru_mac_addr: 00:33:22:33:00:11          # MAC address of the RU
+          du_mac_addr: 00:33:22:33:00:66          # MAC address of the DU
+          enable_promiscuous: false               # Promiscuous mode flag
+          vlan_tag: 33                            # VLAN tag
+          dl_port_id: [0, 1, 2, 3]                # Port IDs for downlink
+          ul_port_id: [0, 1, 2, 3]                # Port IDs for uplink
+          prach_port_id: [4, 5]                   # Port IDs for PRACH
+          compr_method_ul: "bfp"                  # Compression method for uplink
+          compr_bitwidth_ul: 9                    # Compression bitwidth for uplink
+          t2a_max_cp_dl: 470                      # T2a maximum value for downlink Control-Plane
+          t2a_min_cp_dl: 350                      # T2a minimum value for downlink Control-Plane
+          t2a_max_cp_ul: 200                      # T2a maximum value for uplink Control-Plane
+          t2a_min_cp_ul: 90                       # T2a minimum value for uplink Control-Plane
+          t2a_max_up: 345                         # T2a maximum value for User-Plane
+          t2a_min_up: 70                          # T2a minimum value for User-Plane
     
     # dpdk:
     #   eal_args: "--lcores (0-1)@(0-15)"
