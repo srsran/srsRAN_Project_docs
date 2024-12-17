@@ -42,6 +42,8 @@ cell_cfg:
     total_nof_ra_preambles: 64      # Sets number of available PRACH preambles
     nof_ssb_per_ro: 1               # Sets the number of SSBs per RACH occasion.
     nof_cb_preambles_per_ssb: 64    # Sets the number of contention based preambles per SSB.
+  pdsch:
+    mcs_table: qam64                # Sets PDSCH MCS to 64 QAM
 
 log:
   filename: /tmp/gnb.log            # Path of the log file.

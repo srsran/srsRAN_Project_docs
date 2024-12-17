@@ -59,3 +59,15 @@ All configuration parameters are presented here below in the following format:
 
     .. literalinclude:: .config/du.yml
       :language: yaml 
+
+----
+
+Antenna Configuration
+*********************
+
+srsRAN Project supports SISO, codebook-based MIMO, and TX/RX diversity. These options can be configured in the ``cell_cfg`` section via the ``nof_antennas_dl`` and ``nof_antennas_ul`` parameters. 
+
+When you configure ``nof_antennas_dl`` and ``nof_antennas_ul``, it informs the gNB about the number of antennas available for downlink (DL) and uplink (UL) transmissions, respectively. By default, a 
+single physical antenna is used for both DL and UL, meaning the values of ``nof_antennas_dl`` and ``nof_antennas_ul`` are not additive.
+
+An example of a MIMO configuration file can be found in the example configuration files provided with the srsRAN Project source files. 

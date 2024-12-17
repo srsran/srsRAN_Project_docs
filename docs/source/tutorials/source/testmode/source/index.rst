@@ -72,13 +72,21 @@ Create a new configuration file called ``emu.yaml`` with the following content:
     ru_emu:
         cells:
         - bandwidth: 100                          # Bandwidth of the cell
-          network_interface: ens2f1               # Use BDF instead of interface name for DPDK
-          du_mac_addr: 00:11:22:33:55:00          # MAC address of the DU
-          ru_mac_addr: 00:11:22:33:44:00          # MAC address of the RU
-          vlan_tag: 6                             # VLAN tag 
-          ul_port_id: [0]                         # Port ID for uplink
-          compr_method_ul: "bfp"                  # Compression method for uplink
-          compr_bitwidth_ul: 9                    # Compression bitwidth for uplink
+          ru_mac_addr: 00:33:22:33:00:11
+          du_mac_addr: 00:33:22:33:00:66
+          enable_promiscuous: false
+          vlan_tag: 33
+          dl_port_id: [0, 1, 2, 3]
+          ul_port_id: [0, 1, 2, 3]
+          prach_port_id: [4, 5]
+          compr_method_ul: "bfp"
+          compr_bitwidth_ul: 9
+          t2a_max_cp_dl: 470
+          t2a_min_cp_dl: 350
+          t2a_max_cp_ul: 200
+          t2a_min_cp_ul: 90
+          t2a_max_up: 345
+          t2a_min_up: 70
     
     # dpdk:
     #   eal_args: "--lcores (0-1)@(0-15)"
