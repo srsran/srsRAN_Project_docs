@@ -18,3 +18,4 @@ Tutorials
    near-rt-ric/source/index.rst
    matlab/source/index.rst
    tuning/source/index.rst
+   hw_kit/source/index.rst

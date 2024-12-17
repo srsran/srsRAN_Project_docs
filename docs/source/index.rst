@@ -86,3 +86,4 @@ Useful resources:
    tutorials/source/matlab/source/index.rst
    tutorials/source/tuning/source/index.rst
    tutorials/source/testmode/source/index.rst
+   tutorials/source/hw_kit/source/index.rst

@@ -1,0 +1,110 @@
+# This example configuration outlines how to configure the srsRAN Project CU/DU to create a single cell
+# transmitting in band 78, with 100 MHz bandwidth, 30 kHz sub-carrier-spacing and a 4T2R antenna configuration,
+# with a 7D1S2U TDD pattern. This configuration makes use of the OFH Lib from SRS to enable split 7.2.
+
+cu_cp:
+  amf:
+    addr: 127.0.0.5 # Replace this section with your AMF settings.
+    bind_addr: 127.0.0.1
+    supported_tracking_areas:
+      - tac: 7
+        plmn_list:
+          - plmn: "00101"
+            tai_slice_support_list:
+              - sst: 1
+  
+cell_cfg:
+  dl_arfcn: 623484                
+  band: 78                        
+  channel_bandwidth_MHz: 100       
+  common_scs: 30
+  nof_antennas_dl: 4
+  nof_antennas_ul: 2
+  
+  tdd_ul_dl_cfg:
+     dl_ul_tx_period: 10
+     nof_dl_slots: 7
+     nof_dl_symbols: 6
+     nof_ul_slots: 2
+     nof_ul_symbols: 4
+
+  plmn: "00101" # Replace PLMN and TAC with your core network settings     
+  tac: 7                          
+  pci: 1                          
+  ssb:
+    ssb_block_power_dbm: -11 # Set for an RU operating at 24 dBm output power.
+  prach:
+    prach_root_sequence_index: 1
+    zero_correlation_zone: 0
+    prach_config_index: 7
+    prach_frequency_start: 0
+  pucch:
+    p0_nominal: -90
+  csi:
+    csi_rs_period: 40
+  pdsch:
+    mcs_table: qam256
+    dmrs_additional_position: 2
+    olla_target_bler: 0.1
+    olla_cqi_inc_step: 0.05
+    olla_max_cqi_offset: 20
+  pusch:
+    mcs_table: qam64
+    p0_nominal_with_grant: -82
+    dmrs_additional_position: 2
+    olla_target_bler: 0.1
+    olla_snr_inc_step: 0.05
+    olla_max_snr_offset: 30
+   
+ru_ofh:
+  t1a_max_cp_dl: 470
+  t1a_min_cp_dl: 419
+  t1a_max_cp_ul: 336
+  t1a_min_cp_ul: 285
+  t1a_max_up: 345
+  t1a_min_up: 294
+  ta4_max: 400
+  ta4_min: 0
+  is_prach_cp_enabled: false
+  compr_method_ul: bfp
+  compr_bitwidth_ul: 9
+  compr_method_dl: bfp
+  compr_bitwidth_dl: 9
+  compr_method_prach: bfp
+  compr_bitwidth_prach: 9
+  enable_ul_static_compr_hdr: true
+  enable_dl_static_compr_hdr: true
+  iq_scaling: 20.0
+  cells:
+  - network_interface: 0000:01:01.0          # Replace with the DU network interface name (or BDF) for the DU <-> RU connection.
+    ru_mac_addr: AA:BB:CC:DD:EE:FF           # Replace with the RU MAC address.
+    du_mac_addr: AA:BB:CC:DD:EE:FF           # Replace with the MAC address of the DU interface.
+    enable_promiscuous: false
+    vlan_tag_up: 6                           # Replace with the used CP VLAN.
+    vlan_tag_cp: 6                           # Replace with the used UP VLAN.
+    prach_port_id: [4,5]
+    dl_port_id: [0,1,2,3]
+    ul_port_id: [0,1]
+
+hal:
+  eal_args: "--lcores (0-1)@(0-23) -a 0000:01:01.0" # Replace the DU network interface name. 
+
+expert_phy:
+  max_request_headroom_slots: 0
+  max_proc_delay: 4
+  pusch_dec_max_iterations: 10
+
+expert_execution:
+  threads:
+    upper_phy:
+      pdsch_processor_type: concurrent
+      nof_pusch_decoder_threads: 4
+      nof_ul_threads: 2
+      nof_dl_threads: 8
+
+metrics:
+  autostart_stdout_metrics: true
+  enable_json_metrics: true       
+  addr: 172.19.1.4                
+  port: 55555                     
+  sched_report_period: 1000
