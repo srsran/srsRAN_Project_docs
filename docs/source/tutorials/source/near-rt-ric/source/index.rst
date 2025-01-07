@@ -288,7 +288,6 @@ Enable Enable RLC metrics reporting that will feed E2SM_KPM service model with m
 .. code-block:: yaml
 
   metrics:
-    rlc_json_enable: 1                # Enable RLC metrics reporting
     rlc_report_period: 1000           # Set reporting period to 1s
 
 

@@ -66,5 +66,4 @@ e2:
   port: 36421                       # RIC port
 
 metrics: 
-  rlc_json_enable: 1                # Enable RLC metrics reporting (need to deliver measurements to E2SM_KPM service model)
   rlc_report_period: 1000           # Set reporting period to 1s
