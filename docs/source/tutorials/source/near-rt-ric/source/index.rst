@@ -277,8 +277,10 @@ Enable E2AP packet captures and set the name of the output pcap file:
 .. code-block:: yaml
 
   pcap:
-    e2ap_enable: true                 # Set to true to enable E2AP PCAPs.
-    e2ap_filename: /tmp/gnb_e2ap.pcap # Path where the E2AP PCAP is stored.
+    e2ap_enable: true                              # Set to true to enable E2AP PCAPs.
+    e2ap_du_filename: /tmp/gnb_du_e2ap.pcap        # Path where the DU E2AP PCAP is stored.
+    e2ap_cu_cp_filename: /tmp/gnb_cu_cp_e2ap.pcap  # Path where the CU-CP E2AP PCAP is stored.
+    e2ap_cu_up_filename: /tmp/gnb_cu_up_e2ap.pcap  # Path where the CU-UP E2AP PCAP is stored.
 
 
 Enable Enable RLC metrics reporting that will feed E2SM_KPM service model with measurements data:

@@ -53,7 +53,9 @@ pcap:
   ngap_enable: false                # Set to true to enable NGAP PCAPs.
   ngap_filename: /tmp/gnb_ngap.pcap # Path where the NGAP PCAP is stored.
   e2ap_enable: true                 # Set to true to enable E2AP PCAPs.
-  e2ap_filename: /tmp/gnb_e2ap.pcap # Path where the E2AP PCAP is stored.
+  e2ap_du_filename: /tmp/gnb_du_e2ap.pcap        # Path where the DU E2AP PCAP is stored.
+  e2ap_cu_cp_filename: /tmp/gnb_cu_cp_e2ap.pcap  # Path where the CU-CP E2AP PCAP is stored.
+  e2ap_cu_up_filename: /tmp/gnb_cu_up_e2ap.pcap  # Path where the CU-UP E2AP PCAP is stored.
 
 e2:
   enable_du_e2: true                # Enable DU E2 agent (one for each DU instance)
