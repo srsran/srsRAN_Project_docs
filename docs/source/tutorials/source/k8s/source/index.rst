@@ -512,7 +512,7 @@ Cleaning up the deployment
 
       .. code-block:: bash
 
-         helm uninstall linuxptp -n ptp
+         helm uninstall linuxptp -n srsran
 
    3. To delete the Open5GS deployment, use the following command:
 
