@@ -499,6 +499,86 @@ USRP is being used as the frontend or if the CU/DU and 5GC are running on bare-m
 
 -----
 
+Visualizing network KPIs using Grafana
+**************************************
+
+To visualize the gNB KPIs we have created a Grafana dashboard. The dashboard is designed to work with the metrics server that is part of the
+srsRAN Project Helm repository. The metrics server collects metrics from the gNB, parses and stores them in an InfluxDB database. The Grafana 
+dashboard queries the InfluxDB database to display the metrics in a user-friendly way.
+
+In order to install the Grafana Helm Chart make sure you have added the srsRAN Helm repository to your Helm repositories. If you haven't done 
+this yet, use the following command:
+
+.. code-block:: bash
+
+   helm repo add srsran https://srsran.github.io/srsRAN_Project_helm/
+
+The dashboard comes with a pre-configured values.yaml file. The only option that needs to be adjusted is the cluster domain to properly resolve the 
+hostnames used in this tutorial. To get the your cluster domain you can use the following command:
+
+.. code-block:: bash
+
+   kubectl run -it --image=ubuntu --restart=Never shell -- sh -c 'apt-get update > /dev/null && apt-get install -y dnsutils > /dev/null && nslookup kubernetes.default | grep Name | sed "s/Name:\skubernetes.default//"'
+
+This command creates a pod, installs some tools and runs a DNS query against the service kubernetes.default. The output should look like this:
+
+.. code-block:: bash
+
+   If you don't see a command prompt, try pressing enter.
+   debconf: delaying package configuration, since apt-utils is not installed
+
+   .svc.kubernetes.local
+
+In this case the cluster domain is ``svc.kubernetes.local``. Adjust the values.yaml file to reflect your cluster domain. Get the default values.yaml 
+file with the following command:
+
+.. code-block:: bash
+
+   wget https://raw.githubusercontent.com/srsran/srsRAN_Project_helm/refs/heads/main/charts/grafana-srsran/values.yaml
+
+In the default values.yaml file the cluster domain is set to ``.svc.cluster.local``. Replace the two occurrences of ``.svc.cluster.local`` with the 
+string returned in the last step. The metrics server section looks like this after replacing the default cluster domain:
+
+.. code-block:: yaml
+
+   metrics-server:
+      config:
+         port: 55555
+         bucket: srsran
+         testbed: default
+         url: http://grafana-influxdb.srsran.svc.kubernetes.local
+         org: srs
+         token: "605bc59413b7d5457d181ccf20f9fda15693f81b068d70396cc183081b264f3b"
+         serviceType: "ClusterIP"
+
+After that, you can remove the test container using this command:
+
+.. code-block:: bash
+
+   kubectl delete pod shell
+
+Adjust the values.yaml to correct the cluster domain. After that, deploy the Grafana dashboard with the following command:
+
+.. code-block:: bash
+
+   helm install srsran-grafana srsran/grafana-deployment -f values.yaml -n srsran --create-namespace
+
+Once all components are up, the gNB application can start sending traffic to the metrics server. To access the Grafana dashboard, you need to forward the
+port of the Grafana service to your local machine. Use the following commands to forward the port:
+
+.. code-block:: bash
+
+   export POD_NAME=$(kubectl get pods --namespace srsran -l "app.kubernetes.io/name=grafana,app.kubernetes.io/instance=srsran-grafana" -o jsonpath="{.items[0].metadata.name}")
+   kubectl --namespace srsran port-forward $POD_NAME 3000
+
+After that you can access the grafana dashboard by opening your browser at `http://localhost:3000 <http://localhost:3000>`_.
+
+.. image:: .imgs/grafana.png
+    :width: 75%
+    :align: center
+
+-----
+
 Cleaning up the deployment
 **************************
 
@@ -519,6 +599,12 @@ Cleaning up the deployment
       .. code-block:: bash
 
          helm uninstall open5gs -n open5gs
+
+   4. To delete the Grafana deployment, use the following command:
+
+      .. code-block:: bash
+
+         helm uninstall srsran-grafana -n srsran
 
 -----
 
