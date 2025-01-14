@@ -573,6 +573,8 @@ port of the Grafana service to your local machine. Use the following commands to
 
 After that you can access the grafana dashboard by opening your browser at `http://localhost:3000 <http://localhost:3000>`_.
 
+An example of the Grafana dashboard is shown below:
+
 .. image:: .imgs/grafana.png
     :width: 75%
     :align: center
