@@ -7,7 +7,7 @@ srsRAN gNB with srsUE
 
 .. warning:: 
 
-  srsUE is currently no longer in active development, although it does receive small maintenance updates. See `here <https://docs.srsran.com/projects/4g/en/latest/dev_status.html>`_ for further details. srsUE is intended to be used 
+  5G extensions in srsUE are no longer in active development, although it does receive small maintenance updates. See `here <https://docs.srsran.com/projects/4g/en/latest/dev_status.html>`_ for further details. srsUE is intended to be used 
   for proof-of-concept and initial testing to allow users to test srsRAN Project without the need for expensive hardware. It is not intended for scenarios which require a deployment ready solution.
 
 Overview
