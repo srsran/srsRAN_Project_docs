@@ -5,14 +5,18 @@
 srsRAN gNB with srsUE
 #####################
 
+.. warning:: 
+
+  srsUE is currently no longer in active development, although it does receive small maintenance updates. See `here <https://docs.srsran.com/projects/4g/en/latest/dev_status.html>`_ for further details. srsUE is intended to be used 
+  for proof-of-concept and initial testing to allow users to test srsRAN Project without the need for expensive hardware. It is not intended for scenarios which require a deployment ready solution.
+
 Overview
 ********
 
 srsRAN Project is a 5G CU/DU solution and does not include a UE application. However, `srsRAN 4G <https://github.com/srsran/srsRAN_4G>`_ does include a prototype 5G UE (srsUE) which can be used for testing.
 This application note shows how to create an end-to-end fully open-source 5G network with srsUE, the srsRAN Project gNodeB and Open5GS 5G core network. 
 
-First, we show how to connect srsUE to the gNodeB over-the-air using USRPs. In the second part, we outline how to use virtual radios based on ZeroMQ instead of SDR hardware.
-Virtual radios allow the UE to be connected to the gNodeB over sockets. This approach can be very useful for development, testing, debugging, CI/CD or for teaching and demonstrating.
+Various use-cases are shown here, including both over-the-air and ZeroMQ based setups, and multi-UE emulation.  
 
 ----- 
 
@@ -353,21 +357,25 @@ Ping
 Ping is the simplest tool to test the end-to-end connectivity in the network, i.e., it tests whether the UE and core can communicate. 
 
 
-* **Uplink**
+Uplink
+^^^^^^
+
 To test the connection in the uplink direction, run the following command from the UE machine:: 
 
-    ping 10.45.1.1
+  ping 10.45.1.1
 
-* **Downlink**
+Downlink
+^^^^^^^^
+
 To test the connection in the downlink direction, run the following command from the machine running the core network (i.e., Open5GS docker container):: 
 
-    ping 10.45.1.2
+  ping 10.45.1.2
 
 The IP for the UE can be taken from the UE console output. This might change each time a UE reconnects to the network, so it is best practice to always double-check the latest IP assigned by reading it 
 from the console before running the downlink traffic.
 
-
-* **Ping Output**
+Ping Output
+^^^^^^^^^^^
 
 Example **ping** output:: 
 
@@ -390,7 +398,8 @@ iPerf3 is a tool that generates (TCP and UDP) traffic and measures parameters (e
 
 In this example, we generate traffic in the uplink direction. To this end, we run an iPerf3 client on the UE side and a server on the network side. UDP traffic will be generated at 10Mbps for 60 seconds. It is important to start the server first, and then the client.
 
-* **Network-side**
+Network-side
+^^^^^^^^^^^^
 
 Start the iPerf3 server the machine running the core network (i.e., Open5GS docker container):: 
 
@@ -398,7 +407,8 @@ Start the iPerf3 server the machine running the core network (i.e., Open5GS dock
 
 The server listens for traffic coming from the UE. After the client connects, the server prints flow measurements every second.
 
-* **UE-side**
+UE-side
+^^^^^^^
 
 With the network and the iPerf3 server up and running, the client can be run from the UE's machine with the following command:: 
 
@@ -411,7 +421,8 @@ Traffic will now be sent from the UE to the network. This will be shown in both 
 
 **Note:** All routes have to be configured as presented in  :ref:`Routing Configuration for USRP-based setup <ota_routing>` section.
 
-* **Iperf3 Output**
+iPerf3 Output
+^^^^^^^^^^^^^
 
 Example **server** iPerf3 output:: 
 
@@ -442,7 +453,8 @@ Example **client** iPerf3 output::
   [  5]   4.00-5.00   sec  1.25 MBytes  10.5 Mbits/sec    0    130 KBytes       
   [  5]   5.00-6.00   sec  1.12 MBytes  9.44 Mbits/sec    0    130 KBytes 
 
-* **Console Traces**
+Console Traces
+^^^^^^^^^^^^^^
 
 The following example trace was taken from the **srsUE console** while running the above iPerf3 test:: 
 
@@ -597,19 +609,24 @@ The output should be as follows:
 Ping
 ----
 
-* **Uplink**
+Uplink
+^^^^^^
+
 To test the connection in the uplink direction, use the following:: 
 
     sudo ip netns exec ue1 ping 10.45.1.1
 
-* **Downlink**
+Downlink
+^^^^^^^^
+
 To run ping in the downlink direction, use:: 
 
     ping 10.45.1.2
 
 The IP for the UE can be taken from the UE console output. This might change each time a UE reconnects to the network, so it is best practice to always double-check the latest IP assigned by reading it from the console before running the downlink traffic.
 
-* **Ping Output**
+Ping Output
+^^^^^^^^^^^
 
 Example **ping** output:: 
 
@@ -630,7 +647,8 @@ iPerf3
 
 In this example, we generate traffic in the uplink direction. To this end, we run an iPerf3 client on the UE side and a server on the network side. UDP traffic will be generated at 10Mbps for 60 seconds. It is important to start the server first, and then the client.
 
-* **Network-side**
+Network-side
+^^^^^^^^^^^^
 
 Start the iPerf3 server the machine running the core network (i.e., Open5GS docker container):: 
 
@@ -638,7 +656,8 @@ Start the iPerf3 server the machine running the core network (i.e., Open5GS dock
 
 The server listens for traffic coming from the UE. After the client connects, the server prints flow measurements every second.
 
-* **UE-side**
+UE-side
+^^^^^^^^
 
 With the network and the iPerf3 server up and running, the client can be run from the UE's machine with the following command:: 
   
@@ -651,7 +670,8 @@ Traffic will now be sent from the UE to the network. This will be shown in both 
 
 **Note:** All routes have to be configured as presented in  :ref:`Routing Configuration for ZMQ-based setup <zmq_routing>` section.
 
-* **Iperf3 Output**
+Iperf3 Output
+^^^^^^^^^^^^^
 
 Example **server** iPerf3 output:: 
 
@@ -683,7 +703,8 @@ Example **client** iPerf3 output::
   [  5]   5.00-6.00   sec  1.12 MBytes  9.44 Mbits/sec    0    132 KBytes      
 
 
-* **Console Traces**
+Console Traces
+^^^^^^^^^^^^^^
 
 The following example trace was taken from the **srsUE console** while running the above iPerf3 test:: 
 
@@ -711,8 +732,15 @@ The following example trace was taken from the **gNB console** at the same time 
    1 4601   15   27   288k  349    0   0% |  65.5   28    14M  410    0   0%    0.0
 
 
+----- 
+
 Multi-UE Emulation
 ******************
+
+.. note:: 
+
+  The Multi-UE scenario outlined here is **not** inteded to be an optimized, performant, or scalable solution. It is a simple example to demonstrate how to connect multiple UEs to a single gNB 
+  using ZMQ and srsUE. Extending your own set-up beyond what is described here may not perform as expected. Users that require a more performant solution should consider using different solutions, such as AmariUE.
 
 To connect multiple UEs to a single gNB using ZMQ-based RF devices, we need a **broker** that:
 
