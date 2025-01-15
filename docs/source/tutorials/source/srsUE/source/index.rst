@@ -49,6 +49,7 @@ The current srsUE implementation has a few feature limitations when running in 5
 
   - Limited to 15 kHz Sub-Carrier Spacing (SCS), which means only FDD bands can be used. 
   - Limited to 5, 10, 15 or 20 MHz Bandwidth (BW)
+  - Handover is not supported
 
 Open5GS
 =======
