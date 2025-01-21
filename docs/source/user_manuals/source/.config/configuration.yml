@@ -1,9 +1,7 @@
+ran_node_name: srsgnb01             # Optional TEXT (srsgnb01). Sets the text ID associated with the gNB. Format: string without spaces.
 gnb_id: 411                         # Optional UINT (411). Sets the numerical ID associated with the gNB.
 gnb_id_bit_length: 22               # Optional UNIT (22). Sets the bit length of the gnb_id above. Format: integer between [22 - 32]
-ran_node_name: srsgnb01             # Optional TEXT (srsgnb01). Sets the text ID associated with the gNB. Format: string without spaces.
 gnb_du_id: 0                        # Optional UINT (0). Sets the gNB DU ID. Supported: [0 - 68719476735].
-
-du_multicell_enabled: false         # Optional BOOLEAN (false). Sets the DU multi-cell enable flag. Supported: [false, true].
 
 cells:                              # Optional TEXT. Sets the cell configuration on a per cell basis, overwriting the default configuration defined by cell_cfg. Contains a list of cells, each with parameters that overwrite the default config. This can only be
                                     # set via the configuration file. For more information see the relevant example configuration file: gnb_custom_cell_properties.yml. Each list entry should begin with "-".
@@ -56,8 +54,8 @@ cu_cp:
         ncells:                                   # Required TEXT. List of neighbor cells.
           nr_cell_id:                                 # Required UINT. The ID of this neighbor cell.
           report_configs:                             # Required TEXT. List of report configurations to use for measurements of this neighbor cell.
-        gnb_id:                                   # Optional UINT. The ID of this gNB.
-        ssb_arfcn:                                # Optional UINT. The SSB ARFCN of this serving cell. Must be present if not provided over F1.
+        gnb_id_bit_length:                        # Optional UINT. The ID of this gNB. Supported: [22 - 32]
+        pci:                                      # Optional UINT. The PCI of this serving cell. Supported: [0-1007]
         band:                                     # Optional UINT. The NR band of this serving cell cell. Must be present if not provided over F1.
         ssb_scs:                                  # Optional UINT. The SSB subcarrier spacing of this serving cell in KHz. Must be present if not provided over F1.
         ssb_period:                               # Optional UINT. The SSB period of this serving cell in ms.  Must be present if not provided over F1.
@@ -67,11 +65,14 @@ cu_cp:
       -                                         # Define report configs for cell 1
         report_cfg_id:                            # Required UINT. The ID of this report configuration.
         report_type:                              # Required TEXT. The type of the report. Supported: [event_triggered, periodical]. Note that periodical reports are only supported for serving cells.
-        report_interval_ms: 1024                  # Optional UINT (1024). The report interval in ms.
-        a3_report_type:                           # Optional TEXT. A3 report type. Supported: [rsrp, rsrq, sinr].
-        a3_offset_db:                             # Optional UINT. A3 offset in dB used for measurement report trigger.
-        a3_hysteresis_db:                         # Optional UINT. A3 hysteresis in dB used for measurement report trigger.
-        a3_time_to_trigger_ms:                    # Optional UINT. Time in ms during which A3 condition must be met before measurement report trigger.
+        event_triggered_report_type:              # Optional TEXT. Sets the type of event triggered report. Supported: [a1, a2, a3, a4, a5, a6].
+        report_interval_ms: 1024                  # Optional UINT (1024). The report interval in ms. Supported: [120, 240, 480, 640, 1024, 2048, 5120, 10240, 20480, 40960, 60000, 360000, 720000, 1800000]. 
+        meas_trigger_quantity:                    # Optional TEXT. Sets the quantity to be measured. Supported: [rsrp, rsrq, sinr]. 
+        meas_trigger_quantity_threshold_db:       # Optional UINT. Sets the measurement trigger quantity threshold in dB used for measurement report trigger of event A1/A2/A4/A5. Supported: [0 - 127].
+        meas_trigger_quantity_threshold_2_db:     # Optional UINT. Sets the measurement trigger quantity threshold 2 in dB used for measurement report trigger of event A5. Supported: [0 - 127].
+        meas_trigger_quantity_offset_db:          # Optional UINT. Sets the measurement trigger quantity offset in dB used for measurement report trigger of event A3/A6. Note the actual value is field value * 0.5 dB. Supported: [-30 - 30].
+        hysteresis_db:                            # Optional UINT. Sets the hysteresis in dB used for measurement report trigger. Note the actual value is field value * 0.5 dB. Supported: [0 - 30].
+        time_to_trigger_ms:                       # Optional UINT. Sets the time in ms during which a condition must be met before measurement report trigger. Supported: [0, 40, 64, 80, 100, 128, 160, 256, 320, 480, 512, 640, 1024, 1280, 2560, 5120]. 
 
   rrc:
     force_reestablishment_fallback: false    # Optional BOOLEAN (false). Force RRC re-establishment fallback to RRC setup. Supported: [false, true].
@@ -91,13 +92,22 @@ cu_up:
   gtpu_reordering_timer: 0              # Optional INT (0). Sets the GTP-U RX reordering timer (in milliseconds).
   warn_on_drop: false                   # Optional BOOLEAN (false). Enables the option to log a warning for dropped packets in GTP-U and PDCP due to full queues. Supported: [false, true].
 
-  upf:
-    bind_addr: auto                       # Optional TEXT (auto). Sets local IP address to bind for N3 interface. Format: IPV4 or IPV6 IP address.
-    bind_interface: auto                  # Optional TEXT (auto). Sets network device to bind for N3 interface. Format: IPV4 or IPV6 IP address.
-    ext_addr: auto                        # Optional TEXT (auto). Sets external IP address that is advertised to receive GTP-U packets from UPF via N3 interface. Format: IPV4 or IPV6 IP address.
-    udp_max_rx_msgs: 256                  # Optional INT (256). Sets the maximum amount of messages RX in a single syscall.
-    pool_threshold: 0.9                   # Optional FLOAT (0.9). Sets the pool accupancy threshold after which packets are dropped. Supported: [0.0 - 1.0].
+  ngu: 
     no_core: false                        # Optional BOOLEAN (false). Setting to true allows the gNB to run without a core. Supported: [0, 1].
+    socket:                               # Define socket(s) for NG-U interface.
+      -                                     # Socket 1 
+        bind_addr: 127.0.3.1                  # Optional TEXT (auto). Sets local IP address to bind for N3 interface. Format: IPV4 or IPV6 IP address.
+        udp:
+          max_rx_msgs: 256                      # Optional INT (256). Sets the maximum number of messages RX from a socket in a single syscall.
+          pool_threshold: 0.9                   # Optional FLOAT (0.9). Sets the pool occupancy threshold, after which packets are dropped. Supported: [0.0 - 1.0].
+          dscp:                                 # Optional UINT. Sets the Differentiated Services Code Point. Supported: [0 - 63].
+
+  test_mode:
+    enable: false                          # Optional BOOLEAN (false). Set to true to enable CU-UP test mode. Supported: [true, false].
+    integrity_enable: false                # Optional BOOLEAN (false). Set to true to enable PDCP integrity testing. Supported: [true, false].
+    ciphering_enable: false                # Optional BOOLEAN (false). Set to true to enable PDCP ciphering testing. Supported: [true, false].
+    nea_algo: 2                            # Optional UINT (2). Sets the NEA algo to use for testing. Supported: [0, 1, 2, 3].
+    nia_algo: 2                            # Optional UINT (2). Sets the NIA algo to use for testing. Supported: [1, 2, 3].
 
 du:
   warn_on_drop: false                   # Optional BOOLEAN (false). Enables the option to log a warning for dropped packets in F1-U, RLC and MAC due to full queues. Supported: [false, true].
@@ -123,7 +133,6 @@ cell_cfg:
       sched_cfg:                              # Scheduler configuration for the slice
         min_prb_policy_ratio: 0                 # Optional UINT (0). Sets the minimum percentage of PRBs to be allocated to the slice. Supported [0 - 100].
         max_prb_policy_ratio: 100               # Optional UINT (100). Sets the maximum percentage of PRBs to be allocated to the slice. Supported [1 - 100].
-
 
   mac_cell_group:
     bsr_cfg:                                # Buffer status report configuration parameters
@@ -225,6 +234,7 @@ cell_cfg:
     max_rb_size: 275                        # Optional UINT (275). Sets the maximum RB size for the UE PUSCH resource allocation. Supported: [1 - 275].
     start_rb: 0                             # Optional UINT (0). Sets the start RB for resource allocation of UE PUSCHs. Supported: [0 - 275].
     end_rb: 275                             # Optional UINT (275). Sets the end RB for resource allocation of UE PUSCHs. Supported: [0 - 275].
+    enable_cl_loop_pw_control: false        # Optional BOOLEAN (false). Enables the closed-loop power control for PUSCH. Supported: [false, true].
     target_sinr: 10                         # Optional FLOAT (10). Sets the target SINR in dB. Supported: [-5 - 30].
     ref_path_loss: 70                       # Optional FLOAT (70). Sets the reference path-loss for target PUSCH SINR in dB. Supported: [50 - 120].
     pl_compensation_factor: 1               # Optional FLOAT (1). Sets the fractional path-loss compensation factor in PUSCH power control. Supported: [0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1].
@@ -235,6 +245,7 @@ cell_cfg:
     pucch_resource_common: 11               # Optional UINT (11). Index of PUCCH resource set for the common configuration. Supported: [0 - 15].
     sr_period_ms: 20                        # Optional UINT (20). Sets the SR period in milliseconds. Supported: [1,2,4,8,10,16,20,40,80,160,320].
     use_format_0: false                     # Optional BOOLEAN (false). Enables the use of Format 0 for PUCCH resources from resource set 0. Supported: [false, true].
+    pucch_set1_format: 2                    # Optional UINT (2). Sets the PUCCH format for PUCCH resource set 1. Supported: [2, 3, 4].
     nof_ue_res_harq_per_set: 8              # Optional UINT (8). Sets the number of PUCCH resources available per UE for HARQ for each PUCCH resource set. Supported: [1 - 8].
     f0_or_f1_nof_cell_res_sr: 8             # Optional UINT (8). Sets the number of PUCCH F0 or F1 resources available per cell for SR. Supported: [1 - 50].
     f0_intraslot_freq_hop: false            # Optional BOOLEAN (false). Enables intra-slot frequency hopping for PUCCH F0. Supported: [false, true].
@@ -242,11 +253,22 @@ cell_cfg:
     f1_nof_cyclic_shifts: 2                 # Optional UINT (2). Sets the number of possible cyclic shifts available for PUCCH F1 resources. Supported: [1,2,3,4,6,12].
     f1_intraslot_freq_hop: false            # Optional BOOLEAN (false). Enables intra-slot frequency hopping for PUCCH F1. Supported: [false, true].
     nof_cell_harq_pucch_res_sets: 2         # Optional UINT (2). Sets the number of separate PUCCH resource sets for HARQ-ACK that are available in the cell. The higher the number of sets, the lower the chances UEs have to share the same PUCCH resources. Supported: [1 - 10].
-    f2_nof_cell_res_csi: 8                  # Optional UINT (8). Sets the number of PUCCH F2 resources available per cell for CSI. Supported: [0 - 50].
+    f2_or_f3_or_f4_nof_cell_res_csi: 8      # Optional UINT (8). Sets the number of PUCCH F2, F3 or F4 resources available per cell for CSI. Supported: [0 - 100].
     f2_max_nof_rbs: 1                       # Optional UINT (1). Sets the max number of RBs for PUCCH F2 resources. Supported: [1 - 16].
     f2_max_payload:                         # Optional INT. Sets the max number of payload bits for PUCCH F2 resources. Supported [1 - 11].
     f2_max_code_rate: dot35                 # Optional TEXT (dot35). Sets the PUCCH F2 max code rate. Supported: [dot08, dot15, dot25, dot35, dot45, dot60, dot80].
     f2_intraslot_freq_hop: false            # Optional BOOLEAN (false). Enables intra-slot frequency hopping for PUCCH F2. Supported: [false, true].
+    f3_max_nof_rbs: 1                       # Optional UINT (1). Sets the max number of RBs for PUCCH F3 resources. Supported: [1 - 16].
+    f3_max_payload:                         # Optional INT. Sets the max number of payload bits for PUCCH F3 resources. Supported [1 - 11].
+    f3_max_code_rate: dot35                 # Optional TEXT (dot35). Sets the PUCCH F3 max code rate. Supported: [dot08, dot15, dot25, dot35, dot45, dot60, dot80].
+    f3_intraslot_freq_hop: false            # Optional BOOLEAN (false). Enables intra-slot frequency hopping for PUCCH F3. Supported: [false, true]
+    f3_additional_dmrs: false               # Optional BOOLEAN (false). Enables additional DMRS for PUCCH F3. Supported: [false, true].
+    f3_pi2_bpsk: false                      # Optional BOOLEAN (false). Enables pi/2 BPSK for PUCCH F3. Supported: [false, true].
+    f4_max_code_rate: dot35                 # Optional TEXT (dot35). Sets the PUCCH F4 max code rate. Supported: [dot08, dot15, dot25, dot35, dot45, dot60, dot80].
+    f4_intraslot_freq_hop: false            # Optional BOOLEAN (false). Enables intra-slot frequency hopping for PUCCH F4. Supported: [false, true].
+    f4_additional_dmrs: false               # Optional BOOLEAN (false). Enables additional DMRS for PUCCH F4. Supported: [false, true].
+    f4_pi2_bpsk: false                      # Optional BOOLEAN (false). Enables pi/2 BPSK for PUCCH F4. Supported: [false, true].
+    f4_occ_length: 2                        # Optional UINT (2). Sets the OCC length for PUCCH F4. Supported: [1 - 4].                      
     min_k1: 4                               # Optional UINT (4). Sets the minimum value of K1 (difference in slots between PDSCH and HARQ-ACK). Lower k1 values will reduce latency, but place a stricter requirement on the UE decode latency. Supported: [1 - 4].
     max_consecutive_kos: 100                # Optional UINT (100). Sets the maximum number of consecutive undecoded PUCCH F2 for CSI before an Radio Link Failure is reported.
 
@@ -319,16 +341,16 @@ cell_cfg:
 
 e2:
   enable_cu_cp_e2: false                # Optional BOOLEAN (false). Enables the CU E2 agent for CU-CP. Supported: [false, true]. 
-  enable_cu_Up_e2: false                # Optional BOOLEAN (false). Enables the CU E2 agent for CU-UP. Supported: [false, true]. 
+  enable_cu_up_e2: false                # Optional BOOLEAN (false). Enables the CU E2 agent for CU-UP. Supported: [false, true]. 
   enable_du_e2: false                   # Optional BOOLEAN (false). Enables the DU E2 agent. Supported: [false, true].
   addr: 127.0.0.1                       # Optional TEXT (127.0.0.1). Sets the RIC IP address.
   port: 36421                           # Optional UINT (36421). Sets the RIC Port. Supported: [20000 - 40000].
   bind_addr: 127.0.0.1                  # Optional TEXT (127.0.0.1). Sets the local IP address to bind for RIC connection. Supported: IPv4 address.
-  sctp_rto_initial: 120                 # Optional INT. Sets the initial retransmission timeout when creating the SCTP connection.
-  sctp_rto_min: 120                     # Optional INT. Sets the minimum retransmission timeout for the SCTP connection.
-  sctp_rto_max: 500                     # Optional INT. Sets the maximum retransmission timeout for the SCTP connection.
-  sctp_init_max_attempts: 3          # Optional INT. Sets the maximum retransmission attempts for the initial SCTP connection.
-  sctp_max_init_timeo: 500              # Optional INT. Sets the maximum retransmission timeout for the initial SCTP connection.
+  sctp_rto_initial: 120                 # Optional INT (120). Sets the initial retransmission timeout when creating the SCTP connection.
+  sctp_rto_min: 150                     # Optional INT (150). Sets the minimum retransmission timeout for the SCTP connection.
+  sctp_rto_max: 500                     # Optional INT (500). Sets the maximum retransmission timeout for the SCTP connection.
+  sctp_init_max_attempts: 3             # Optional INT (3). Sets the maximum retransmission attempts for the initial SCTP connection.
+  sctp_max_init_timeo: 500              # Optional INT (500). Sets the maximum retransmission timeout for the initial SCTP connection.
   e2sm_kpm_enabled: false               # Optional BOOLEAN (false). Enabled the E2SM KPM service module. Supported: [false, true].
   e2sm_rc_enabled: false                # Optional BOOLEAN (false). Enabled the E2SM RC service module. Supported: [false, true].
 
@@ -511,12 +533,6 @@ expert_execution:
       enable_dl_parallelization: true         # Optional BOOLEAN (true). Sets the Open Fronthaul downlink parallelization flag. Supported: [false, true].
 
 test_mode:
-  enable: false                          # Optional BOOLEAN (false). Set to true to enable CU-UP test mode. Supported: [true, false].
-  integrity_enable: false                # Optional BOOLEAN (false). Set to true to enable PDCP integrity testing. Supported: [true, false].
-  ciphering_enable: false                # Optional BOOLEAN (false). Set to true to enable PDCP ciphering testing. Supported: [true, false].
-  nea_algo: 2                            # Optional UINT (2). Sets the NEA algo to use for testing. Supported: [0, 1, 2, 3].
-  nia_algo: 2                            # Optional UINT (2). Sets the NIA algo to use for testing. Supported: [1, 2, 3].
-
   test_ue:
     -                                     # Test UE 1, multiple test UEs can be added
       rnti: 0                               # Optional ENUM (0). Sets the C-RNTI of the UE. Supported: [0 - 65519].
@@ -569,7 +585,6 @@ log:
 pcap:
   ngap_filename: /tmp/gnb_ngap.pcap     # Optional TEXT (/tmp/gnb_ngap.pcap). Path for NGAP PCAPs.
   ngap_enable: false                    # Optional BOOLEAN (false). Enable/disable NGAP packet capture. Supported: [false, true].
-  
   n3_filename: /tmp/gnb_n3.pcap         # Optional TEXT (/tmp/gnb_n3.pcap). Path for N3 PCAPs.
   n3_enable: false                      # Optional BOOLEAN (false). Enable/disable N3 packet capture. Supported: [false, true].
   e1ap_filename: /tmp/gnb_e1ap.pcap     # Optional TEXT (/tmp/gnb_e1ap.pcap). Path for E1AP PCAPs.
@@ -577,6 +592,7 @@ pcap:
   e2ap_cu_cp_filename: /tmp/cu_cp_e2ap.pcap # Optional TEXT (/tmp/cu_cp_e2ap.pcap). Path for E2AP CU-CP PCAPs.
   e2ap_cu_up_filename: /tmp/cu_up_e2ap.pcap # Optional TEXT (/tmp/cu_up_e2ap.pcap). Path for E2AP CU-UP PCAPs.
   e2ap_du_filename: /tmp/du_e2ap.pcap   # Optional TEXT (/tmp/du_e2ap.pcap). Path for E2AP CU PCAPs.
+  e2ap_cu_cp_enable: false              # Optional BOOLEAN (false). Enable/disable E2AP CU-CP packet capture. Supported: [false, true].
   e2ap_enable: false                    # Optional BOOLEAN (false). Enable/disable E2AP packet capture. Supported: [false, true].
   f1ap_filename: /tmp/gnb_f1ap.pcap     # Optional TEXT (/tmp/gnb_f1ap.pcap). Path for F1AP PCAPs.
   f1ap_enable: false                    # Optional BOOLEAN (false). Enable/disable F1AP packet capture. Supported: [false, true].
