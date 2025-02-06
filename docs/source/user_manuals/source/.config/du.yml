@@ -367,6 +367,7 @@ expert_phy:
   pusch_dec_enable_early_stop: true         # Optional BOOLEAN (true). Enables the PUSCH decoder early stopping mechanism.
   pusch_sinr_calc_method: post_equalization # Optional TEXT (evm). Sets the PUSCH SINR calculation method. Supported: [channel_estimator, post_equalization, evm]. 
   max_request_headroom_slots: 0             # Optional UINT (0). Sets the maximum request headroom size in slots. Supported: [0 - 30]. 
+  allow_request_on_empty_uplink_slot: false # Optional BOOLEAN (false). Allows uplink request on empty uplink slots (slots with no PUCCH/PUSHC/SRS PDUs).
 
 buffer_pool: 
   nof_segments: 1048576                 # Optional UINT (1048576). Sets the number of segments allocated by the buffer pool. 
