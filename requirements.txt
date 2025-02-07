@@ -13,3 +13,4 @@ sphinxcontrib-plantuml
 sphinx-tabs
 sphinxcontrib-applehelp
 sphinxcontrib-devhelp
+sphinxcontrib-googleanalytics
