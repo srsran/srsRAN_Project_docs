@@ -412,7 +412,9 @@ To start AmarisoftUE run::
 
   sudo ./lteue ./ue-nr-ntn-geo.cfg
 
-Note that the :download:`if-up script <.config/ue-ifup>` should be located in the same directory, so the simulator can create a network namespace for the UE.
+Note that the :download:`if-up script <.config/ue-ifup>` should be located in the same directory, so the simulator can create a network namespace for the UE. Also, verify that the script is executable by running:::
+
+  chmod +x ./ue-ifup
 
 The UE console output should be similar to:: 
   

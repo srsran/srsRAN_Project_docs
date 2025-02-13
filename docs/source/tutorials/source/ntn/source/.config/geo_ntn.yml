@@ -6,6 +6,12 @@ cell_cfg:
         sib_mapping: 19             # Enable SIB19.
   pucch:
     sr_period_ms: 80                # Set Scheduling Request period.
+    nof_ue_res_harq_per_set: 7
+    nof_cell_harq_pucch_res_sets: 1
+    f1_nof_cyclic_shifts: 1
+    f1_enable_occ: true
+    f0_or_f1_nof_cell_res_sr: 7
+    f2_or_f3_or_f4_nof_cell_res_csi: 7
   csi:
     csi_rs_period: 80               # Set CSI-RS report period.
   pdsch:
@@ -16,12 +22,14 @@ cell_cfg:
     max_msg3_harq_retx: 0           # Disable Msg3 HARQ retransmissions.
 
 cu_cp:
+  request_pdu_session_timeout: 10
   rrc:
     rrc_procedure_timeout_ms: 12800 # Set high RRC timeout value.
 
 ntn:
   cell_specific_koffset:  239       # Cell-specific k-offset.
-  ta_common:  0                     # TA common offset.
+  ta_info:                          # TA-Info.
+    ta_common:  0
   ephemeris_info_ecef:              # Satellite ephemeris in position and velocity state vector format.
     pos_x:  -28105880
     pos_y:  31509747
@@ -29,3 +37,4 @@ ntn:
     vel_x:  34
     vel_y:  9
     vel_z:  -385
+
