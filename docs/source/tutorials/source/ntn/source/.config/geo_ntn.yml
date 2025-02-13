@@ -26,8 +26,16 @@ cu_cp:
   rrc:
     rrc_procedure_timeout_ms: 12800 # Set high RRC timeout value.
 
+cell_cfg:
+  sched_expert_cfg:
+    ta_sched_cfg:
+      ta_cmd_offset_threshold: 1
+      ta_measurement_slot_period: 40
+      ta_measurement_slot_prohibit_period: 250
+      ta_target: 0
+
 ntn:
-  cell_specific_koffset:  239       # Cell-specific k-offset.
+  cell_specific_koffset:  240       # Cell-specific k-offset.
   ta_info:                          # TA-Info.
     ta_common:  0
   ephemeris_info_ecef:              # Satellite ephemeris in position and velocity state vector format.

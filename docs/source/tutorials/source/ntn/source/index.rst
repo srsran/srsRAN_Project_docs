@@ -266,6 +266,18 @@ The ``ntn`` section is as follows::
       vel_y:  9
       vel_z:  -385
 
+
+Finally, the Timing Advance (TA) Scheduler configuration must be updated to account for the large propagation delays in GEO NTN. Specifically, it is important to avoid measuring and issuing new TA commands before the previous command has been applied by the UE. The ``ta_sched_cfg`` section is as follows::
+
+  cell_cfg:
+    sched_expert_cfg:
+      ta_sched_cfg:
+        ta_cmd_offset_threshold: 1                 # Sets the timing Advance Command (T_A) offset threshold above which Timing Advance Command is triggered.
+        ta_measurement_slot_period: 80             # Sets the measurements periodicity in nof. slots over which the new Timing Advance Command is computed.
+        ta_measurement_slot_prohibit_period: 250   # Sets the delay in number of slots between issuing the TA_CMD and starting TA measurements.
+        ta_target: 0                               # Sets the timing advance target in units of TA.
+
+
 Note that :download:`gnb_zmq.yml <.config/gnb_zmq.yml>` file contains the basic (i.e., generic) gNB config, while the NTN-related parameters are defined in a separate :download:`geo_ntn.yml<.config/geo_ntn.yml>` file.
 
 
@@ -554,6 +566,38 @@ Example **ping** output::
   --- 10.45.1.1 ping statistics ---
   4 packets transmitted, 4 received, 0% packet loss, time 3002ms
   rtt min/avg/max/mdev = 641.317/702.106/762.413/45.207 ms
+
+
+Iperf
+=====
+
+
+**Uplink**
+
+To test the connection in the uplink direction, use the following::
+
+    sudo ip netns exec ue1 iperf -c 10.45.1.1 -i 1 -t 100 -u -b25M
+
+**Downlink**
+
+To run iperf in the downlink direction, use::
+
+    iperf -c 10.45.1.2 -i 1 -t 1000 -u -b 25M
+
+
+**Console Trace**
+
+Example **gNB console** trace output when running **iperf**::
+
+           |--------------------DL---------------------|-------------------------UL----------------------------------
+  pci rnti | cqi  ri  mcs  brate   ok  nok  (%)  dl_bs | pusch  rsrp  ri  mcs  brate   ok  nok  (%)    bsr     ta  phr
+    1 4601 |  15 1.0   27    21M  988    0   0%  3.15M |  51.9  -8.9   1   27  20.1M  988    0   0%   700k  -151n   23
+    1 4601 |  15 1.0   27    21M  988    0   0%  3.83M |  51.9  -8.9   1   27  20.1M  988    0   0%   700k  -152n   23
+    1 4601 |  15 1.0   27    21M  988    0   0%  4.49M |  51.9  -8.9   1   27  20.1M  988    0   0%   700k  -151n   23
+    1 4601 |  15 1.0   27    21M  986    0   0%   5.3M |  51.9  -8.9   1   27  20.1M  986    0   0%   700k  -151n   23
+    1 4601 |  15 1.0   27    21M  988    0   0%  5.48M |  51.9  -8.9   1   27  20.1M  988    0   0%   700k  -151n   23
+    1 4601 |  15 1.0   27    21M  988    0   0%  5.44M |  51.9  -8.9   1   27  20.1M  988    0   0%   700k  -152n   23
+    1 4601 |  15 1.0   27    21M  988    0   0%  5.46M |  51.9  -8.9   1   27  20.1M  988    0   0%   700k  -151n   23
 
 -----
 
