@@ -1,6 +1,7 @@
-ran_node_name: srsgnb01             # Optional TEXT (srsgnb01). Sets the text ID associated with the gNB. Format: string without spaces.
+ran_node_name: cu_cp_01             # Optional TEXT (cu_cp_01). Sets the text ID associated with the gNB. Format: string without spaces.
 gnb_id: 411                         # Optional UINT (411). Sets the numerical ID associated with the gNB.
 gnb_id_bit_length: 22               # Optional UNIT (22). Sets the bit length of the gnb_id above. Format: integer between [22 - 32]
+gnb_cu_up_id: 0                     # Optional UINT (0). Sets the gNB CU-UP ID. Supported: [0 - 68719476735].
 gnb_du_id: 0                        # Optional UINT (0). Sets the gNB DU ID. Supported: [0 - 68719476735].
 
 cells:                              # Optional TEXT. Sets the cell configuration on a per cell basis, overwriting the default configuration defined by cell_cfg. Contains a list of cells, each with parameters that overwrite the default config. This can only be
@@ -85,7 +86,10 @@ cu_cp:
     nia_pref_list: nia2,nia1                 # Optional TEXT (nia2,nia1). Ordered preference list for the selection of encryption algorithm (NIA). Supported: [nia2,nia1,nia3].
 
   f1ap:
-    procedure_timeout: 1000                  # Optional INT (1000). Sets the UE context setup timeout in milliseconds.
+    procedure_timeout: 1000                  # Optional INT (1000). Sets the time the F1AP waits for a DU response in milliseconds.
+
+  e1ap: 
+    procedure_timeout: 1000                  # Optional INT (1000). Sets the time the E1AP waits for a CU-UP response in milliseconds.
 
 cu_up:
   gtpu_queue_size: 2048                 # Optional INT (2048). Sets the GTP-U queue size, in PDUs.
@@ -271,6 +275,10 @@ cell_cfg:
     f4_occ_length: 2                        # Optional UINT (2). Sets the OCC length for PUCCH F4. Supported: [1 - 4].                      
     min_k1: 4                               # Optional UINT (4). Sets the minimum value of K1 (difference in slots between PDSCH and HARQ-ACK). Lower k1 values will reduce latency, but place a stricter requirement on the UE decode latency. Supported: [1 - 4].
     max_consecutive_kos: 100                # Optional UINT (100). Sets the maximum number of consecutive undecoded PUCCH F2 for CSI before an Radio Link Failure is reported.
+    enable_cl_loop_pw_control: false        # Optional BOOLEAN (false). Enables the closed-loop power control for PUCCH. Supported: [false, true].
+    target_sinr_f0: 10                      # Optional FLOAT (10). Sets the target SINR for PUCCH F0 in dB. Supported: [-10 - 20].
+    target_sinr_f2: 6                       # Optional FLOAT (6). Sets the target SINR for PUCCH F2 in dB. Supported: [-10 - 20].
+    target_sinr_f3: 1                       # Optional FLOAT (1). Sets the target SINR for PUCCH F3 in dB. Supported: [-15 - 10].
 
   srs:
     srs_period_ms:                          # Optional FLOAT. Sets the periodic SRS period in ms. The SRS period needs to be compatible with the subcarrier spacing. Supported: {1,2,2.5,4,5,8,10,16,20,32,40,64,80,160,320,640,1280,2560}. 
@@ -287,6 +295,7 @@ cell_cfg:
     fixed_msg3_mcs: 0                       # Optional UINT (0). Sets a fixed Msg3 MCS. Supported: [0 - 28].
     max_msg3_harq_retx: 4                   # Optional UINT (4). Sets the maximum number of Msg3 HARQ retransmissions. Supported: [0 - 4].
     total_nof_ra_preambles:                 # Optional TEXT. Sets the number of different PRACH preambles. Supported: [1 - 64].
+    cfra_enabled: false                     # Optional BOOLEAN (false). Enables Contention Free Random Access (CFRA). If enabled, total_nof_ra_preambles must be lower than 64. Supported: [false, true].
     prach_frequency_start:                  # Optional INT. Set Offset of lowest PRACH transmission occasion in frequency domain respective to PRB 0, in PRBs. Supported: [0 - (MAX_NOF_PRB - 1)].
     preamble_rx_target_pw: -100             # Optional INT (-100). Sets the Target power level at the network receiver side, in dBm. Supported: multiples of 2 within range [-202, -60].
     preamble_trans_max: 7                   # Optional UINT (7). Sets the max number of RA preamble transmissions performed before declaring a failure. Supported: [3, 4, 5, 6, 7, 8, 10, 20, 50, 100, 200].
@@ -326,12 +335,16 @@ cell_cfg:
 
   sched_expert_cfg:
     policy_sched_cfg:
-      pf_sched:
-        pf_sched_fairness_coeff: 2                  # Optional FLOAT [2]. Sets the fairness Coefficient to use in Proportional Fair policy scheduler.
+      qos_sched:
+        qos_weight_function: gbr_prioritized  # Optional TEXT (gbr_prioritized). Sets the QoS weight function to use in the QoS scheduler. Supported: [gbr_prioritized, multivariate].      
+        pf_fairness_coeff: 2                  # Optional FLOAT [2]. Sets the fairness Coefficient to use in Proportional Fair policy scheduler.
+        prior_enabled: true                   # Optional BOOLEAN (true). Sets whether or not to take into account the QoS Flow priority in QoS-aware scheduling. Supported: [false, true].
+        pdb_enabled: true                     # Optional BOOLEAN (true). Sets whether or not to take into account the Packet Delay Budget (PDB) in QoS-aware scheduling. Supported: [false, true].
+        gbr_enabled: true                     # Optional BOOLEAN (true). Sets whether or not to take into account the Guaranteed Bit Rate (GBR) in QoS-aware scheduling. Supported: [false, true].
     ta_sched_cfg:
         ta_measurement_slot_period: 80              # Optional UINT (80). Sets the measurements periodicity in nof. slots over which the new Timing Advance Command is computed.
         ta_cmd_offset_threshold: 1                  # Optional INT (1). Sets the timing Advance Command (T_A) offset threshold above which Timing Advance Command is triggered. If set to less than zero, issuing of TA Command is disabled. Supported: [-1 - 31].
-        ta_target: 0                                # Optional INT (0). Sets the timing advance target in units of TA. Supported: [-30 - 30].
+        ta_target: 1                                # Optional INT (1). Sets the timing advance target in units of TA. Supported: [-30 - 30].
         ta_update_measurement_ul_sinr_threshold: 0  # Optional FLOAT (0). Sets the UL SINR threshold (in dB) above which reported N_TA update measurement is considered valid. 
 
   drx: 
@@ -356,11 +369,15 @@ e2:
 
 ntn:
   cell_specific_koffset: 0              # Optional INT (0). Sets the cell-specific k-offset to be used for NTN. Supported: [0 - 1023].
-  ta_common:                            # Optional UINT. Sets the TA common offset.
+  ntn_ul_sync_validity_dur: 0           # Optional INT. Sets the NTN UL sync validity duration in milliseconds. Supported: [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 120, 180, 240, 900].  
 
   epoch_time:
     sfn: 0                                # Optional INT (0). Sets the SFN part. Supported: [0 - 1023].
     subframe_number: 0                    # Optional INT (0). Sets the sub-frame number part. Supported: [0 - 9].
+  ta_info: 
+    ta_common: 0                          # Optional INT (0). Sets the common Timing Advance value. Supported: [0 - 66485757].
+    ta_common_drift: 0                    # Optional INT (0). Sets the common Timing Advance drift value. Supported: [-257303 - 257303].
+    ta_common_drift_variant: 0            # Optional INT (0). Sets the common Timing Advance drift variant value. Supported: [0 - 28949].
   ephemeris_info_ecef:
     pos_x: 0                              # Optional INT (0). Sets the X position of the satellite. Supported: [-67108864 - 67108863].
     pos_y: 0                              # Optional INT (0). Sets the Y position of the satellite. Supported: [-67108864 - 67108863].
@@ -394,7 +411,7 @@ ru_ofh:
   is_dl_broadcast_enabled: false        # Optional BOOLEAN (false). Sets downlink broadcast enabled flag. Supported: [false, true].
   ignore_ecpri_seq_id: false            # Optional BOOLEAN (false). Sets whether or not to ignore eCPRI sequence ID field value. Supported [false, true].
   ignore_ecpri_payload_size: false      # Optional BOOLEAN (false). Sets whether or not to ignore eCPRI payload size field value. Supported [false, true].
-  warn_unreceived_ru_frames: true       # Optional BOOLEAN (true). Sets whether or not to send a warning when there are unreceived Radio Unit frames. Supported [false, true].
+  warn_unreceived_ru_frames: always     # Optional TEXT (always). Sets whether or not to send a warning when there are unreceived Radio Unit frames. Supported [always, never, after_traffic_detection].
   compr_method_ul: bfp                  # Optional TEXT (bfp). Sets the uplink compression method. Supported: [none, bfp, bfp selective, block scaling, mu law, modulation, modulation selective].
   compr_bitwidth_ul: 9                  # Optional UINT (9). Sets the uplink compression bit width. Supported: [1 - 16].
   compr_method_dl: bfp                  # Optional TEXT (bfp). Sets the downlink compression method. Supported: [none, bfp, bfp selective, block scaling, mu law, modulation, modulation selective].
@@ -495,12 +512,14 @@ buffer_pool:
   segment_size: 2048                    # Optional UINT (2048). Sets the size of each buffer pool segment in bytes.
 
 expert_phy:
-  max_proc_delay: 5                         # Optional INT (5). Sets the maximum allowed DL processing delay in slots. Supported: [1 - 30].
-  pusch_dec_max_iterations: 6               # Optional UINT (6). Sets the number of PUSCH LDPC decoder iterations. Format: Positive integer greater than 0.
-  pusch_dec_enable_early_stop: true         # Optional BOOLEAN (true). Enables the PUSCH decoder early stopping mechanism.
-  pusch_sinr_calc_method: post_equalization # Optional TEXT (evm). Sets the PUSCH SINR calculation method. Supported: [channel_estimator, post_equalization, evm].
-  max_request_headroom_slots: 0             # Optional UINT (0). Sets the maximum request headroom size in slots. Supported: [0 - 3].
-  allow_request_on_empty_uplink_slot: false # Optional BOOLEAN (false). Allows uplink request on empty uplink slots (slots with no PUCCH/PUSHC/SRS PDUs).
+  max_proc_delay: 5                             # Optional INT (5). Sets the maximum allowed DL processing delay in slots. Supported: [1 - 30].
+  pusch_dec_max_iterations: 6                   # Optional UINT (6). Sets the number of PUSCH LDPC decoder iterations. Format: Positive integer greater than 0.
+  pusch_dec_enable_early_stop: true             # Optional BOOLEAN (true). Enables the PUSCH decoder early stopping mechanism.
+  pusch_sinr_calc_method: post_equalization     # Optional TEXT (evm). Sets the PUSCH SINR calculation method. Supported: [channel_estimator, post_equalization, evm].
+  pusch_channel_estimator_td_strategy: average  # Optional TEXT (average). Sets the PUSCH channel estimator time-domain strategy. Supported: [average, interpolate].
+  pusch_channel_equalizer_algorithm: zf         # Optional TEXT (zf). Sets the PUSCH channel equalizer algorithm. Supported: [zf, mmse].
+  max_request_headroom_slots: 0                 # Optional UINT (0). Sets the maximum request headroom size in slots. Supported: [0 - 3].
+  allow_request_on_empty_uplink_slot: false     # Optional BOOLEAN (false). Allows uplink request on empty uplink slots (slots with no PUCCH/PUSHC/SRS PDUs).
 
 expert_execution:
   cell_affinities:                      # Optional TEXT. Sets the cell CPU affinities configuration on a per cell basis. Entry order is the same as the order in the defined cell list.
@@ -533,6 +552,11 @@ expert_execution:
     ofh:
       enable_dl_parallelization: true         # Optional BOOLEAN (true). Sets the Open Fronthaul downlink parallelization flag. Supported: [false, true].
 
+remote_control:
+  enabled: false                        # Optional BOOLEAN (false). Enables the remote control feature. Supported: [false, true].
+  bind_addr: 127.0.0.1                  # Optional TEXT (127.0.0.1). Sets the local IP address to bind for remote control. Supported: IPv4 address.
+  port: 8001                            # Optional UINT (8001). Sets the port where the remote control server listens for incoming connections. Supported: [0 - 65535].              
+
 test_mode:
   test_ue:
     -                                     # Test UE 1, multiple test UEs can be added
@@ -562,6 +586,8 @@ log:
   sec_level: warning                    # Optional TEXT (warning). Sets the security functions level.
   pdcp_level: warning                   # Optional TEXT (warning). Sets the PDCP log level.
   sdap_level: warning                   # Optional TEXT (warning). Sets the SDAP log level.
+  e1ap_level: warning                   # Optional TEXT (warning). Sets the E1AP log level.
+  e1ap_json_enabled: false              # Optional BOOLEAN (false). Enables the JSON logging of E1AP PDUs. Supported: [false, true].
   cu_level: warning                     # Optional TEXT (warning). Sets the CU log level.
   metrics_level: none                   # Optional TEXT (none). Sets the metrics log level.
   mac_level: warning                    # Optional TEXT (warning). Sets the MAC log level.
@@ -593,7 +619,6 @@ pcap:
   e2ap_cu_cp_filename: /tmp/cu_cp_e2ap.pcap # Optional TEXT (/tmp/cu_cp_e2ap.pcap). Path for E2AP CU-CP PCAPs.
   e2ap_cu_up_filename: /tmp/cu_up_e2ap.pcap # Optional TEXT (/tmp/cu_up_e2ap.pcap). Path for E2AP CU-UP PCAPs.
   e2ap_du_filename: /tmp/du_e2ap.pcap   # Optional TEXT (/tmp/du_e2ap.pcap). Path for E2AP CU PCAPs.
-  e2ap_cu_cp_enable: false              # Optional BOOLEAN (false). Enable/disable E2AP CU-CP packet capture. Supported: [false, true].
   e2ap_enable: false                    # Optional BOOLEAN (false). Enable/disable E2AP packet capture. Supported: [false, true].
   f1ap_filename: /tmp/gnb_f1ap.pcap     # Optional TEXT (/tmp/gnb_f1ap.pcap). Path for F1AP PCAPs.
   f1ap_enable: false                    # Optional BOOLEAN (false). Enable/disable F1AP packet capture. Supported: [false, true].
@@ -616,3 +641,4 @@ metrics:
   enable_json_metrics: false            # Optional BOOLEAN (false). Enables JSON metrics reporting. Supported: [false, true].
   autostart_stdout_metrics: false       # Optional BOOLEAN (false). Sets whether or note to autostart stdout metrics reporting. Supported [false, true].
   sched_report_period: 1000             # Optional UINT (1000). Sets the DU statistics report period in milliseconds. This metric sets the console output period. Supported: [0 - inf].
+  enable_upper_phy: false               # Optional BOOLEAN (false). Enables the upper PHY metrics reporting. Supported: [false, true].
