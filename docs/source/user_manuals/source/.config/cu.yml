@@ -1,7 +1,8 @@
+ran_node_name: cu_cp_01             # Optional TEXT (cu_cp_01). Sets the text ID associated with the gNB. Format: string without spaces.
 gnb_id: 411                         # Optional UINT (411). Sets the numerical ID associated with the gNB.
 gnb_id_bit_length:                  # Optional UNIT. Sets the bit length of the gnb_id above. Format: integer between [22 - 32]
 
-ran_node_name: cu_cp_01             # Optional TEXT (srsgnb01). Sets the text ID associated with the gNB. Format: string without spaces.
+gnb_cu_up_ip: 0                     # Optional UINT (0). Sets the CU-UP ID. Format: integer between [0 - 255].
 
 qos:                                # Optional TEXT. Configures RLC and PDCP radio bearers on a per 5QI basis. This can only be set via the configuration file. Each list entry should begin with "-".
 
@@ -12,10 +13,6 @@ cu_cp:
   max_nof_drbs_per_ue:                  # Optional UINT. Maximum number of DRBs per UE. Supported: [1 - 29].
   inactivity_timer: 120                 # Optional INT (120). Sets the UE/PDU Session/DRB inactivity timer in seconds. Supported: [1 - 7200].
   request_pdu_session_timeout: 3        # Optional INT (3). Timeout for the setup of a PDU session after an InitialUeMessage was sent to the core, in seconds. The timeout must be larger than T310. If the value is reached, the UE will be released
-
-  f1ap:
-    bind_addr: 120.0.10.1                    # Optional TEXT (127.0.0.1). Sets the F1-c bind address. 
-    procedure_timeout: 1000                  # Optional INT (1000). Sets the UE context setup timeout in milliseconds.
 
   amf:
     no_core: false                        # Optional BOOLEAN. Setting to true allows the gNB to run without a core. Supported: [0, 1].
@@ -79,6 +76,13 @@ cu_cp:
     nea_pref_list: nea0,nea2,nea1            # Optional TEXT (nea0,nea2,nea1). Ordered preference list for the selection of encryption algorithm (NEA). Supported: [nea0,nea2,nea1,nea3].
     nia_pref_list: nia2,nia1                 # Optional TEXT (nia2,nia1). Ordered preference list for the selection of encryption algorithm (NIA). Supported: [nia2,nia1,nia3].
 
+  f1ap:
+    bind_addr: 120.0.10.1                    # Optional TEXT (127.0.0.1). Sets the F1-c bind address. 
+    procedure_timeout: 1000                  # Optional INT (1000). Sets the time the F1AP waits for a DU response in milliseconds.
+
+  e1ap: 
+    procedure_timeout: 1000                  # Optional INT (1000). Sets the time the E1AP waits for a CU-UP response in milliseconds.
+
 cu_up: 
   gtpu_queue_size: 2048                # Optional INT (2048). Sets the GTP-U queue size, in PDUs.
   gtpu_reordering_timer: 0             # Optional INT (0). Sets the GTP-U RX reordering timer (in milliseconds).
@@ -138,6 +142,11 @@ expert_execution:
       nof_non_rt_threads: 4                   # Optional UINT (4). Sets the number of non real time threads for processing of CP and UP data in upper layers.
       non_rt_task_queue_size: 2048            # Optional UINT (2048). Sets the non real time task worker queue size. 
 
+remote_control:
+  enabled: false                        # Optional BOOLEAN (false). Enables the remote control feature. Supported: [false, true].
+  bind_addr: 127.0.0.1                  # Optional TEXT (127.0.0.1). Sets the local IP address to bind for remote control. Supported: IPv4 address.
+  port: 8001                            # Optional UINT (8001). Sets the port where the remote control server listens for incoming connections. Supported: [0 - 65535].        
+
 log: 
 # All gNB layers and components can be configured independently to output at various levels of detail. Logs can be configured to the following levels (from lowest to highest levels of detail):
 # none, error, warning, info, debug
@@ -159,6 +168,8 @@ log:
   f1u_level: warning                    # Optional TEXT (warning). Sets F1u log level.
   cu_level: warning                     # Optional TEXT (warning). Sets the CU log level. 
   hex_max_size: 0                       # Optional UINT (0). Sets maximum number of bytes to print for hex messages. Supported: [0 - 1024]
+  e1ap_level: warning                   # Optional TEXT (warning). Sets E1AP log level.
+  e1ap_json_enabled: false              # Optional BOOLEAN (false). Enables the JSON logging of E1AP PDUs. Supported: [false, true].
 
 pcap: 
   ngap_filename: /tmp/gnb_ngap.pcap     # Optional TEXT (/tmp/gnb_ngap.pcap). Path for NGAP PCAPs. 
