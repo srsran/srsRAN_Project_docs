@@ -96,6 +96,7 @@ Below are the most critical values to be set and the ones that differ from the R
 - ``RRH_C_PLANE_VLAN_TAG/RRH_U_PLANE_VLAN_TAG`` : Set this to a value of your choice, we usually use the same VLAN for both.
 - ``RRH_MAX_PRB`` : The channel bandwidth. Set this to e.g., ``51`` for a 20 MHz cell, to ``245`` for 90 MHz and ``273`` for a 100 MHz cell.
 - ``RRH_LO_FREQUENCY_KHZ`` : The center frequency of the cell in kHz, set to e.g., ``3600000, 0`` to radiate at 3.6 GHz (ARFCN 640000).
+- ``RRH_DL_IQ_SCALING`` : Only present in newer FW versions (e.g. v3.1.15q.551v0706). Set to ``0x10001``. Only tested with 2T2R.
 
 The full configuration example file we used for this set up can be found :download:`here <.configs/foxconn_rrh_config.txt>`. In this config we are configuring the RU for 20 MHz.
 
