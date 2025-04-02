@@ -622,13 +622,25 @@ Modify the ``ru_sdr`` section of Amarisoft UE configuration to send and receive 
         rx_antenna: "rx",
     },
 
-Then, set the gain parameters and timing offset as follows:
+Then, set the gain parameters as follows:
 
 .. code-block:: cfg
 
   tx_gain: 75.0, /* TX gain (in dB) B2x0: 0 to 89.8 dB */
   rx_gain: 40.0, /* RX gain (in dB) B2x0: 0 to 73 dB */
-  tx_time_offset: -150, /* in samples */
+
+And the tx timing offset: 
+
+.. code-block:: cfg
+
+  {
+   ...
+  cell_groups: [{
+    tx_time_offset: -150,
+    ...
+  }],
+  ...
+}
 
 Make sure the CELL_BANDWIDTH matches that on gNB configuration file:
 
