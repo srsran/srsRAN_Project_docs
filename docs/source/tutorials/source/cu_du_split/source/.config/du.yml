@@ -1,15 +1,17 @@
 f1ap:
-  cu_cp_addr: 127.0.10.1
-  bind_addr: 127.0.10.2
+  cu_cp_addr: 127.0.10.1                    # The address of CU-CP
+  bind_addr: 127.0.1.2             
 
-nru: 
-  bind_addr: 127.0.10.2
+f1u:
+  socket:
+    -
+      bind_addr: 127.0.1.2
 
 ru_sdr:
   device_driver: uhd
   device_args: type=b200,num_recv_frames=64,num_send_frames=64
   srate: 23.04
-  otw_format: sc12  
+  otw_format: sc12
   tx_gain: 80
   rx_gain: 40
 

@@ -77,23 +77,10 @@ As previously stated, Open5GS is running bare metal for this example. No configu
 srsCU
 =====
 
-To configure srsCU, the ``amf`` and ``f1ap`` (f1-c) bind addresses must be configured in the ``cu_up``. Unless otherwise specified, setting the f1-c address will also set the f1-u address. The following configuration file shows the minimum requirements to configure srsCU: 
+To configure srsCU, the ``amf``, ``f1ap`` and ``f1u`` fields must be configured correctly in both the ``cu_cp`` and ``cu_up``. The following configuration file shows the minimum requirements to configure srsCU: 
 
-.. code-block:: yaml
-
-  cu_cp:
-    amf:
-      addr: 127.0.1.100                                            # The address or hostname of the AMF.
-      bind_addr: 127.0.10.2                                        # A local IP that the gNB binds to for traffic from the AMF.
-      supported_tracking_areas:                                    # Configure the TA associated with the CU-CP
-        - tac: 7                        
-          plmn_list:
-            - plmn: "00101"
-              tai_slice_support_list:
-                - sst: 1
-    f1ap:
-      bind_addr: 127.0.10.1                                        # Configure the F1AP bind address, this will enable the CU-cp to connect to the DU
-
+.. literalinclude:: .config/cu.yml
+  :language: yaml
 
 The ``amf`` parameters are specific to the local configuration of the core. If you are running Open5GS via the docker scripts provided with srsRAN Project, your configuration will be different. The same is true if you have 
 made any other local changes to how Open5GS has been configured.  
@@ -101,33 +88,10 @@ made any other local changes to how Open5GS has been configured.
 srsDU
 =====
 
-To configure srsDU, the ``f1ap`` parameters must be configured, as well as the ``ru_sdr`` and ``cell_cfg`` parameters. As with srsCU, the following are the minimum requirements to configure srsDU: 
+To configure srsDU, the ``f1ap`` and ``f1u`` parameters must be configured, as well as the ``ru_sdr`` and ``cell_cfg`` parameters. As with srsCU, the following are the minimum requirements to configure srsDU: 
 
-.. code-block:: yaml
-
-  f1ap:
-    cu_cp_addr: 127.0.10.1
-    bind_addr: 127.0.10.2
-
-  nru: 
-    bind_addr: 127.0.10.2
-
-  ru_sdr:
-    device_driver: uhd
-    device_args: type=b200,num_recv_frames=64,num_send_frames=64
-    srate: 23.04
-    otw_format: sc12  
-    tx_gain: 80
-    rx_gain: 40
-
-  cell_cfg:
-    dl_arfcn: 650000
-    band: 78
-    channel_bandwidth_MHz: 20
-    common_scs: 30
-    plmn: "00101"
-    tac: 7
-    pci: 1
+.. literalinclude:: .config/du.yml
+  :language: yaml
 
 In this example, the DU is configured to work with a USRP B210, and to create a 20 MHz cell. The specifics of the RU being used and the desired cell can be changed as needed. The ``f1ap`` configuration must remain constant with the associated configuration in the CU. 
 
@@ -166,10 +130,13 @@ If srsCU is running correctly, you should see the following in the console:
 
 .. code-block:: bash 
 
+  --== srsRAN CU (commit 2be82d8ea3) ==--
+
   N2: Connection to AMF on 127.0.1.100:38412 completed
-  F1-C: Listening for new connections on 127.0.10.1:38471...
+  F1-C: Listening for new connections on 127.0.10.1:38472...
   ==== CU started ===
   Type <h> to view help
+
 
 srsDU
 =====
@@ -192,18 +159,17 @@ If srsDU is running correctly, you will see the following in the console:
 
 .. code-block:: bash
 
-  Cell pci=1, bw=20 MHz, 1T1R, dl_arfcn=650000 (n78), dl_freq=3750.0 MHz, dl_ssb_arfcn=649632, ul_freq=3750.0 MHz
+  --== srsRAN DU (commit 2be82d8ea3) ==--
 
-  Available radio types: uhd and zmq.
-  [INFO] [UHD] linux; GNU C++ version 9.3.0; Boost_107100; UHD_4.0.0.0-666-g676c3a37
+  Lower PHY in quad executor mode.
+  Available radio types: uhd.
+  [INFO] [UHD] linux; GNU C++ version 11.4.0; Boost_107400; DPDK_23.11; UHD_4.8.0.0-64-g0dede88c
   [INFO] [LOGGING] Fastpath logging disabled at runtime.
   Making USRP object with args 'type=b200,num_recv_frames=64,num_send_frames=64'
-  [INFO] [B200] Detected Device: B210
+  [INFO] [B200] Detected Device: B200mini
   [INFO] [B200] Operating over USB 3.
   [INFO] [B200] Initialize CODEC control...
   [INFO] [B200] Initialize Radio control...
-  [INFO] [B200] Performing register loopback test... 
-  [INFO] [B200] Register loopback test passed
   [INFO] [B200] Performing register loopback test... 
   [INFO] [B200] Register loopback test passed
   [INFO] [B200] Setting master clock rate selection to 'automatic'.
@@ -212,10 +178,11 @@ If srsDU is running correctly, you will see the following in the console:
   [INFO] [MULTI_USRP] Setting master clock rate selection to 'manual'.
   [INFO] [B200] Asking for clock rate 23.040000 MHz... 
   [INFO] [B200] Actually got clock rate 23.040000 MHz.
-  F1-C: Connection to CU-CP on 127.0.10.1:38471 completed
+  Cell pci=1, bw=20 MHz, 1T1R, dl_arfcn=650000 (n78), dl_freq=3750 MHz, dl_ssb_arfcn=649632, ul_freq=3750 MHz
+
+  F1-C: Connection to CU-CP on 127.0.10.1:38472 completed
   ==== DU started ===
   Type <h> to view help
-
 
 ------
 

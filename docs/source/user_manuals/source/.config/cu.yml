@@ -2,7 +2,7 @@ ran_node_name: cu_cp_01             # Optional TEXT (cu_cp_01). Sets the text ID
 gnb_id: 411                         # Optional UINT (411). Sets the numerical ID associated with the gNB.
 gnb_id_bit_length:                  # Optional UNIT. Sets the bit length of the gnb_id above. Format: integer between [22 - 32]
 
-gnb_cu_up_ip: 0                     # Optional UINT (0). Sets the CU-UP ID. Format: integer between [0 - 255].
+gnb_cu_up_id: 0                     # Optional UINT (0). Sets the CU-UP ID. Format: integer between [0 - 255].
 
 qos:                                # Optional TEXT. Configures RLC and PDCP radio bearers on a per 5QI basis. This can only be set via the configuration file. Each list entry should begin with "-".
 
@@ -16,6 +16,7 @@ cu_cp:
 
   amf:
     no_core: false                        # Optional BOOLEAN. Setting to true allows the gNB to run without a core. Supported: [0, 1].
+    amf_reconnection_retry_time: 1000     # Optional INT (1000). Sets the time in ms to wait before retrying to connect to the AMF after a failed connection attempt.
     addr:                                 # Required TEXT. Sets the IP address or hostname of the AMF. Format: IPV4 or IPV6 IP address.
     port: 38412                           # Optional UINT. Sets the AMF port. Format: integer between [20000 - 40000].
     bind_addr: 127.0.0.1                  # Optional TEXT. Sets local IP address to bind for N2 interface. Format: IPV4 or IPV6 IP address.
@@ -23,7 +24,7 @@ cu_cp:
     sctp_rto_initial: 120                 # Optional INT. Sets the initial retransmission timeout when creating the SCTP connection.
     sctp_rto_min: 120                     # Optional INT. Sets the minimum retransmission timeout for the SCTP connection.
     sctp_rto_max: 500                     # Optional INT. Sets the maximum retransmission timeout for the SCTP connection.
-    sctp_init_max_attempts: 3          # Optional INT. Sets the maximum retransmission attempts for the initial SCTP connection.
+    sctp_init_max_attempts: 3             # Optional INT. Sets the maximum retransmission attempts for the initial SCTP connection.
     sctp_max_init_timeo: 500              # Optional INT. Sets the maximum retransmission timeout for the initial SCTP connection.
     sctp_nodelay: false                   # Optional BOOLEAN. Setting to true allows the gNB to send SCTP messages as soon as possible without any Nagle-like algorithm. Supported: [false, true].
     supported_tracking_areas:             # Required TEXT. Sets the list of tracking areas supported by this AMF.
@@ -150,7 +151,6 @@ remote_control:
 log: 
 # All gNB layers and components can be configured independently to output at various levels of detail. Logs can be configured to the following levels (from lowest to highest levels of detail):
 # none, error, warning, info, debug
-  metrics_level: none                   # Optional TEXT (none). Sets the metrics log level.
   filename:                             # Optional TEXT (/tmp/gnb.log). File path for logs. Logs can be redirected to stdout by setting the filename to "stdout".
   all_level: warning                    # Optional TEXT (warning). Sets a common log level across PHY, MAC, RLC, PDCP, RRC, SDAP, NGAP and GTPU layers.
   lib_level: warning                    # Optional TEXT (warning). Sets generic log level.
@@ -187,6 +187,11 @@ pcap:
   e2ap_enable: false                    # Optional BOOLEAN (false). Enable/disable E2AP packet capture. Supported: [false, true].
 
 metrics: 
-  cu_cp_statistics_report_period: 1     # Optional UINT (1). Sets the CU-CP statistics report period in seconds. Set this value to 0 to disable this feature. Supported: [0 - inf]. 
-  cu_up_statistics_report_period: 1     # Optional UINT (1). Sets the CU-UP statistics report period in seconds. Set this value to 0 to disable this feature. Supported: [0 - inf]. 
-  pdcp_report_period: 0                 # Optional UINT (0). Sets the PDCP metrics report period. 
+  addr: 127.0.0.1                       # Optional TEXT:IPV4 (127.0.0.1). Sets the metrics address. Supported: IPV4 address.
+  port: 55555                           # Optional UINT. Sets the metrics UPD port. Supported: [0 - 65535].
+  resource_usage_report: 0              # Optional UINT (0). Sets the resource usage report period in miliseconds. Supported: [0 - inf].
+  cu_cp_statistics_report_period: 1     # Optional UINT (1). Sets the CU-CP statistics report period in seconds. Set this value to 0 to disable this feature. Supported: [0 - inf].
+  cu_up_statistics_report_period: 1     # Optional UINT (1). Sets the CU-UP statistics report period in seconds. Set this value to 0 to disable this feature. Supported: [0 - inf].
+  pdcp_report_period: 0                 # Optional UINT (0). Sets the PDCP metrics report period.
+  enable_json_metrics: false            # Optional BOOLEAN (false). Enables JSON metrics reporting. Supported: [false, true].
+  enable_log_metrics: false             # Optional BOOLEAN (false). Enables log metrics reporting. Supported: [false, true].

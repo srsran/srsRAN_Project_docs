@@ -12,11 +12,11 @@ srsRAN gNB Handover
 Overview
 ********
 
-srsRAN Project 24.04 brings handover capabilities to the code base. Initial handover features allow for Intra-gNB handover, i.e. handover between DU cells connected to the same CU-CP. This allows the UE to move between 
+srsRAN Project 24.04 brings handover capabilities to the code base. These features enable Intra-gNB handover, i.e. handover cells connected to the same CU-CP. This allows the UE to move between 
 two cells, handover can be triggered manually via the command line or automatically by physically moving the UE. 
 
-In practice this is enabled by creating two DUs within the srsRAN gNB binary, with a cell associated to each DU. This requires a USRP to be used that has two independent RF chains. Each DU will be given an associated 
-RF chain to create a 'cell', which the UE then being able move between these.
+In practice this is enabled by creating two cells within a DU within the srsRAN gNB binary. This requires using a USRP that has two independent RF chains. Each cell will be given an associated 
+RF chain, which the UE then being able move between these.
 
 The following diagram presents the setup architecture:
 
@@ -102,42 +102,43 @@ The cells and mobility information must also be added to the ``cu_cp``, under th
 with the necessary information for each of the cells and the conditions for triggering handover. As usual, the ``amf`` is also configured within the ``cu_cp``. 
 
 .. code-block:: yaml
-
+  
   cu_cp:
     amf:
-      addr: 10.53.1.2                                             # The address or hostname of the AMF.
-      bind_addr: 10.53.1.1                                        # A local IP that the gNB binds to for traffic from the AMF.
+      addr: 10.12.1.105                                           # The address or hostname of the AMF.
+      bind_addr: 10.12.1.148                                      # A local IP that the gNB binds to for traffic from the AMF.
       supported_tracking_areas:                                   # Configure the TA associated with the CU-CP
-        - tac: 7                        
-          plmn_list:
-            - plmn: "00101"
-              tai_slice_support_list:
-                - sst: 1      
+        - tac: 7                                                    # Tracking area code    
+          plmn_list:                                                # List of PLMNs associated with the tracking area             
+            - plmn: "00101"                                         # PLMN ID
+              tai_slice_support_list:                               # List of slices supported by the tracking area
+                - sst: 1                                              # Slice/Service Type
     mobility:
-      trigger_handover_from_measurements: true  # Set the CU-CP to trigger handover when neighbor cell measurements arrive
-      cells:                                    # List of cells available for handover known to the cu-cp
-        - nr_cell_id: 0x19B0                      # Cell ID for cell 1 
-          periodic_report_cfg_id: 1               # 
-          ncells:                                 # Neighbor cell(s) available for handover
-            - nr_cell_id: 0x19B1                    # Cell ID of neighbor cell available for handover
-              report_configs: [ 1 ]                 # Report configurations to configure for this neighbor cell
-        - nr_cell_id: 0x19B1                      # Cell ID for cell 2
-          periodic_report_cfg_id: 1               #
-          ncells:                                 # Neighbor cell(s) available for handover 
-            - nr_cell_id: 0x19B0                    # Cell ID of neighbor cell available for handover
-              report_configs: [ 1 ]                 # Report configurations to configure for this neighbor cell
-      report_configs:                           # Sets the report configuration for triggering handover
-        - report_cfg_id: 1                        # Report config ID 1 
-          report_type: periodical                 # Sets the report type as periodical
-          report_interval_ms: 480                 # Sets to report every 480ms 
-        - report_cfg_id: 2                        # Report config ID 2
-          report_type: event_triggered            # Sets the report type as event triggered 
-          a3_report_type: rsrp                    # Sets the A3 report type to RSRP
-          a3_offset_db: 3                         # A3 offset in dB used for measurement report trigger. Note the actual value is field value * 0.5 dB
-          a3_hysteresis_db: 0                     # A3 hysteresis in dB used for measurement report trigger. Note the actual value is field value * 0.5 dB
-          a3_time_to_trigger_ms: 100              # Time in ms during which A3 condition must be met before measurement report trigger
-  
-A3 events defined as events when intra-frequency handover should be triggered. In the above configuration the conditions under which such an event 
+      trigger_handover_from_measurements: true                    # Set the CU-CP to trigger handover when neighbor cell measurements arrive
+      cells:                                                      # List of cells available for handover known to the cu-cp
+        - nr_cell_id: 0x19B0                                        # Cell ID for cell 1 
+          periodic_report_cfg_id: 1                                 # Set the periodic report configuration ID for this cell
+          ncells:                                                   # Neighbor cell(s) available for handover
+            - nr_cell_id: 0x19B1                                      # Cell ID of neighbor cell available for handover
+              report_configs: [ 2 ]                                   # Report configurations to configure for this neighbor cell
+        - nr_cell_id: 0x19B1                                        # Cell ID for cell 2
+          periodic_report_cfg_id: 1                                 # Set the periodic report configuration ID for this cell
+          ncells:                                                   # Neighbor cell(s) available for handover 
+            - nr_cell_id: 0x19B0                                      # Cell ID of neighbor cell available for handover
+              report_configs: [ 2 ]                                   # Report configurations to configure for this neighbor cell
+      report_configs:                                             # Sets the report configuration for triggering handover
+        - report_cfg_id: 1                                          # Report config ID 1 
+          report_type: periodical                                   # Sets the report type as periodical
+          report_interval_ms: 480                                   # Sets to report every 480ms 
+        - report_cfg_id: 2                                          # Report config ID 2
+          report_type: event_triggered                              # Sets the report type as event triggered
+          event_triggered_report_type: a3                           # Sets the event triggered report type as A3               
+          meas_trigger_quantity: rsrp                               # Sets the measurement trigger quantity as rsrp
+          meas_trigger_quantity_offset_db: 3                        # Sets the measurement trigger quantity offset to 3dB
+          hysteresis_db: 0                                          # Sets the hysteresis to 0dB
+          time_to_trigger_ms: 100                                   # Sets the time to trigger to 100ms
+    
+A3 events are defined as events when intra-frequency handover should be triggered. In the above configuration the conditions under which such an event 
 should be triggered are set as when the neighbor cell's RSRP measurement is 1.5 dB better than serving cell. The hysteresis is set to 0, which means that handover 
 is triggered when an offset exactly 1.5 dB is met. Once these conditions are met, the UE will handover between the cells. This is true for handover in each direction. 
 
@@ -238,10 +239,6 @@ the signal strength increase as the UE moves into its serving area. This trigger
 neighbor cell has a 1.5 dB offset to the current serving cell.  
 
 Physically, this translates to moving the UE left-to-right between the antennas of the USRP, where PCI 1 corresponds to the cell associated with RF0 and PCI 2 corresponds to the cell associated with RF1. 
-
-.. image:: .imgs/UE.gif
-  :align: center
-  :scale: 80%
 
 As handover is triggered, it can be seen in the console as the PCI of the serving cell changing: 
 

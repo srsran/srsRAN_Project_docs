@@ -177,7 +177,7 @@ and edit this line in ``/etc/default/grub``:
 
 .. code-block:: bash
 
-   GRUB_CMDLINE_LINUX_DEFAULT="quiet splash intel_iommu=on iommu=pt hugepagesz=1G hugepages=8 hugepagesz=2M hugepages=0 default_hugepagesz=1G"
+   GRUB_CMDLINE_LINUX_DEFAULT="quiet splash intel_iommu=on iommu=pt hugepagesz=1G hugepages=2 default_hugepagesz=1G"
 
 After that, update the grub config and reboot the system:
 
