@@ -185,14 +185,14 @@ cell_cfg:
   pdcch:
     common:
       coreset0_index:                           # Optional INT. Sets the CORESET 0 index. Supported: [0 - 15].
-      ss1_n_candidates: {0, 0, 1, 0, 0}         # Optional UINT ({0, 0, 1, 0, 0}). Sets the number of PDCCH candidates per aggregation level for SearchSpace#1. Supported: any 5 value array containing the following UINT values [0, 1, 2, 3, 4, 5, 6, 7, 8].
+      ss1_n_candidates: [0, 0, 1, 0, 0]         # Optional UINT ([0, 0, 1, 0, 0]). Sets the number of PDCCH candidates per aggregation level for SearchSpace#1. Supported: any 5 value array containing the following UINT values [0, 1, 2, 3, 4, 5, 6, 7, 8].
       ss0_index: 0                              # Optional UINT (0). Sets the SearchSpace#0 index. Supported: [0 - 15].
       max_coreset0_duration:                    # Optional INT. Sets the maximum CORESET#0 duration in OFDM symbols to consider when deriving CORESET#0 index. Supported: [1 - 2].
     dedicated:
       coreset1_rb_start: 1                      # Optional INT (0). Sets the starting common resource block (CRB) number for CORESET 1, relative to CRB0. Supported: [0 - 275].
       coreset1_l_crb:                           # Optional INT (Across entire BW of cell). Sets the length of CORESET 1 in number of CRBs. Supported: [0 - 275].
       coreset1_duration:                        # Optional INT (Max(2, Nof. CORESET#0 symbols)). Sets the duration of CORESET 1 in number of OFDM symbols. Supported: [1 - 2].
-      ss2_n_candidates: {0, 0, 0, 0, 0}         # Optional UINT ({0, 0, 0, 0, 0}). Sets the number of PDCCH candidates per aggregation level for SearchSpace#2. Supported: any 5 value array containing the following UINT values [0, 1, 2, 3, 4, 5, 6, 7, 8].
+      ss2_n_candidates: [0, 2, 4, 0, 0]        # Optional UINT ([0, 2, 4, 0, 0]). Sets the number of PDCCH candidates per aggregation level for SearchSpace#2. Supported: any 5 value array containing the following UINT values [0, 1, 2, 3, 4, 5, 6, 7, 8].
       dci_format_0_1_and_1_1: true              # Optional BOOLEAN (true). Sets whether to use non-fallback or fallback DCI format in UE SearchSpace#2. Supported: [false, true].
       ss2_type: ue_dedicated                    # Optional TEXT (ue_dedicated). Sets the SearchSpace type for UE dedicated SearchSpace#2. Supported: [common, ue_dedicated].
 
