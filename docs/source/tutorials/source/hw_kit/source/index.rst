@@ -5,10 +5,6 @@ E2E O-RAN Tesbed with srsRAN
 
 *This information is correct as of December 2024.*
 
-.. note::
-
-  To purchase preconfigured testbed kits (srsKIT), please contact SRS at `info@srs.io <mailto:info@srs.io>`_.
-
 
 Introduction
 ************
