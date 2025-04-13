@@ -115,9 +115,9 @@ Set up a K8s/K3s bare metal cluster
 1. Deploy a Kubernetes cluster
 ==============================
 
-For the installation of Kubernetes varies accross distributions and tools to be used for the deployment. Depending
+The installation of Kubernetes varies accross distributions and tools to be used for the deployment. Depending
 on your needs and the environment you are deploying to, you can choose the tool that best fits your needs. For this
-guide, we will be deploying a single node K3s cluster on Ubuntu 24.04. K3s is lightweight and easy to set up. It is
+guide, we will be deploying a single node K3s cluster on Ubuntu 24.04 server. K3s is a lightweight implementation of Kubernetes. It is
 a fully compliant Kubernetes distribution that is easy to install and manage. It is designed for resource-constrained
 environments and edge computing. K3s is a great choice for deploying Kubernetes on bare metal servers.
 
@@ -142,8 +142,8 @@ For more information on how to install K3s, you can refer to the `official docum
 
 The real-time kernel in Ubuntu 24.04 LTS, built on the PREEMPT_RT patch, ensures low-latency and deterministic
 performance for time-sensitive operations. By prioritizing critical processes and providing predictable response
-times, it is ideal for industries like manufacturing, automotive, and telecommunications. This release also
-enhances support for Raspberry Pi hardware, enabling optimized real-time computing across diverse applications.
+times, it is ideal for telco applications. This release also enhances support for Raspberry Pi hardware, enabling
+optimized real-time computing across diverse applications.
 
 To install the real-time kernel on Ubuntu 24.04 you need to get a free Canonical Pro subscription. Therefore,
 register on the `Canonical website <https://ubuntu.com/pro>`_ and create an account. After that, you can obtain
@@ -182,8 +182,8 @@ In the following example we will use the `SR-IOV CNI plugin <https://github.com/
 -------------------------------------
 
 As a first step we enable a single Virtual Functions (VFs) on the host, change its MAC and bind it to the vfio-pci
-driver for DPDK. In our example the VF is created for interface named ``enp1s0f0``. For more information refert to
-the `DPDK tutorial of our srsRAN Documentation <https://docs.srsran.com/projects/project/en/latest/tutorials/source/dpdk/source/index.html>`_
+driver for DPDK. In our example the VF is created for interface named ``enp1s0f0``. For more information refer to
+the :ref:`DPDK tutorial <_dpdk>` from the srsRAN Project documentation.
 
 .. code-block:: bash
 
@@ -251,8 +251,8 @@ For more information on the installation of the Multus plugin have a look at the
 5.4 Install SR-IOV Components
 -----------------------------
 
-Install the following 3 components to enable SR-IOV in the k3s cluster. Make sure all of the daemonsets
-are properly defined for your cluster.
+Install the following 3 components to enable the SR-IOV plugin in the K3s cluster. Make sure all of the daemonsets
+are properly defined for your cluster environment.
 
 - Install the SR-IOV CNI plugin and its DaemonSet:
 
@@ -271,132 +271,28 @@ are properly defined for your cluster.
 .. code-block:: bash
 
     kubectl apply -f sriovdp-daemonset.yaml
-
-The SR-IOV plugin is a Kubernetes plugin that enables the use of SR-IOV devices in Kubernetes.
-(`SR-IOV Network Device Plugin <https://github.com/k8snetworkplumbingwg/sriov-network-device-plugin>`_)
-It allows you to dynamically assign virtual functions (VFs) to Pods. This allows you to use SR-IOV devices
-in Kubernetes without priviledged access to the host.
-
-In the following example we will use the `SR-IOV CNI plugin <https://github.com/k8snetworkplumbingwg/sriov-cni>`_ and `MULTUS <https://github.com/k8snetworkplumbingwg/multus-cni#quickstart-installation-guide>`_
-
-5.1 Configure Virtual Functions (VFs)
--------------------------------------
-
-As a first step we enable a single Virtual Functions (VFs) on the host, change its MAC and bind it to the
-vfio-pci driver for DPDK. In our example the VF is created for interface named ``enp1s0f0``. For more information
-refert to the `DPDK tutorial of our srsRAN Documentation <https://docs.srsran.com/projects/project/en/latest/tutorials/source/dpdk/source/index.html>`_.
-
-.. code-block:: bash
-
-    # Enable VF
-    echo 1 > /sys/class/net/enp1s0f0/device/sriov_numvfs
-    # Change MAC address
-    ip link set enp1s0f0 vf 0 mac 00:11:22:33:44:55
-    # Bind VF to vfio-pci
-    dpdk-devbind.py -b vfio-pci 0000:01:01.0
-
-5.2 Edit and Apply ConfigMap
-----------------------------
-
-In this step we create the necessary configMap.yaml for the SR-IOV CNI plugin. The configMap.yaml file
-contains the device vendor and and device ID of the NIC. The device ID can be found using the ``lspci``
-command as shown below. Its important to note that PFs and VFs have different device IDs.
-
-.. code-block:: bash
-
-    lspci -nn -s 01:01.0 
-    01:01.0 Ethernet controller [0200]: Intel Corporation Ethernet Adaptive Virtual Function [8086:1889] (rev 02)
-
-In our case the device ID is ``1889`` and the vendor ID is ``8086``. The configMap.yaml file should look like this:
-
-.. code-block:: yaml
-
-    apiVersion: v1
-    kind: ConfigMap
-    metadata:
-      name: sriovdp-config
-      namespace: kube-system
-    data:
-      config.json: |
-         {
-              "resourceList": [{
-                         "resourceName": "intel_sriov_netdevice",
-                         "selectors": {
-                              "vendors": ["8086"],
-                              "devices": ["1889"],
-                              "drivers": ["vfio-pci"]
-                         }
-                    }
-                 ]
-         }
-
-Save and apply the configMap using the following command:
-
-.. code-block:: bash
-
-    kubectl apply -f configMap.yaml
-
-5.3 Install Multus CNI
-----------------------
-
-Deploy Multus CNI using the following command:
-
-.. code-block:: bash
-
-    kubectl apply -f https://raw.githubusercontent.com/k8snetworkplumbingwg/multus-cni/master/deployments/multus-daemonset-thick.yml
-
-For more information on the installation of the Multus plugin have a look at the
-`installation guide <https://github.com/k8snetworkplumbingwg/multus-cni#quickstart-installation-guide>`_
-
-
-5.4 Install SR-IOV Components
------------------------------
-
-Install the following 3 components to enable SR-IOV in the k3s cluster. Make sure all of the daemonsets are
-properly defined for your cluster.
-
-- Install the SR-IOV CNI plugin and its DaemonSet:
-
-.. code-block:: bash
-
-    kubectl apply -f sriov-cni-daemonset.yaml
-
-- Install the SR-IOV Custom Resource Definitions (CRDs):
-
-.. code-block:: bash
-
-    kubectl apply -f sriov-crd.yaml
-
-- Install the SR-IOV Device Plugin DaemonSet:
-
-.. code-block:: bash
-
-    kubectl apply -f sriovdp-daemonset.yaml
-
-.. todo::
-    Attach 3 manifest files
 
 ----------
 
 Set up PTP synchronization
 **************************
 
-We have created a Helm chart to deploy ptp4l, phc2sys and ts2phc for PTP synchronization. As a first step install the
-srsRAN Project Helm repository:
+The PTP synchronization can be established by using tools like ptp4l, ts2phc and phc2sys. These tools can be deployed
+using the srsRAN Project linuxptp Helm chart. As a first step install the srsRAN Project Helm repository:
 
 .. code-block:: bash
 
     helm repo add srsran https://srsran.github.io/srsRAN_Project_helm/
 
 Depending on your setup the deployment of the PTP components can be done in different ways. The most common configurations
-are either LLS-C1 or LLS-C3 using either uni-cast or multicast transmission (https://www.techplayon.com/o-ran-fronthaul-transport-synchronization-configurations/).
+are either LLS-C1 or LLS-C3 using either uni-cast or multicast transmission.
 In the LLS-C1 configuration the DU server is driving the PTP synchronization and the RU is configured as a client. The RU
 is only receiving the PTP messages from the DU server. In the LLS-C3 configuration both, DU and RU are configured as clients
 and are receiving the PTP messages from a PTP grandmaster.
 
 In this tutorial we will show how to deploy both, LLS-C1 and LLS-C3 configurations using the G.8275.1 multicast profile of
-linuxptp. For more information on LinuxPTP refer to the official documentation (https://linuxptp.nwtime.org/documentation/).
-The configuration of the Helm chart needs to be done in the values.yaml file.
+linuxptp. For more information on linuxptp refer to the `official documentation <https://linuxptp.nwtime.org/documentation/>`_.
+The configuration of the Helm chart is done in the values.yaml file.
 
 LLS-C1 example configuration:
 
@@ -434,9 +330,9 @@ LLS-C3 example configuration:
         network_transport: "L2"
         domainNumber: "24"
 
-For more information on the configuration of the values.yaml file of the linuxptp helm chart please refer to
-its readme (https://github.com/srsran/srsRAN_Project_helm/tree/main/charts/linuxptp). An example of the linuxptp
-values.yaml file can be obtained here: https://raw.githubusercontent.com/srsran/srsRAN_Project_helm/main/charts/linuxptp/values.yaml.
+For more information on the configuration of the values.yaml file of the linuxptp Helm chart please refer to
+its readme `readme <https://github.com/srsran/srsRAN_Project_helm/tree/main/charts/linuxptp/>`_. An example of the linuxptp
+values.yaml file can be obtained `here <https://raw.githubusercontent.com/srsran/srsRAN_Project_helm/main/charts/linuxptp/values.yaml>`_.
 The deployment of the PTP components can be done using the following command:
 
 .. code-block:: bash
@@ -465,8 +361,8 @@ Set up core network Open5gs
 Open5GS is a C-language open-source implementation for 5G Core and EPC. The following links will provide you
 with the information needed to download and setup Open5GS so that it is ready to use with srsRAN:
 
-- Open5GS GitHub: https://github.com/open5gs/open5gs
-- Open5GS Quickstart Guide: https://open5gs.org/open5gs/docs/guide/01-quickstart/
+- `Open5GS GitHub: <https://github.com/open5gs/open5gs>`_
+- `Open5GS Quickstart Guide: <https://open5gs.org/open5gs/docs/guide/01-quickstart/>`_
 
 As a first step install the Open5GS Helm repo from Gradiant:
 
@@ -475,7 +371,7 @@ As a first step install the Open5GS Helm repo from Gradiant:
     helm pull oci://registry-1.docker.io/gradiant/open5gs --version 2.2.0
 
 For the deployment edit the values.yaml file and set the desired RAN parameters. An example of the Open5GS Helm
-Chart values.yaml can be found here: https://gradiant.github.io/openverso-charts/docs/open5gs-ueransim-gnb/5gSA-values.yaml.
+Chart values.yaml can be found `here <https://gradiant.github.io/openverso-charts/docs/open5gs-ueransim-gnb/5gSA-values.yaml>`_.
 
 Deploy Open5GS using the following command:
 
@@ -487,7 +383,7 @@ This command deploys Open5GS in the open5gs namespace. The --set mongodb.persist
 used to disable the persistence of the MongoDB database. This is useful for testing purposes, but in a
 production environment you should enable persistence. You can enable persistance by setting up a PV and
 PVC in your cluster and make the mongodb Pod use it. For more information on how to set up a PV and PVC
-refer to the Kubernetes documentation (https://kubernetes.io/docs/concepts/storage/persistent-volumes/).
+refer to the `Kubernetes documentation <https://kubernetes.io/docs/concepts/storage/persistent-volumes/>`_.
 
 You should see the following output:
 
@@ -529,7 +425,7 @@ Set up gNB
 **********
 
 For the deployment edit the values.yaml file and set the desired RAN parameters. An example of the srsRAN
-Project Helm Chart values.yaml can be found here: https://raw.githubusercontent.com/srsran/srsRAN_Project_helm/main/charts/srsran-project/values.yaml.
+Project Helm Chart values.yaml can be found `here <https://raw.githubusercontent.com/srsran/srsRAN_Project_helm/main/charts/srsran-project/values.yaml>`_.
 
 If you havent already added the srsRAN Project Helm repo, install it using the following command:
 
@@ -544,7 +440,7 @@ In the follwoing we wil explain how to set up different scenarios using the srsR
 
 In this scenario we will connect the gNB to an external core network or SMO using a LoadBalancer. The
 LoadBalancer will be used to expose the gNB to the outside world. In bare metal Kubernetes clusters the
-LoadBalancer needs to be installed manually. For K8s you can use for example MetalLB (https://metallb.io/),
+LoadBalancer needs to be installed manually. For K8s you can use for example `MetalLB <https://metallb.io/>`_.,
 in K3s the LoadBalancer is already installed.
 
 In order to deploy the gNB via Helm for the use with a LoadBalancer, make sure the following configuration is
@@ -629,7 +525,7 @@ You can get all services names using the following command:
 
 The Open5GS AMF service name is ``open5gs-amf`` and the namespace is ``default``. Therefore the hostname of the AMF service is ``open5gs-amf-ngap.default.svc.kubernetes.local``. Use this hostname in the gNB config section of the Helm chart for the AMF.
 
-For more information please refer to the official Kubernetes documentation: https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/
+For more information please refer to the official `Kubernetes documentation <https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/>`_.
 
 3 Assing DPDK devices using SR-IOV plugin
 =========================================
@@ -682,6 +578,8 @@ As you can see in the console snippet on DPDK device is available on the system.
 4 Assing DPDK devices without SR-IOV plugin
 ===========================================
 
+.. _sriov-plugin:
+
 In order to assign PFs or VF directly to the container without the SR-IOV plugin you need to give the Pod full
 access to the host system. Therefore, make sure the following settings are set in the values.yaml file:
 
@@ -733,7 +631,7 @@ To enable the O1 interface in the gNB use the following configuration in your va
 
 The netconfServerAddr should be set to localhost in case the srsRAN netconf server is used. Set this address in
 case you want to use an external netconf server. Currently, the external netconf server is not supported via
-LoadBalancer, you have to use a configuration as described in the section ### 4 Assing DPDK devices without SR-IOV plugin.
+LoadBalancer, you have to use a configuration as described in the :ref:`Assing DPDK devices without SR-IOV plugin <_sriov-plugin>`.
 
 .. todo::
     Provide example configs for 1-5
@@ -895,7 +793,7 @@ To clean up all deployments, use the following commands:
 
     helm uninstall srsran-project -n srsran
 
-To delete the LinuxPTP deployment, use the following command:
+To delete the linuxptp deployment, use the following command:
 
 .. code-block:: bash
 
