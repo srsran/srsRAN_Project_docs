@@ -78,10 +78,8 @@ RU.
 RU
 ===
 
-For this tutorial you can use every of the RUs supported by the srsRAN. You can
-find a list of supported RUs in the srsRAN documentation.
-
-TODO: Add link to supported RUs
+For this tutorial you can use every of the RUs supported by the srsRAN. For more information on
+supported O-RUs, see :ref:`this section <hw_integration>` of the RU tutorial.
 
 5G Core
 =======
@@ -162,22 +160,17 @@ Reboot the system after the installation has finsihed. For more inforamtion refe
 3. Install TuneD
 ================
 
-For the performance tuning with TuneD please refer to the srsRAN Performance Tuning Guide in our documentation.
-https://docs.srsran.com/projects/project/en/latest/tutorials/source/tuning/source/index.html
-
-.. todo::
-    Fix links!
+For the performance tuning with TuneD please refer to the :ref:`srsRAN Performance Tuning Guide <_tuning>` in our documentation.
 
 4. Install DPDK
 ===============
 
-For the installation of DPDK please refer to the `srsRAN documentation <https://docs.srsran.com/projects/project/en/latest/tutorials/source/dpdk/source/index.html>`_.
-
-.. todo::
-    Fix links!
+For the installation of DPDK please refer to the :ref:`srsRAN documentation <_dpdk>`.
 
 5. Install and configure the SR-IOV plugin
 ==========================================
+
+.. _sriov_plugin:
 
 The SR-IOV plugin is a Kubernetes plugin that enables the use of SR-IOV devices in Kubernetes. It allows you to
 dynamically assign virtual functions (VFs) to Pods. This allows you to use SR-IOV devices in Kubernetes without
@@ -659,18 +652,30 @@ Set the following values in the secuirtyContext:
         privileged: false
 
 Before the deployment make sure that the SR-IOV plugin is installed and the VFs are created. For more information
-on how to set up the SR-IOV plugin refer to the section above. You can check if the node has available SR-IOV
+on how to set up the SR-IOV plugin refer to the :ref:`section above <_sriov_plugin>`. You can check if the node has available SR-IOV
 devices using the following command:
 
 .. code-block:: bash
 
     kubectl describe node <node-name>
 
-You should see the following output:
+Depending on how you have named the SR-IOV device in the configmap, it will show up under a different name int he resource section. You
+should see the following output:
 
-.. code-block:: bash
+.. code-block:: yaml
 
-    TODO: ADD OUTPUT
+    resources:
+      enable_hugepages_1gi: true
+      requests:
+        hugepages-1Gi: 2Gi
+        cpu: 12
+        memory: 16Gi
+        intel.com/intel_sriov_netdevice: '1'
+      limits:
+        hugepages-1Gi: 2Gi
+        memory: 16Gi
+        cpu: 12
+        intel.com/intel_sriov_netdevice: '1'
 
 As you can see in the console snippet on DPDK device is available on the system.
 
@@ -762,7 +767,25 @@ used for the OFH traffic, the du_mac_addr field sets the MAC address of the DU i
         compr_method_ul: "bfp"
         compr_bitwidth_ul: 9
 
-Currently the RU Emulator doesnt support the SR-IOV plugin. Thats why you have to use the following security context:
+Depending on if you are using the SR-IOV plugin or not, you need to update the securityContext. In case you want to use the SR-IOV plugin
+you need to set the following values in the securityContext. The network_interface and the du_mac_addr will be replaced at runtime with
+the correct values.
+
+.. code-block:: yaml
+
+    securityContext:
+        allowPrivilegeEscalation: false
+        capabilities:
+        add:
+            - IPC_LOCK
+            - SYS_ADMIN
+            - SYS_RAWIO
+            - NET_RAW
+            - SYS_NICE
+        privileged: false
+
+Use the following secuirtyContext if you dont want to use the SR-IOV plugin. Make sure network_interface and du_mac_addr are set to
+the correct values.
 
 .. code-block:: yaml
 
