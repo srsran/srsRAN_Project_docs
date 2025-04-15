@@ -364,26 +364,40 @@ with the information needed to download and setup Open5GS so that it is ready to
 - `Open5GS GitHub: <https://github.com/open5gs/open5gs>`_
 - `Open5GS Quickstart Guide: <https://open5gs.org/open5gs/docs/guide/01-quickstart/>`_
 
-As a first step install the Open5GS Helm repo from Gradiant:
+As a first step we need to install a PersistentVolume (PV) and a PersistentVolumeClaim (PVC) for the MongoDB. Use
+the following command to create a PV and PVC for the MongoDB:
+.. code-block:: bash
+
+    kubectl apply -f open5gs-pv-pvc.yaml
+
+.. todo::
+    Provide example config for open5gs-pv-pvc.yaml
+
+The PV is confgured as hostPath. We need to make sure that the path is available on the host. The default path is
+``/mnt/data/vol``. You can change the path in the open5gs-pv-pvc.yaml file. To do that use the following commands:
 
 .. code-block:: bash
 
-    helm pull oci://registry-1.docker.io/gradiant/open5gs --version 2.2.0
+    mkdir -p /mnt/data/vol
+    chown -R 1001:1001 /mnt/data/vol
 
-For the deployment edit the values.yaml file and set the desired RAN parameters. An example of the Open5GS Helm
-Chart values.yaml can be found `here <https://gradiant.github.io/openverso-charts/docs/open5gs-ueransim-gnb/5gSA-values.yaml>`_.
+For the deployment edit the values.yaml file and set the desired RAN parameters. We have created an example
+values.yaml file that can be used as a starting point. The values.yaml file can be found `here <https://raw.githubusercontent.com/srsran/srsRAN_Project_helm/main/charts/open5gs/values.yaml>`_.
 
-Deploy Open5GS using the following command:
+.. todo::
+    Provide example config for values.yaml, make sure link is correct!
+    Update github pages
 
-.. code-block:: bash
-
-    helm install open5gs oci://registry-1.docker.io/gradiant/open5gs --version 2.2.0 -f 5gSA-values.yaml -n open5gs --create-namespace --set mongodb.persistence.enabled=false
-
-This command deploys Open5GS in the open5gs namespace. The --set mongodb.persistence.enabled=false flag is
-used to disable the persistence of the MongoDB database. This is useful for testing purposes, but in a
-production environment you should enable persistence. You can enable persistance by setting up a PV and
-PVC in your cluster and make the mongodb Pod use it. For more information on how to set up a PV and PVC
+Deploy Open5GS using the following command. The values.yaml is configured to pick the PVC by name.
+Make sure to adjust the size of the PV and PVC to your needs. The default size is 50Gi for the PV and 30Gi for
+the PVC. You can also deploy Open5GS without a PVC by using the --set mongodb.persistence.enabled=false. This
+will create a temporary PVC that will be deleted once the Pod is deleted. This is useful for testing purposes
+but not recommended for production use. For more information on how to set up and configure a PVs and PVCs
 refer to the `Kubernetes documentation <https://kubernetes.io/docs/concepts/storage/persistent-volumes/>`_.
+
+.. code-block:: bash
+
+    helm install open5gs oci://registry-1.docker.io/gradiant/open5gs --version 2.2.5 -f 5gSA-values.yaml -n open5gs --create-namespace
 
 You should see the following output:
 
