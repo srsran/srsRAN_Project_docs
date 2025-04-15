@@ -39,9 +39,9 @@ We recommend unexperienced users read the following two articles before starting
 Setup Considerations
 ********************
 
-.. image:: .imgs/k8s.png
-    :width: 75%
-    :align: center
+.. todo::
+    Add pictures for all deployment configuration that are explained here.
+
 
 This tutorial we will cover the following topics:
 
