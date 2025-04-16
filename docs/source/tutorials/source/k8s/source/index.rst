@@ -36,9 +36,6 @@ We recommend that users unfamiliar with Kubernetes or Helm begin by reviewing th
 Setup Considerations
 ********************
 
-.. todo::
-    Add diagrams for all deployment configurations described here.
-
 This tutorial will cover the following topics:
 
 - Set up Kubernetes/K3s nodes
@@ -366,14 +363,15 @@ necessary information to download and set up Open5GS for use with srsRAN:
 - `Open5GS GitHub <https://github.com/open5gs/open5gs>`_
 - `Open5GS Quickstart Guide <https://open5gs.org/open5gs/docs/guide/01-quickstart/>`_
 
-First, install a PersistentVolume (PV) and a PersistentVolumeClaim (PVC) for MongoDB. Apply the configuration file:
+First, install a PersistentVolume (PV) and a PersistentVolumeClaim (PVC) for MongoDB.
+
+- `Example PV and PVC for Open5GS <https://raw.githubusercontent.com/srsran/srsRAN_Project_helm/refs/heads/main/charts/open5gs/open5gs-pv-pvc.yaml>`_
+
+Apply the PV and PVC manifest:
 
 .. code-block:: bash
 
     kubectl apply -f open5gs-pv-pvc.yaml
-
-.. todo::
-    Provide example config for open5gs-pv-pvc.yaml
 
 The PV is configured using `hostPath`. Ensure that the path exists and has the proper file access rights on the host
 system. The default path is ``/mnt/data/vol``. If needed, create it and set the file access rights using:
@@ -385,11 +383,7 @@ system. The default path is ``/mnt/data/vol``. If needed, create it and set the 
 
 Next, prepare the `values.yaml` file and set the required RAN parameters. You can use the following as a starting point:
 
-- `Example values.yaml for Open5GS <https://raw.githubusercontent.com/srsran/srsRAN_Project_helm/main/charts/open5gs/values.yaml>`_
-
-.. todo::
-    Provide example config for values.yaml, make sure link is correct!
-    Update GitHub pages
+- `Example values.yaml for Open5GS <https://raw.githubusercontent.com/srsran/srsRAN_Project_helm/refs/heads/main/charts/open5gs/5gSA-values.yaml>`_
 
 Deploy Open5GS using Helm. This example assumes your `values.yaml` references the previously created PVC:
 
@@ -655,9 +649,6 @@ adjust this address accordingly.
 **Note:** External Netconf servers are currently not supported via LoadBalancer. Use the configuration described in
 :ref:`Assign DPDK devices without the SR-IOV plugin <_sriov-plugin>` for such scenarios.
 
-.. todo::
-    Provide example configs for 1–5
-
 Load Testing
 ************
 
@@ -735,10 +726,6 @@ Also make sure to explicitly disable SR-IOV by setting:
         enabled: false
 
 Ensure that the `network_interface` and `du_mac_addr` values are set correctly for your deployment.
-
-.. todo::
-    Implement SR-IOV support for RU Emulator.
-
 
 2. Assess Maximum Latency Using cyclictest
 ==========================================
