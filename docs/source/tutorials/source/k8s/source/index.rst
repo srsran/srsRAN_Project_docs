@@ -6,33 +6,30 @@ srsRAN gNB on Kubernetes
 Introduction
 ************
 
-This tutorial outlines the steps required to launch the srsRAN gNB with `Kubernetes <https://kubernetes.io/>`_.
-This is a useful tool for use-cases that require users to deploy and manage networks over a prolonged period,
-with high levels of guaranteed service ability and enhanced fault tolerance.
+This tutorial outlines the steps required to deploy the srsRAN gNB for a split 7.2 architecture using
+`Kubernetes <https://kubernetes.io/>`_. This approach is well-suited for scenarios that require network
+deployment and management over extended periods, with high service availability and enhanced fault tolerance.
 
-In short, Kubernetes can be described as the following:
+In short, Kubernetes can be described as follows:
 
-   *When it comes to managing test networks, the adoption of Kubernetes
-   is pivotal for streamlined and efficient operations. Kubernetes provides
-   a unified platform for orchestrating diverse functions within the network,
-   optimizing resource utilization, and automating scaling based on demand. Its
-   inherent capability to enhance fault tolerance ensures consistent service availability,
-   while the ease of continuous deployment supports rapid innovation. Kubernetes also excels
-   in simplifying the deployment process across various environments, fostering adaptability.
-   In essence, Kubernetes emerges as a practical solution, offering a cohesive and scalable 
-   framework for effective network function management.*
+   *When managing test networks, Kubernetes plays a pivotal role in streamlining and simplifying operations.
+   It provides a unified platform for orchestrating network functions, optimizing resource usage,
+   and automating scaling based on demand. Its built-in fault tolerance ensures consistent service
+   availability, while its support for continuous deployment accelerates innovation.
+   Kubernetes also simplifies deployment across varied environments, promoting adaptability.
+   In essence, it offers a cohesive and scalable framework for efficient network function management.*
 
-Such deployments may not be suited to more research and development focused use-cases that
-require fine-tuning of configuration files and development of source-code. Iterative development
-and testing is more suited to "bare metal" deployments.
+Note, however, that such deployments may not be ideal for research and development-focused use cases
+that require fine-tuning of configuration files or source code modification. For iterative development
+and testing, "bare metal" setups are often more appropriate.
 
 Further Reading
-================
+===============
 
-We recommend unexperienced users read the following two articles before starting with this tutorial:
+We recommend that users unfamiliar with Kubernetes or Helm begin by reviewing the following resources:
 
-   - `Getting started with Kubernetes <https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/>`_
-   - `Getting started with Helm <https://helm.sh/docs/intro/>`_
+- `Getting started with Kubernetes <https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/>`_
+- `Getting started with Helm <https://helm.sh/docs/intro/>`_
 
 -----
 
@@ -40,150 +37,152 @@ Setup Considerations
 ********************
 
 .. todo::
-    Add pictures for all deployment configuration that are explained here.
+    Add diagrams for all deployment configurations described here.
 
+This tutorial will cover the following topics:
 
-This tutorial we will cover the following topics:
+- Set up Kubernetes/K3s nodes
+    - Install a real-time kernel
+    - Optimize system performance using TuneD
+    - Install DPDK
+    - Install and configure the SR-IOV plugin
+- Set up PTP synchronization
+    - LLS-C1 and LLS-C3
+- Deploy the core network (Open5GS)
+- Deploy the gNB
+    - Connect to external core networks and SMOs using a LoadBalancer
+    - Connect to internal core networks and SMOs within the cluster
+    - Assign DPDK devices using the SR-IOV plugin
+    - Assign DPDK devices without using the SR-IOV plugin
+    - Use the srsRAN Project with an SMO
+- Run load testing
+    - cyclictest
+    - srsRAN RU Emulator
+- Visualize KPIs using Grafana
 
-    - Set up K8s/K3s nodes
-        - Install realtime kernel
-        - Tune system performance via TuneD
-        - Install DPDK
-        - Install and configure the SR-IOV plugin
-    - Set up PTP syncronization
-        - LLS-C1 and LLS-C3
-    - Set up core network Open5gs
-    - Set up gNB
-        - Connecting to cluster external core networks and SMOs using a LoadBalancer
-        - Connecting to cluster internal core networks and SMOs
-        - Assing DPDK devices using SR-IOV plugin
-        - Assing DPDK devices without SR-IOV plugin
-        - Using srsRAN Project with a SMO
-    - Run load testing
-        - cyclictest
-        - srsRAN RU Emulator
-    - Visualizing KPIs via Grafana
-
-In this tutorial we will be using a single node cluster based on Ubuntu 24.04. We
-require at least Kubernetes version 1.24 or newer. Also, this tutorial requires a
-basic understanding of Kubernetes and Helm.
+This tutorial uses a single-node cluster running Ubuntu 24.04. Kubernetes version 1.24 or newer is required.
+A basic understanding of Kubernetes and Helm is assumed.
 
 CU/DU
 =====
 
-The CU/DU is provided by the srsRAN Project gNB. The Open Fronthaul
-(OFH) Library provides the necessary interface between the DU and the
-RU.
+The CU/DU is provided by the srsRAN Project gNB. The Open Fronthaul (OFH) Library offers
+the required interface between the DU and the RU.
 
 RU
-===
+==
 
-For this tutorial you can use every of the RUs supported by the srsRAN. For more information on
+For this tutorial, you can use any of the RUs supported by srsRAN. For more information on
 supported O-RUs, see :ref:`this section <hw_integration>` of the RU tutorial.
 
 5G Core
 =======
 
-For this tutorial we use the Open5GS 5G Core.
+This tutorial uses the Open5GS 5G Core.
 
-Open5GS is a C-language open-source implementation for 5G Core and EPC.
-The following links will provide you with the information needed to
-download and setup Open5GS so that it is ready to use with srsRAN:
+Open5GS is an open-source implementation of the 5G Core and EPC, written in C.
+The following links provide guidance on downloading and setting up Open5GS
+to work with srsRAN:
 
-   - `Open5GS GitHub <https://github.com/open5gs/open5gs>`_
-   - `Open5GS Quickstart Guide <https://open5gs.org/open5gs/docs/guide/01-quickstart/>`_
+- `Open5GS GitHub <https://github.com/open5gs/open5gs>`_
+- `Open5GS Quickstart Guide <https://open5gs.org/open5gs/docs/guide/01-quickstart/>`_
 
 Clocking & Synchronization
 ==========================
 
-The split 7.2 interface requires tight timing synchronization between
-the DU and RU. O-RAN WG 4 has defined various synchronization methods
-for use with Open Fronthaul. These are outlined in
-O-RAN.WG4.CUS.0-R003-v11.00 Section 11.
+The split 7.2 interface requires tight synchronization between the DU and RU.
+O-RAN WG4 has defined various synchronization mechanisms for use with Open Fronthaul,
+outlined in *O-RAN.WG4.CUS.0-R003-v11.00*, Section 11.
 
-In this tutorial we explain how to set up LLS-C1 or LLS-C3 configruation.
-The LLS-C1 configuration is used when the DU is the PTP grandmaster and the RU is the
-PTP client. The LLS-C3 configuration is used when both, DU and RU are PTP client.
-The PTP grandmaster is usually a GPS clock or a Rubidium clock. The PTP client is
-usually a network interface card (NIC) that supports PTP.
+This tutorial explains how to configure LLS-C1 and LLS-C3 setups.
+
+- **LLS-C1**: The DU acts as the PTP grandmaster, and the RU is a PTP client.
+- **LLS-C3**: Both the DU and RU are PTP clients, synchronized to a common grandmaster.
+
+The PTP grandmaster is typically a GPS or Rubidium clock, while the PTP client
+is usually a network interface card (NIC) with PTP support.
 
 ----------
 
-Set up a K8s/K3s bare metal cluster
+Set up a K8s/K3s Bare Metal Cluster
 ***********************************
 
-1. Deploy a Kubernetes cluster
+1. Deploy a Kubernetes Cluster
 ==============================
 
-The installation of Kubernetes varies accross distributions and tools to be used for the deployment. Depending
-on your needs and the environment you are deploying to, you can choose the tool that best fits your needs. For this
-guide, we will be deploying a single node K3s cluster on Ubuntu 24.04 server. K3s is a lightweight implementation of Kubernetes. It is
-a fully compliant Kubernetes distribution that is easy to install and manage. It is designed for resource-constrained
-environments and edge computing. K3s is a great choice for deploying Kubernetes on bare metal servers.
+The installation of Kubernetes varies across distributions and the tools used for deployment. Depending
+on your requirements and environment, you can choose the tool that best suits your needs. In this
+tutorial, we deploy a single-node K3s cluster on Ubuntu 24.04 Server. K3s is a lightweight Kubernetes
+distribution that is easy to install and manage. It is designed for resource-constrained environments
+and edge computing, making it a great choice for bare metal Kubernetes deployments.
 
-Some tools that can be used to deploy K8s are:
+Popular tools for deploying Kubernetes include:
 
 - `Kubespray <https://kubespray.io/>`_
 - `kubeadm <https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/>`_
 - `K3s <https://k3s.io/>`_
 - `Rancher <https://rancher.com/>`_
 
-The installation of K3s is very simple and can be done with a single command. The following command will install
+The installation of K3s is very straightforward and can be completed with a single command. The following command installs
 K3s on your server:
 
 .. code-block:: bash
 
     curl -sfL https://get.k3s.io | sh -
 
-For more information on how to install K3s, you can refer to the `official documentation <https://k3s.io/>`_.
+For more information, refer to the `official K3s documentation <https://k3s.io/>`_.
 
-2. Install realtime kernel
+2. Install Realtime Kernel
 ==========================
 
 The real-time kernel in Ubuntu 24.04 LTS, built on the PREEMPT_RT patch, ensures low-latency and deterministic
-performance for time-sensitive operations. By prioritizing critical processes and providing predictable response
-times, it is ideal for telco applications. This release also enhances support for Raspberry Pi hardware, enabling
-optimized real-time computing across diverse applications.
+performance for time-sensitive operations. By prioritizing critical processes and ensuring predictable response
+times, it is ideal for telco applications. This release also improves support for Raspberry Pi hardware,
+enabling optimized real-time computing across diverse applications.
 
-To install the real-time kernel on Ubuntu 24.04 you need to get a free Canonical Pro subscription. Therefore,
-register on the `Canonical website <https://ubuntu.com/pro>`_ and create an account. After that, you can obtain
-a Pro token and use the following commands to install the real-time kernel:
+To install the real-time kernel on Ubuntu 24.04, you must obtain a free Canonical Pro subscription.
+Register on the `Canonical website <https://ubuntu.com/pro>`_ and create an account. After that, use your
+Pro token and the following commands to install the kernel:
 
 .. code-block:: bash
 
     sudo pro attach <your-token>
     sudo pro enable realtime-kernel
 
-Reboot the system after the installation has finsihed. For more inforamtion refer to the
+Reboot the system after the installation is complete. For more information, refer to the
 `Ubuntu documentation <https://documentation.ubuntu.com/pro-client/en/docs/howtoguides/enable_realtime_kernel/>`_.
 
 3. Install TuneD
 ================
 
-For the performance tuning with TuneD please refer to the :ref:`srsRAN Performance Tuning Guide <_tuning>` in our documentation.
+For performance tuning using TuneD, refer to the :ref:`srsRAN Performance Tuning Guide <_tuning>` in our documentation.
 
 4. Install DPDK
 ===============
 
-For the installation of DPDK please refer to the :ref:`srsRAN documentation <_dpdk>`.
+For DPDK installation instructions, refer to the :ref:`srsRAN documentation <_dpdk>`.
 
-5. Install and configure the SR-IOV plugin
+5. Install and Configure the SR-IOV Plugin
 ==========================================
 
 .. _sriov_plugin:
 
-The SR-IOV plugin is a Kubernetes plugin that enables the use of SR-IOV devices in Kubernetes. It allows you to
-dynamically assign virtual functions (VFs) to Pods. This allows you to use SR-IOV devices in Kubernetes without
-priviledged access to the host.
+The **SR-IOV Network Device Plugin** is a Kubernetes device plugin used to discover and advertise networking resources in the form of:
 
-In the following example we will use the `SR-IOV CNI plugin <https://github.com/k8snetworkplumbingwg/sriov-cni>`_ and `MULTUS <https://github.com/k8snetworkplumbingwg/multus-cni#quickstart-installation-guide>`_
+- SR-IOV Virtual Functions (VFs)
+- PCI Physical Functions (PFs)
+- Auxiliary network devices, particularly Subfunctions (SFs)
+
+In the following steps, we use the `SR-IOV CNI plugin <https://github.com/k8snetworkplumbingwg/sriov-cni>`_
+in combination with `Multus <https://github.com/k8snetworkplumbingwg/multus-cni#quickstart-installation-guide>`_
+to enable SR-IOV networking within the cluster.
 
 5.1 Configure Virtual Functions (VFs)
 -------------------------------------
 
-As a first step we enable a single Virtual Functions (VFs) on the host, change its MAC and bind it to the vfio-pci
-driver for DPDK. In our example the VF is created for interface named ``enp1s0f0``. For more information refer to
-the :ref:`DPDK tutorial <_dpdk>` from the srsRAN Project documentation.
+First, we enable a single VF on the host, change its MAC address, and bind it to the `vfio-pci` driver for DPDK.
+In this example, the VF is created for the interface named ``enp1s0f0``. For more information, refer to the
+:ref:`DPDK tutorial <_dpdk>` in the srsRAN Project documentation.
 
 .. code-block:: bash
 
@@ -197,16 +196,16 @@ the :ref:`DPDK tutorial <_dpdk>` from the srsRAN Project documentation.
 5.2 Edit and Apply ConfigMap
 ----------------------------
 
-In this step we create the necessary configMap.yaml for the SR-IOV CNI plugin. The configMap.yaml file contains
-the device vendor and and device ID of the NIC. The device ID can be found using the ``lspci`` command as shown
-below. Its important to note that PFs and VFs have different device IDs.
+Next, we create the required `configMap.yaml` for the SR-IOV CNI plugin. This file contains the vendor and device
+IDs of the NIC. Use the ``lspci`` command to identify the correct IDs. Note that Physical Functions (PFs) and
+Virtual Functions (VFs) have different device IDs.
 
 .. code-block:: bash
 
     lspci -nn -s 01:01.0 
     01:01.0 Ethernet controller [0200]: Intel Corporation Ethernet Adaptive Virtual Function [8086:1889] (rev 02)
 
-In our case the device ID is ``1889`` and the vendor ID is ``8086``. The configMap.yaml file should look like this:
+In this case, the device ID is ``1889`` and the vendor ID is ``8086``. The `configMap.yaml` file should look like this:
 
 .. code-block:: yaml
 
@@ -229,7 +228,7 @@ In our case the device ID is ``1889`` and the vendor ID is ``8086``. The configM
                  ]
          }
 
-Save and apply the configMap using the following command:
+Apply the ConfigMap using:
 
 .. code-block:: bash
 
@@ -238,21 +237,20 @@ Save and apply the configMap using the following command:
 5.3 Install Multus CNI
 ----------------------
 
-Deploy Multus CNI using the following command:
+Deploy Multus CNI using:
 
 .. code-block:: bash
 
     kubectl apply -f https://raw.githubusercontent.com/k8snetworkplumbingwg/multus-cni/master/deployments/multus-daemonset-thick.yml
 
-For more information on the installation of the Multus plugin have a look at the 
-`installation guide <https://github.com/k8snetworkplumbingwg/multus-cni#quickstart-installation-guide>`_
-
+For additional information, refer to the
+`installation guide <https://github.com/k8snetworkplumbingwg/multus-cni#quickstart-installation-guide>`_.
 
 5.4 Install SR-IOV Components
 -----------------------------
 
-Install the following 3 components to enable the SR-IOV plugin in the K3s cluster. Make sure all of the daemonsets
-are properly defined for your cluster environment.
+Install the following components to enable SR-IOV support in the K3s cluster.
+Ensure each DaemonSet is properly defined for your cluster environment.
 
 - Install the SR-IOV CNI plugin and its DaemonSet:
 
@@ -274,27 +272,30 @@ are properly defined for your cluster environment.
 
 ----------
 
-Set up PTP synchronization
+Set Up PTP Synchronization
 **************************
 
-The PTP synchronization can be established by using tools like ptp4l, ts2phc and phc2sys. These tools can be deployed
-using the srsRAN Project linuxptp Helm chart. As a first step install the srsRAN Project Helm repository:
+PTP synchronization can be established using tools like `ptp4l`, `ts2phc`, and `phc2sys`. These tools can be deployed
+using the srsRAN Project `linuxptp` Helm chart. As a first step, install the srsRAN Project Helm repository:
 
 .. code-block:: bash
 
     helm repo add srsran https://srsran.github.io/srsRAN_Project_helm/
 
-Depending on your setup the deployment of the PTP components can be done in different ways. The most common configurations
-are either LLS-C1 or LLS-C3 using either uni-cast or multicast transmission.
-In the LLS-C1 configuration the DU server is driving the PTP synchronization and the RU is configured as a client. The RU
-is only receiving the PTP messages from the DU server. In the LLS-C3 configuration both, DU and RU are configured as clients
-and are receiving the PTP messages from a PTP grandmaster.
+Depending on your setup, PTP components can be deployed in different configurations. The most common ones are
+**LLS-C1** and **LLS-C3**, which can use either unicast or multicast transmission.
 
-In this tutorial we will show how to deploy both, LLS-C1 and LLS-C3 configurations using the G.8275.1 multicast profile of
-linuxptp. For more information on linuxptp refer to the `official documentation <https://linuxptp.nwtime.org/documentation/>`_.
-The configuration of the Helm chart is done in the values.yaml file.
+- In the **LLS-C1** configuration, the DU server drives PTP synchronization, and the RU acts as a client. The RU
+  receives PTP messages from the DU.
+- In the **LLS-C3** configuration, both the DU and RU are clients receiving PTP messages from a common PTP grandmaster.
 
-LLS-C1 example configuration:
+In this tutorial, we demonstrate how to deploy both LLS-C1 and LLS-C3 configurations using the G.8275.1 multicast profile
+of `linuxptp`. For more information, refer to the
+`official linuxptp documentation <https://linuxptp.nwtime.org/documentation/>`_.
+
+The configuration is set in the `values.yaml` file of the Helm chart.
+
+**LLS-C1 example configuration:**
 
 .. code-block:: yaml
 
@@ -312,7 +313,7 @@ LLS-C1 example configuration:
         network_transport: "L2"
         domainNumber: "24"
 
-LLS-C3 example configuration:
+**LLS-C3 example configuration:**
 
 .. code-block:: yaml
 
@@ -330,42 +331,43 @@ LLS-C3 example configuration:
         network_transport: "L2"
         domainNumber: "24"
 
-For more information on the configuration of the values.yaml file of the linuxptp Helm chart please refer to
-its readme `readme <https://github.com/srsran/srsRAN_Project_helm/tree/main/charts/linuxptp/>`_. An example of the linuxptp
-values.yaml file can be obtained `here <https://raw.githubusercontent.com/srsran/srsRAN_Project_helm/main/charts/linuxptp/values.yaml>`_.
-The deployment of the PTP components can be done using the following command:
+For additional configuration options, refer to the `linuxptp Helm chart README <https://github.com/srsran/srsRAN_Project_helm/tree/main/charts/linuxptp/>`_.
+An example `values.yaml` can be found
+`here <https://raw.githubusercontent.com/srsran/srsRAN_Project_helm/main/charts/linuxptp/values.yaml>`_.
+
+To deploy the PTP components, use the following command:
 
 .. code-block:: bash
 
     helm install ptp4l srsran/linuxptp -f values.yaml
 
-If the server is under high load and the PTP quality degrades you can give the linuxptp Pod an exclusive CPU
-core by editing the resources section of the values.yaml file. This will ensure that the linuxptp Pod is not
-affected by other Pods running on the server. The resources section should look like this:
+If the server is under heavy load and PTP performance degrades, you can assign the `linuxptp` Pod an exclusive CPU
+core by editing the `resources` section of the `values.yaml` file. This ensures the `linuxptp` Pod is isolated
+from other workloads:
 
 .. code-block:: yaml
 
     resources:
         requests:
-        cpu: "1"
-        memory: "512Mi"
+            cpu: "1"
+            memory: "512Mi"
         limits:
-        cpu: "1"
-        memory: "512Mi"
+            cpu: "1"
+            memory: "512Mi"
 
 ----------
 
-Set up core network Open5gs
-***************************
+Set Up Core Network: Open5GS
+*****************************
 
-Open5GS is a C-language open-source implementation for 5G Core and EPC. The following links will provide you
-with the information needed to download and setup Open5GS so that it is ready to use with srsRAN:
+Open5GS is an open-source implementation of the 5G Core and EPC, written in C. The following links provide the
+necessary information to download and set up Open5GS for use with srsRAN:
 
-- `Open5GS GitHub: <https://github.com/open5gs/open5gs>`_
-- `Open5GS Quickstart Guide: <https://open5gs.org/open5gs/docs/guide/01-quickstart/>`_
+- `Open5GS GitHub <https://github.com/open5gs/open5gs>`_
+- `Open5GS Quickstart Guide <https://open5gs.org/open5gs/docs/guide/01-quickstart/>`_
 
-As a first step we need to install a PersistentVolume (PV) and a PersistentVolumeClaim (PVC) for the MongoDB. Use
-the following command to create a PV and PVC for the MongoDB:
+First, install a PersistentVolume (PV) and a PersistentVolumeClaim (PVC) for MongoDB. Apply the configuration file:
+
 .. code-block:: bash
 
     kubectl apply -f open5gs-pv-pvc.yaml
@@ -373,27 +375,23 @@ the following command to create a PV and PVC for the MongoDB:
 .. todo::
     Provide example config for open5gs-pv-pvc.yaml
 
-The PV is confgured as hostPath. We need to make sure that the path is available on the host. The default path is
-``/mnt/data/vol``. You can change the path in the open5gs-pv-pvc.yaml file. To do that use the following commands:
+The PV is configured using `hostPath`. Ensure that the path exists and has the proper file access rights on the host
+system. The default path is ``/mnt/data/vol``. If needed, create it and set the file access rights using:
 
 .. code-block:: bash
 
     mkdir -p /mnt/data/vol
     chown -R 1001:1001 /mnt/data/vol
 
-For the deployment edit the values.yaml file and set the desired RAN parameters. We have created an example
-values.yaml file that can be used as a starting point. The values.yaml file can be found `here <https://raw.githubusercontent.com/srsran/srsRAN_Project_helm/main/charts/open5gs/values.yaml>`_.
+Next, prepare the `values.yaml` file and set the required RAN parameters. You can use the following as a starting point:
+
+- `Example values.yaml for Open5GS <https://raw.githubusercontent.com/srsran/srsRAN_Project_helm/main/charts/open5gs/values.yaml>`_
 
 .. todo::
     Provide example config for values.yaml, make sure link is correct!
-    Update github pages
+    Update GitHub pages
 
-Deploy Open5GS using the following command. The values.yaml is configured to pick the PVC by name.
-Make sure to adjust the size of the PV and PVC to your needs. The default size is 50Gi for the PV and 30Gi for
-the PVC. You can also deploy Open5GS without a PVC by using the --set mongodb.persistence.enabled=false. This
-will create a temporary PVC that will be deleted once the Pod is deleted. This is useful for testing purposes
-but not recommended for production use. For more information on how to set up and configure a PVs and PVCs
-refer to the `Kubernetes documentation <https://kubernetes.io/docs/concepts/storage/persistent-volumes/>`_.
+Deploy Open5GS using Helm. This example assumes your `values.yaml` references the previously created PVC:
 
 .. code-block:: bash
 
@@ -412,64 +410,62 @@ You should see the following output:
     REVISION: 1
     TEST SUITE: None
 
-Wait until all Pods are running. You can check the status with the following command:
+Wait for all Pods to be in the `Running` state. Check with:
 
 .. code-block:: bash
 
     kubectl get pods -n open5gs
 
-Once all components are started and running you can edit the subscribers via the Open5GS WebUI. For that, you
-need to forward port 9999 of the open5gs-webui service to your local machine:
+Once the components are running, you can edit subscribers via the Open5GS WebUI. To do this, forward port `9999`
+of the `open5gs-webui` service to your local machine:
 
 .. code-block:: bash
 
     kubectl port-forward svc/open5gs-webui 9999:9999 -n open5gs
 
-You should see the following output:
+Expected output:
 
 .. code-block:: bash
 
     Forwarding from 127.0.0.1:9999 -> 9999
     Forwarding from [::1]:9999 -> 9999
 
-Don't close the shell and open your browser at http://localhost:9999. (Username: admin, Password: 1423). Once
-you are logged in you can edit the subscribers. After setting up the subscribers you can close the shell.
+Leave the shell open and access the WebUI by visiting `http://localhost:9999` in your browser.
+(Default credentials: **admin** / **1423**). Once you're done editing subscribers, you can close the shell.
 
-Set up gNB
+Set Up gNB
 **********
 
-For the deployment edit the values.yaml file and set the desired RAN parameters. An example of the srsRAN
-Project Helm Chart values.yaml can be found `here <https://raw.githubusercontent.com/srsran/srsRAN_Project_helm/main/charts/srsran-project/values.yaml>`_.
+To deploy the gNB, edit the `values.yaml` file and set the desired RAN parameters. An example `values.yaml` for the srsRAN
+Project Helm Chart can be found `here <https://raw.githubusercontent.com/srsran/srsRAN_Project_helm/main/charts/srsran-project/values.yaml>`_.
 
-If you havent already added the srsRAN Project Helm repo, install it using the following command:
+If you haven't already added the srsRAN Project Helm repository, add it using:
 
 .. code-block:: bash
 
     helm repo add srsran https://srsran.github.io/srsRAN_Project_helm/
 
-In the follwoing we wil explain how to set up different scenarios using the srsRAN Helm Chart.
+In the following, we explain how to set up different scenarios using the srsRAN Helm Chart.
 
-1 Connecting to cluster external core networks and SMOs using a LoadBalancer
-============================================================================
+1. Connecting to External Core Networks and SMOs via LoadBalancer
+==================================================================
 
-In this scenario we will connect the gNB to an external core network or SMO using a LoadBalancer. The
-LoadBalancer will be used to expose the gNB to the outside world. In bare metal Kubernetes clusters the
-LoadBalancer needs to be installed manually. For K8s you can use for example `MetalLB <https://metallb.io/>`_.,
-in K3s the LoadBalancer is already installed.
+In this scenario, the gNB is connected to an external core network or SMO using a `LoadBalancer`. The LoadBalancer
+is used to expose the gNB to external systems. On bare-metal Kubernetes clusters, you need to install a LoadBalancer
+manually—for example, using `MetalLB <https://metallb.io/>`_. In K3s, a LoadBalancer is already included.
 
-In order to deploy the gNB via Helm for the use with a LoadBalancer, make sure the following configuration is
-set in the values.yaml:
+To deploy the gNB for use with a LoadBalancer, ensure the following configuration is set in `values.yaml`:
 
-Make sure the access to the hosts network is disabled:
+Disable access to the host network:
 
 .. code-block:: yaml
 
     network:
         hostNetwork: false
 
-For connecting to an cluster external core network set up the LoadBalancer IP address and N2 and N3 IP address.
-In case N2 and N3 binds to the same interface, use the same IP for both ports. Make sure that the IP assigned to
-the LoadBalancer matches the IP in LoadBalancerIP:
+To connect to an external core network, define the LoadBalancer IP and the N2/N3 interface configuration.
+If N2 and N3 share the same interface, reuse the same IP for both. Ensure the IP assigned to the LoadBalancer
+matches `LoadBalancerIP`:
 
 .. code-block:: yaml
 
@@ -486,7 +482,7 @@ the LoadBalancer matches the IP in LoadBalancerIP:
             outport: 32152
             protocol: UDP
 
-For an external SMO use the following configuration:
+To expose the O1 interface to an external SMO:
 
 .. code-block:: yaml
 
@@ -499,19 +495,19 @@ For an external SMO use the following configuration:
             outport: 830
             protocol: TCP
 
-2 Connecting to cluster internal core networks and SMOs
-=======================================================
+2. Connecting to Internal Core Networks and SMOs Within the Cluster
+====================================================================
 
-When all components are running in the same cluster we can use host names instead of a LoadBalancer. In case
-the Open5GS core network is running in the same cluster we can use the hostname of the AMF to connect to it
-instead of using the Pod's or service's IP address. In order to derive the hostname of the service we need
-to obtain the cluster domain first. Use the following commands to do so:
+When all components run within the same Kubernetes cluster, you can use DNS hostnames instead of a LoadBalancer.
+For example, if the Open5GS core network is deployed in the same cluster, use the AMF service's hostname to connect to it.
+
+To determine the cluster domain, run:
 
 .. code-block:: bash
 
     kubectl run -it --image=ubuntu --restart=Never shell -- sh -c 'apt-get update > /dev/null && apt-get install -y dnsutils > /dev/null && nslookup kubernetes.default | grep Name | sed "s/Name:\skubernetes.default//"'
 
-This command creates a Pod, installs some tools and runs a DNS query against the service kubernetes.default. The output should look like this:
+Example output:
 
 .. code-block:: bash
 
@@ -520,33 +516,42 @@ This command creates a Pod, installs some tools and runs a DNS query against the
 
     .svc.kubernetes.local
 
-In this case the cluster domain is svc.kubernetes.local. To now get the hostname of the service append the
-service name and the namespace to the cluster domain in the following manner:
+In this case, the cluster domain is `svc.kubernetes.local`. To construct a service hostname:
 
 .. code-block:: bash
 
-    my-svc.my-namespace.svc.cluster-domain.example
+    <service-name>.<namespace>.svc.<cluster-domain>
 
-You can get all services names using the following command:
+To list all available services:
 
 .. code-block:: bash
 
     kubectl get services -A
+
+Example output:
+
+.. code-block:: bash
+
     NAMESPACE     NAME               TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)                  AGE
     default       kubernetes         ClusterIP   10.96.0.1        <none>        443/TCP                  10d
     default       open5gs-amf-ngap   ClusterIP   10.111.110.41    <none>        38412/SCTP               16h
     [...]
 
-The Open5GS AMF service name is ``open5gs-amf`` and the namespace is ``default``. Therefore the hostname of the AMF service is ``open5gs-amf-ngap.default.svc.kubernetes.local``. Use this hostname in the gNB config section of the Helm chart for the AMF.
+Here, the AMF service name is `open5gs-amf-ngap` and the namespace is `default`. Therefore, the hostname is:
 
-For more information please refer to the official `Kubernetes documentation <https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/>`_.
+``open5gs-amf-ngap.default.svc.kubernetes.local``
 
-3 Assing DPDK devices using SR-IOV plugin
-=========================================
+Use this hostname in the `amf` section of the gNB configuration in `values.yaml`.
 
-When using the SR-IOV plugin you can assign DPDK devices to the gNB using the following configuration in the values.yaml file:
+For more information, refer to the official
+`Kubernetes DNS documentation <https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/>`_.
 
-Set the following values in the secuirtyContext:
+3. Assign DPDK Devices Using the SR-IOV Plugin
+==============================================
+
+When using the SR-IOV plugin, assign DPDK devices to the gNB using the following configuration in `values.yaml`:
+
+Set the following values under `securityContext`:
 
 .. code-block:: yaml
 
@@ -561,16 +566,17 @@ Set the following values in the secuirtyContext:
             - SYS_NICE
         privileged: false
 
-Before the deployment make sure that the SR-IOV plugin is installed and the VFs are created. For more information
-on how to set up the SR-IOV plugin refer to the :ref:`section above <_sriov_plugin>`. You can check if the node has available SR-IOV
-devices using the following command:
+Before deployment, ensure that the SR-IOV plugin is installed and Virtual Functions (VFs) are created.
+Refer to the :ref:`section above <_sriov_plugin>` for setup instructions.
+
+To check if SR-IOV resources are available on the node:
 
 .. code-block:: bash
 
     kubectl describe node <node-name>
 
-Depending on how you have named the SR-IOV device in the configmap, it will show up under a different name int he resource section. You
-should see the following output:
+Depending on how the SR-IOV device is named in the ConfigMap, it may appear under a different name in the resource list.
+Example output:
 
 .. code-block:: yaml
 
@@ -587,39 +593,39 @@ should see the following output:
         cpu: 12
         intel.com/intel_sriov_netdevice: '1'
 
-As you can see in the console snippet on DPDK device is available on the system.
+In this example, one DPDK device is available on the node.
 
-4 Assing DPDK devices without SR-IOV plugin
-===========================================
+4. Assign DPDK Devices Without the SR-IOV Plugin
+================================================
 
 .. _sriov-plugin:
 
-In order to assign PFs or VF directly to the container without the SR-IOV plugin you need to give the Pod full
-access to the host system. Therefore, make sure the following settings are set in the values.yaml file:
+To assign PFs or VFs directly to the container without using the SR-IOV plugin, you must grant the Pod full
+access to the host system. In `values.yaml`, set the following:
 
-Make sure the access to the hosts network is enabled:
+Enable access to the host network:
 
 .. code-block:: yaml
 
     network:
         hostNetwork: true
 
-Enable priviledged access to the host and set the two capabilites below:
+Enable privileged mode and set required capabilities:
 
 .. code-block:: yaml
 
     securityContext:
         capabilities:
-        add: ["SYS_NICE", "NET_ADMIN"]
+            add: ["SYS_NICE", "NET_ADMIN"]
         privileged: true
 
-Using this configuration the gNB Pod has access to the network stack of the host. That means you can access
-everything host can access, but also everything inside the Kubernetes cluster the Pod is running in.
+With this setup, the gNB Pod has full access to the host’s network stack. This enables the Pod to access both
+external and internal Kubernetes network resources.
 
-5 Using srsRAN Project with a SMO
-=================================
+5. Using srsRAN Project with an SMO
+===================================
 
-To enable the O1 interface in the gNB use the following configuration in your values.yaml:
+To enable the O1 interface in the gNB, use the following configuration in your `values.yaml`:
 
 .. code-block:: yaml
 
@@ -629,119 +635,145 @@ To enable the O1 interface in the gNB use the following configuration in your va
         o1Port: 830
         healthcheckPort: 5000
         o1Adapter:
-        image: softwareradiosystems/srsran_5g_enterprise/o1_adapter
-        repository: registry.gitlab.com
-        pullPolicy: IfNotPresent
-        tag: latest
+            image: softwareradiosystems/srsran_5g_enterprise/o1_adapter
+            repository: registry.gitlab.com
+            pullPolicy: IfNotPresent
+            tag: latest
         resources: {}
         securityContext: {}
         netconfServer:
-        image: softwareradiosystems/srsran_5g_enterprise/netconf
-        repository: registry.gitlab.com
-        pullPolicy: IfNotPresent
-        tag: latest
+            image: softwareradiosystems/srsran_5g_enterprise/netconf
+            repository: registry.gitlab.com
+            pullPolicy: IfNotPresent
+            tag: latest
         resources: {}
         securityContext: {}
 
-The netconfServerAddr should be set to localhost in case the srsRAN netconf server is used. Set this address in
-case you want to use an external netconf server. Currently, the external netconf server is not supported via
-LoadBalancer, you have to use a configuration as described in the :ref:`Assing DPDK devices without SR-IOV plugin <_sriov-plugin>`.
+Set `netconfServerAddr` to `localhost` if using the srsRAN Netconf server. If using an external Netconf server,
+adjust this address accordingly.
+
+**Note:** External Netconf servers are currently not supported via LoadBalancer. Use the configuration described in
+:ref:`Assign DPDK devices without the SR-IOV plugin <_sriov-plugin>` for such scenarios.
 
 .. todo::
-    Provide example configs for 1-5
+    Provide example configs for 1–5
 
-Load testeing
-*************
+Load Testing
+************
 
-In the following we will present two methods to test the maximum load on the system.
+In the following, we present two methods to test the maximum load on the system.
 
-1 srsRAN RU Emulator
-====================
+1. srsRAN RU Emulator
+=====================
 
-The srsRAN RU Emulator is a tool that emulates a Radio Unit (RU). It prints KPIs like early and late packets. This
-can help to debug problems in networks. It also helps to evaluate how much load deployments can handle. You can
-quickly deploy the RU Emulator by using the RU Emulator Helm chart.
+The srsRAN RU Emulator is a tool that emulates a Radio Unit (RU). It prints KPIs such as early and late packets,
+which are useful for debugging network issues and evaluating how much load a deployment can handle. You can
+quickly deploy the RU Emulator using the dedicated Helm chart.
 
-For deploying the RU Emulator we first need to obtain the RU and DU MAC address, as well as the bandwidth,
-VLAN tag and the compression. These parameters are mandetory. The ru_mac_addr is the MAC of the interface to be 
-used for the OFH traffic, the du_mac_addr field sets the MAC address of the DU interface used for OFH traffic.
+Before deploying the RU Emulator, you must obtain the RU and DU MAC addresses, along with the bandwidth, VLAN tag,
+and compression method. These parameters are **mandatory**:
+
+- `ru_mac_addr`: MAC address of the interface used for Open Fronthaul (OFH) traffic.
+- `du_mac_addr`: MAC address of the DU interface used for OFH traffic.
+
+Example configuration:
 
 .. code-block:: yaml
 
     ru_emu:
         cells:
         - bandwidth: 100
-        network_interface: enp4s0f0
-        ru_mac_addr: 50:7c:6f:45:44:33
-        du_mac_addr: 00:11:22:33:44:00
-        vlan_tag: 6
-        ul_port_id: [0]
-        compr_method_ul: "bfp"
-        compr_bitwidth_ul: 9
+          network_interface: enp4s0f0
+          ru_mac_addr: 50:7c:6f:45:44:33
+          du_mac_addr: 00:11:22:33:44:00
+          vlan_tag: 6
+          ul_port_id: [0]
+          compr_method_ul: "bfp"
+          compr_bitwidth_ul: 9
 
-Depending on if you are using the SR-IOV plugin or not, you need to update the securityContext. In case you want to use the SR-IOV plugin
-you need to set the following values in the securityContext. The network_interface and the du_mac_addr will be replaced at runtime with
-the correct values.
+Depending on whether you are using the SR-IOV plugin, update the `securityContext` and `sriovConfig` sections accordingly.
+
+**If using the SR-IOV plugin**, enable it by setting:
+
+.. code-block:: yaml
+
+    sriovConfig:
+        enabled: true
+        extendedResourceName: "intel.com/intel_sriov_netdevice"
+
+The `extendedResourceName` must match the name defined in the SR-IOV ConfigMap.
+
+Use the following `securityContext`:
 
 .. code-block:: yaml
 
     securityContext:
         allowPrivilegeEscalation: false
         capabilities:
-        add:
-            - IPC_LOCK
-            - SYS_ADMIN
-            - SYS_RAWIO
-            - NET_RAW
-            - SYS_NICE
+            add:
+                - IPC_LOCK
+                - SYS_ADMIN
+                - SYS_RAWIO
+                - NET_RAW
+                - SYS_NICE
         privileged: false
 
-Use the following secuirtyContext if you dont want to use the SR-IOV plugin. Make sure network_interface and du_mac_addr are set to
-the correct values.
+**If not using the SR-IOV plugin**, use the following configuration:
 
 .. code-block:: yaml
 
     securityContext:
         capabilities:
-        add: ["SYS_NICE", "NET_ADMIN"]
+            add: ["SYS_NICE", "NET_ADMIN"]
         privileged: true 
+
+Also make sure to explicitly disable SR-IOV by setting:
+
+.. code-block:: yaml
+
+    sriovConfig:
+        enabled: false
+
+Ensure that the `network_interface` and `du_mac_addr` values are set correctly for your deployment.
 
 .. todo::
     Implement SR-IOV support for RU Emulator.
 
-2 Asses max latency using cyclictest
-====================================
 
-cyclictest is a tool to asses the latency of applications on real time systems?
+2. Assess Maximum Latency Using cyclictest
+==========================================
+
+`cyclictest` is a tool used to assess application latency on real-time systems.
 
 .. todo::
-    How does it work? Example config? Tests outputs? Picture of the generated graph
+    How does it work? Example config? Test outputs? Picture of the generated graph.
 
 ----------
 
 Visualizing KPIs via Grafana
 ****************************
 
-To visualize the gNB KPIs we have created a Grafana dashboard. The dashboard is designed to work with the
-metrics server that is part of the srsRAN Project Helm repository. The metrics server collects metrics from
-the gNB, parses and stores them in an InfluxDB database. The Grafana dashboard queries the InfluxDB database
-to display the metrics in a user-friendly way.
+To visualize gNB KPIs, we provide a Grafana dashboard designed to work with the metrics server included in the
+srsRAN Project Helm repository. The metrics server collects and parses gNB metrics, stores them in an InfluxDB
+database, and the Grafana dashboard then displays them.
 
-In order to install the Grafana Helm Chart make sure you have added the srsRAN Helm repository to your Helm
-repositories. If you haven't done this yet, use the following command:
+If you haven't already added the srsRAN Helm repository, add it now:
 
 .. code-block:: bash
 
     helm repo add srsran https://srsran.github.io/srsRAN_Project_helm/
 
-The dashboard comes with a pre-configured values.yaml file. The only option that needs to be adjusted is the cluster
-domain to properly resolve the hostnames used in this tutorial. To get the your cluster domain you can use the following command:
+The Grafana dashboard comes with a pre-configured `values.yaml` file. The only field that must be adjusted is the
+**cluster domain**, which is required to resolve service hostnames.
+
+To determine your cluster domain, run:
 
 .. code-block:: bash
 
     kubectl run -it --image=ubuntu --restart=Never shell -- sh -c 'apt-get update > /dev/null && apt-get install -y dnsutils > /dev/null && nslookup kubernetes.default | grep Name | sed "s/Name:\skubernetes.default//"'
 
-This command creates a Pod, installs some tools and runs a DNS query against the service kubernetes.default. The output should look like this:
+This command launches a temporary container and runs a DNS query against the `kubernetes.default` service.
+Expected output:
 
 .. code-block:: bash
 
@@ -750,18 +782,18 @@ This command creates a Pod, installs some tools and runs a DNS query against the
 
     .svc.kubernetes.local
 
-In this case the cluster domain is svc.kubernetes.local. Adjust the values.yaml file to reflect your cluster domain.
-Get the default values.yaml file with the following command:
+In this case, the cluster domain is `svc.kubernetes.local`. Adjust the `values.yaml` file by replacing the default
+domain (`.svc.cluster.local`) with the string returned by the above command.
+
+Download the default `values.yaml` file using:
 
 .. code-block:: bash
 
     wget https://raw.githubusercontent.com/srsran/srsRAN_Project_helm/refs/heads/main/charts/grafana-srsran/values.yaml
 
-In the default values.yaml file the cluster domain is set to .svc.cluster.local. Replace the two occurrences of 
-.svc.cluster.local with the string returned in the last step. The metrics server section looks like this after 
-replacing the default cluster domain:
+After editing the file, the `metrics-server` section should look like this:
 
-.. code-block:: bash
+.. code-block:: yaml
 
     metrics-server:
         config:
@@ -773,53 +805,57 @@ replacing the default cluster domain:
         token: "605bc59413b7d5457d181ccf20f9fda15693f81b068d70396cc183081b264f3b"
         serviceType: "ClusterIP"
 
-After that, you can remove the test container using this command:
+Once updated, delete the temporary container:
 
 .. code-block:: bash
 
     kubectl delete pod shell
 
-Adjust the values.yaml to correct the cluster domain. After that, deploy the Grafana dashboard with the following command:
+Now deploy the Grafana dashboard:
 
 .. code-block:: bash
 
     helm install srsran-grafana srsran/grafana-deployment -f values.yaml -n srsran --create-namespace
 
-Once all components are up, the gNB application can start sending traffic to the metrics server. To access the Grafana dashboard, 
-you need to forward the port of the Grafana service to your local machine. Use the following commands to forward the port. Make 
-sure the namespaces is set correctly.
+After all components are running, the gNB application can start sending metrics to the metrics server.
+
+To access the Grafana dashboard, forward the service port to your local machine:
 
 .. code-block:: bash
 
     export POD_NAME=$(kubectl get pods --namespace srsran -l "app.kubernetes.io/name=grafana,app.kubernetes.io/instance=srsran-grafana" -o jsonpath="{.items[0].metadata.name}")
     kubectl --namespace srsran port-forward $POD_NAME 3000
 
-After that you can access the grafana dashboard by opening your browser at http://localhost:3000. An example of the Grafana dashboard is shown below:
+Open your browser and go to: http://localhost:3000
+
+An example of the Grafana dashboard is shown below:
 
 ----------
 
-Clean up deployments
-********************
+Clean Up Deployments
+*********************
 
 To clean up all deployments, use the following commands:
+
+To delete the srsRAN Project deployment:
 
 .. code-block:: bash
 
     helm uninstall srsran-project -n srsran
 
-To delete the linuxptp deployment, use the following command:
+To delete the `linuxptp` deployment:
 
 .. code-block:: bash
 
     helm uninstall linuxptp -n srsran
 
-To delete the Open5GS deployment, use the following command:
+To delete the Open5GS deployment:
 
 .. code-block:: bash
 
     helm uninstall open5gs -n open5gs
 
-To delete the Grafana deployment, use the following command:
+To delete the Grafana deployment:
 
 .. code-block:: bash
 
