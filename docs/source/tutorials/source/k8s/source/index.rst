@@ -39,22 +39,31 @@ Setup Considerations
 This tutorial will cover the following topics:
 
 - Set up Kubernetes/K3s nodes
+
     - Install a real-time kernel
     - Optimize system performance using TuneD
     - Install DPDK
     - Install and configure the SR-IOV plugin
+
 - Set up PTP synchronization
+
     - LLS-C1 and LLS-C3
+
 - Deploy the core network (Open5GS)
+
 - Deploy the gNB
+
     - Connect to external core networks and SMOs using a LoadBalancer
     - Connect to internal core networks and SMOs within the cluster
     - Assign DPDK devices using the SR-IOV plugin
     - Assign DPDK devices without using the SR-IOV plugin
     - Use the srsRAN Project with an SMO
+
 - Run load testing
+
     - cyclictest
     - srsRAN RU Emulator
+
 - Visualize KPIs using Grafana
 
 This tutorial uses a single-node cluster running Ubuntu 24.04. Kubernetes version 1.24 or newer is required.
@@ -505,7 +514,7 @@ Example output:
 
 .. code-block:: bash
 
-    If you don't see a command prompt, try pressing enter.
+    If you dont see a command prompt, try pressing enter.
     debconf: delaying package configuration, since apt-utils is not installed
 
     .svc.kubernetes.local
@@ -764,7 +773,7 @@ Expected output:
 
 .. code-block:: bash
 
-    If you don't see a command prompt, try pressing enter.
+    If you dont see a command prompt, try pressing enter.
     debconf: delaying package configuration, since apt-utils is not installed
 
     .svc.kubernetes.local
@@ -817,6 +826,11 @@ Open your browser and go to: http://localhost:3000
 
 An example of the Grafana dashboard is shown below:
 
+
+.. image:: .imgs/grafana.png
+    :alt: Grafana dashboard
+    :width: 75%
+    :align: center
 ----------
 
 Clean Up Deployments
