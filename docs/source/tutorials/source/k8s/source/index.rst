@@ -739,10 +739,32 @@ Ensure that the `network_interface` and `du_mac_addr` values are set correctly f
 2. Assess Maximum Latency Using cyclictest
 ==========================================
 
-`cyclictest` is a tool used to assess application latency on real-time systems.
+`cyclictest` is a tool used to measure application latency on real-time systems. To assess the maximum latency
+on your system, you can deploy `cyclictest` using the srsRAN Project `rt-test` Helm chart.
 
-.. todo::
-    How does it work? Example config? Test outputs? Picture of the generated graph.
+The rt-test Helm chart is designed to run two real-time test tools: `cyclictest` and `stress-ng`. While `cyclictest`
+measures system latency and jitter, `stress-ng` generates high CPU and memory load to simulate system stress. Running
+both together allows you to evaluate how well the system maintains real-time performance under load.
+
+To configure your test scenario, update the `config` section of the `values.yaml` file. For example:
+
+.. code-block:: yaml
+
+    config:
+        rt_tests.yml: |-
+            stress-ng: "--matrix 0 -t 12h"
+            cyclictest: "-m -p95 -d0 -a 1-15 -t 16 -h400 -D 12h"
+
+This configuration runs `stress-ng` for 12 hours using the `--matrix` workload, and launches `cyclictest` pinned to
+CPU cores 1–15 across 16 threads with high priority, running for 12 hours. For more information on `cyclictest` and
+`stress-ng`, refer to the `cyclictest <https://wiki.linuxfoundation.org/realtime/documentation/howto/tools/cyclictest/start>`_
+and `stress-ng <https://wiki.ubuntu.com/Kernel/Reference/stress-ng>`_ documentation.
+
+To deploy `rt-test`, use the following Helm command:
+
+.. code-block:: bash
+
+    helm install rt-tests srsran/rt-tests -n srsran --create-namespace
 
 ----------
 
