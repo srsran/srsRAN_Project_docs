@@ -43,7 +43,6 @@ This tutorial will cover the following topics:
     - Install a real-time kernel
     - Optimize system performance using TuneD
     - Install DPDK
-    - Install and configure the SR-IOV plugin
 
 - Set up PTP synchronization
 
@@ -53,11 +52,8 @@ This tutorial will cover the following topics:
 
 - Deploy the gNB
 
-    - Connect to external core networks and SMOs using a LoadBalancer
     - Connect to internal core networks and SMOs within the cluster
-    - Assign DPDK devices using the SR-IOV plugin
     - Assign DPDK devices without using the SR-IOV plugin
-    - Use the srsRAN Project with an SMO
 
 - Run load testing
 
@@ -167,114 +163,6 @@ For performance tuning using TuneD, refer to the :ref:`srsRAN Performance Tuning
 ===============
 
 For DPDK installation instructions, refer to the :ref:`srsRAN documentation <_dpdk>`.
-
-5. Install and Configure the SR-IOV Plugin
-==========================================
-
-.. _sriov_plugin:
-
-The **SR-IOV Network Device Plugin** is a Kubernetes device plugin used to discover and advertise networking resources in the form of:
-
-- SR-IOV Virtual Functions (VFs)
-- PCI Physical Functions (PFs)
-- Auxiliary network devices, particularly Subfunctions (SFs)
-
-In the following steps, we use the `SR-IOV CNI plugin <https://github.com/k8snetworkplumbingwg/sriov-cni>`_
-in combination with `Multus <https://github.com/k8snetworkplumbingwg/multus-cni#quickstart-installation-guide>`_
-to enable SR-IOV networking within the cluster.
-
-5.1 Configure Virtual Functions (VFs)
--------------------------------------
-
-First, we enable a single VF on the host, change its MAC address, and bind it to the `vfio-pci` driver for DPDK.
-In this example, the VF is created for the interface named ``enp1s0f0``. For more information, refer to the
-:ref:`DPDK tutorial <_dpdk>` in the srsRAN Project documentation.
-
-.. code-block:: bash
-
-    # Enable VF
-    echo 1 > /sys/class/net/enp1s0f0/device/sriov_numvfs
-    # Change MAC address
-    ip link set enp1s0f0 vf 0 mac 00:11:22:33:44:55
-    # Bind VF to vfio-pci
-    dpdk-devbind.py -b vfio-pci 0000:01:01.0
-
-5.2 Edit and Apply ConfigMap
-----------------------------
-
-Next, we create the required `configMap.yaml` for the SR-IOV CNI plugin. This file contains the vendor and device
-IDs of the NIC. Use the ``lspci`` command to identify the correct IDs. Note that Physical Functions (PFs) and
-Virtual Functions (VFs) have different device IDs.
-
-.. code-block:: bash
-
-    lspci -nn -s 01:01.0 
-    01:01.0 Ethernet controller [0200]: Intel Corporation Ethernet Adaptive Virtual Function [8086:1889] (rev 02)
-
-In this case, the device ID is ``1889`` and the vendor ID is ``8086``. The `configMap.yaml` file should look like this:
-
-.. code-block:: yaml
-
-    apiVersion: v1
-    kind: ConfigMap
-    metadata:
-      name: sriovdp-config
-      namespace: kube-system
-    data:
-      config.json: |
-         {
-              "resourceList": [{
-                         "resourceName": "intel_sriov_netdevice",
-                         "selectors": {
-                              "vendors": ["8086"],
-                              "devices": ["1889"],
-                              "drivers": ["vfio-pci"]
-                         }
-                    }
-                 ]
-         }
-
-Apply the ConfigMap using:
-
-.. code-block:: bash
-
-    kubectl apply -f configMap.yaml
-
-5.3 Install Multus CNI
-----------------------
-
-Deploy Multus CNI using:
-
-.. code-block:: bash
-
-    kubectl apply -f https://raw.githubusercontent.com/k8snetworkplumbingwg/multus-cni/master/deployments/multus-daemonset-thick.yml
-
-For additional information, refer to the
-`installation guide <https://github.com/k8snetworkplumbingwg/multus-cni#quickstart-installation-guide>`_.
-
-5.4 Install SR-IOV Components
------------------------------
-
-Install the following components to enable SR-IOV support in the K3s cluster.
-Ensure each DaemonSet is properly defined for your cluster environment.
-
-- Install the SR-IOV CNI plugin and its DaemonSet:
-
-.. code-block:: bash
-
-    kubectl apply -f sriov-cni-daemonset.yaml
-
-- Install the SR-IOV Custom Resource Definitions (CRDs):
-
-.. code-block:: bash
-
-    kubectl apply -f sriov-crd.yaml
-
-- Install the SR-IOV Device Plugin DaemonSet:
-
-.. code-block:: bash
-
-    kubectl apply -f sriovdp-daemonset.yaml
 
 ----------
 
@@ -450,56 +338,8 @@ If you haven't already added the srsRAN Project Helm repository, add it using:
 
 In the following, we explain how to set up different scenarios using the srsRAN Helm Chart.
 
-1. Connecting to External Core Networks and SMOs via LoadBalancer
-==================================================================
-
-In this scenario, the gNB is connected to an external core network or SMO using a `LoadBalancer`. The LoadBalancer
-is used to expose the gNB to external systems. On bare-metal Kubernetes clusters, you need to install a LoadBalancer
-manually—for example, using `MetalLB <https://metallb.io/>`_. In K3s, a LoadBalancer is already included.
-
-To deploy the gNB for use with a LoadBalancer, ensure the following configuration is set in `values.yaml`:
-
-Disable access to the host network:
-
-.. code-block:: yaml
-
-    network:
-        hostNetwork: false
-
-To connect to an external core network, define the LoadBalancer IP and the N2/N3 interface configuration.
-If N2 and N3 share the same interface, reuse the same IP for both. Ensure the IP assigned to the LoadBalancer
-matches `LoadBalancerIP`:
-
-.. code-block:: yaml
-
-    service:
-        type: LoadBalancer
-        LoadBalancerIP: "192.168.30.30"
-        ports:
-        n2:
-            port: 38412
-            outport: 38412
-            protocol: SCTP
-        n3:
-            port: 2152
-            outport: 32152
-            protocol: UDP
-
-To expose the O1 interface to an external SMO:
-
-.. code-block:: yaml
-
-    service:
-        type: LoadBalancer
-        LoadBalancerIP: "192.168.30.30"
-        ports:
-        o1:
-            port: 830
-            outport: 830
-            protocol: TCP
-
-2. Connecting to Internal Core Networks and SMOs Within the Cluster
-====================================================================
+1. Connecting to Internal Core Networks Within the Cluster
+==========================================================
 
 When all components run within the same Kubernetes cluster, you can use DNS hostnames instead of a LoadBalancer.
 For example, if the Open5GS core network is deployed in the same cluster, use the AMF service's hostname to connect to it.
@@ -549,59 +389,8 @@ Use this hostname in the `amf` section of the gNB configuration in `values.yaml`
 For more information, refer to the official
 `Kubernetes DNS documentation <https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/>`_.
 
-3. Assign DPDK Devices Using the SR-IOV Plugin
-==============================================
-
-When using the SR-IOV plugin, assign DPDK devices to the gNB using the following configuration in `values.yaml`:
-
-Set the following values under `securityContext`:
-
-.. code-block:: yaml
-
-    securityContext:
-        allowPrivilegeEscalation: false
-        capabilities:
-        add:
-            - IPC_LOCK
-            - SYS_ADMIN
-            - SYS_RAWIO
-            - NET_RAW
-            - SYS_NICE
-        privileged: false
-
-Before deployment, ensure that the SR-IOV plugin is installed and Virtual Functions (VFs) are created.
-Refer to the :ref:`section above <_sriov_plugin>` for setup instructions.
-
-To check if SR-IOV resources are available on the node:
-
-.. code-block:: bash
-
-    kubectl describe node <node-name>
-
-Depending on how the SR-IOV device is named in the ConfigMap, it may appear under a different name in the resource list.
-Example output:
-
-.. code-block:: yaml
-
-    resources:
-      enable_hugepages_1gi: true
-      requests:
-        hugepages-1Gi: 2Gi
-        cpu: 12
-        memory: 16Gi
-        intel.com/intel_sriov_netdevice: '1'
-      limits:
-        hugepages-1Gi: 2Gi
-        memory: 16Gi
-        cpu: 12
-        intel.com/intel_sriov_netdevice: '1'
-
-In this example, one DPDK device is available on the node.
-
-4. Assign DPDK Devices Without the SR-IOV Plugin
+2. Assign DPDK Devices Without the SR-IOV Plugin
 ================================================
-
-.. _sriov-plugin:
 
 To assign PFs or VFs directly to the container without using the SR-IOV plugin, you must grant the Pod full
 access to the host system. In `values.yaml`, set the following:
@@ -622,41 +411,8 @@ Enable privileged mode and set required capabilities:
             add: ["SYS_NICE", "NET_ADMIN"]
         privileged: true
 
-With this setup, the gNB Pod has full access to the host’s network stack. This enables the Pod to access both
+With this setup, the gNB Pod has full access to the hosts network stack. This enables the Pod to access both
 external and internal Kubernetes network resources.
-
-5. Using srsRAN Project with an SMO
-===================================
-
-To enable the O1 interface in the gNB, use the following configuration in your `values.yaml`:
-
-.. code-block:: yaml
-
-    o1:
-        enable_srs_o1: true
-        netconfServerAddr: "localhost"
-        o1Port: 830
-        healthcheckPort: 5000
-        o1Adapter:
-            image: softwareradiosystems/srsran_5g_enterprise/o1_adapter
-            repository: registry.gitlab.com
-            pullPolicy: IfNotPresent
-            tag: latest
-        resources: {}
-        securityContext: {}
-        netconfServer:
-            image: softwareradiosystems/srsran_5g_enterprise/netconf
-            repository: registry.gitlab.com
-            pullPolicy: IfNotPresent
-            tag: latest
-        resources: {}
-        securityContext: {}
-
-Set `netconfServerAddr` to `localhost` if using the srsRAN Netconf server. If using an external Netconf server,
-adjust this address accordingly.
-
-**Note:** External Netconf servers are currently not supported via LoadBalancer. Use the configuration described in
-:ref:`Assign DPDK devices without the SR-IOV plugin <_sriov-plugin>` for such scenarios.
 
 Load Testing
 ************
@@ -691,34 +447,7 @@ Example configuration:
           compr_method_ul: "bfp"
           compr_bitwidth_ul: 9
 
-Depending on whether you are using the SR-IOV plugin, update the `securityContext` and `sriovConfig` sections accordingly.
-
-**If using the SR-IOV plugin**, enable it by setting:
-
-.. code-block:: yaml
-
-    sriovConfig:
-        enabled: true
-        extendedResourceName: "intel.com/intel_sriov_netdevice"
-
-The `extendedResourceName` must match the name defined in the SR-IOV ConfigMap.
-
-Use the following `securityContext`:
-
-.. code-block:: yaml
-
-    securityContext:
-        allowPrivilegeEscalation: false
-        capabilities:
-            add:
-                - IPC_LOCK
-                - SYS_ADMIN
-                - SYS_RAWIO
-                - NET_RAW
-                - SYS_NICE
-        privileged: false
-
-**If not using the SR-IOV plugin**, use the following configuration:
+Use the following configuration inside the `values.yaml` file to enable the RU Emulator:
 
 .. code-block:: yaml
 
@@ -847,7 +576,6 @@ To access the Grafana dashboard, forward the service port to your local machine:
 Open your browser and go to: http://localhost:3000
 
 An example of the Grafana dashboard is shown below:
-
 
 .. image:: .imgs/grafana.png
     :alt: Grafana dashboard
