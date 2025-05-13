@@ -116,13 +116,27 @@ Where ``eth0`` is the ethernet port for the SFP+ fiber cable that connects the D
 PTP configuration
 -----------------
 
-To start the PTP process in the DU, use the command below. The configuration file can be downloaded :download:`here <.configs/default.cfg>`
+PTP is used to synchronize the DU with the fronthaul switch. The PTP process should be running on the DU and the PTP sync should be checked to ensure it is synchronized correctly.
+ptp4l and phc2sys are the two main components of the PTP synchronization with linuxptp. To avoid any issues with the PTP, it is recommended to disable the Network Time Protocol (NTP) on the DU.
+
+We have created an example configuration file for G.8275.1 Multicast PTP profile for LinuxPTP version 4. It can be downloaded `here <.configs/srs-linuxptp.cfg>`.
+
+Install the LinuxPTP v4 using the following command:
+
+.. code-block:: bash
+    git clone http://git.code.sf.net/p/linuxptp/code linuxptp
+    cd linuxptp/
+    git checkout v4.2
+    make
+    sudo make install
+
+Run ptp4l using the following command:
 
 .. code-block:: bash
 
-   ./ptp4l -2 -i enp1s0f0 -f ./configs/default.cfg -m
+   sudo ptp4l -2 -i enp1s0f0 -f ./configs/default.cfg -m
 
-You should then see the following output: 
+You should then see the following output:
 
 .. code-block:: bash
 
@@ -131,15 +145,15 @@ You should then see the following output:
     ptp4l[4324.216]: rms    6 max   11 freq -25781 +/-   9 delay   169 +/-   1
     ptp4l[4325.341]: rms    5 max   10 freq -25783 +/-   8 delay   170 +/-   1
 
-In the above output, the ``rms`` value can be used to determine if the PTP sync is correct, for this we look for a value < 10. 
+In the above output, the ``rms`` value can be used to determine if the PTP sync is correct, for this we look for a value < 10.
 
-Next, run: 
+Next, run:
 
 .. code-block:: bash
 
-    ./phc2sys -s enp1s0f0 -w -m -R 8 -f ./configs/default.cfg
+    sudo phc2sys -s enp1s0f0 -w -m -R 8 -f ./configs/default.cfg
 
-You should then see the following output: 
+You should then see the following output:
 
 .. code-block:: bash
 
@@ -148,9 +162,9 @@ You should then see the following output:
     phc2sys[4348.553]: CLOCK_REALTIME phc offset       -25 s2 freq   +8016 delay   1396
     phc2sys[4348.678]: CLOCK_REALTIME phc offset        -5 s2 freq   +8028 delay   1397
 
-The first value here is used to determine if the PTP sync is correct, for this we look for a value < 100. 
+The first value here is used to determine if the PTP sync is correct, for this we look for a value in the range of -100 to 100.
 
-In both of the above commands ``enp1s0f0`` is the network interface on our DU that gets the PTP sync. 
+In both of the above commands ``enp1s0f0`` is the network interface on our DU that gets the PTP sync.
 
 srsRAN configuration
 --------------------
