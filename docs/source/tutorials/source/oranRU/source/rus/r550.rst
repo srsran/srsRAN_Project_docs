@@ -1,7 +1,7 @@
 .. _r550:
 
-Benetel R550/650
-################
+Benetel RAN550/RAN650
+#####################
 
 .. warning::
 
@@ -27,12 +27,17 @@ Configuration
 CU/DU
 =====
 
-Sample configuration files for the DU can be downloaded from below, for two different system configurations:
+.. note::
+  In earlier versions we've provided config examples for long and short PRACH format.
+  This is not longer required and all default configs now use the short PRACH format.
 
-- :download:`2x2 MIMO configuration with 20 MHz bandwidth and using a short PRACH format <.configs/gnb_ru_ran550_tdd_n78_20mhz_2x2.yml>`.
-- `4x2 MIMO configuration with 100 MHz bandwidth and using a long PRACH format <https://github.com/srsran/srsRAN_Project/blob/main/configs/gnb_ru_ran550_tdd_n78_100mhz_4x2.yml>`_
+Sample configuration files for the DU can be downloaded from here
 
-These configurations are **specific** to the firmware version of the RU (version 1.0.4) being used for this guide. As a result, you may need to modify this slightly for your local setup.
+- `4x2 MIMO configuration with 100 MHz bandwidth and using a short PRACH format <https://github.com/srsran/srsRAN_Project/blob/main/configs/gnb_ru_ran550_tdd_n78_100mhz_4x2.yml>`_
+
+These configurations are **specific** to the firmware version of the RU. For this guide we've used:
+- RAN550_1_v1.4.1-NM-25fa970 for the RAN550
+- RAN650_1_v1.4.0-NM-5561771 for the RAN650
 
 The following excerpt shows how the DU is configured to communicate with the RU (for a 4x2 MIMO configuration):
 
@@ -47,16 +52,16 @@ The following excerpt shows how the DU is configured to communicate with the RU 
     t1a_min_up: 294
     ta4_max: 200
     ta4_min: 0
-    is_prach_cp_enabled: false           # Configures if Control-Plane messages should be used to receive PRACH messages.
+    is_prach_cp_enabled: true            # Configures if Control-Plane messages should be used to receive PRACH messages.
     compr_method_ul: bfp                 # Uplink compression method.
     compr_bitwidth_ul: 9                 # Uplink IQ samples bitwidth after compression.
     compr_method_dl: bfp                 # Downlink compression method.
     compr_bitwidth_dl: 9                 # Downlink IQ samples bitwidth after compression.
     compr_method_prach: bfp              # PRACH compression method.
     compr_bitwidth_prach: 9              # PRACH IQ samples bitwidth after compression.
-    enable_ul_static_compr_hdr: true     # Configures if the compression header is present for uplink User-Plane messages (false) or not present (true).
-    enable_dl_static_compr_hdr: true     # Configures if the compression header is present for downlink User-Plane messages (false) or not present (true).
-    iq_scaling: 10                       # IQ samples scaling factor applied before compression, should be a positive value smaller than 10.
+    enable_ul_static_compr_hdr: false    # Configures if the compression header is present for uplink User-Plane messages (false) or not present (true).
+    enable_dl_static_compr_hdr: false    # Configures if the compression header is present for downlink User-Plane messages (false) or not present (true).
+    iq_scaling: 5.5                      # IQ samples scaling factor applied before compression, 5.5 for RAN550, 20 for RAN650.
     cells:
       - network_interface: enp1s0f0      # Ethernet interface name used to communicate with the RU.
         ru_mac_addr: 70:b3:d5:e1:5b:06   # RU MAC address.
@@ -71,7 +76,7 @@ To expand on this, the following parameters are set in the ``cells`` field:
 
 - ``network_interface`` : Network interface used to send the OFH packets.
 - ``ru_mac_addr`` : MAC address of the RAN550/650.
-- ``du_mac_addr`` : MAC address of the interface used by the gNB (it should be connected directly to the RU or using a smart switch).
+- ``du_mac_addr`` : MAC address of the interface used by the gNB (it should be connected directly to the RU or through a PTP-capable switch).
 - ``vlan_tag_up/vlan_tag_cp`` : V-LAN identifier, should be set to the value configured in the switch settings
 
 RU
@@ -82,31 +87,22 @@ Refer to the Benetel User Guide documentation to apply the following configurati
 We currently recommend to use the following RU configuration as other parameter combinations are untested and seem to
 cause issues with Benetel RUs:
 
-- 2x2 MIMO configuration with 20 MHz bandwidth
 - 4x2 MIMO configuration with 100 MHz bandwitdh
-- Long PRACH format; the 2x2 MIMO with 20 MHz bandwith also supports the short PRACH format, but shows a limited UL performance
 
 Ensure the RU is running before trying to make any configuration changes. Some
 of the values can be set/modified in the `/etc/ru_config.cfg` file, but some others need to be modified
 
 - ``MAC Address`` : The MAC address of the DU must be configured in the RU for Control-Plane and User-Plane traffic. In our configuration we use the same MAC address for both planes.
 - ``VLAN tag`` : In our setup the same VLAN ID is used for all network traffic, as only one MAC address is used.
-- ``Compression`` : Currently only static compression headers are supported for this setup. We use BFP9 compression for all uplink and downlink channels. Refer to the Benetel User Guide for details on how to configure compression in the RU.
+- ``Compression`` : Configure dynamic compression. We use BFP9 compression for all uplink and downlink channels. Refer to the Benetel User Guide for details on how to configure compression in the RU.
 - ``Transmission Power`` : Depending on your setup, you may need to alter the transmission power of the RU. For example, in a lab setting with the UE in close proximity to the RU, the default power settings may result in UE saturation.
-- ``PRACH format`` : We recommend using long PRACH format.
-- ``DL scaling`` : We use downlink scaling of 0dB for 2x2 MIMO configuration with 20 MHz bandwidth and of 6dB for 4x2 MIMO configuration with 100 MHz bandwidth.
-- ``TDD pattern`` : The TDD pattern should be set to the 7-2 format (DDDDDDDSUU). Download it :download:`here <.configs/benetel_tdd.xml>`.
+- ``PRACH format`` : We recommend using short PRACH format.
+- ``DL scaling`` : We use downlink scaling of 0dB and adjust the iq_scaling parameter in the DU.
+- ``TDD pattern`` : The TDD pattern should be set to the 7-2 format (DDDDDDDSUU). Refer to the Benetel guide for other supported patterns.
 
 The full configuration files we used for these set ups can be found below:
 
-- :download:`2x2 MIMO configuration with 20 MHz bandwidth and using a short PRACH format <.configs/ru_config_20.cfg>`.
-- :download:`4x2 MIMO configuration with 100 MHz bandwidth and using a long PRACH format <.configs/ru_config.cfg>`.
-
-Note that in case of using a long PRACH format, the Msg1 offset needs to be manually set by writing to the ``0xc0324`` register. It can be done by writing the following command in the RU control console:
-
-.. code-block:: bash
-
-  registercontrol -w c0324 -x 0xef780000
+- :download:`4x2 MIMO configuration with 100 MHz bandwidth <.configs/ru_config.cfg>`.
 
 -----
 
@@ -138,8 +134,6 @@ The following steps should be taken to initialize the network:
 
         Connecting to AMF on 127.0.0.5:38412
         Initializing the Open Fronthaul Interface for sector#0: ul_compr=[BFP,9], dl_compr=[BFP,9], prach_compr=[BFP,9], prach_cp_enabled=false, downlink_broadcast=false
-        Warning: Configured PRACH occasion collides with PUCCH RBs ([0..1) intersects [0..3)). Some interference between PUCCH and PRACH is expected.
-        Warning: Configured PRACH occasion collides with PUCCH RBs ([0..1) intersects [0..3)). Some interference between PUCCH and PRACH is expected.
         Cell pci=1, bw=100 MHz, 4T2R, dl_arfcn=650000 (n78), dl_freq=3750.0 MHz, dl_ssb_arfcn=647328, ul_freq=3750.0 MHz
 
         ==== gNodeB started ===
