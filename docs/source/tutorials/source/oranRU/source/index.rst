@@ -119,7 +119,7 @@ PTP configuration
 PTP is used to synchronize the DU with the fronthaul switch. The PTP process should be running on the DU and the PTP sync should be checked to ensure it is synchronized correctly.
 ptp4l and phc2sys are the two main components of the PTP synchronization with linuxptp. To avoid any issues with the PTP, it is recommended to disable the Network Time Protocol (NTP) on the DU.
 
-We have created an example configuration file for G.8275.1 Multicast PTP profile for LinuxPTP version 4. It can be downloaded `here <.configs/srs-linuxptp.cfg>`.
+We have created an example configuration file for G.8275.1 Multicast PTP profile for LinuxPTP version 4. It can be downloaded :download:`here <.configs/srs-linuxptp.cfg>`.
 
 Install the LinuxPTP v4 using the following command:
 
@@ -169,7 +169,7 @@ In both of the above commands ``enp1s0f0`` is the network interface on our DU th
 srsRAN configuration
 --------------------
 
-Sample configuration files for the CU/DU can be downloaded from `here <https://github.com/srsran/srsRAN_Project/blob/main/configs/>`_. There is an associated configuration file for each of the tested RUs. 
+Sample configuration files for the CU/DU can be found in the ``configs`` folder of the srsRAN source files. There is an associated configuration file for each of the tested RUs. 
 
 The main configuration steps for the CU/DU occur in the ``ru_ofh`` field. Here the CU/DU is configured to match the capabilities of the RU being used. All parameters should be configured specifically for each RU. 
 
