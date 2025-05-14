@@ -20,12 +20,3 @@ The DU Manager contains the following components:
     - UE Manager: Manages the UEs connected to the DU
     - RAN Resource Manager: Manages the physical RAN resources associated with the DU 
 
-.. - :ref:`UE Manager <ue_manager_du>`: Manages the UEs connected to the DU
-.. - :ref:`RAN Resource Manager <ran_resource_manager>`: Manages the physical RAN resources associated with the DU 
-
------
-
-.. Add the following to TOCTREE once populated: 
-   ue_manager.rst
-   resource_manager.rst
-

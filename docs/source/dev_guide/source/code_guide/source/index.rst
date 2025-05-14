@@ -3,8 +3,8 @@
 Code Style Guide
 ################
 
-This document establishes the basic guidelines and recommendations for C and C++ programming styles within the srsRAN Project code base. Many of the guidelines are C++ specific, however
-some can still be applied to C. The main goal of this document is to help establish a consistent programming style throughout the srsRAN Project code base, and 
+This document establishes the basic guidelines and recommendations for C and C++ programming styles within |project_name| code base. Many of the guidelines are C++ specific, however
+some can still be applied to C. The main goal of this document is to help establish a consistent programming style throughout |project_name| code base, and 
 improve the readability and maintainability of code committed by users. 
 
 This document is heavily inspired in `LLVM's coding standards <https://llvm.org/docs/CodingStandards.html>`_, please refer to this

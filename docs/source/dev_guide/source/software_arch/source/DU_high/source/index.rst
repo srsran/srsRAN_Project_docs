@@ -7,7 +7,7 @@ DU-high
    :scale: 60%
    :align: center
 
-   srsRAN Project DU-high implementation
+   |project_name| DU-high implementation
 
 The DU-high, or Distributed Unit - High, is responsible for the handling of both uplink and downlink traffic. Specifically the MAC and RLC processing of these signals. The DU-high, has three main components and 
 three main interfaces. The DU-high communicates directly with the CU-CP and CU-UP via the F1-c and F1-u interfaces, the DU-low via the FAPI interface, and can also be connected to the near-RT RIC via the E2 interface.

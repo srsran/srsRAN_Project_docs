@@ -3,7 +3,7 @@
 Commit Formatting
 #################
 
-When committing code to the srsRAN Project codebase it is important that commit messages are clear and succinct. This means having clear guidelines for 
+When committing code to |project_name| codebase it is important that commit messages are clear and succinct. This means having clear guidelines for 
 how commits should be structured, both in the title and body of the commit messages. 
 
 The preferred commit message style is as follows:

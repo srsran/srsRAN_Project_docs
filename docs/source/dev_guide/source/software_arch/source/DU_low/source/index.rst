@@ -7,7 +7,7 @@ DU-low
    :scale: 60%
    :align: center
 
-   srsRAN Project DU-low implementation
+   |project_name| DU-low implementation
 
 The DU-low, or Distributed Unit - Low, is responsible for the handling of both uplink and downlink traffic. Specifically, it handles the Upper PHY processing related to these signals. The DU-low, contains only the Upper PHY and has 
 two main interfaces. The DU-low communicates directly with the DU-high via the FAPI interface, and with the RU via the Open FrontHaul (OFH) interface. The lower PHY processing is carried out in the RU. This architecture 

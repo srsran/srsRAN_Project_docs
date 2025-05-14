@@ -48,7 +48,7 @@ Names should follow these rules (always use snake_case):
 Assert and expect
 *****************
 
-The srsRAN project provides a custom assert macro called ``srsran_assert``.
+|project_name| provides a custom assert macro called ``srsran_assert``.
 Use it as much as you can to check all your preconditions and assumptions. This will help to reduce debugging times as
 the assert may be triggered by your code or even by external faulty code.
 
@@ -113,7 +113,7 @@ Do not use ``using namespace std``
 When you need to refer to identifiers in the standard library then prefer to explicitly use a ``std::`` prefix rather than relying in ``using namespace std;``.
 In header files, adding a using namespace directive will pollute the namespace of any source file that includes this header, causing maintenance issues.
 
-The exception to this rule (not for the ``std`` namespace) is for implementation files (``.cpp``). For example, all the code in the srsRAN project implements code that lives in the
+The exception to this rule (not for the ``std`` namespace) is for implementation files (``.cpp``). For example, all the code in |project_name| implements code that lives in the
 srsran namespace. In this case, it is clearer for the .cpp files to have a using namespace srsran directive at the top of the file, just after the include list.
 This will reduce indentation in the body of the file.
 
