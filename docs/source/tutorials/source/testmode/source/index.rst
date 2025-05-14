@@ -1,13 +1,12 @@
 .. _testmode:
 
 srsRAN gNB(-DU) Load Testing
-#######################
-
+############################
 
 Introduction
 ************
 
-In this tutorial, we will guide you through the process of load testing the srsRAN Project gNB(-DU) application without the need for specific hardware, via parameters available within the configuration file.
+In this tutorial, we will guide you through the process of load testing the |project_name| gNB(-DU) application without the need for specific hardware, via parameters available within the configuration file.
 
 The ``ru_dummy`` option in the gNB configuration allows users to emulate the RU and focus exclusively on testing the DU, by excluding the OFH layers. The RU Emulator (``ru_emu``) can be used to simulate traffic 
 sent and received by an O-RU in a split 7.2 configuration, while also allowing you to monitor key performance indicators (KPIs). 
@@ -21,7 +20,7 @@ function emulates single or multiple UEs, simulating traffic  across layers such
 builds beyond the gNB. 
 
 Detailed explanations of these scenarios are provided in the following sections. For detailed information on specific configuration parameters and usage of these modes, refer to the 
-srsRAN Project :ref:`Configuration Reference <manual_config_ref>`.
+|project_name| :ref:`Configuration Reference <manual_config_ref>`.
 
 -----
 
@@ -42,7 +41,7 @@ is sent over the network. To use the ``ru_dummy`` parameter add the following se
 Using ``ru_emu``
 ****************
 
-The RU Emulator is an extra tool that needs to be built separately from the gNB application. To build the RU Emulator use the following commands from inside the srsRAN Project repository:
+The RU Emulator is an extra tool that needs to be built separately from the gNB application. To build the RU Emulator use the following commands from inside |project_name| repository:
 
   .. code-block:: bash
 
@@ -144,7 +143,7 @@ Using ``testmode``
 ******************
 
 Once an RU and a core network are in place you can start using ``testmode``. A sample configuration file can also be found in `srsRAN_Project/configs` within 
-the srsRAN Project source files: 
+|project_name| source files: 
 
   .. code-block:: yaml
 
@@ -196,4 +195,4 @@ You should then see the following output:
       1 0x44 |  15 1.0   28   1.0G 1546    0   0%    10M |  99.9 -99.9   28    75M  400    0   0%  81.5M      0  n/a
       1 0x44 |  15 1.0   28   1.0G 1548    0   0%    10M |  99.9 -99.9   28    76M  401    0   0%  81.5M      0  n/a
 
-For more information about the test mode please refer to the srsRAN Project `Configuration Reference <https://docs.srsran.com/projects/project/en/latest/user_manuals/source/config_ref.html>`_. 
+For more information about the test mode please refer to the |project_name| `Configuration Reference <https://docs.srsran.com/projects/project/en/latest/user_manuals/source/config_ref.html>`_. 

@@ -5,11 +5,11 @@ of a real-world deployment with RUs and over-the-air transmission, these simulat
 
 **Compiling the MEXs**
 
-The inclusion of srsRAN Project PHY blocks into a MATLAB simulator is achieved by means of `MEX
+The inclusion of |project_name| PHY blocks into a MATLAB simulator is achieved by means of `MEX
 functions <https://www.mathworks.com/help/matlab/call-mex-file-functions.html>`_, which are small C++ libraries that can be called from MATLAB. Therefore, the first step for running
 the srsRAN-matlab simulators is to build the MEX executables.
 
-First, we compile srsRAN Project with the ``ENABLE_EXPORT`` flag, to export (some of) its libraries for external
+First, we compile |project_name| with the ``ENABLE_EXPORT`` flag, to export (some of) its libraries for external
 projects. This can be done from the command line with the following command: 
 
 .. code-block:: bash 
@@ -18,7 +18,7 @@ projects. This can be done from the command line with the following command:
    cmake -B buildExport -DENABLE_EXPORT:BOOL=ON
    cmake --build buildExport -j 'nproc'
 
-This builds srsRAN Project inside ``buildExport`` and generates the file ``buildExport/srsran.cmake``, which 
+This builds |project_name| inside ``buildExport`` and generates the file ``buildExport/srsran.cmake``, which 
 provides all the details required to import the necessary srsRAN CMake targets from external projects. 
 
 .. note:: 
@@ -65,7 +65,7 @@ You can then run:
 
     runSRSRANUnittest('all', 'testmex')
 
-If successful, the ``runSRSRANUnittest`` will generate test vectors, these will be fed into the MEX versions of the srsRAN Project PHY components. An output similar to the following will be shown: 
+If successful, the ``runSRSRANUnittest`` will generate test vectors, these will be fed into the MEX versions of |project_name| PHY components. An output similar to the following will be shown: 
 
 .. code-block:: matlab 
 
@@ -130,7 +130,7 @@ This should give the following output:
                  DisplayDiagnostics: false
 
 The simulation set-up can now be modified as desired by the user. In particular, the ``ImplementationType`` should be changed to ``srs``. Doing 
-so allows the PHY components of srsRAN Project to be used (via the MEX libraries above) instead of those from the MATLAB 5G Toolbox.
+so allows the PHY components of |project_name| to be used (via the MEX libraries above) instead of those from the MATLAB 5G Toolbox.
 
 This can be done with the following command: 
 

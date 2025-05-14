@@ -8,13 +8,13 @@ srsRAN gNB with srsUE
 .. warning:: 
 
   5G extensions in srsUE are no longer in active development, although it does receive small maintenance updates. See `here <https://docs.srsran.com/projects/4g/en/latest/dev_status.html>`_ for further details. srsUE is intended to be used 
-  for proof-of-concept and initial testing to allow users to test srsRAN Project without the need for expensive hardware. It is not intended for scenarios which require a deployment ready solution.
+  for proof-of-concept and initial testing to allow users to test |project_name| without the need for expensive hardware. It is not intended for scenarios which require a deployment ready solution.
 
 Overview
 ********
 
-srsRAN Project is a 5G CU/DU solution and does not include a UE application. However, `srsRAN 4G <https://github.com/srsran/srsRAN_4G>`_ does include a prototype 5G UE (srsUE) which can be used for testing.
-This application note shows how to create an end-to-end fully open-source 5G network with srsUE, the srsRAN Project gNodeB and Open5GS 5G core network. 
+|project_name| is a 5G CU/DU solution and does not include a UE application. However, `srsRAN 4G <https://github.com/srsran/srsRAN_4G>`_ does include a prototype 5G UE (srsUE) which can be used for testing.
+This application note shows how to create an end-to-end fully open-source 5G network with srsUE, |project_name| gNodeB and Open5GS 5G core network. 
 
 Various use-cases are shown here, including both over-the-air and ZeroMQ based setups, and multi-UE emulation.  
 
@@ -62,12 +62,12 @@ with the information needed to download and set-up Open5GS so that it is ready t
     - `GitHub <https://github.com/open5gs/open5gs>`_ 
     - `Quickstart Guide <https://open5gs.org/open5gs/docs/guide/01-quickstart/>`_
 
-For the purpose of this application note, we will use a dockerized Open5GS version provided in srsRAN Project at ``srsgnb/docker``.
+For the purpose of this application note, we will use a dockerized Open5GS version provided in |project_name| at ``srsgnb/docker``.
 
 ZeroMQ
 ======
 
-For a guide on installing ZMQ and building srsRAN Project correctly, see :ref:`here <manual_installation_build>`. 
+For a guide on installing ZMQ and building |project_name| correctly, see :ref:`here <manual_installation_build>`. 
 
 ----- 
 
@@ -83,7 +83,7 @@ The following diagram presents the setup architecture:
 Configuration
 =============
 
-You can find the srsRAN Project gNB configuration file for this example in the ``configs`` folder of the srsRAN Project source files. You can also find it `here <https://github.com/srsran/srsRAN_Project/tree/main/configs>`_: 
+You can find a configuration file for this example in the ``configs`` folder of the |project_name| source files. You can also find it `here <https://github.com/srsran/srsRAN_Project/tree/main/configs>`_: 
 
  
   * `gNB FDD srsUE config <https://github.com/srsran/srsRAN_Project/blob/main/configs/gnb_rf_b210_fdd_srsUE.yml>`_
@@ -221,14 +221,14 @@ The following order should be used when running the network:
 Open5GS Core
 ------------
 
-srsRAN Project provides a dockerized version of the Open5GS. It is a convenient and quick way to start the core network. You can run it as follows:
+|project_name| provides a dockerized version of the Open5GS. It is a convenient and quick way to start the core network. You can run it as follows:
 
 .. code-block:: bash
 
   cd ./srsRAN_Project/docker
   docker compose up --build 5gc
 
-Note that we have already configured Open5GS to operate correctly with srsRAN Project gNB. Moreover, the UE database is populated with the credentials used by our srsUE.
+Note that we have already configured Open5GS to operate correctly with |project_name|. Moreover, the UE database is populated with the credentials used by our srsUE.
 	
 gNB
 ---

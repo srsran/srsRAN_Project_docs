@@ -8,7 +8,7 @@ srsRAN gNB for 5G NTN
 Overview
 ********
 
-This tutorial demonstrates how to configure and run a 5G NR SA Non-Terrestrial Network (NTN) using the srsRAN Project gNB and Amarisoft UE with NTN extensions. 
+This tutorial demonstrates how to configure and run a 5G NR SA Non-Terrestrial Network (NTN) using |project_name| and Amarisoft UE with NTN extensions. 
 NTN is a network deployment where communication between the gNB and UE is relayed via non-terrestrial components, such as satellites.
 
 Deploying NTN introduces unique challenges due to the different link dynamics and characteristics compared to traditional terrestrial networks. To address these challenges, 3GPP introduced several enhancements and features in the 5G NR specifications (Release 17). Key features and enhancements include:
@@ -84,7 +84,7 @@ with the information needed to download and set-up Open5GS so that it is ready t
     - `GitHub <https://github.com/open5gs/open5gs>`_ 
     - `Quickstart Guide <https://open5gs.org/open5gs/docs/guide/01-quickstart/>`_
 
-For this application note, we will use a dockerized Open5GS version provided in srsRAN Project at ``srsgnb/docker``.
+For this application note, we will use a dockerized Open5GS version provided in |project_name| at ``srsgnb/docker``.
 
 GNU-Radio Companion
 ===================
@@ -113,12 +113,12 @@ with:
   sudo apt-get install libzmq3-dev
 
 
-srsRAN Project gNB
-==================
+|project_name|
+==============
 
-Then, you need to compile srsRAN Project (assuming you have already installed all the required dependencies). 
+Then, you need to compile |project_name| (assuming you have already installed all the required dependencies). 
 Note that ZeroMQ is initially deactivated, and activation occurs during the execution of the ``cmake`` command, with the inclusion of the flags ``-DENABLE_EXPORT=ON -DENABLE_ZEROMQ=ON``.
-Speficially, the following commands can be used to download and build srsRAN Project from source: 
+Speficially, the following commands can be used to download and build |project_name| from source: 
 
 .. code::
 
@@ -141,7 +141,7 @@ Pay extra attention to the cmake console output. Make sure you read the followin
   -- Found libZEROMQ: /usr/local/include, /usr/local/lib/libzmq.so
   ...
 
-Note, if you have already built and installed srsRAN Project prior to installing ZMQ and other dependencies you will have to re-build both to ensure the ZMQ drivers have been recognized correctly. 
+Note, if you have already built and installed |project_name| prior to installing ZMQ and other dependencies you will have to re-build both to ensure the ZMQ drivers have been recognized correctly. 
 
 
 Amarisoft UE
@@ -156,9 +156,9 @@ ZeroMQ driver for Amarisoft UE
 ==============================
 
 .. note::
-  These steps should only be completed **after** compiling srsRAN Project gNB as mentioned above, as they require the build files of srsRAN Project gNB and Amarisoft UHD RF frontend driver.
+  These steps should only be completed **after** compiling |project_name| as mentioned above, as they require the build files of |project_name| and Amarisoft UHD RF frontend driver.
 
-Interfacing the Amarisoft UE with srsRAN Project requires a custom TRX driver implemented by SRS, which can be found in the srsRAN Project source files in ``srsRAN_Project/utils/trx_srsran``. 
+Interfacing the Amarisoft UE with |project_name| requires a custom TRX driver implemented by SRS, which can be found in |project_name| source files in ``srsRAN_Project/utils/trx_srsran``. 
 
 The Amarisoft UE release folder, ``amarisoft.2023-12-15.tar.gz``, should contain a file called ``trx_uhd-linux-2023-12-15.tar.gz``. The release folder and the sub-file in question should be uncompressed before proceeding.
 
@@ -355,14 +355,14 @@ The following order should be used when running the network:
 Open5GS Core
 ============
 
-srsRAN Project provides a dockerized version of the Open5GS. It is a convenient and quick way to start the core network. You can run it as follows:
+|project_name| provides a dockerized version of the Open5GS. It is a convenient and quick way to start the core network. You can run it as follows:
 
 .. code-block:: bash
 
   cd ./srsRAN_Project/docker
   docker compose up --build 5gc
 
-Note that we have already configured Open5GS to operate correctly with srsRAN Project gNB. Moreover, the UE database is populated with the credentials used by the AmarisoftUE.
+Note that we have already configured Open5GS to operate correctly with |project_name|. Moreover, the UE database is populated with the credentials used by the AmarisoftUE.
 
 GEO NTN Channel Emulator
 ========================

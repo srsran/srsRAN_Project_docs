@@ -6,7 +6,7 @@ O-RAN 7.2 RU Guide
 Overview
 ********
 
-The srsRAN Project supports both split 7.2 and split 8 fronthaul interfaces to Radio Units (RUs). This tutorial outlines the general steps required to interface an RU with the srsRAN CU/DU via split 7.2. For more detailed instructions 
+|project_name| supports both split 7.2 and split 8 fronthaul interfaces to Radio Units (RUs). This tutorial outlines the general steps required to interface an RU with the srsRAN CU/DU via split 7.2. For more detailed instructions 
 on specific O-RUs select an RU from :ref:`this list <hw_integration>`. 
 
 :ref:`Split 7.2 <7_2_split>` is an open specification published by the O-RAN Alliance aiming to  ensure interoperability between different DU and RU solutions.  
@@ -21,7 +21,7 @@ Setup Considerations
 
 This tutorial uses the following hardware: 
 
-    - Server (Running srsRAN Project CU/DU)
+    - Server (Running |project_name|  CU/DU)
 
       - CPU: AMD Ryzen 7 5700G
       - MEM: 64GB
@@ -44,13 +44,13 @@ With the following software:
 CU/DU 
 =====
 
-The CU/DU is provided by the srsRAN Project gNB. The Open Fronthaul (OFH) Library provides the necessary interface between the DU and the RU. The DU is connected to the fronthaul switch via SFP+ fiber cable. 
+The CU/DU is provided by the |project_name|. The Open Fronthaul (OFH) Library provides the necessary interface between the DU and the RU. The DU is connected to the fronthaul switch via SFP+ fiber cable. 
 
 RU 
 =====
 
 Users should chose the RU that best suits their usecase and specific requirements. There are various O-RUs available with specific implementations for indoor and outdoor use, various price points, and various hardware capabilities. A list of tested O-RUs 
-can be found :ref:`here <hw_integration>`, along with details on using them with the srsRAN Project gNB. 
+can be found :ref:`here <hw_integration>`, along with details on using them with |project_name|. 
 
 For all set-ups the RU should be connected to the fronthaul switch via SFP+ fiber cable through the main fronthaul interface. 
 
@@ -129,6 +129,7 @@ We have created an example configuration file for G.8275.1 Multicast PTP profile
 Install the LinuxPTP v4 using the following command:
 
 .. code-block:: bash
+
     git clone http://git.code.sf.net/p/linuxptp/code linuxptp
     cd linuxptp/
     git checkout v4.2
@@ -253,7 +254,7 @@ The following sections will outline two different approaches for connecting to t
 COTS UE
 =======
 
-For full details on configuring and connecting a COTS UE to the srsRAN Project gNB see :ref:`this tutorial <COTS_UE_tutorial>`.
+For full details on configuring and connecting a COTS UE to |project_name| see :ref:`this tutorial <COTS_UE_tutorial>`.
 
 For this setup a OnePlus 9 5G UE was used to connect to the network. The set-up and configuration of the device is the same as in the above tutorial. 
 
@@ -262,7 +263,7 @@ AmariUE
 
 Additionally, third party UEs, such as AmariUE can be used to connect to the network. 
 
-For full details on configuring and connecting AmariUE to the srsRAN Project gNB see :ref:`this tutorial <amariUE_radios>`. 
+For full details on configuring and connecting AmariUE to |project_name| see :ref:`this tutorial <amariUE_radios>`. 
 
 Sending Traffic
 ---------------

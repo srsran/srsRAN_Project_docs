@@ -7,7 +7,7 @@ O-RAN CU-DU Split
 
 .. note:: 
 
-  The latest version of srsRAN Project is required to implement the CU-DU split with srsRAN Project.  
+  The latest version of |project_name| is required to implement the CU-DU split with |project_name|.  
 
 Overview
 ********
@@ -33,10 +33,10 @@ For this application note, the following hardware and software are used:
     - COTS UE (Xiaomi 12 5G)
 
 
-srsRAN Project
+|project_name|
 ==============
 
-If you have not already done so, install the latest version of srsRAN Project and all of its dependencies. This is outlined in the :ref:`Installation Guide <manual_installation>`. 
+If you have not already done so, install the latest version of |project_name| and all of its dependencies. This is outlined in the :ref:`Installation Guide <manual_installation>`. 
 
 B210
 ====
@@ -57,9 +57,9 @@ with the information needed to download and set-up Open5GS so that it is ready t
 COTS UE
 =======
 
-A 5G SA capable COTS UE is used for this tutorial, specifically the `Xiaomi 12 5G <https://www.mi.com/es/product/xiaomi-12/specs/>`_. A detailed list of COTS UEs that have been tested with srsRAN Project can be found :ref:`here <cots_ues>`.
+A 5G SA capable COTS UE is used for this tutorial, specifically the `Xiaomi 12 5G <https://www.mi.com/es/product/xiaomi-12/specs/>`_. A detailed list of COTS UEs that have been tested with |project_name|  can be found :ref:`here <cots_ues>`.
 
-For more information on connecting a COTS UEs to srsRAN Project, see the :ref:`full tutorial <COTS_UE_tutorial>`. 
+For more information on connecting a COTS UEs to |project_name|, see the :ref:`full tutorial <COTS_UE_tutorial>`. 
 
 ------
 
@@ -82,7 +82,7 @@ To configure srsCU, the ``amf``, ``f1ap`` and ``f1u`` fields must be configured 
 .. literalinclude:: .config/cu.yml
   :language: yaml
 
-The ``amf`` parameters are specific to the local configuration of the core. If you are running Open5GS via the docker scripts provided with srsRAN Project, your configuration will be different. The same is true if you have 
+The ``amf`` parameters are specific to the local configuration of the core. If you are running Open5GS via the docker scripts provided with |project_name|, your configuration will be different. The same is true if you have 
 made any other local changes to how Open5GS has been configured.  
 
 srsDU

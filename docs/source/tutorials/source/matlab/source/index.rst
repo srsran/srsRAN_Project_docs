@@ -7,16 +7,16 @@ Overview
 ************
 
 This tutorial explains the main features of `srsRAN-matlab <https://github.com/srsran/srsRAN_matlab>`_, a MATLAB-based project for testing
-srsRAN Project. More specifically, this tutorial will show how to generate a new set of test vectors for the srsRAN
+|project_name|. More specifically, this tutorial will show how to generate a new set of test vectors for the srsRAN
 Project tests, how to analyze the uplink IQ samples recorded by srsRAN gNB, and how to run end-to-end,
-link-level simulations for testing PHY components of srsRAN Project. This will be done across three independent sections.
+link-level simulations for testing PHY components of |project_name|. This will be done across three independent sections.
 
 srsRAN-matlab offers three main tools: the test vector generators, the uplink analyzers and the link-level simulators.
 
 Test Vector Generation
 ======================
 
-Test vectors are mainly used to test, develop and debug the PHY components of the srsRAN Project. This tutorial will show
+Test vectors are mainly used to test, develop and debug the PHY components of |project_name|. This tutorial will show
 how to generate the set of vectors used for unit testing inside the srsRAN repository. As well as outlining how to generate a
 new set of random vectors for broadening the extent of the tests.
 
@@ -49,7 +49,7 @@ For this application note, the following hardware and software are used:
 Installation
 ************
 
-Assuming that srsRAN Project and MATLAB have both been downloaded and installed, the next step is to download srsRAN-matlab.
+Assuming that |project_name| and MATLAB have both been downloaded and installed, the next step is to download srsRAN-matlab.
 
 This can be done with the following command:
 
@@ -59,7 +59,7 @@ This can be done with the following command:
 
 .. note::
 
-   This tutorial assumes that srsRAN Project is installed in the users come directory.
+   This tutorial assumes that |project_name| is installed in the users come directory.
 
 Once it has been downloaded, the working directory for srsRAN-matlab should be added to MATLAB's search path. This can be done from the MATLAB console with the following command:
 

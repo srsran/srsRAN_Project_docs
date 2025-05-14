@@ -7,12 +7,12 @@ srsRAN gNB Handover
 
 .. note:: 
 
-  srsRAN Project 24.04 or later is required for this use case.  
+  |project_name| 24.04 or later is required for this use case.  
 
 Overview
 ********
 
-srsRAN Project 24.04 brings handover capabilities to the code base. These features enable Intra-gNB handover, i.e. handover cells connected to the same CU-CP. This allows the UE to move between 
+|project_name| 24.04 brings handover capabilities to the code base. These features enable Intra-gNB handover, i.e. handover cells connected to the same CU-CP. This allows the UE to move between 
 two cells, handover can be triggered manually via the command line or automatically by physically moving the UE. 
 
 In practice this is enabled by creating two cells within a DU within the srsRAN gNB binary. This requires using a USRP that has two independent RF chains. Each cell will be given an associated 
@@ -37,10 +37,10 @@ For this application note, the following hardware and software are used:
     - COTS UE (Fairphone 5)
 
 
-srsRAN Project
+|project_name|
 ==============
 
-If you have not already done so, install the latest version of srsRAN Project and all of its dependencies. This is outlined in the :ref:`Installation Guide <manual_installation>`. 
+If you have not already done so, install the latest version of |project_name| and all of its dependencies. This is outlined in the :ref:`Installation Guide <manual_installation>`. 
 
 X310 USRP
 =========
@@ -52,7 +52,7 @@ Not all dual channel USRPs have independent RF chains, this means that, for exam
 Open5GS
 =======
 
-For the purpose of this application note, we will use a dockerized Open5GS version provided in srsRAN Project at ``srsgnb/docker`` as the 5G Core.
+For the purpose of this application note, we will use a dockerized Open5GS version provided in |project_name| at ``srsgnb/docker`` as the 5G Core.
 
 Open5GS is a C-language Open Source implementation for 5G Core and EPC. The following links will provide you 
 with the information needed to download and set-up Open5GS so that it is ready to use with srsRAN: 
@@ -63,9 +63,9 @@ with the information needed to download and set-up Open5GS so that it is ready t
 COTS UE
 =======
 
-A 5G SA capable COTS UE is used for this tutorial, specifically the `Fairphone 5 <https://shop.fairphone.com/fairphone-5#section5>`_. A detailed list of COTS UEs that have been tested with srsRAN Project can be found :ref:`here <cots_ues>`.
+A 5G SA capable COTS UE is used for this tutorial, specifically the `Fairphone 5 <https://shop.fairphone.com/fairphone-5#section5>`_. A detailed list of COTS UEs that have been tested with |project_name|  can be found :ref:`here <cots_ues>`.
 
-For more information on connecting a COTS UEs to srsRAN Project, see the :ref:`full tutorial <COTS_UE_tutorial>`. 
+For more information on connecting a COTS UEs to |project_name|, see the :ref:`full tutorial <COTS_UE_tutorial>`. 
 
 ------
 
@@ -73,7 +73,7 @@ For more information on connecting a COTS UEs to srsRAN Project, see the :ref:`f
 Configuration
 *************
 
-To configure srsRAN Project to enable handover between cells, the following steps must be taken: 
+To configure |project_name| to enable handover between cells, the following steps must be taken: 
 
   - Add the two cells to the ``cells`` list 
   - Update the ``cu_cp`` ``mobility`` options 

@@ -191,7 +191,7 @@ Also pay attention to the ``sync_scheme_params`` property:
 
 Property ``sync_source`` should be configured to use PTP.
 
-If the RSRP detected by the UE is low, is possible to increase it by updating ``dl_amplitude_scale`` property. Check Picocom documentation for valid values. For reference, srsRAN Project uses the following by default:
+If the RSRP detected by the UE is low, is possible to increase it by updating ``dl_amplitude_scale`` property. Check Picocom documentation for valid values. For reference, |project_name| uses the following by default:
 
 .. code-block:: json
 

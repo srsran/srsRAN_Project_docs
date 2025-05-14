@@ -9,13 +9,13 @@ srsRAN gNB with COTS UEs
 Overview
 ********
 
-This tutorial demonstrates how to configure and connect a 5G capable COTS UE to a 5G SA network using the srsRAN Project gNB and a 3rd-party 5G core (Open5GS in this example). 
+This tutorial demonstrates how to configure and connect a 5G capable COTS UE to a 5G SA network using |project_name| and a 3rd-party 5G core (Open5GS in this example). 
 
-To connect a COTS UE to a 5G network using the srsRAN Project gNB users will need the following requirements: 
+To connect a COTS UE to a 5G network using |project_name| users will need the following requirements: 
  
     - A PC with a linux based OS 
-    - srsRAN Project CU/DU
-    - RF-frontend compatible with srsRAN Project
+    - |project_name|  CU/DU
+    - RF-frontend compatible with |project_name|
     - A third-party 5G Core 
     - A 5G SA capable COTS UE 
     - A test USIM/ISIM/SIM card (must be a test sim or programmable card with known keys)
@@ -24,7 +24,7 @@ To connect a COTS UE to a 5G network using the srsRAN Project gNB users will nee
 This specific implementation uses the following: 
 
     - Dell XPS-13 (Intel i7-10510U CPU) with Ubuntu 20.04
-    - srsRAN Project CU/DU
+    - |project_name|  CU/DU
     - B210 USRP
     - Open5GS 5G Core 
     - OnePlus 8T
@@ -42,7 +42,7 @@ Open5GS
 For this example we are using Open5GS as the 5G Core. 
 
 Open5GS is a C-language Open Source implementation for 5G Core and EPC. The following links will provide you 
-with the information needed to download and set-up Open5GS so that it is ready to use with the srsRAN Project gNB: 
+with the information needed to download and set-up Open5GS so that it is ready to use with |project_name|: 
 
     - `GitHub <https://github.com/open5gs/open5gs>`_ 
     - `Quickstart Guide <https://open5gs.org/open5gs/docs/guide/01-quickstart/>`_
@@ -51,7 +51,7 @@ with the information needed to download and set-up Open5GS so that it is ready t
 COTS UE
 =======
 
-You should make sure your device is capable of operating in 5G SA mode and that it operates in the bands supported by the srsRAN Project gNB. 
+You should make sure your device is capable of operating in 5G SA mode and that it operates in the bands supported by |project_name|. 
 
 External Clock
 ==============
@@ -135,7 +135,7 @@ To configure the connection between the core and the gNB, you need to set the AM
 
 .. note:: 
 
-    srsRAN Project supports all NR bands up to Rel. 17. Not all BWs are supported in all bands, to confirm that your configuration is correct, you should 
+    |project_name| supports all NR bands up to Rel. 17. Not all BWs are supported in all bands, to confirm that your configuration is correct, you should 
     reference *Table 5.3.5-1* in `TS 38.104 <https://www.etsi.org/deliver/etsi_ts/138100_138199/138104/16.06.00_60/ts_138104v160600p.pdf>`_.
 
 ISIM

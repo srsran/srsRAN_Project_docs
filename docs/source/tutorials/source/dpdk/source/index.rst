@@ -293,7 +293,7 @@ This configuration tells DPDK that EAL threads [0 - 1] should use cores [0 - 23]
 Running srsRAN with DPDK 
 ************************
 
-Once DPDK has been installed and configured you will need to create a clean build of srsRAN Project to enable the use of DPDK. 
+Once DPDK has been installed and configured you will need to create a clean build of |project_name| to enable the use of DPDK. 
 
 If you have not done so already, download the code-base with the following command: 
 

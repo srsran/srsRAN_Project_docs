@@ -1,5 +1,5 @@
-The PHY components of srsRAN Project are tested by feeding each component with vectors of input data and
-comparing the resulting output with their expected values. In srsRAN Project, the test vectors for a
+The PHY components of |project_name| are tested by feeding each component with vectors of input data and
+comparing the resulting output with their expected values. In |project_name|, the test vectors for a
 PHY component usually consist of a number of binary files with input and output data, and a single shared header file 
 that describes the test set-up and the content of the binary files. The binary files are packed in a single tarball.
 For example, the test vectors of the channel estimator are provided by the files ``port_channel_estimator_test_data.h`` and
@@ -29,7 +29,7 @@ generated with the following command:
    runSRSRANUnittest('port_channel_estimator', 'testvector')
 
 Once the test vectors have been generated, the pairs of ``.h`` and ``tar.gz`` files in the ``testvector_outputs`` folder
-can be transferred to the srsRAN Project folder with the MATLAB command:
+can be transferred to |project_name| folder with the MATLAB command:
 
 .. code-block:: matlab
 
@@ -38,7 +38,7 @@ can be transferred to the srsRAN Project folder with the MATLAB command:
 This command will automatically copy all test vectors to the proper subdirectory inside ``~/srsRAN_Project/tests/unittests/phy``. 
 
 By default, executing ``runSRSRANUnittest`` will reproduce the same test vectors as the ones provided with
-the srsRAN Project repository. To generate a random set of vectors, we simply need to add the ``RandomShuffle``
+|project_name| repository. To generate a random set of vectors, we simply need to add the ``RandomShuffle``
 option. This can be done with the following command: 
 
 .. code-block:: matlab

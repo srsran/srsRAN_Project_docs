@@ -8,7 +8,7 @@ O-RAN NearRT-RIC and xApp
 Overview
 ********
 
-This application note shows how to use the E2 interface exposed by the srsRAN Project gNodeB and showcases its interoperability with third-party RIC frameworks.
+This application note shows how to use the E2 interface exposed by |project_name| gNodeB and showcases its interoperability with third-party RIC frameworks.
 For this purpose, we use `O-RAN Alliance <https://www.o-ran.org/>`_ compliant NearRT-RICs and xApps provided in `ORAN SC RIC <https://docs.o-ran-sc.org/en/latest/projects.html#near-realtime-ran-intelligent-controller-ric>`_ and `FlexRIC <https://gitlab.eurecom.fr/mosaic5g/flexric>`_ projects.
 
 Our E2 interface implementation is based on the following O-RAN technical specifications:
@@ -78,7 +78,7 @@ Specifically, the current E2 interface implementation supports only E2SM_KPM and
 Installation
 ************
 
-For the purpose of presenting the usage of E2 interface exposed by srsRAN Project gNodeB, we use the NearRT-RIC and an example KPM monitoring xApps from the ORAN SC RIC and FlexRIC frameworks.
+For the purpose of presenting the usage of E2 interface exposed by |project_name| gNodeB, we use the NearRT-RIC and an example KPM monitoring xApps from the ORAN SC RIC and FlexRIC frameworks.
 
 .. note::
 
@@ -163,7 +163,7 @@ with the information needed to download and set-up Open5GS so that it is ready t
     - `GitHub <https://github.com/open5gs/open5gs>`_ 
     - `Quickstart Guide <https://open5gs.org/open5gs/docs/guide/01-quickstart/>`_
 
-For the purpose of this application note, we will use a dockerized Open5GS version provided in srsRAN Project at ``srsgnb/docker``.
+For the purpose of this application note, we will use a dockerized Open5GS version provided in |project_name| at ``srsgnb/docker``.
 
 ZeroMQ
 ======
@@ -200,16 +200,16 @@ Second, install czmq:
   sudo make install
   sudo ldconfig
 
-Finally, you need to compile srsRAN Project and srsRAN 4G (assuming you have already installed all the required dependencies). 
+Finally, you need to compile |project_name| and srsRAN 4G (assuming you have already installed all the required dependencies). 
 
 .. note::
-  If you have already built and installed srsRAN 4G and srsRAN Project prior to installing ZMQ and other dependencies you will have to re-build both to ensure the ZMQ drivers have been recognized correctly. 
+  If you have already built and installed srsRAN 4G and |project_name| prior to installing ZMQ and other dependencies you will have to re-build both to ensure the ZMQ drivers have been recognized correctly. 
 
 
-srsRAN Project
+|project_name|
 ==============
 
-For srsRAN Project, the following commands can be used to download and build from source: 
+For |project_name|, the following commands can be used to download and build from source: 
 
 .. code-block:: bash
 
@@ -247,7 +247,7 @@ Configuration
 
 Here, we use ZMQ-based setup, and hence the configuration files are based on those introduced in :ref:`srsRAN gNB with srsUE<srsue_appnote>` application note.
 
-The following config files were modified to use ZMQ-based RF driver and enable E2 interface in the srsRAN Project gNodeB:
+The following config files were modified to use ZMQ-based RF driver and enable E2 interface in |project_name| gNodeB:
 
   * :download:`gNB config <.config/gnb_zmq.yaml>`
   * :download:`UE config <.config/ue_zmq.conf>`
@@ -309,14 +309,14 @@ The following order should be used when running the network:
 Open5GS Core
 ============
 
-srsRAN Project provides a dockerized version of the Open5GS. It is a convenient and quick way to start the core network. You can run it as follows:
+|project_name| provides a dockerized version of the Open5GS. It is a convenient and quick way to start the core network. You can run it as follows:
 
 .. code-block:: bash
 
   cd ./srsRAN_Project/docker
   docker compose up 5gc
 
-Note that we have already configured Open5GS to operate correctly with srsRAN Project gNB. Moreover, the UE database is populated with the credentials used by our srsUE. 
+Note that we have already configured Open5GS to operate correctly with |project_name|. Moreover, the UE database is populated with the credentials used by our srsUE. 
 
 NearRT-RIC
 ==========

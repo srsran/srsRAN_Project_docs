@@ -63,69 +63,7 @@ Installation
 ZeroMQ
 ======
 
-First thing is to install ZeroMQ and build srsRAN. On Ubuntu, ZeroMQ development libraries can be installed
-with:
-
-.. code-block:: bash
-
-  sudo apt-get install libzmq3-dev
-
-Alternatively, installing from sources can also be done.
-
-First, one needs to install libzmq:
-
-.. code-block:: bash
-
-  git clone https://github.com/zeromq/libzmq.git
-  cd libzmq
-  ./autogen.sh
-  ./configure
-  make
-  sudo make install
-  sudo ldconfig
-
-Second, install czmq:
-
-.. code-block:: bash
-
-  git clone https://github.com/zeromq/czmq.git
-  cd czmq
-  ./autogen.sh
-  ./configure
-  make
-  sudo make install
-  sudo ldconfig
-
-
-srsRAN Project gNB
-==================
-
-Once ZeroMQ is installed, you need to compile srsRAN (assuming you have already installed all the required dependencies).
-Note, if you have already built and installed srsRAN prior to installing ZMQ and other dependencies you
-will have to re-run the make command to ensure srsRAN recognizes the addition of ZMQ:
-
-.. code-block:: bash
-
-  git clone https://github.com/srsran/srsRAN_Project.git
-  cd srsRAN_Project
-  mkdir build
-  cd build
-  cmake ../ -DENABLE_EXPORT=ON -DENABLE_ZEROMQ=ON
-  make -j`nproc`
-
-ZeroMQ is disabled by default, this is enabled when running ``cmake`` by including ``-DENABLE_EXPORT=ON -DENABLE_ZEROMQ=ON``.
-
-Pay extra attention to the cmake console output. Make sure you read the following line:
-
-.. code-block:: bash
-
-  ...
-  -- FINDING ZEROMQ.
-  -- Checking for module 'ZeroMQ'
-  --   No package 'ZeroMQ' found
-  -- Found libZEROMQ: /usr/local/include, /usr/local/lib/libzmq.so
-  ...
-
+To install ZMQ, and build |project_name| such that it is recognized, see the :ref:`installation guide <manual_installation>`.
 
 Amarisoft UE
 ============
@@ -139,9 +77,10 @@ ZeroMQ driver for Amarisoft UE
 ==============================
 
 .. note::
-  These steps should only be completed **after** compiling srsRAN Project gNB as mentioned above, as they require the build files of srsRAN Project gNB and Amarisoft UHD RF frontend driver.
 
-Interfacing the Amarisoft UE with srsRAN Project requires a custom TRX driver implemented by SRS, which can be found in the srsRAN Project source files in ``srsRAN_Project/utils/trx_srsran``. 
+  These steps should only be completed **after** compiling |project_name| as mentioned above, as they require the build files of |project_name| and of the Amarisoft UHD RF frontend driver.
+
+Interfacing the Amarisoft UE with |project_name| requires a custom TRX driver implemented by SRS, which can be found in |project_name| source files in ``srsRAN_Project/utils/trx_srsran``. 
 
 The Amarisoft UE release folder, ``amarisoft.2023-02-06.tar.gz``, should contain a file called ``trx_uhd-linux-2023-02-06.tar.gz``. The release folder and the sub-file in question should be uncompressed before proceeding.
 
@@ -192,8 +131,8 @@ The following config files were modified to use ZMQ-based RF driver:
 Details of the modifications made are outlined in following sections.
 
 
-srsRAN Project gNB
-------------------
+|project_name|
+--------------
 
 Modify the ``amf`` within the ``cu_cp`` section with the IP of AMF and IP to which gNB needs to bind in order to connect to AMF. You will also need to define the TA list for the CU-cp:
 
@@ -306,8 +245,8 @@ Once the steps from the Open5GS Quickstart Guide are followed you do not need to
 making any changes to the config files.
 
 
-srsRAN Project gNB
-------------------
+|project_name|
+--------------
   
 Run the gNB from its build directory, using the configuration file provided: 
 
@@ -570,7 +509,7 @@ The following diagram presents the setup architecture:
 Configuration
 =============
 
-You can find the srsRAN Project gNB configuration file for this example in the ``configs`` folder of the srsRAN Project source files. You can also find it `here <https://github.com/srsran/srsRAN_Project/tree/main/configs>`_. 
+You can find a configuration file for this example in the ``configs`` folder of |project_name| source files. You can also find it `here <https://github.com/srsran/srsRAN_Project/tree/main/configs>`_. 
 
  
   * `gNB TDD band 78 config <https://github.com/srsran/srsRAN_Project/blob/main/configs/gnb_rf_b200_tdd_n78_20mhz.yml>`_
@@ -582,8 +521,8 @@ You can download the AmariUE configs here:
 
 Details of the modifications made compared to ZMQ setup are outlined in following sections.
 
-srsRAN Project gNB
-------------------
+|project_name|
+--------------
 
 Modify the ``ru_sdr`` section to send and receive radio samples via UHD driver:
 
@@ -640,7 +579,7 @@ And the tx timing offset:
     ...
   }],
   ...
-}
+  }
 
 Make sure the CELL_BANDWIDTH matches that on gNB configuration file:
 
@@ -671,8 +610,8 @@ Open5gs 5G Core
 Running the 5GC is same as in the ZMQ based setup.
 
 
-srsRAN Project gNB
-------------------
+|project_name|
+--------------
 
 Let's now launch the gNB from its build directory.
 
@@ -914,7 +853,7 @@ Troubleshooting
 ZMQ setup
 =========
 
-Amarisoft UE in ZMQ based setup may not connect to srsRAN Project gNB if the time between gNB bring up and UE bring up too large. So its advised to run immediately after running gNB for better results.
+Amarisoft UE in ZMQ based setup may not connect to |project_name| if the time between gNB bring up and UE bring up too large. So its advised to run immediately after running gNB for better results.
 
 Reference clock for over-the-air
 ================================
