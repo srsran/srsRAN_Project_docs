@@ -17,4 +17,4 @@ For issues or fixes that could potentially affect software security, please use 
 Support
 *******
 
-For support and help using srsRAN Project, check out the community driven `discussion forum <https://github.com/srsran/srsRAN_Project/discussions>`_.
+For support and help using |project_name|, check out the community driven `discussion forum <https://github.com/srsran/srsRAN_Project/discussions>`_.
