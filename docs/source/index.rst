@@ -1,29 +1,29 @@
 
-srsRAN Project Documentation
+|project_name| Documentation
 #############################
 
 .. image:: .imgs/srsran_arch_5g.png
 
 .. meta::
     :description lang=en:
-        Documentation for srsRAN Project.
+        Documentation for |project_name|.
 
-The srsRAN Project is an open-source 5G CU/DU from `SRS <https://www.srs.io>`_.
+|project_name| is an open-source 5G CU/DU from `SRS <https://www.srs.io>`_.
 
-It is a complete RAN solution compliant with 3GPP and O-RAN Alliance specifications. The srsRAN Project includes the full L1/2/3 stack with minimal external dependencies. The software is portable across processor architectures and
+It is a complete RAN solution compliant with 3GPP and O-RAN Alliance specifications. |project_name|  includes the full L1/2/3 stack with minimal external dependencies. The software is portable across processor architectures and
 scalable from low-power embedded systems to cloudRAN, providing a powerful platform for mobile wireless research and development.
 
-Get started with the srsRAN Project:
+Get started with |project_name| :
 
-   - :ref:`Install<manual_installation>` srsRAN Project on your computer.
-   - Get up and running with srsRAN Project :ref:`here<manual_running>`.
+   - :ref:`Install<manual_installation>` |project_name| on your computer.
+   - Get up and running with |project_name| :ref:`here<manual_running>`.
    - More advanced users should read the :ref:`Developers Guide <dev_guide>`.
    - Get up to speed on 5G and OpenRAN with our :ref:`Knowledge Base <knowledge_base>`.
 
 Useful resources:
 
-    * The srsRAN Project `source code <https://github.com/srsran/srsRAN_project>`_.
-    * Explore the srsRAN Project `Discussions <https://github.com/srsran/srsran_project/discussions>`_ for news and user support.
+    * |project_name|  `source code <https://github.com/srsran/srsRAN_project>`_.
+    * Explore the |project_name|  `Discussions <https://github.com/srsran/srsran_project/discussions>`_ for news and user support.
     * Discover the `srsRAN Enterprise solution <https://srs.io/srsran-enterprise-5g/>`_ for Private 5G network deployments.
 
 ----
@@ -32,7 +32,6 @@ Useful resources:
    :maxdepth: 1
    :caption: General
 
-   general/source/1_getting_started.rst
    general/source/2_features_and_roadmap.rst
    general/source/3_contributions.rst
    general/source/4_reporting.rst
