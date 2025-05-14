@@ -3,7 +3,7 @@
 COTS UEs
 ########
 
-This section of our knowledge base aims to list all COTS UEs known to be working with the srsRAN Project gNB including tested bands and configurations.
+This section of our knowledge base aims to list all COTS UEs known to be working with |project_name| including tested bands and configurations.
 
 ----
 
@@ -12,7 +12,7 @@ This section of our knowledge base aims to list all COTS UEs known to be working
 Tested COTS UEs
 ***************
 
-This is a list of COTS UEs that have been confirmed to be working with the srsRAN Project gNB tested by SRS.
+This is a list of COTS UEs that have been confirmed to be working with |project_name| tested by SRS.
 
 .. csv-table:: SRS tested COTS UEs
     :file: .csv/cots_ues - srs_tested.csv
@@ -26,7 +26,7 @@ This is a list of COTS UEs that have been confirmed to be working with the srsRA
 User reported working UEs
 *************************
 
-This is a list of COTS UEs that have been reported to be working with the srsRAN Project gNB by users.
+This is a list of COTS UEs that have been reported to be working with |project_name| by users.
 
 .. csv-table:: User reported COTS UEs
     :file: .csv/cots_ues - user_reported.csv

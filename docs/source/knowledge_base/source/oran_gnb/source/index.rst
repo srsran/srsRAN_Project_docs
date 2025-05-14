@@ -97,12 +97,12 @@ Split 7.2 moves to low PHY out to the RU , while Split 8 keeps it within the DU-
 To be O-RAN compliant a gNB must implement the CU and DU as shown above, while also having support for the interfaces needed for the nearRT-RIC, nonRT-RIC, 
 and the RU and RU. 
 
-srsRAN Project gNB
-******************
+|project_name|
+**************
 
-The srsRAN Project gNB is fully O-RAN compliant. While users will still be able to stand up a monolithic gNodeB on a single machine in minutes, our new gNB will also eventually 
+|project_name| is fully O-RAN compliant. While users will still be able to stand up a monolithic gNodeB on a single machine in minutes, our new gNB will also eventually 
 enable users to distribute the RAN functionality across the machines and geography of their choice. All of the elements in the blue shaded area 
-above are implemented in the srsRAN Project gNB, along with all of the interfaces. This allows users to easily use third party RICs, PHY solutions and other O-RAN compliant 
+above are implemented in |project_name|, along with all of the interfaces. This allows users to easily use third party RICs, PHY solutions and other O-RAN compliant 
 hardware and applications with the gNB.
 
 Further Reading
