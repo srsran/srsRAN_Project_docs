@@ -1,6 +1,6 @@
-If srsRAN Project has been installed using ``sudo make install`` or installed from packages then you will be able to run the gNB from anywhere on your machine. 
+If |project_name| has been installed using ``sudo make install`` or installed from packages then you will be able to run the gNB from anywhere on your machine. 
 
-If you built srsRAN Project from source and have not installed it, then you can run the gNB from: ``/srsRAN_Project/build/apps/gnb``. In this folder you will find the gNB application binary. 
+If you have built |project_name| from source and have not installed it, then you can run the gNB from: ``/srsRAN_Project/build/apps/gnb``. In this folder you will find the gNB application binary. 
 
 Run the gNB as follows, passing the YAML configuration file:  
 
@@ -10,7 +10,7 @@ Run the gNB as follows, passing the YAML configuration file:
    
 Run the gNB with ``sudo`` to ensure threads are configured with the correct priority. 
 
-Example configuration files can be found in the ``configs/`` folder in the srsRAN Project codebase. For more information on the configuration files and the available parameters see the :ref:`configuration reference <manual_config_ref>`.
+Example configuration files can be found in the ``configs/`` folder in |project_name| codebase. For more information on the configuration files and the available parameters see the :ref:`configuration reference <manual_config_ref>`.
 
 When running, the gNB should generate the following console output:
 

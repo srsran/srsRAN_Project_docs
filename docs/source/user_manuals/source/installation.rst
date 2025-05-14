@@ -3,7 +3,7 @@
 Installation Guide
 ##################
 
-The following steps need to be taken in order to download and build the srsRAN Project:
+The following steps need to be taken in order to download and build |project_name|:
 
     1. Install dependencies
     2. Install RF driver (only required for Split 8 deployments)
@@ -14,19 +14,19 @@ The following steps need to be taken in order to download and build the srsRAN P
 
 .. note:: 
 
-    srsRAN Project requires a Linux-based OS, we recommend Ubuntu (22.04 or later).
+    |project_name| requires a Linux-based OS, we recommend Ubuntu (22.04 or later).
 
 .. _manual_installation_dependencies: 
 
 Build Tools and Dependencies
 ****************************
 
-The srsRAN Project uses CMake and C++17. We recommend the following build tools:
+|project_name| uses CMake and C++17. We recommend the following build tools:
 
     - `cmake <https://cmake.org/>`_
     - `gcc <https://gcc.gnu.org/>`_ (v11.4.0 or later) **OR** `Clang <https://clang.llvm.org/>`_ (v14.0.0 or later)
 
-The srsRAN Project has the following necessary dependencies: 
+|project_name| has the following necessary dependencies: 
 
     - `libfftw <https://www.fftw.org/>`_
     - `libsctp <https://github.com/sctp/lksctp-tools>`_
@@ -71,7 +71,7 @@ RF-drivers
 
     UHD and/or ZMQ are only required for Split 8 deployments, if you are planning on using a Split 7.2 deployment you may skip this step. 
 
-The srsRAN Project uses RF drivers to support different radio types. Currently, only UHD and ZMQ are supported:
+|project_name| uses RF drivers to support different radio types. Currently, only UHD and ZMQ are supported:
 
 .. _Drivers:
 
@@ -85,7 +85,7 @@ The srsRAN Project uses RF drivers to support different radio types. Currently, 
 Clone and Build
 ***************
 
-srsRAN Project can be built with certain features enabled or disabled. This is done during the build process by using CMake flags and/or by downloading third party dependencies prior to building the code. The following sections outline these various build options. 
+|project_name| can be built with certain features enabled or disabled. This is done during the build process by using CMake flags and/or by downloading third party dependencies prior to building the code. The following sections outline these various build options. 
 
 .. tabs:: 
 
@@ -105,20 +105,20 @@ srsRAN Project can be built with certain features enabled or disabled. This is d
 
       .. include:: installation_zmq.rst 
 
-The :ref:`Running srsRAN Project <manual_running>` section of the documentation further discusses how to configure and run the gNB application. 
+The :ref:`Running |project_name| <manual_running>` section of the documentation further discusses how to configure and run the gNB application. 
 
 ----
 
 Packages
 ********
 
-srsRAN Project is available to download directly from packages for various linux distributions. Users looking for a simple installation who do not wish to edit the source code should use the package installation.
+|project_name| is available to download directly from packages for various linux distributions. Users looking for a simple installation who do not wish to edit the source code should use the package installation.
 
 .. tabs:: 
 
     .. tab:: Ubuntu 
 
-        Ubuntu users can download the srsRAN Project packages using the following commands: 
+        Ubuntu users can download |project_name| packages using the following commands: 
 
         .. code-block:: bash
 
@@ -128,15 +128,15 @@ srsRAN Project is available to download directly from packages for various linux
 
     .. tab:: Arch Linux
 
-        Arch Linux users can download the srsRAN Project packages using an AUR helper, e.g. 'yay', using the following command: 
+        Arch Linux users can download |project_name| packages using an AUR helper, e.g. 'yay', using the following command: 
 
         .. code-block:: bash
 
             yay -Sy srsran-project-git
 
-This will install the latest version of srsRAN Project from git. 
+This will install the latest version of |project_name| from git. 
 
-When installed from packages, srsRAN Project example configs can be found in ``/usr/share/srsran``. For info on these config files, see :ref:`here <manual_config_ref>`
+When installed from packages, example configs for |project_name| can be found in ``/usr/share/srsran``. For info on these config files, see :ref:`here <manual_config_ref>`
 
 The application can then be run using: 
 
@@ -165,6 +165,6 @@ The following steps are required to enable them:
 
     cmake -B build -DUSE_PHY_TESTVECTORS=ON
 
-4. Rebuild srsRAN Project. 
+4. Rebuild |project_name|. 
 
 

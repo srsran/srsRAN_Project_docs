@@ -1,20 +1,20 @@
 .. _manual_running:
 
-Running srsRAN Project
+Running |project_name|
 ######################
 
 .. note:: 
 
-   This guide outlines running srsRAN Project applications in a Split 8 deployment with a USRP, for Split 7.2 deployments see :ref:`here <oran_ru_tutorial>`. 
+   This guide outlines running |project_name| applications in a Split 8 deployment with a USRP, for Split 7.2 deployments see :ref:`here <oran_ru_tutorial>`. 
 
 Baseline Requirements
 *********************
 
-To successfully run an end-to-end network the srsRAN Project applications you will need the following: 
+To successfully run an end-to-end network |project_name| applications you will need the following: 
 
     - A PC with a Linux based OS (Ubuntu 22.04 or later)
     - A USRP device
-    - srsRAN Project (see the :ref:`Installation Guide <manual_installation_build>`)
+    - |project_name| (see the :ref:`Installation Guide <manual_installation_build>`)
     - A 3rd-party 5G core (we recommend `Open5GS <https://github.com/open5gs/open5gs>`_)
     - A 3rd-party 5G UE
 
@@ -30,7 +30,7 @@ This is discussed further in the relevant tutorial.
 System Preparation
 ******************
 
-Before running any of the srsRAN Project applications, we recommend tuning your system for best performance. We provide a script to configure known performance parameters:
+Before running any of |project_name| applications, we recommend tuning your system for best performance. We provide a script to configure known performance parameters:
 
    - `srsRAN performance script <https://github.com/srsran/srsRAN_Project/tree/main/scripts/srsran_performance>`_
 
@@ -48,7 +48,7 @@ Run the script as follows from the main project folder:
 
 ----
 
-Running srsRAN Project
+Running |project_name|
 **********************
 
 .. tabs:: 
@@ -65,4 +65,4 @@ Running srsRAN Project
 
       .. include:: running_du.rst 
 
-For more information on running srsRAN Project, and configuring for various use-cases see the :ref:`full list of tutorials <tutorials>`.  
+For more information on running |project_name|, and configuring for various use-cases see the :ref:`full list of tutorials <tutorials>`.  

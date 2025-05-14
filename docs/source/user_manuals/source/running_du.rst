@@ -1,6 +1,6 @@
-If srsRAN Project has been installed using ``sudo make install`` or installed from packages then you will be able to run srsDU from anywhere on your machine. 
+If |project_name| has been installed using ``sudo make install`` or installed from packages then you will be able to run srsDU from anywhere on your machine. 
 
-If you built srsRAN Project from source and have not installed it, then you can run srsDU from: ``/srsRAN_Project/build/apps/du``. In this folder you will find the srsDU application binary. 
+If you have built |project_name| from source and have not installed it, then you can run srsDU from: ``/srsRAN_Project/build/apps/du``. In this folder you will find the srsDU application binary. 
 
 Run srsDU as follows, passing the YAML configuration file:  
 
@@ -10,7 +10,7 @@ Run srsDU as follows, passing the YAML configuration file:
    
 Run srsDU with ``sudo`` to ensure threads are configured with the correct priority. 
 
-Example configuration files can be found in the ``configs/`` folder in the srsRAN Project codebase. For more information on the configuration files and the available parameters see the :ref:`configuration reference <manual_config_ref>`.
+Example configuration files can be found in the ``configs/`` folder in |project_name| codebase. For more information on the configuration files and the available parameters see the :ref:`configuration reference <manual_config_ref>`.
 
 When running, srsDU should generate the following console output:
 

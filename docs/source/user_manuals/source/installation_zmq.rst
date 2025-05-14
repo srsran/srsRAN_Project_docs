@@ -30,11 +30,11 @@ Second, install czmq:
   sudo make install
   sudo ldconfig
 
-Finally, you need to compile srsRAN Project (assuming you have already installed all the required dependencies). 
+Finally, you need to compile |project_name| (assuming you have already installed all the required dependencies). 
 
 .. note:: 
     
-    If you have already built and installed srsRAN Project prior to installing ZMQ and other dependencies you will have to re-build to ensure the ZMQ drivers have been recognized correctly. 
+    If you have already built and installed |project_name| prior to installing ZMQ and other dependencies you will have to re-build to ensure the ZMQ drivers have been recognized correctly. 
 
 The following commands can be used to clone and build from source: 
 

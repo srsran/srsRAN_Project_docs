@@ -6,7 +6,7 @@ Outputs
 Logs
 ****
 
-The srsRAN Project gNB application provides a highly configurable logging mechanism, with per-layer and per-component log levels. Set the log file path and log levels in the gNB config 
+|project_name| provides users with a highly configurable logging mechanism, with per-layer and per-component log levels. Set the log file path and log levels in the gNB config 
 file. See the :ref:`Configuration Reference<manual_config_ref>` for more details.
 
 The format used for all log messages is as follows:
@@ -62,11 +62,12 @@ An example log file excerpt can be seen below:
 PCAPs
 *****
 
-The srsRAN Project gNB can output PCAPs at the following layers: 
+|project_name| can output PCAPs at the following layers: 
 
   - MAC
+  - RLC
   - NGAP
-  - GTP-U
+  - N3
   - E1AP
   - F1AP
   - E2AP
@@ -110,10 +111,10 @@ To analyze an NGAP-layer PCAP using Wireshark, you will need to configure User D
 
 .. image:: .imgs/ngap_pcap.png
 
-GTP-U
+N3
 =====
 
-To analyze a GTP-U PCAP using Wireshark, you will need to configure User DLT 156 for GTP:
+To analyze a N3 PCAP using Wireshark, you will need to configure User DLT 156 for GTP:
 
   #. Go to Edit->Preferences->Protocols->DLT_USER->Edit and add an entry with DLT=156 and Payload Protocol=gtp.
 
@@ -155,7 +156,7 @@ To analyze an E2AP PCAP using Wireshark, you will need to configure User DLT 155
 JSON Metrics
 ************
 
-srsRAN Projects supports the reporting of the console metrics to a JSON file over UDP socket. This is used to generate the output seen in the :ref:`GrafanaGUI <grafana_gui>`. 
+|project_name| supports the reporting of the console metrics to a JSON file over UDP socket. This is used to generate the output seen in the :ref:`GrafanaGUI <grafana_gui>`. 
 
 The metrics can be received and written to a file using a Python script. To do this a Python UDP receiver is needed. 
 

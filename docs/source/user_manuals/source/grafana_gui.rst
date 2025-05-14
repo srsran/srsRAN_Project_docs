@@ -7,8 +7,8 @@ Grafana Metrics GUI
 
     The GrafanaGUI works with both the monolithic gNB and srsDU applications. The configuration changes required are the same for both applications. 
 
-srsRAN allows the reporting and visualization of the CU/DU metrics to a `Grafana <https://grafana.com/oss/grafana/>`_ WebUI. This is done through the use 
-of a `Docker <https://www.docker.com/>`_ container that comes as standard with the srsRAN code base, located in the ``~/srsRAN/docker/`` folder. This container allows users 
+|project_name| allows the reporting and visualization of the CU/DU metrics to a `Grafana <https://grafana.com/oss/grafana/>`_ WebUI. This is done through the use 
+of a `Docker <https://www.docker.com/>`_ container that comes as standard with the srsRAN code base, located in the ``docker/`` folder. This container allows users 
 to bring up the Grafana dashboard in a single command. 
 
 **Further Reading:**
@@ -20,7 +20,7 @@ to bring up the Grafana dashboard in a single command.
 Configuration
 *************
 
-To use the Grafana webUI, you will first need to have Docker installed on your system, you will also need to modify the srsRAN gNB or DU configuration file to allow the 
+To use the Grafana webUI, you will first need to have Docker installed on your system, you will also need to modify the gNB or DU configuration file to allow the 
 reporting of the metrics to the necessary JSON format for use in the webUI. 
 
 Docker
@@ -34,10 +34,10 @@ the `Docker documentation <https://docs.docker.com/desktop/install/linux-install
 
     We recommend using a Docker Compose V2 or later. 
 
-srsRAN
-======
+|project_name|
+==============
 
-To enable the correct reporting of metrics to the Grafana UI, the srsRAN gNB or DU configuration files needs to be updated to allow the metrics to be output in the correct JSON format and then sent through a udp-socket to the metrics-server,
+To enable the correct reporting of metrics to the Grafana UI, the gNB or DU configuration files needs to be updated to allow the metrics to be output in the correct JSON format and then sent through a udp-socket to the metrics-server,
 where it can be parsed and displayed correctly by the GUI.
 
 .. code-block:: yaml
@@ -47,7 +47,7 @@ where it can be parsed and displayed correctly by the GUI.
         addr: 172.19.1.4                # Metrics-server IP
         port: 55555                     # Metrics-server Port
 
-The ``addr`` and ``port`` values defined above mirror those set in the ``docker-compose.yml`` file found in ``~/srsRAN_Project/docker``. Any changes in these values must be kept consistent across both files. 
+The ``addr`` and ``port`` values defined above mirror those set in the ``docker-compose.yml`` file found in the ``/docker`` folder. Any changes in these values must be kept consistent across both files. 
 
 -----
 
@@ -72,7 +72,7 @@ The following output should be observed:
 
 Navigating to http://localhost:3300/ in your preferred web browser will allow you to view the UI. 
 
-You can then run srsRAN as normal. As the UE(s) connect to the network you will begin to see an output for each. These figures and graphics will update automatically during runtime, showing plots for each 
+You can then run |project_name| as normal. As the UE(s) connect to the network you will begin to see an output for each. These figures and graphics will update automatically during runtime, showing plots for each 
 UE on the network. 
 
 -----

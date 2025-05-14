@@ -3,7 +3,7 @@
 Console Reference
 #################
 
-Both the gNB and DU applications run in the console. When running, type ``t`` in the console to enable the metrics trace.
+|project_name| can output metrics to command line while running, to enable this, type ``t`` in the console.
 
 A sample output showing bi-directional traffic can be seen here:
 

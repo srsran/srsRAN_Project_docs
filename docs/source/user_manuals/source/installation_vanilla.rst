@@ -1,4 +1,4 @@
-First, clone the srsRAN Project repository: 
+First, clone |project_name| repository: 
 
 .. code-block:: bash
 
@@ -15,7 +15,7 @@ Then build the code-base:
     make -j $(nproc)
     make test -j $(nproc) 
 
-You can now run the gNB from ``srsRAN_Project/build/apps/gnb/``. If you wish to install the srsRAN Project gNB, you can use the following command: 
+You can now run the gNB from ``srsRAN_Project/build/apps/gnb/``. If you wish to install |project_name|, you can use the following command: 
 
 .. code-block:: bash
 
