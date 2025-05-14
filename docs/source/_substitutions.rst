@@ -1,0 +1,1 @@
+.. |project_name| replace:: srsRAN Project 

@@ -349,4 +349,9 @@ texinfo_documents = [
 todo_include_todos = True
 
 # Include numbers in figures
-#numfig = True
+numfig = True
+
+# -- Replace Project Name -------------------------------------------
+
+with open('_substitutions.rst') as f:
+    rst_prolog = f.read()
