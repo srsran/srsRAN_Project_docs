@@ -61,7 +61,7 @@ The following excerpt shows how the DU is configured to communicate with the RU 
     compr_bitwidth_prach: 9              # PRACH IQ samples bitwidth after compression.
     enable_ul_static_compr_hdr: false    # Configures if the compression header is present for uplink User-Plane messages (false) or not present (true).
     enable_dl_static_compr_hdr: false    # Configures if the compression header is present for downlink User-Plane messages (false) or not present (true).
-    iq_scaling: 5.5                      # IQ samples scaling factor applied before compression, 5.5 for RAN550, 20 for RAN650.
+    iq_scaling: 20                       # IQ samples scaling factor applied before compression.
     cells:
       - network_interface: enp1s0f0      # Ethernet interface name used to communicate with the RU.
         ru_mac_addr: 70:b3:d5:e1:5b:06   # RU MAC address.
@@ -71,6 +71,13 @@ The following excerpt shows how the DU is configured to communicate with the RU 
         prach_port_id: [4, 5]            # PRACH eAxC port value.
         dl_port_id: [0, 1, 2, 3]         # Downlink eAxC port values.
         ul_port_id: [0, 1]               # Uplink eAxC port values.
+  cell_cfg:
+    prach:
+      prach_root_sequence_index: 1
+      prach_config_index: 159
+      zero_correlation_zone: 0
+    ssb:
+      ssb_block_power_dbm: 0 # 0 for RAN650 with 37dBm Tx power, -11 for RAN550 with 24dBm Tx power
 
 To expand on this, the following parameters are set in the ``cells`` field:
 
