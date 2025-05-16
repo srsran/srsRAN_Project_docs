@@ -118,6 +118,11 @@ PTP configuration
 
 PTP is used to synchronize the DU with the fronthaul switch. The PTP process should be running on the DU and the PTP sync should be checked to ensure it is synchronized correctly.
 ptp4l and phc2sys are the two main components of the PTP synchronization with linuxptp. To avoid any issues with the PTP, it is recommended to disable the Network Time Protocol (NTP) on the DU.
+Use the following command to disable NTP on Ubuntu 22.04:
+
+.. code-block:: bash
+
+   sudo timedatectl set-ntp false
 
 We have created an example configuration file for G.8275.1 Multicast PTP profile for LinuxPTP version 4. It can be downloaded :download:`here <.configs/srs-linuxptp.cfg>`.
 
