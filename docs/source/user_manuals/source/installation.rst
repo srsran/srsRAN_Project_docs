@@ -105,7 +105,7 @@ Clone and Build
 
       .. include:: installation_zmq.rst 
 
-The :ref:`Running |project_name| <manual_running>` section of the documentation further discusses how to configure and run the gNB application. 
+The :ref:`Running srsRAN <manual_running>` section of the documentation further discusses how to configure and run the gNB application. 
 
 ----
 
