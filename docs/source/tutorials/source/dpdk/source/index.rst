@@ -155,11 +155,12 @@ Configuring DPDK
 Configure Hugepages
 ===================
 
-DPDK requires ``hugepages`` to be configured to run correctly. THe ``dpdk-hugepages.py`` helper script can be used to configure this correctly:
+DPDK requires ``hugepages`` to be configured to run correctly. The ``dpdk-hugepages.py`` helper script can be used to configure this correctly. We recommend to use 2GB of the 2G hugepages for the
+CU/DU running a single sector 4x2 100MHz. If you run more sectors, you will need to increase the amount of hugepages.
 
 .. code-block:: bash
 
-   sudo ./dpdk-hugepages.py -p 1G --setup 8G
+   sudo ./dpdk-hugepages.py -p 1G --setup 2G
 
 To make these changes persistent across boot-cycles, run the following: 
 
@@ -199,7 +200,7 @@ You should see an output similar to the following:
 
    cat /proc/cmdline
    
-   BOOT_IMAGE=/vmlinuz-5.15.0-1037-realtime root=/dev/mapper/ubuntu--vg-ubuntu--lv quiet splash intel_iommu=on iommu=pt hugepagesz=1G hugepages=8 hugepagesz=2M hugepages=0 default_hugepagesz=1G
+   BOOT_IMAGE=/vmlinuz-5.15.0-1082-realtime root=/dev/mapper/ubuntu--vg-ubuntu--lv quiet splash intel_iommu=on iommu=pt hugepagesz=1G hugepages=2 default_hugepagesz=1G
 
    cat /proc/meminfo
    
