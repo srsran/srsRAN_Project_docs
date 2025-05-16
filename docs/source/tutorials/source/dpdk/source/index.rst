@@ -1,4 +1,4 @@
-.. _dpdk: 
+.. _dpdk_tutorial: 
 
 srsRAN gNB with DPDK
 ####################

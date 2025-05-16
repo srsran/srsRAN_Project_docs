@@ -157,12 +157,12 @@ Reboot the system after the installation is complete. For more information, refe
 3. Install TuneD
 ================
 
-For performance tuning using TuneD, refer to the :ref:`srsRAN Performance Tuning Guide <_tuning>` in our documentation.
+For performance tuning using TuneD, refer to the :ref:`srsRAN Performance Tuning Guide <tuning>` in our documentation.
 
 4. Install DPDK
 ===============
 
-For DPDK installation instructions, refer to the :ref:`srsRAN documentation <_dpdk>`.
+For DPDK installation instructions, refer to the :ref:`DPDK guide <dpdk_tutorial>`.
 
 ----------
 
