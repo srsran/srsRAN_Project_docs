@@ -31,11 +31,10 @@ CU/DU
   In earlier versions we've provided config examples for long and short PRACH format.
   This is not longer required and all default configs now use the short PRACH format.
 
-Sample configuration files for the DU can be downloaded from here
-
-- `4x2 MIMO configuration with 100 MHz bandwidth and using a short PRACH format <https://github.com/srsran/srsRAN_Project/blob/main/configs/gnb_ru_ran550_tdd_n78_100mhz_4x2.yml>`_
+Sample configuration files for the DU can be found in the ``configs`` folder of the srsRAN source files. 
 
 These configurations are **specific** to the firmware version of the RU. For this guide we've used:
+
 - RAN550_1_v1.4.1-NM-25fa970 for the RAN550
 - RAN650_1_v1.4.0-NM-5561771 for the RAN650
 
