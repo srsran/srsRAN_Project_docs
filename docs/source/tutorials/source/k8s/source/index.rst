@@ -68,7 +68,7 @@ A basic understanding of Kubernetes and Helm is assumed.
 CU/DU
 =====
 
-The CU/DU is provided by the srsRAN Project gNB. The Open Fronthaul (OFH) Library offers
+The CU/DU is provided by the |project_name| gNB. The Open Fronthaul (OFH) Library offers
 the required interface between the DU and the RU.
 
 RU
@@ -170,7 +170,7 @@ Set Up PTP Synchronization
 **************************
 
 PTP synchronization can be established using tools like `ptp4l`, `ts2phc`, and `phc2sys`. These tools can be deployed
-using the srsRAN Project `linuxptp` Helm chart. As a first step, install the srsRAN Project Helm repository:
+using the |project_name| `linuxptp` Helm chart. As a first step, install the |project_name| Helm repository:
 
 .. code-block:: bash
 
@@ -327,10 +327,10 @@ Leave the shell open and access the WebUI by visiting `http://localhost:9999` in
 Set Up gNB
 **********
 
-To deploy the gNB, edit the `values.yaml` file and set the desired RAN parameters. An example `values.yaml` for the srsRAN
-Project Helm Chart can be found `here <https://raw.githubusercontent.com/srsran/srsRAN_Project_helm/main/charts/srsran-project/values.yaml>`_.
+To deploy the gNB, edit the `values.yaml` file and set the desired RAN parameters. An example `values.yaml` for the |project_name| 
+Helm Chart can be found `here <https://raw.githubusercontent.com/srsran/srsRAN_Project_helm/main/charts/srsran-project/values.yaml>`_.
 
-If you haven't already added the srsRAN Project Helm repository, add it using:
+If you haven't already added the |project_name| Helm repository, add it using:
 
 .. code-block:: bash
 
@@ -469,7 +469,7 @@ Ensure that the `network_interface` and `du_mac_addr` values are set correctly f
 ==========================================
 
 `cyclictest` is a tool used to measure application latency on real-time systems. To assess the maximum latency
-on your system, you can deploy `cyclictest` using the srsRAN Project `rt-test` Helm chart.
+on your system, you can deploy `cyclictest` using the |project_name| `rt-test` Helm chart.
 
 The rt-test Helm chart is designed to run two real-time test tools: `cyclictest` and `stress-ng`. While `cyclictest`
 measures system latency and jitter, `stress-ng` generates high CPU and memory load to simulate system stress. Running
@@ -501,7 +501,7 @@ Visualizing KPIs via Grafana
 ****************************
 
 To visualize gNB KPIs, we provide a Grafana dashboard designed to work with the metrics server included in the
-srsRAN Project Helm repository. The metrics server collects and parses gNB metrics, stores them in an InfluxDB
+|project_name| Helm repository. The metrics server collects and parses gNB metrics, stores them in an InfluxDB
 database, and the Grafana dashboard then displays them.
 
 If you haven't already added the srsRAN Helm repository, add it now:
@@ -588,7 +588,7 @@ Clean Up Deployments
 
 To clean up all deployments, use the following commands:
 
-To delete the srsRAN Project deployment:
+To delete the |project_name| deployment:
 
 .. code-block:: bash
 
