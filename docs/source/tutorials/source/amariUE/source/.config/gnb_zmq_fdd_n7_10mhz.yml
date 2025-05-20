@@ -26,6 +26,11 @@ cell_cfg:
   plmn: "00101"                                                             # PLMN broadcasted by the gNB.
   tac: 7                                                                    # Tracking area code (needs to match the core configuration).
   pci: 1                                                                    # Physical cell ID.
+  pucch:
+    nof_ue_res_harq_per_set: 1
+    nof_cell_harq_pucch_res_sets: 1
+    f2_or_f3_or_f4_nof_cell_res_csi: 1
+
 
 log:
   filename: /tmp/gnb.log                                                    # Path of the log file.
