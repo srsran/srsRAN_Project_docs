@@ -10,21 +10,20 @@ Current Features
  * FDD/TDD supported, all FR1 bands
  * All bandwidths (e.g. 100 MHz TDD, 50 MHz FDD)
  * 15/30 kHz subcarrier spacing
- * All physical channels including PUCCH Format 1 and 2, excluding Sounding-RS 
+ * All physical channels
  * Highly optimized LDPC and Polar encoder/decoder for ARM Neon and x86 AVX2/AVX512
  * All RRC procedures
  * All MAC procedures
  * Split 7.2 support using in-house OFH library
  * Support for QAM-256
  * 4x4 MIMO
- * Slicing 
+ * Slicing
  * NTN GEO support
  * CU-DU Split
 
 Coming Soon
 ***********
 
- * CU-CP CU-CP separation 
- * Sounding-RS 
+ * CU-CP/CU-CP separation
  * FR2, 120 kHz
- * 8-layer MIMO
+ * Higher order MIMO
