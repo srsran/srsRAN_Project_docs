@@ -53,7 +53,7 @@ added to explain the selected choices. Once the files are copied, please make su
 
 .. code-block:: bash
 
-   echo "sudo chmod +x /usr/lib/tuned/srs/startup.sh"
+   sudo chmod +x /usr/lib/tuned/srs/startup.sh
 
 Before activating the srsRAN tuning profile you need to make sure that (in case it is installed) the ``power-profiles-daemon`` is disabled:
 

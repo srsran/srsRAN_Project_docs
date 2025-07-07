@@ -76,6 +76,7 @@ The following Open5GS configuration files were modified for this set-up:
     
     - :download:`amf.yaml <.config/amf.yaml>` 
     - :download:`upf.yaml <.config/upf.yaml>` 
+    - :download:`nrf.yaml <.config/nrf.yaml>` 
 
 The aspects of the network should be configured in the following order: 
 
@@ -291,7 +292,35 @@ In the UPF configuration file the following modifications need to be made:
            - addr: 127.0.0.7
              port: 9090
 
+nrf.yml
+-------
 
+In the NRF configuration, the following modifications need to be made: 
+
+    - Set the PLMN to match that of the gNB and AMF configuration files
+    - Set the address of the AMF to match that of the gNB configuration file
+
+.. code-block:: yml 
+
+    logger:
+      file:
+        path: /var/log/open5gs/nrf.log
+    #  level: info   # fatal|error|warn|info(default)|debug|trace
+    
+    global:
+      max:
+        ue: 1024  # The number of UE can be increased depending on memory size.
+    #    peer: 64
+    
+    nrf:
+      serving:  # 5G roaming requires PLMN in NRF
+        - plmn_id:
+            mcc: 901
+            mnc: 70
+      sbi:
+        server:
+          - address: 127.0.0.10
+            port: 7777    
 
 User Database
 -------------

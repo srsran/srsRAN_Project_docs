@@ -26,6 +26,8 @@ cu_cp:
     sctp_rto_max: 500                     # Optional INT. Sets the maximum retransmission timeout for the SCTP connection.
     sctp_init_max_attempts: 3             # Optional INT. Sets the maximum retransmission attempts for the initial SCTP connection.
     sctp_max_init_timeo: 500              # Optional INT. Sets the maximum retransmission timeout for the initial SCTP connection.
+    sctp_hb_interval: 30000               # Optional INT (30000). SCTP heartbeat interval in milliseconds (-1 to use system default). 
+    sctp_assoc_max_retx: 10               # Optional INT (10). SCTP association max retransmissions (-1 to use system default). 
     sctp_nodelay: false                   # Optional BOOLEAN. Setting to true allows the gNB to send SCTP messages as soon as possible without any Nagle-like algorithm. Supported: [false, true].
     supported_tracking_areas:             # Required TEXT. Sets the list of tracking areas supported by this AMF.
       -                                     # Supported TAC #1
@@ -85,8 +87,6 @@ cu_cp:
     procedure_timeout: 1000                  # Optional INT (1000). Sets the time the E1AP waits for a CU-UP response in milliseconds.
 
 cu_up: 
-  gtpu_queue_size: 2048                # Optional INT (2048). Sets the GTP-U queue size, in PDUs.
-  gtpu_reordering_timer: 0             # Optional INT (0). Sets the GTP-U RX reordering timer (in milliseconds).
   warn_on_drop: false                  # Optional BOOLEAN (false). Enables the option to log a warning for dropped packets in GTP-U and PDCP due to full queues. Supported: [false, true].
 
   f1u:
@@ -107,13 +107,21 @@ cu_up:
           max_rx_msgs: 256                      # Optional INT (256). Sets the maximum number of messages RX from a socket in a single syscall.
           pool_threshold: 0.9                   # Optional FLOAT (0.9). Sets the pool occupancy threshold, after which packets are dropped. Supported: [0.0 - 1.0].
           dscp:                                 # Optional UINT. Sets the Differentiated Services Code Point. Supported: [0 - 63].
+    gtpu: 
+      queue_size: 2046                       # Optional UINT (2046). GTP-U queue size, in PDUs
+      batch_size: 256                        # Optional UINT (256). Maximum number of GTP-U PDUs processed in a batch
+      reordering_timer: 0                    # Optional UINT (0). GTP-U RX reordering timer (in milliseconds)
+      rate_limiter_period:                   # Optional INT. GTP-U RX rate limiter period (in milliseconds)
+      ignore_ue_ambr: true                   # Optional BOOLEAN (true). Ignore GTP-U DL UE-AMBR rate limiter
 
   test_mode:
-    enable: false                          # Optional BOOLEAN (false). Set to true to enable CU-UP test mode. Supported: [true, false].
-    integrity_enable: false                # Optional BOOLEAN (false). Set to true to enable PDCP integrity testing. Supported: [true, false].
-    ciphering_enable: false                # Optional BOOLEAN (false). Set to true to enable PDCP ciphering testing. Supported: [true, false].
-    nea_algo: 2                            # Optional UINT (2). Sets the NEA algo to use for testing. Supported: [0, 1, 2, 3].
-    nia_algo: 2                            # Optional UINT (2). Sets the NIA algo to use for testing. Supported: [1, 2, 3].
+    enable: false                         # Optional BOOLEAN (false). Enable or disable CU-UP test mode
+    integrity_enable: false               # Optional BOOLEAN (false). Enable or disable PDCP integrity testing
+    ciphering_enable: false               # Optional BOOLEAN (false). Enable or disable PDCP ciphering testing
+    nea_algo: 2                           # Optional UINT:INT (2). NEA algo to use for testing. Format: [0 - 3]
+    nia_algo: 2                           # Optional UINT:INT (2). NIA algo to use for testing. Format: [1 - 3]
+    ue_ambr:                              # Optional UINT. DL UE-AMBR used for testing in bps
+    attach_detach_period:                 # Optional INT. Attach/detach period for test mode. 0 means always attached.
 
 e2:
   enable_cu_cp_e2: false                # Optional BOOLEAN (false). Enables the CU-CP E2 agent. Supported: [false, true]. 
@@ -138,10 +146,20 @@ expert_execution:
     isolated_cpus:                        # Optional TEXT. Sets the CPU core(s) isolated for the CU application. Supported: [1, 2, 3 , ..., N].
     low_priority_cpus:                    # Optional TEXT. Sets the CPU core(s) assigned to low priority tasks. Supported: [1, 2, 3 , ..., N].
     low_priority_pinning:                 # Optional TEXT. Sets the policy used for assigning CPU cores to low priority tasks.   
+  
   threads:
     non_rt:
       nof_non_rt_threads: 4                   # Optional UINT (4). Sets the number of non real time threads for processing of CP and UP data in upper layers.
       non_rt_task_queue_size: 2048            # Optional UINT (2048). Sets the non real time task worker queue size. 
+
+  queues: 
+    cu_up_dl_ue_executor_queue_size: 8192   # Optional UINT (8192). Sets the CU-UP's DL UE executor queue size.
+    cu_up_ul_ue_executor_queue_size: 8192   # Optional UINT (8192). Sets the CU-UP's UL UE executor queue size.
+    cu_up_ctrl_ue_executor_queue_size: 8192 # Optional UINT (8192). Sets the CU-UP's CTRL UE executor queue size.
+    cu_up_strand_batch_size: 256            # Optional UINT (256). Sets the CU-UP's strands batch size.
+
+  tracing: 
+    cu_up_executor_tracing_enable: false    # Optional BOOLEAN (false). Enable tracing for CU-UP executors
 
 remote_control:
   enabled: false                        # Optional BOOLEAN (false). Enables the remote control feature. Supported: [false, true].
@@ -189,9 +207,17 @@ pcap:
 metrics: 
   addr: 127.0.0.1                       # Optional TEXT:IPV4 (127.0.0.1). Sets the metrics address. Supported: IPV4 address.
   port: 55555                           # Optional UINT. Sets the metrics UPD port. Supported: [0 - 65535].
-  resource_usage_report: 0              # Optional UINT (0). Sets the resource usage report period in miliseconds. Supported: [0 - inf].
-  cu_cp_statistics_report_period: 1     # Optional UINT (1). Sets the CU-CP statistics report period in seconds. Set this value to 0 to disable this feature. Supported: [0 - inf].
-  cu_up_statistics_report_period: 1     # Optional UINT (1). Sets the CU-UP statistics report period in seconds. Set this value to 0 to disable this feature. Supported: [0 - inf].
-  pdcp_report_period: 0                 # Optional UINT (0). Sets the PDCP metrics report period.
-  enable_json_metrics: false            # Optional BOOLEAN (false). Enables JSON metrics reporting. Supported: [false, true].
-  enable_log_metrics: false             # Optional BOOLEAN (false). Enables log metrics reporting. Supported: [false, true].
+  enable_json: false                    # Optional BOOLEAN (false). Enable JSON metrics reporting
+  enable_log: false                     # Optional BOOLEAN (false). Enable log metrics reporting
+  enable_verbose: false                 # Optional BOOLEAN (false). Enable extended detail metrics reporting
+
+  layers:
+    enable_app_usage: false               # Optional BOOLEAN (false). Enable application usage metrics
+    enable_e1ap: false                    # Optional BOOLEAN (false). Enable E1AP metrics
+    enable_pdcp: false                    # Optional BOOLEAN (false). Enable PDCP metrics
+    enable_cu_up_executor: false          # Optional BOOLEAN (false). Whether to log CU-UP executor metrics
+
+  perioidicity:
+    app_usage_report_period: 1000         # Optional UINT (1000). Application resource usage metrics report period in milliseconds
+    cu_cp_report_period: 1000             # Optional UINT (1000). CU-CP metrics report period in milliseconds
+    cu_up_report_period: 1000             # Optional UINT (1000). CU-UP metrics report period in milliseconds
