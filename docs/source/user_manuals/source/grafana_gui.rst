@@ -43,9 +43,20 @@ where it can be parsed and displayed correctly by the GUI.
 .. code-block:: yaml
 
     metrics:
-        enable_json_metrics: true       # Enable reporting metrics in JSON format
-        addr: 172.19.1.4                # Metrics-server IP
-        port: 55555                     # Metrics-server Port
+        enable_json: true       # Enable reporting metrics in JSON format
+        addr: 172.19.1.4        # Metrics-server IP
+        port: 55555             # Metrics-server Port
+        layers: 
+            enable_app_usage: true      # Enable application usage metrics
+            enable_e1ap: true           # Enable E1AP metrics
+            enable_pdcp: true           # Enable PDCP metrics
+            enable_cu_up_executor: true # Enable CU-UP executor metrics
+            enable_sched: true          # Enable DU scheduler metrics
+            enable_rlc: true            # Enable RLC metrics
+            enable_mac: true            # Enable MAC metrics
+            enable_executor: true       # Enable DU-high executor metrics
+            enable_du_low: true         # Enable DU low metrics (upper physical layer)
+            enable_ru: true             # Enable Radio Unit metrics
 
 The ``addr`` and ``port`` values defined above mirror those set in the ``docker-compose.yml`` file found in the ``/docker`` folder. Any changes in these values must be kept consistent across both files. 
 
