@@ -147,7 +147,7 @@ SIM Programming
 
 As outlined previously, this set-up uses the OnePlus 8t, during internal tests it was found that this phone (and other OnePlus devices) sometimes connect to the network more easily in a roaming scenario. This is achieved by setting different PLMNs for the cell and the ISIM in the phone. 
 
-The MMC, MNC, IMSI and other credentials in the ISIM can be set by reprogramming. We reprogrammed our SysmoISIM-SJA2 using the following steps. 
+The MCC, MNC, IMSI and other credentials in the ISIM can be set by reprogramming. We reprogrammed our SysmoISIM-SJA2 using the following steps. 
 
 Download `pySim <https://github.com/osmocom/pysim>`_ : 
 
@@ -298,29 +298,31 @@ nrf.yml
 In the NRF configuration, the following modifications need to be made: 
 
     - Set the PLMN to match that of the gNB and AMF configuration files
-    - Set the address of the AMF to match that of the gNB configuration file
+    - Check that the address of the AMF matches that of the gNB configuration file
 
-.. code-block:: yml 
+.. code-block:: diff 
 
-    logger:
-      file:
-        path: /var/log/open5gs/nrf.log
-    #  level: info   # fatal|error|warn|info(default)|debug|trace
+        logger:
+          file:
+            path: /var/log/open5gs/nrf.log
+        #  level: info   # fatal|error|warn|info(default)|debug|trace
+
+        global:
+          max:
+            ue: 1024  # The number of UE can be increased depending on memory size.
+        #    peer: 64
     
-    global:
-      max:
-        ue: 1024  # The number of UE can be increased depending on memory size.
-    #    peer: 64
-    
-    nrf:
-      serving:  # 5G roaming requires PLMN in NRF
-        - plmn_id:
-            mcc: 901
-            mnc: 70
-      sbi:
-        server:
-          - address: 127.0.0.10
-            port: 7777    
+        nrf:
+          serving:  # 5G roaming requires PLMN in NRF
+            - plmn_id:
+    -          mcc: 999
+    -          mnc: 70
+    +          mcc: 901
+    +          mnc: 70
+        sbi:
+          server:   
+            - addr: 127.0.0.10
+              port: 7777    
 
 User Database
 -------------
