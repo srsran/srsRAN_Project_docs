@@ -29,7 +29,7 @@ cu_cp:
     addr:                                 # Required TEXT. Sets the IP address or hostname of the AMF. Format: IPV4 or IPV6 IP address.
     port: 38412                           # Optional UINT. Sets the AMF port. Format: integer between [20000 - 40000].
     bind_addr: 127.0.0.1                  # Optional TEXT. Sets local IP address to bind for N2 interface. Format: IPV4 or IPV6 IP address.
-    bind_interface: auto                  # Optional TEXT. Sets network device to bind for N2 interface. Format: IPV4 or IPV6 IP address.
+    bind_interface: auto                  # Optional TEXT (auto). Sets network device to bind for N2 interface. Format: IPV4 or IPV6 IP address.
     sctp_rto_initial: 120                 # Optional INT. Sets the initial retransmission timeout when creating the SCTP connection.
     sctp_rto_min: 120                     # Optional INT. Sets the minimum retransmission timeout for the SCTP connection.
     sctp_rto_max: 500                     # Optional INT. Sets the maximum retransmission timeout for the SCTP connection.
@@ -152,7 +152,7 @@ cell_cfg:
     bsr_cfg:                                # Buffer status report configuration parameters
       periodic_bsr_timer: 10                    # Optional UINT (10). Sets the periodic Buffer Status Report Timer value in nof. subframes. Value 0 equates to infinity. Supported: [1, 5, 10, 16, 20, 32, 40, 64, 80, 128, 160, 320, 640, 1280, 2560, 0].
       retx_bsr_timer: 80                        # Optional UINT (80). sets the retransmission Buffer Status Report Timer value in nof. subframes. Supported: [10, 20, 40, 80, 160, 320, 640, 1280, 2560, 5120, 10240].
-      lc_sr_delay_timer:                        # Optional TEXT. Sets the logical Channel SR delay timer in nof. subframes. Supported: [10, 20, 40, 80, 160, 320, 640, 1280, 2560].
+      lc_sr_delay_timer:                        # Optional UINT. Sets the Logical Channel SR delay timer in nof. subframes. Supported: [20, 40, 64, 128, 512, 1024, 2560].
     phr_cfg:                                # Power Headroom report configuration parameters
       phr_prohibit_timer: 10                    # Optional UINT (10). Sets the PHR prohibit timer in nof. subframes. Supported: [0, 10, 20, 50, 100, 200, 500, 1000].
     sr_cfg:                                 # Scheduling Request configuration parameters
@@ -198,10 +198,10 @@ cell_cfg:
       ss0_index: 0                              # Optional UINT (0). Sets the SearchSpace#0 index. Supported: [0 - 15].
       max_coreset0_duration:                    # Optional INT. Sets the maximum CORESET#0 duration in OFDM symbols to consider when deriving CORESET#0 index. Supported: [1 - 2].
     dedicated:
-      coreset1_rb_start: 1                      # Optional INT (0). Sets the starting common resource block (CRB) number for CORESET 1, relative to CRB0. Supported: [0 - 275].
+      coreset1_rb_start: 1                      # Optional INT. Sets the starting common resource block (CRB) number for CORESET 1, relative to CRB0. Supported: [0 - 275].
       coreset1_l_crb:                           # Optional INT (Across entire BW of cell). Sets the length of CORESET 1 in number of CRBs. Supported: [0 - 275].
       coreset1_duration:                        # Optional INT (Max(2, Nof. CORESET#0 symbols)). Sets the duration of CORESET 1 in number of OFDM symbols. Supported: [1 - 2].
-      ss2_n_candidates: [0, 2, 4, 0, 0]         # Optional UINT ([0, 2, 4, 0, 0]). Sets the number of PDCCH candidates per aggregation level for SearchSpace#2. Supported: any 5 value array containing the following UINT values [0, 1, 2, 3, 4, 5, 6, 7, 8].
+      ss2_n_candidates: [0, 0, 0, 0, 0]         # Optional UINT ([0, 0, 0, 0, 0]). Sets the number of PDCCH candidates per aggregation level for SearchSpace#2. An all-zero array lets the gNB decide nof. candidates for SS#2. Supported: any 5 value array containing the following UINT values [0, 1, 2, 3, 4, 5, 6, 7, 8].
       dci_format_0_1_and_1_1: true              # Optional BOOLEAN (true). Sets whether to use non-fallback or fallback DCI format in UE SearchSpace#2. Supported: [false, true].
       ss2_type: ue_dedicated                    # Optional TEXT (ue_dedicated). Sets the SearchSpace type for UE dedicated SearchSpace#2. Supported: [common, ue_dedicated].
       al_cqi_offset: 0                          # Optional FLOAT (0). Offset to apply to the CQI value used in the PDCCH aggregation level calculation. Format: [-15 - 15]
@@ -359,9 +359,9 @@ cell_cfg:
   csi:
     csi_rs_enabled: true                    # Optional BOOLEAN (true). Enables CSI-RS resources and CSI reporting. Supported: [false, true].
     csi_rs_period: 20                       # Optional UINT (20). Sets the CSI-RS period in milliseconds. Supported: [10, 20, 40, 80].
-    meas_csi_rs_slot_offset:                # Optional TEXT Sets the slot offset of first CSI-RS resource used for measurement.
-    tracking_csi_rs_slot_offset:            # Optional TEXT. Sets the slot offset of the first CSI-RS slot used for tracking.
-    zp_csi_rs_slot_offset:                  # Optional TEXT. Sets the slot offset of the ZP CSI-RS resources.
+    meas_csi_rs_slot_offset:                # Optional UINT Sets the slot offset of first CSI-RS resource used for measurement.
+    tracking_csi_rs_slot_offset:            # Optional UINT. Sets the slot offset of the first CSI-RS resource used for tracking.
+    zp_csi_rs_slot_offset:                  # Optional UINT. Sets the slot offset of the ZP CSI-RS resources.
     pwr_ctrl_offset: 0                      # Optional INT (0). Sets the power offset of PDSCH RE to NZP CSI-RS RE in dB. Supported: [-8 - 15].
 
   sched_expert_cfg:
