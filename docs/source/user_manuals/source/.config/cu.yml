@@ -92,7 +92,7 @@ cu_up:
   f1u:
       socket:                               # Define UDP/IP socket(s) for F1-U interface.
         -                                     # Socket 1
-          bind_addr: 127.0.3.1                  # Required TEXT. Sets the address that the F1-U socket will bind to.
+          bind_addr: 127.0.10.1                  # Required TEXT. Sets the address that the F1-U socket will bind to.
           ext_addr: 8.8.8.8                     # Optional TEXT. Sets the address that is reported as the F1-U bind address. If empty, the real bind address is used.
           udp:
             max_rx_msgs: 256                        # Optional UINT (256). Sets the maximum packets read from the socket in a single syscall.
