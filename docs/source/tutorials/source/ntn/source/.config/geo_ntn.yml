@@ -6,12 +6,6 @@ cell_cfg:
         sib_mapping: 19             # Enable SIB19.
   pucch:
     sr_period_ms: 80                # Set Scheduling Request period.
-    nof_ue_res_harq_per_set: 7
-    nof_cell_harq_pucch_res_sets: 1
-    f1_nof_cyclic_shifts: 1
-    f1_enable_occ: true
-    f0_or_f1_nof_cell_res_sr: 7
-    f2_or_f3_or_f4_nof_cell_res_csi: 7
   csi:
     csi_rs_period: 80               # Set CSI-RS report period.
   pdsch:
