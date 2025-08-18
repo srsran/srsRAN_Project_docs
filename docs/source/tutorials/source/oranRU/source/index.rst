@@ -175,13 +175,13 @@ In both of the above commands ``enp1s0f0`` is the network interface on our DU th
 Enabling PTP with DPDK
 ----------------------
 
-If you are using DPDK, you will need to use virtual functions (VFs) to ensure that the PTP sync is correctly passed to the relevant components.
+If you are using PTP and OFH with DPDK on the same interface, you will need to use virtual functions (VFs) to ensure that the PTP sync is correctly passed to the relevant components.
 
 First, identify the network port you want to use for PTP and OFH. You can use the following command to list the available network ports:
 
 .. code-block:: bash
 
-    sudo dpdk-devbind.py -s 
+    dpdk-devbind.py -s 
 
 You will see the following output or similar:
 
@@ -196,24 +196,24 @@ You will see the following output or similar:
 
 In the above output, ``enp81s0f0`` is the network port we want to use for PTP and OFH.
 
-Next, you will need to create the VF, you can do this by running the following commands:
+Next, you will need to create the VF, you can do this by running the following commands. Remember to replace ``<INTERFACE NAME>`` with the name of your network interface (e.g., ``enp81s0f0``):
 
 .. code-block:: bash
 
     # Remove old VFs
-    echo 0 > /sys/class/net/enp81s0f0/device/sriov_numvfs
+    echo 0 > /sys/class/net/<INTERFACE NAME>/device/sriov_numvfs
 
     # Create new VF
-    echo 1 > /sys/class/net/enp81s0f0/device/sriov_numvfs
+    echo 1 > /sys/class/net/<INTERFACE NAME>/device/sriov_numvfs
 
     # Set the MAC address for the VF
-    ip link set enp81s0f0 vf 0 mac 00:33:22:33:00:11 spoofchk off
+    ip link set <INTERFACE NAME> vf 0 mac 00:33:22:33:00:11 spoofchk off
 
 Now, you can verify that the VF as been created by running the following command:
 
 .. code-block:: bash
 
-    sudo dpdk-devbind.py -s
+    dpdk-devbind.py -s
 
 You should see the following output or similar:
 
@@ -227,9 +227,9 @@ You should see the following output or similar:
     0000:51:00.2 'Ethernet Controller E810-C for SFP 1593' if=enp81s0f2 drv=ice unused=vfio-pci 
     0000:51:00.3 'Ethernet Controller E810-C for SFP 1593' if=enp81s0f3 drv=ice unused=vfio-pci  
 
-In the above example, we can see that the VF has been created and is using the ``iavf`` driver.
+In the above example, we can see that the VF has been created and is using the ``iavf`` driver. Note, this is only for the Intel E810 NIC, other NICs may have different drivers. The specific driver used will be displayed in the line *Adaptive Virtual Function*, in this case the second line. 
 
-Next, you will need to bind the VF to the ``vfio-pci`` driver, you can do this by running the following command:
+Next, you will need to bind the VF to the ``vfio-pci`` driver, you can do this by running the following command. Before running this command, make sure that ``vfio-pci`` is enabled, see the :ref:`DPDK Guide <dpdk_tutorial>` for more information on how to enable it.
 
 .. code-block:: bash
 
