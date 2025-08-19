@@ -201,13 +201,13 @@ Next, you will need to create the VF, you can do this by running the following c
 .. code-block:: bash
 
     # Remove old VFs
-    echo 0 > /sys/class/net/<INTERFACE NAME>/device/sriov_numvfs
+    echo 0 | /sys/class/net/<INTERFACE NAME>/device/sriov_numvfs
 
     # Create new VF
-    echo 1 > /sys/class/net/<INTERFACE NAME>/device/sriov_numvfs
+    echo 1 | /sys/class/net/<INTERFACE NAME>/device/sriov_numvfs
 
     # Set the MAC address for the VF
-    ip link set <INTERFACE NAME> vf 0 mac 00:33:22:33:00:11 spoofchk off
+    sudo ip link set <INTERFACE NAME> vf 0 mac 00:33:22:33:00:11 spoofchk off
 
 Now, you can verify that the VF as been created by running the following command:
 
@@ -227,7 +227,9 @@ You should see the following output or similar:
     0000:51:00.2 'Ethernet Controller E810-C for SFP 1593' if=enp81s0f2 drv=ice unused=vfio-pci 
     0000:51:00.3 'Ethernet Controller E810-C for SFP 1593' if=enp81s0f3 drv=ice unused=vfio-pci  
 
-In the above example, we can see that the VF has been created and is using the ``iavf`` driver. Note, this is only for the Intel E810 NIC, other NICs may have different drivers. The specific driver used will be displayed in the line *Adaptive Virtual Function*, in this case the second line. 
+
+
+In the above example, we can see that the VF has been created and is using the ``iavf`` driver in the line *Adaptive Virtual Function*. Note, this is only for the Intel E810 NIC, other NICs may have different drivers.
 
 Next, you will need to bind the VF to the ``vfio-pci`` driver, you can do this by running the following command. Before running this command, make sure that ``vfio-pci`` is enabled, see the :ref:`DPDK Guide <dpdk_tutorial>` for more information on how to enable it.
 
@@ -239,7 +241,7 @@ Finally, verify the binding by running the following command:
 
 .. code-block:: bash
 
-    sudo dpdk-devbind.py -s
+    dpdk-devbind.py -s
 
 You should see the following output or similar:
 
