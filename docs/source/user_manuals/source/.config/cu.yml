@@ -20,7 +20,7 @@ cu_cp:
     addr:                                 # Required TEXT. Sets the IP address or hostname of the AMF. Format: IPV4 or IPV6 IP address.
     port: 38412                           # Optional UINT. Sets the AMF port. Format: integer between [20000 - 40000].
     bind_addr: 127.0.0.1                  # Optional TEXT. Sets local IP address to bind for N2 interface. Format: IPV4 or IPV6 IP address.
-    bind_interface: auto                  # Optional TEXT. Sets network device to bind for N2 interface. Format: IPV4 or IPV6 IP address.
+    bind_interface: auto                  # Optional TEXT (auto). Sets network device to bind for N2 interface. Format: IPV4 or IPV6 IP address.
     sctp_rto_initial: 120                 # Optional INT. Sets the initial retransmission timeout when creating the SCTP connection.
     sctp_rto_min: 120                     # Optional INT. Sets the minimum retransmission timeout for the SCTP connection.
     sctp_rto_max: 500                     # Optional INT. Sets the maximum retransmission timeout for the SCTP connection.

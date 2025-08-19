@@ -101,7 +101,7 @@ cell_cfg:
     bsr_cfg:                                # Buffer status report configuration parameters
       periodic_bsr_timer: 10                    # Optional UINT (10). Sets the periodic Buffer Status Report Timer value in nof. subframes. Value 0 equates to infinity. Supported: [1, 5, 10, 16, 20, 32, 40, 64, 80, 128, 160, 320, 640, 1280, 2560, 0].
       retx_bsr_timer: 80                        # Optional UINT (80). sets the retransmission Buffer Status Report Timer value in nof. subframes. Supported: [10, 20, 40, 80, 160, 320, 640, 1280, 2560, 5120, 10240].
-      lc_sr_delay_timer:                        # Optional TEXT. Sets the logical Channel SR delay timer in nof. subframes. Supported: [10, 20, 40, 80, 160, 320, 640, 1280, 2560].
+      lc_sr_delay_timer:                        # Optional UINT. Sets the Logical Channel SR delay timer in nof. subframes. Supported: [20, 40, 64, 128, 512, 1024, 2560].
     phr_cfg:                                # Power Headroom report configuration parameters
       phr_prohibit_timer: 10                    # Optional UINT (10). Sets the PHR prohibit timer in nof. subframes. Supported: [0, 10, 20, 50, 100, 200, 500, 1000].
     sr_cfg:                                 # Scheduling Request configuration parameters
@@ -147,10 +147,10 @@ cell_cfg:
       ss0_index: 0                              # Optional UINT (0). Sets the SearchSpace#0 index. Supported: [0 - 15].
       max_coreset0_duration:                    # Optional INT. Sets the maximum CORESET#0 duration in OFDM symbols to consider when deriving CORESET#0 index. Supported: [1 - 2].
     dedicated:
-      coreset1_rb_start: 1                      # Optional INT (0). Sets the starting common resource block (CRB) number for CORESET 1, relative to CRB0. Supported: [0 - 275].
+      coreset1_rb_start: 1                      # Optional INT. Sets the starting common resource block (CRB) number for CORESET 1, relative to CRB0. Supported: [0 - 275].
       coreset1_l_crb:                           # Optional INT (Across entire BW of cell). Sets the length of CORESET 1 in number of CRBs. Supported: [0 - 275].
       coreset1_duration:                        # Optional INT (Max(2, Nof. CORESET#0 symbols)). Sets the duration of CORESET 1 in number of OFDM symbols. Supported: [1 - 2].
-      ss2_n_candidates: [0, 2, 4, 0, 0]         # Optional UINT ([0, 2, 4, 0, 0]). Sets the number of PDCCH candidates per aggregation level for SearchSpace#2. Supported: any 5 value array containing the following UINT values [0, 1, 2, 3, 4, 5, 6, 7, 8].
+      ss2_n_candidates: [0, 0, 0, 0, 0]         # Optional UINT ([0, 0, 0, 0, 0]). Sets the number of PDCCH candidates per aggregation level for SearchSpace#2. An all-zero array lets the gNB decide nof. candidates for SS#2. Supported: any 5 value array containing the following UINT values [0, 1, 2, 3, 4, 5, 6, 7, 8].
       dci_format_0_1_and_1_1: true              # Optional BOOLEAN (true). Sets whether to use non-fallback or fallback DCI format in UE SearchSpace#2. Supported: [false, true].
       ss2_type: ue_dedicated                    # Optional TEXT (ue_dedicated). Sets the SearchSpace type for UE dedicated SearchSpace#2. Supported: [common, ue_dedicated].
       al_cqi_offset: 0                          # Optional FLOAT (0). Offset to apply to the CQI value used in the PDCCH aggregation level calculation. Format: [-15 - 15]
