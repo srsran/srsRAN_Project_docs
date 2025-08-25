@@ -229,7 +229,7 @@ You should see the following output or similar:
 
 
 
-In the above example, we can see that the VF has been created and is using the ``iavf`` driver in the line *Adaptive Virtual Function*. Note, this is only for the Intel E810 NIC, other NICs may have different drivers.
+In the above example, we can see that the VF has been created and is using the ``iavf`` driver in the line *Adaptive Virtual Function*. Note, this is **only** for the Intel E810 NIC, other NICs may have different drivers.
 
 Next, you will need to bind the VF to the ``vfio-pci`` driver, you can do this by running the following command. Before running this command, make sure that ``vfio-pci`` is enabled, see the :ref:`DPDK Guide <dpdk_tutorial>` for more information on how to enable it.
 
