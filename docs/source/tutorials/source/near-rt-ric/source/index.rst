@@ -283,12 +283,16 @@ Enable E2AP packet captures and set the name of the output pcap file:
     e2ap_cu_up_filename: /tmp/gnb_cu_up_e2ap.pcap  # Path where the CU-UP E2AP PCAP is stored.
 
 
-Enable Enable RLC metrics reporting that will feed E2SM_KPM service model with measurements data:
+Enable Enable RLC and DU scheduler metrics reporting that will feed E2SM_KPM service model with measurements data:
 
 .. code-block:: yaml
 
   metrics:
-    rlc_report_period: 1000           # Set reporting period to 1s
+    layers:
+      enable_rlc: true                # Enable RLC metrics
+      enable_sched: true              # Enable DU scheduler metrics
+    periodicity:
+      du_report_period: 1000          # Set DU statistics report period to 1s
 
 
 --------

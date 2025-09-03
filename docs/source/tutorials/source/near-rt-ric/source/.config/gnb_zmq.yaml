@@ -67,5 +67,9 @@ e2:
   #bind_addr: 127.0.0.100           # A local IP that the E2 agent binds to for traffic from the RIC. ONLY required if running the RIC on a separate machine. 
   port: 36421                       # RIC port
 
-metrics: 
-  rlc_report_period: 1000           # Set reporting period to 1s
+metrics:
+  layers:
+    enable_rlc: true                # Enable RLC metrics
+    enable_sched: true              # Enable DU scheduler metrics
+  periodicity:
+    du_report_period: 1000          # Set DU statistics report period to 1s
