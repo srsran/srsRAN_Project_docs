@@ -245,8 +245,11 @@ Finally, the ``cell_cfg`` config section for NTN GEO scenario is as follows::
     sib:
       si_window_length: 40            # Set SI Window Length.
       si_sched_info:
+        - si_period: 16               # Set SIB2 period.
+          sib_mapping: 2              # Enable SIB2.
         - si_period: 16               # Set SIB19 period.
           sib_mapping: 19             # Enable SIB19.
+          si_window_position: 2       # Set SIB19 position.
     pucch:
       sr_period_ms: 320               # Set Scheduling Request period.
     csi:
