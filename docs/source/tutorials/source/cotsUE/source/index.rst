@@ -214,6 +214,53 @@ After these steps **UST service 124** and **125** should be disabled. You can ve
 
 More information on pySim and SUCI configuration can be found in `this guide <https://downloads.osmocom.org/docs/pysim/master/html/suci-tutorial.html>`_ in the pySim documentation. 
 
+Adding user-controlled PLMNs
+-----------------------
+
+If you want to add user-controlled PLMNs to the USIM, you can do this by extending the EF_PLMNwACT EF.
+The following commands will add the PLMN ``90170`` to the USIM. First verify the current PLMN list which should
+include your home PLMN, e.g. ``00101``. Then with  `edit_binary_decoded` you can add the new PLMN.
+
+.. code-block:: bash
+
+    pySIM-shell (MF)> select MF
+    pySIM-shell (MF)> select ADF.USIM
+    pySIM-shell (MF/ADF.USIM)> select EF.PLMNwAcT
+    pySIM-shell (00:MF/ADF.USIM/EF.PLMNwAcT)> read_binary_decoded
+    [
+    {
+        "mcc": "001",
+        "mnc": "01",
+        "act": [
+            "E-UTRAN NB-S1",
+            "E-UTRAN WB-S1",
+            "EC-GSM-IoT",
+            "GSM",
+            "GSM COMPACT",
+            "NG-RAN",
+            "UTRAN",
+            "cdma2000 1xRTT",
+            "cdma2000 HRPD"
+        ]
+    }
+    ..
+    pySIM-shell (00:MF/ADF.USIM/EF.PLMNwAcT)> edit_binary_decoded
+    {
+        "mcc": "901",
+        "mnc": "70",
+        "act": [
+            "E-UTRAN NB-S1",
+            "E-UTRAN WB-S1",
+            "EC-GSM-IoT",
+            "GSM",
+            "GSM COMPACT",
+            "NG-RAN",
+            "UTRAN",
+            "cdma2000 1xRTT",
+            "cdma2000 HRPD"
+        ]
+    }
+
 .. _open5gs: 
 
 Open5GS
