@@ -243,6 +243,10 @@ Finally, the ``cell_cfg`` config section for NTN GEO scenario is as follows::
       prach_config_index: 31          # Use Preamble Format 1 to improve the timing robustness.
       max_msg3_harq_retx: 0           # Disable Msg3 HARQ retransmissions.
     sib:
+      t300: 2000                      # Extend the RRC Connection Establishment timer in ms.
+      t301: 2000                      # Extend the RRC Connection Re-establishment timer in ms.
+      t311: 3000                      # Extend the RRC Connection Re-establishment procedure timer in ms.
+      t319: 2000                      # Extend the RRC Connection Resume timer in ms.
       si_window_length: 40            # Set SI Window Length.
       si_sched_info:
         - si_period: 16               # Set SIB2 period.
