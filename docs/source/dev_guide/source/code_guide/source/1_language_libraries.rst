@@ -6,7 +6,7 @@ Language and libraries
 C & C++ version
 ***************
 
-The |project_name| project is written in standard C++14, thus it is important to avoid the use of compiler specific extensions to ease code portability
+The |project_name| project is written in standard C++17, thus it is important to avoid the use of compiler specific extensions to ease code portability
 and adding support for additional toolchains in the future.
 
 If you need to use custom features such as builtin functions, guard them behind a macro or a function and always provide a fallback mechanism
