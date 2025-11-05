@@ -1,6 +1,6 @@
 
-gnb_id: 411                         # Optional UINT (411). Sets the numerical ID associated with the gNB.
-gnb_id_bit_length:                  # Optional UNIT. Sets the bit length of the gnb_id above. Format: integer between [22 - 32]
+gnb_id: 411                         # Required UINT (411). Sets the numerical ID associated with the gNB.
+gnb_id_bit_length: 22               # Required UNIT (22). Sets the bit length of the gnb_id above. Format: integer between [22 - 32]
 
 gnb_du_id: 0                        # Optional UINT (0). Sets the gNB DU ID. Supported: [0 - 68719476735].
 
@@ -497,6 +497,22 @@ remote_control:
 
 hal:
   eal_args:                             # Optional TEXT. EAL configuration parameters used to initialize DPDK.
+  bbdev_hwacc:
+    hwacc_type:                         # Optional TEXT. Type of BBDEV hardware-accelerator. Supported: [acc100, acc200, vrb1].
+    id: 0                               # Optional UINT (0). ID of the BBDEV-based hardware-accelerator. Supported: [0 - 65535].
+    pdsch_enc:
+      nof_hwacc: 0                      # Optional UINT (0). Number of hardware-accelerated PDSCH encoding functions. Supported [0 - 64].
+      cb_mode: false                    # Optional BOOLEAN (false). Operation mode of the PDSCH encoder (CB = true, TB = false [default]).
+      max_buffer_size: 0                # Optional UINT (0). Maximum supported buffer size in bytes (CB mode will be forced for larger TBs).
+      dedicated_queue: true             # Optional BOOLEAN (true). Hardware queue used for the PDSCH encoder (dedicated = true [default], shared = false).
+    pusch_dec:
+      nof_hwacc: 0                      # Optional UINT (0). Number of hardware-accelerated PDSCH encoding functions. Supported [0 - 64].
+      harq_context_size: 0              # Optional UINT (0). Size of the HARQ context repository.
+      force_local_harq: false           # Optional BOOLEAN (false). Force using the host memory to implement the HARQ buffer.
+      dedicated_queue: true             # Optional BOOLEAN (true). Hardware queue used for the PDSCH encoder (dedicated = true [default], shared = false).
+    msg_mbuf_size: 0                    # Optional UINT (0). Size of the mbufs storing unencoded and unrate-matched messages (in bytes). Supported [0 - 64000].
+    rm_mbuf_size: 0                     # Optional UINT (0). Size of the mbufs storing encoded and rate-matched messages (in bytes). Supported [0 - 64000].
+    nof_mbuf: 0                         # Optional UINT (0). Number of mbufs in the memory pool.
 
 test_mode:
   test_ue:

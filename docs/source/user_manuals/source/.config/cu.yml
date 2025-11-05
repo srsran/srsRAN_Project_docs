@@ -1,6 +1,6 @@
-ran_node_name: cu_cp_01             # Optional TEXT (cu_cp_01). Sets the text ID associated with the gNB. Format: string without spaces.
-gnb_id: 411                         # Optional UINT (411). Sets the numerical ID associated with the gNB.
-gnb_id_bit_length:                  # Optional UNIT. Sets the bit length of the gnb_id above. Format: integer between [22 - 32]
+ran_node_name: srscucp01            # Required TEXT (cu_cp_01). Sets the text ID associated with the gNB. Format: string without spaces.
+gnb_id: 411                         # Required UINT (411). Sets the numerical ID associated with the gNB.
+gnb_id_bit_length: 22               # Required UNIT (22). Sets the bit length of the gnb_id above. Format: integer between [22 - 32]
 
 gnb_cu_up_id: 0                     # Optional UINT (0). Sets the CU-UP ID. Format: integer between [0 - 255].
 

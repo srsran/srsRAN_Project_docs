@@ -1,6 +1,6 @@
-ran_node_name: cu_cp_01             # Optional TEXT (cu_cp_01). Sets the text ID associated with the gNB. Format: string without spaces.
-gnb_id: 411                         # Optional UINT (411). Sets the numerical ID associated with the gNB.
-gnb_id_bit_length: 22               # Optional UNIT (22). Sets the bit length of the gnb_id above. Format: integer between [22 - 32]
+ran_node_name: srsgnb01             # Required TEXT (cu_cp_01). Sets the text ID associated with the gNB. Format: string without spaces.
+gnb_id: 411                         # Required UINT (411). Sets the numerical ID associated with the gNB.
+gnb_id_bit_length: 22               # Required UINT (22). Sets the bit length of the gnb_id above. Format: integer between [22 - 32]
 gnb_cu_up_id: 0                     # Optional UINT (0). Sets the gNB CU-UP ID. Supported: [0 - 68719476735].
 gnb_du_id: 0                        # Optional UINT (0). Sets the gNB DU ID. Supported: [0 - 68719476735].
 
@@ -211,7 +211,7 @@ cell_cfg:
     max_ue_mcs: 28                          # Optional UINT (28). Sets a maximum PDSCH MCS value to be used for all UEs. Supported: [0 - 28].
     fixed_rar_mcs: 0                        # Optional UINT (0). Sets a fixed RAR MCS value for all UEs. Supported: [0 - 28].
     fixed_sib1_mcs: 5                       # Optional UINT (5). Sets a fixed SIB1 MCS for all UEs. Supported: [0 - 28].
-    nof_harqs: 16                           # Optional UNIT (16). Sets the number of Downlink HARQ processes. Supported [2, 4, 6, 8, 10, 12, 16].
+    nof_harqs: 16                           # Optional UINT (16). Sets the number of Downlink HARQ processes. Supported [2, 4, 6, 8, 10, 12, 16].
     max_nof_harq_retxs: 4                   # Optional UINT (4). Sets the maximum number times a DL HARQ can be retransmitted before it is discarded. Supported: [0 - 4].
     harq_retx_timeout: 100                  # Optional UINT (100). Maximum time, in milliseconds, between a HARQ NACK and the scheduler allocating the respective HARQ for retransmission. If this timeout is exceeded, the HARQ process is discarded. Format: [10 - 500]
     max_consecutive_kos: 100                # Optional UINT (100). Sets the maximum number of consecutive HARQ-ACK KOs before an RLF is reported. Supported: [0 - inf].
@@ -524,6 +524,22 @@ fapi:
 
 hal:
   eal_args:                             # Optional TEXT. EAL configuration parameters used to initialize DPDK.
+  bbdev_hwacc:
+    hwacc_type:                         # Optional TEXT. Type of BBDEV hardware-accelerator. Supported: [acc100, acc200, vrb1].
+    id: 0                               # Optional UINT (0). ID of the BBDEV-based hardware-accelerator. Supported: [0 - 65535].
+    pdsch_enc:
+      nof_hwacc: 0                      # Optional UINT (0). Number of hardware-accelerated PDSCH encoding functions. Supported [0 - 64].
+      cb_mode: false                    # Optional BOOLEAN (false). Operation mode of the PDSCH encoder (CB = true, TB = false [default]).
+      max_buffer_size: 0                # Optional UINT (0). Maximum supported buffer size in bytes (CB mode will be forced for larger TBs).
+      dedicated_queue: true             # Optional BOOLEAN (true). Hardware queue used for the PDSCH encoder (dedicated = true [default], shared = false).
+    pusch_dec:
+      nof_hwacc: 0                      # Optional UINT (0). Number of hardware-accelerated PDSCH encoding functions. Supported [0 - 64].
+      harq_context_size: 0              # Optional UINT (0). Size of the HARQ context repository.
+      force_local_harq: false           # Optional BOOLEAN (false). Force using the host memory to implement the HARQ buffer.
+      dedicated_queue: true             # Optional BOOLEAN (true). Hardware queue used for the PDSCH encoder (dedicated = true [default], shared = false).
+    msg_mbuf_size: 0                    # Optional UINT (0). Size of the mbufs storing unencoded and unrate-matched messages (in bytes). Supported [0 - 64000].
+    rm_mbuf_size: 0                     # Optional UINT (0). Size of the mbufs storing encoded and rate-matched messages (in bytes). Supported [0 - 64000].
+    nof_mbuf: 0                         # Optional UINT (0). Number of mbufs in the memory pool.
 
 buffer_pool:
   nof_segments: 1048576                 # Optional UINT (1048576). Sets the number of segments allocated by the buffer pool.
@@ -558,8 +574,8 @@ expert_execution:
   affinities:
     isolated_cpus:                        # Optional TEXT. Sets the CPU core(s) isolated for the gNB application. Supported: [1, 2, 3 , ..., N].
     low_priority_cpus:                    # Optional TEXT. Sets the CPU core(s) assigned to low priority tasks. Supported: [1, 2, 3 , ..., N].
-    low_priority_pinning:                 # Optional TEXT. Sets the policy used for assigning CPU cores to low priority tasks.
-    ru_timing_cpu:                        # Optional TEXT. Sets the CPU used for timing in the Radio Unity.
+    low_priority_pinning:                 # Optional TEXT. Sets the policy used for assigning CPU cores to low priority tasks.   
+    ru_timing_cpu:                        # Optional TEXT. Sets the CPU used for timing in the Radio Unit.
     ofh:                                  # Optional TEXT Sets the CPU affinities configuration for RU cells tx-rx threads. Number of entries specified defines the number of tx-rx threads created. By default if no entries are specified, the number of tx-rx threads equals the number of RU cells.
   threads:
     non_rt:
