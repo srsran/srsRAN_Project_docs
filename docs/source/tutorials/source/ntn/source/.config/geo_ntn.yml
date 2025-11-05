@@ -25,7 +25,7 @@ cell_cfg:
 cu_cp:
   request_pdu_session_timeout: 10
   rrc:
-    rrc_procedure_guard_time_ms: 12800 # Set high RRC timeout value.
+    rrc_procedure_guard_time_ms: 12800 # Set high RRC guard time value.
 
 cell_cfg:
   sched_expert_cfg:
@@ -46,4 +46,3 @@ ntn:
     vel_x:  34
     vel_y:  9
     vel_z:  -385
-

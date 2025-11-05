@@ -35,8 +35,8 @@ cu_cp:
     sctp_rto_max: 500                     # Optional INT. Sets the maximum retransmission timeout for the SCTP connection.
     sctp_init_max_attempts: 3          # Optional INT. Sets the maximum retransmission attempts for the initial SCTP connection.
     sctp_max_init_timeo: 500              # Optional INT. Sets the maximum retransmission timeout for the initial SCTP connection.
-    sctp_hb_interval: 30000               # Optional INT (30000). SCTP heartbeat interval in milliseconds (-1 to use system default). 
-    sctp_assoc_max_retx: 10               # Optional INT (10). SCTP association max retransmissions (-1 to use system default).    
+    sctp_hb_interval: 30000               # Optional INT (30000). SCTP heartbeat interval in milliseconds (-1 to use system default).
+    sctp_assoc_max_retx: 10               # Optional INT (10). SCTP association max retransmissions (-1 to use system default).
     sctp_nodelay: false                   # Optional BOOLEAN. Setting to true allows the gNB to send SCTP messages as soon as possible without any Nagle-like algorithm. Supported: [false, true].
     supported_tracking_areas:             # Required TEXT. Sets the list of tracking areas supported by this AMF.
       -                                     # Supported TAC #1
@@ -70,17 +70,17 @@ cu_cp:
         report_cfg_id:                            # Required UINT. The ID of this report configuration.
         report_type:                              # Required TEXT. The type of the report. Supported: [event_triggered, periodical]. Note that periodical reports are only supported for serving cells.
         event_triggered_report_type:              # Optional TEXT. Sets the type of event triggered report. Supported: [a1, a2, a3, a4, a5, a6].
-        report_interval_ms: 1024                  # Optional UINT (1024). The report interval in ms. Supported: [120, 240, 480, 640, 1024, 2048, 5120, 10240, 20480, 40960, 60000, 360000, 720000, 1800000]. 
-        meas_trigger_quantity:                    # Optional TEXT. Sets the quantity to be measured. Supported: [rsrp, rsrq, sinr]. 
+        report_interval_ms: 1024                  # Optional UINT (1024). The report interval in ms. Supported: [120, 240, 480, 640, 1024, 2048, 5120, 10240, 20480, 40960, 60000, 360000, 720000, 1800000].
+        meas_trigger_quantity:                    # Optional TEXT. Sets the quantity to be measured. Supported: [rsrp, rsrq, sinr].
         meas_trigger_quantity_threshold_db:       # Optional UINT. Sets the measurement trigger quantity threshold in dB used for measurement report trigger of event A1/A2/A4/A5. Supported: [0 - 127].
         meas_trigger_quantity_threshold_2_db:     # Optional UINT. Sets the measurement trigger quantity threshold 2 in dB used for measurement report trigger of event A5. Supported: [0 - 127].
         meas_trigger_quantity_offset_db:          # Optional UINT. Sets the measurement trigger quantity offset in dB used for measurement report trigger of event A3/A6. Note the actual value is field value * 0.5 dB. Supported: [-30 - 30].
         hysteresis_db:                            # Optional UINT. Sets the hysteresis in dB used for measurement report trigger. Note the actual value is field value * 0.5 dB. Supported: [0 - 30].
-        time_to_trigger_ms:                       # Optional UINT. Sets the time in ms during which a condition must be met before measurement report trigger. Supported: [0, 40, 64, 80, 100, 128, 160, 256, 320, 480, 512, 640, 1024, 1280, 2560, 5120]. 
+        time_to_trigger_ms:                       # Optional UINT. Sets the time in ms during which a condition must be met before measurement report trigger. Supported: [0, 40, 64, 80, 100, 128, 160, 256, 320, 480, 512, 640, 1024, 1280, 2560, 5120].
 
   rrc:
     force_reestablishment_fallback: false    # Optional BOOLEAN (false). Force RRC re-establishment fallback to RRC setup. Supported: [false, true].
-    rrc_procedure_timeout_ms: 720            # Optional UINT (720). Sets the timeout in ms used for RRC message exchange with UE. It needs to suit the expected communication delay and account for potential retransmissions UE processing delays, SR delays, etc. Supported: [0 - inf].
+    rrc_procedure_guard_time_ms: 1000        # Optional UINT (1000). Sets the guard time in ms used for RRC message exchange with UE. This is added to the RRC procedure timeout. Supported: [0 - inf].
 
   security:
     integrity: not_needed                    # Optional TEXT (not_needed). Sets the default integrity protection indication for DRBs.
@@ -91,22 +91,22 @@ cu_cp:
   f1ap:
     procedure_timeout: 1000                  # Optional INT (1000). Sets the time the F1AP waits for a DU response in milliseconds.
 
-  e1ap: 
+  e1ap:
     procedure_timeout: 1000                  # Optional INT (1000). Sets the time the E1AP waits for a CU-UP response in milliseconds.
 
 cu_up:
   warn_on_drop: false                   # Optional BOOLEAN (false). Enables the option to log a warning for dropped packets in GTP-U and PDCP due to full queues. Supported: [false, true].
 
-  ngu: 
+  ngu:
     no_core: false                        # Optional BOOLEAN (false). Setting to true allows the gNB to run without a core. Supported: [0, 1].
     socket:                               # Define socket(s) for NG-U interface.
-      -                                     # Socket 1 
+      -                                     # Socket 1
         bind_addr: 127.0.3.1                  # Optional TEXT (auto). Sets local IP address to bind for N3 interface. Format: IPV4 or IPV6 IP address.
         udp:
           max_rx_msgs: 256                      # Optional INT (256). Sets the maximum number of messages RX from a socket in a single syscall.
           pool_threshold: 0.9                   # Optional FLOAT (0.9). Sets the pool occupancy threshold, after which packets are dropped. Supported: [0.0 - 1.0].
           dscp:                                 # Optional UINT. Sets the Differentiated Services Code Point. Supported: [0 - 63].
-    gtpu: 
+    gtpu:
       queue_size: 2046                       # Optional UINT (2046). GTP-U queue size, in PDUs
       batch_size: 256                        # Optional UINT (256). Maximum number of GTP-U PDUs processed in a batch
       reordering_timer: 0                    # Optional UINT (0). GTP-U RX reordering timer (in milliseconds)
@@ -174,12 +174,12 @@ cell_cfg:
     t311: 3000                              # Optional UINT (3000). Sets the RRC Connection Re-establishment procedure timer in ms. The timer starts upon initiating the RRC connection re-establishment procedure. Supported: [1000,3000,5000,10000,15000,20000,30000].
     n311: 1                                 # Optional UINT (1). Sets the In-sync counter. The counter is increased upon reception of the "in-sync" from lower layer while the timer T310 is running. Stops the timer T310, when configured value is reached.Supported: [1,2,3,4,5,6,8,10].
     t319: 1000                              # Optional UINT (1000). Sets the RRC Connection Resume timer in ms. The timer starts upon transmission of RRCResumeRequest or RRCResumeRequest1. Supported: [100,200,300,400,600,1000,1500,2000].
-    etws: 
+    etws:
       message_id: 4356                        # Optional UINT (4356). Sets the ETWS message ID. Supported: [0 - 65535].
       serial_num: 1288                        # Optional UINT (1228). Sets the ETWS serial number. Supported: [0 - 65535].
       warning_type: 2432                      # Optional UINT (2432). Sets the ETWS warning type. Supported: [0 - 65535].
       data_coding_scheme: 0                   # Optional UINT (0). Sets the ETWS data coding scheme. Supported: [0 - 255].
-      warning_message:                        # Optional TEXT. Sets the ETWS warning message. Max length and character support depends on the chosen coding scheme. 
+      warning_message:                        # Optional TEXT. Sets the ETWS warning message. Max length and character support depends on the chosen coding scheme.
     cmas:
       message_id: 4370                        # Optional UINT (4370). Sets the CMAS message ID. Supported: [0 - 65535].
       serial_num: 12291                       # Optional UINT (12291). Sets the CMAS serial number. Supported: [0 - 65535].
@@ -303,7 +303,7 @@ cell_cfg:
     f4_intraslot_freq_hop: false            # Optional BOOLEAN (false). Enables intra-slot frequency hopping for PUCCH F4. Supported: [false, true].
     f4_additional_dmrs: false               # Optional BOOLEAN (false). Enables additional DMRS for PUCCH F4. Supported: [false, true].
     f4_pi2_bpsk: false                      # Optional BOOLEAN (false). Enables pi/2 BPSK for PUCCH F4. Supported: [false, true].
-    f4_occ_length: 2                        # Optional UINT (2). Sets the OCC length for PUCCH F4. Supported: [1 - 4].                      
+    f4_occ_length: 2                        # Optional UINT (2). Sets the OCC length for PUCCH F4. Supported: [1 - 4].
     min_k1: 4                               # Optional UINT (4). Sets the minimum value of K1 (difference in slots between PDSCH and HARQ-ACK). Lower k1 values will reduce latency, but place a stricter requirement on the UE decode latency. Supported: [1 - 4].
     max_consecutive_kos: 100                # Optional UINT (100). Sets the maximum number of consecutive undecoded PUCCH F2 for CSI before an Radio Link Failure is reported.
     enable_cl_loop_pw_control: false        # Optional BOOLEAN (false). Enables the closed-loop power control for PUCCH. Supported: [false, true].
@@ -312,12 +312,12 @@ cell_cfg:
     target_sinr_f3: 1                       # Optional FLOAT (1). Sets the target SINR for PUCCH F3 in dB. Supported: [-15 - 10].
 
   srs:
-    srs_period_ms:                          # Optional FLOAT. Sets the periodic SRS period in ms. The SRS period needs to be compatible with the subcarrier spacing. Supported: {1,2,2.5,4,5,8,10,16,20,32,40,64,80,160,320,640,1280,2560}. 
-    srs_max_nof_sym_per_slot: 2             # Optional UINT (2). Sets the number of symbols for UL slot that are reserved for the SRS cell resources. Supprted: [1 - 6]. 
-    srs_nof_sym_per_resource: 1             # Optional UINT (2). Sets the number of symbols per SRS resource. Supported: {1,2,4}. 
+    srs_period_ms:                          # Optional FLOAT. Sets the periodic SRS period in ms. The SRS period needs to be compatible with the subcarrier spacing. Supported: {1,2,2.5,4,5,8,10,16,20,32,40,64,80,160,320,640,1280,2560}.
+    srs_max_nof_sym_per_slot: 2             # Optional UINT (2). Sets the number of symbols for UL slot that are reserved for the SRS cell resources. Supprted: [1 - 6].
+    srs_nof_sym_per_resource: 1             # Optional UINT (2). Sets the number of symbols per SRS resource. Supported: {1,2,4}.
     srs_tx_comb: 4                          # Optional UINT (4). Sets the SRS TX comb size. Supported: {2, 4}.
     srs_cyclic_shift_reuse: 1               # Optional UINT (1). Sets the SRS cyclic shift reuse factor. It needs to be compatible with the TX comb and number of UL antenna ports. Supported: {1,2,3,4,6}.
-    srs_sequence_id_reuse: 1                # Optional UINT (1). Sets the reuse factor for the SRS sequence ID. Supported: {1,2,3,5,6,10,15,30}. 
+    srs_sequence_id_reuse: 1                # Optional UINT (1). Sets the reuse factor for the SRS sequence ID. Supported: {1,2,3,5,6,10,15,30}.
 
   prach:
     prach_config_index:                     # Optional UINT. Sets the PRACH configuration index. If not set, the value is derived, so that the PRACH fits in an UL slot. Supported: [0 - 255].
@@ -367,7 +367,7 @@ cell_cfg:
   sched_expert_cfg:
     policy_sched_cfg:
       qos_sched:
-        qos_weight_function: gbr_prioritized  # Optional TEXT (gbr_prioritized). Sets the QoS weight function to use in the QoS scheduler. Supported: [gbr_prioritized, multivariate].      
+        qos_weight_function: gbr_prioritized  # Optional TEXT (gbr_prioritized). Sets the QoS weight function to use in the QoS scheduler. Supported: [gbr_prioritized, multivariate].
         pf_fairness_coeff: 2                  # Optional FLOAT [2]. Sets the fairness Coefficient to use in Proportional Fair policy scheduler.
         prio_enabled: true                   # Optional BOOLEAN (true). Sets whether or not to take into account the QoS Flow priority in QoS-aware scheduling. Supported: [false, true].
         pdb_enabled: true                     # Optional BOOLEAN (true). Sets whether or not to take into account the Packet Delay Budget (PDB) in QoS-aware scheduling. Supported: [false, true].
@@ -377,9 +377,9 @@ cell_cfg:
         ta_measurement_slot_prohibit_period: 0      # Optional UINT (0). Sets the delay in number of slots between issuing the TA_CMD and starting TA measurements. Supported: [0 - 10000].
         ta_cmd_offset_threshold: 1                  # Optional INT (1). Sets the timing Advance Command (T_A) offset threshold above which Timing Advance Command is triggered. If set to less than zero, issuing of TA Command is disabled. Supported: [-1 - 31].
         ta_target: 1                                # Optional INT (1). Sets the timing advance target in units of TA. Supported: [-30 - 30].
-        ta_update_measurement_ul_sinr_threshold: 0  # Optional FLOAT (0). Sets the UL SINR threshold (in dB) above which reported N_TA update measurement is considered valid. 
+        ta_update_measurement_ul_sinr_threshold: 0  # Optional FLOAT (0). Sets the UL SINR threshold (in dB) above which reported N_TA update measurement is considered valid.
 
-  drx: 
+  drx:
     on_duration_timer: 10                   # Optional UINT (10). Minimum duration in milliseconds that the UE stays in active mode, when DRX is configured. Supported: {1,2,3,4,5,6,8,10,20,30,40,50,60,80,100,200,300,400,500,600,800,1000,1200,1600}
     inactivity_timer: 0                     # Optional UINT (0). Duration in milliseconds that the UE stays active after PDCCH reception, when DRX is configured. Supported: {0,1,2,3,4,5,6,8,10,20,30,40,50,60,80,100,200,300,500,750,1280,1920,2560}
     retx_timer_dl: 0                        # Optional UINT (0). Maximum duration in slots until a DL ReTX is received by the UE, when DRX is configured. Supported: {0,1,2,4,6,8,16,24,33,40,64,80,96,112,128,160,320}
@@ -387,8 +387,8 @@ cell_cfg:
     long_cycle: 0                           # Optional UINT (0). Duration in milliseconds between UE DRX long cycles. The value 0 is used to disable DRX. Supported: {10,20,32,40,60,64,70,80,128,160,256,320,512,640,1024,1280,2048,2560,5120,10240} OR {0}
 
 e2:
-  enable_cu_cp_e2: false                # Optional BOOLEAN (false). Enables the CU E2 agent for CU-CP. Supported: [false, true]. 
-  enable_cu_up_e2: false                # Optional BOOLEAN (false). Enables the CU E2 agent for CU-UP. Supported: [false, true]. 
+  enable_cu_cp_e2: false                # Optional BOOLEAN (false). Enables the CU E2 agent for CU-CP. Supported: [false, true].
+  enable_cu_up_e2: false                # Optional BOOLEAN (false). Enables the CU E2 agent for CU-UP. Supported: [false, true].
   enable_du_e2: false                   # Optional BOOLEAN (false). Enables the DU E2 agent. Supported: [false, true].
   addr: 127.0.0.1                       # Optional TEXT (127.0.0.1). Sets the RIC IP address.
   port: 36421                           # Optional UINT (36421). Sets the RIC Port. Supported: [20000 - 40000].
@@ -403,12 +403,12 @@ e2:
 
 ntn:
   cell_specific_koffset: 0              # Optional INT (0). Sets the cell-specific k-offset to be used for NTN. Supported: [0 - 1023].
-  ntn_ul_sync_validity_dur: 5           # Optional INT. Sets the NTN UL sync validity duration in milliseconds. Supported: [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 120, 180, 240, 900].  
+  ntn_ul_sync_validity_dur: 5           # Optional INT. Sets the NTN UL sync validity duration in milliseconds. Supported: [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 120, 180, 240, 900].
 
   epoch_time:
     sfn: 0                                # Optional INT (0). Sets the SFN part. Supported: [0 - 1023].
     subframe_number: 0                    # Optional INT (0). Sets the sub-frame number part. Supported: [0 - 9].
-  ta_info: 
+  ta_info:
     ta_common: 0                          # Optional INT (0). Sets the common Timing Advance value. Supported: [0 - 66485757].
     ta_common_drift: 0                    # Optional INT (0). Sets the common Timing Advance drift value. Supported: [-257303 - 257303].
     ta_common_drift_variant: 0            # Optional INT (0). Sets the common Timing Advance drift variant value. Supported: [0 - 28949].
@@ -426,7 +426,7 @@ ntn:
     longitude: 0                          # Optional FLOAT (0). Sets the longitude of the satellites angle of ascending node.
     inclination: 0                        # Optional FLOAT (0). Sets the inclination of the satellite.
     mean_anomaly: 0                       # Optional FLOAT (0). Sets the mean anomaly of the satellite.
- 
+
 ru_ofh:
 # Many of the following values are optional as they have default values. In practice, all of the following parameters should be defined by the user, as they will need
 # to be configured specifically for the RU being used. Failing to configure this parameters correctly may result in the RU failing to connect correctly to the DU.
@@ -555,17 +555,17 @@ expert_execution:
   affinities:
     isolated_cpus:                        # Optional TEXT. Sets the CPU core(s) isolated for the gNB application. Supported: [1, 2, 3 , ..., N].
     low_priority_cpus:                    # Optional TEXT. Sets the CPU core(s) assigned to low priority tasks. Supported: [1, 2, 3 , ..., N].
-    low_priority_pinning:                 # Optional TEXT. Sets the policy used for assigning CPU cores to low priority tasks.   
+    low_priority_pinning:                 # Optional TEXT. Sets the policy used for assigning CPU cores to low priority tasks.
     ru_timing_cpu:                        # Optional TEXT. Sets the CPU used for timing in the Radio Unity.
     ofh:                                  # Optional TEXT Sets the CPU affinities configuration for RU cells tx-rx threads. Number of entries specified defines the number of tx-rx threads created. By default if no entries are specified, the number of tx-rx threads equals the number of RU cells.
   threads:
     non_rt:
       nof_non_rt_threads: 4                   # Optional UINT (4). Sets the number of non real time threads for processing of CP and UP data in upper layers.
-      non_rt_task_queue_size: 2048            # Optional UINT (2048). Sets the non real time task worker queue size. 
+      non_rt_task_queue_size: 2048            # Optional UINT (2048). Sets the non real time task worker queue size.
     upper_phy:
       pdsch_processor_type: auto              # Optional TEXT (auto). Sets the PDSCH processor type. Supported: [auto, generic, concurrent, lite].
-      pdsch_cb_batch_length: 0                # Optional UINT (0). Sets PDSCH flexible processor clodeblock-batch size. Supported values: 
-                                              # 'auto' -> adapts the batch length to the number of threads dedicated to downlink processing 
+      pdsch_cb_batch_length: 0                # Optional UINT (0). Sets PDSCH flexible processor clodeblock-batch size. Supported values:
+                                              # 'auto' -> adapts the batch length to the number of threads dedicated to downlink processing
                                               # 'synchronous' -> disables batch-splitting and ensure that TB processing remains within the calling thread without parallelization
       nof_pusch_decoder_threads: 1            # Optional UINT (1). Sets the number of threads used to encode PUSCH.
       nof_ul_threads: 1                       # Optional UINT (1). Sets the number of upprt PHY threads to proccess uplink.
@@ -574,23 +574,23 @@ expert_execution:
       execution_profile: quad                 # Optional TEXT (quad). Sets the lower physical layer executor profile. Supported: [single, dual, quad].
     ofh:
       enable_dl_parallelization: true         # Optional BOOLEAN (true). Sets the Open Fronthaul downlink parallelization flag. Supported: [false, true].
-  queues: 
+  queues:
     cu_up_dl_ue_executor_queue_size: 8192   # Optional UINT (8192). Sets the CU-UP's DL UE executor queue size.
     cu_up_ul_ue_executor_queue_size: 8192   # Optional UINT (8192). Sets the CU-UP's UL UE executor queue size.
     cu_up_ctrl_ue_executor_queue_size: 8192 # Optional UINT (8192). Sets the CU-UP's CTRL UE executor queue size.
     cu_up_strand_batch_size: 256            # Optional UINT (256). Sets the CU-UP's strands batch size.
     du_ue_data_executor_queue_size: 8192    # Optional UINT (8192). Sets the DU's UE executor task queue size for PDU processing.
-  tracing: 
+  tracing:
     cu_up_executor_tracing_enable: false    # Optional BOOLEAN (false). Enable tracing for CU-UP executors
     du_high_enable: false                   # Optional BOOLEAN (false). Enable tracing for DU-high executors
 
 remote_control:
   enabled: false                        # Optional BOOLEAN (false). Enables the remote control feature. Supported: [false, true].
   bind_addr: 127.0.0.1                  # Optional TEXT (127.0.0.1). Sets the local IP address to bind for remote control. Supported: IPv4 address.
-  port: 8001                            # Optional UINT (8001). Sets the port where the remote control server listens for incoming connections. Supported: [0 - 65535].              
+  port: 8001                            # Optional UINT (8001). Sets the port where the remote control server listens for incoming connections. Supported: [0 - 65535].
 
 test_mode:
-  test_ue:                                  
+  test_ue:
     rnti: 0                               # Optional ENUM (0). Sets the C-RNTI of the UE. Supported: [0 - 65519].
     nof_ues: 1                            # Optonal UINT (1). Sets the number of test UE(s) created. Supported [0 - 1024].
     auto_ack_indication_delay:            # Optional TEXT. Sets the delay before the UL and DL HARQs are automatically ACKed. This feature should only be used if the UL PHY is not operational.
@@ -668,7 +668,7 @@ metrics:
   enable_json: false                    # Optional BOOLEAN (false). Enable JSON metrics reporting
   enable_log: false                     # Optional BOOLEAN (false). Enable log metrics reporting
   enable_verbose: false                 # Optional BOOLEAN (false). Enable extended detail metrics reporting
-  layers: 
+  layers:
     enable_app_usage: false               # Optional BOOLEAN (false). Enable application usage metrics
     enable_e1ap: false                    # Optional BOOLEAN (false). Enable E1AP metrics
     enable_pdcp: false                    # Optional BOOLEAN (false). Enable PDCP metrics
@@ -679,7 +679,7 @@ metrics:
     enable_executor: false                # Optional BOOLEAN (false). Whether to log DU-high executor metrics
     enable_du_low: false                  # Optional BOOLEAN (false). Enable DU low metrics (upper physical layer)
     enable_ru: false                      # Optional BOOLEAN (false). Enable Radio Unit metrics
-  periodicity: 
+  periodicity:
     app_usage_report_period: 1000         # Optional UINT (1000). Application resource usage metrics report period in milliseconds
     cu_cp_report_period: 1000             # Optional UINT (1000). CU-CP metrics report period in milliseconds
     cu_up_report_period: 1000             # Optional UINT (1000). CU-UP metrics report period in milliseconds
