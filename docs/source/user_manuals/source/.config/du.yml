@@ -416,6 +416,7 @@ ru_sdr:
   sync: default                         # Optional TEXT (default). Specify the RF device time synchronization source (i.e., 1PPS reference). Supported: [default, internal, external, gpsdo].
   otw_format: default                   # Optional TEXT (default). Specific the over-the-wire format. Supported: [default, sc8, sc12, sc16].
   time_alignment_calibration: auto      # Optional TEXT (auto). Compensates for any reception and transmission time misalignment inherent to the RF device. Positive values reduce the RF transmission delay with respect to the RF reception. Negative values have the opposite effect.
+  start_time:                           # Optional TEXT (empty). Radio streaming start time with format %Y-%m-%d %H:%M:%S.
 
   amplitude_control:
     tx_gain_backoff: 12.0                     # Optional FLOAT (12.0). Sets baseband gain back-off in dB. This accounts for the signal PAPR and is applied regardless of clipping settings. Format: positive float.
@@ -426,7 +427,6 @@ ru_sdr:
     low_phy_dl_throttling: 0                # Optional FLOAT (0). Throttles the lower PHY DL baseband generation. Setting to 0 disables throttling. Supported: any value in the range [0 - 1].
     tx_mode: continuous                     # Optional TEXT (continuous). Selects a radio transmission mode. Discontinuous modes are not supported by all radios. Supported: [continuous, discontinuous, same-port]
     power_ramping_time_us: 0                # Optional FLOAT (0). Specifies the power ramping time in microseconds, it proactively initiates the transmission and mitigates transient effects. It is recommended to configure this parameter carefully, taking into account the characteristics of the transmit chain in order to achieve optimal performance
-    dl_buffer_size_policy: auto             # Optional TEXT (auto). Sets the size of the policy of the baseband buffers that pass the DL samples from the lower PHY to the radio.
 
 ru_dummy:
   dl_processing_delay: 1                # Optional UINT (1). Sets the downlink processing delay in number of slots.
@@ -436,6 +436,7 @@ expert_phy:
   max_proc_delay: 5                              # Optional INT (5). Sets the maximum allowed DL processing delay in slots. Supported: [1 - 30].
   pusch_dec_max_iterations: 6                    # Optional UINT (6). Sets the number of PUSCH LDPC decoder iterations. Format: Positive integer greater than 0.
   pusch_dec_enable_early_stop: true              # Optional BOOLEAN (true). Enables the PUSCH decoder early stopping mechanism.
+  pusch_decoder_force_decoding: false            # Optional BOOLEAN (false). Set to true for forcing the LDPC decoder to decode inputs filled with zeros.
   pusch_sinr_calc_method: post_equalization      # Optional TEXT (evm). Sets the PUSCH SINR calculation method. Supported: [channel_estimator, post_equalization, evm].
   pusch_channel_estimator_fd_strategy: filter    # Optional TEXT (filter). Sets the PUSCH channel estimator frequency-domain strategy. Supported: [filter, mean, none].
   pusch_channel_estimator_td_strategy: average   # Optional TEXT (average). Sets the PUSCH channel estimator time-domain strategy. Supported: [average, interpolate].
@@ -443,6 +444,8 @@ expert_phy:
   pusch_channel_equalizer_algorithm: zf          # Optional TEXT (zf). Sets the PUSCH channel equalizer algorithm. Supported: [zf, mmse].
   max_request_headroom_slots: 0                  # Optional UINT (0). Sets the maximum request headroom size in slots. Supported: [0 - 3].
   allow_request_on_empty_uplink_slot: false      # Optional BOOLEAN (false). Allows uplink request on empty uplink slots (slots with no PUCCH/PUSHC/SRS PDUs).
+  enable_phy_tap: false                          # Optional BOOLEAN (false). Enables or disables the PHY tap plugin if it is present while building the application.
+  phy_tap_arguments:                             # Optional TEXT (empty). PHY tap plugin argument string passed during construction.
 
 buffer_pool:
   nof_segments: 1048576                 # Optional UINT (1048576). Sets the number of segments allocated by the buffer pool.
@@ -470,15 +473,16 @@ expert_execution:
       nof_non_rt_threads: 4                   # Optional UINT (4). Sets the number of non real time threads for processing of CP and UP data in upper layers.
       non_rt_task_queue_size: 2048            # Optional UINT (2048). Sets the non real time task worker queue size.
     upper_phy:
-      pdsch_processor_type: auto              # Optional TEXT (auto). Sets the PDSCH processor type. Supported: [auto, generic, concurrent, lite].
-      pdsch_cb_batch_length: 0                # Optional UINT (0). Sets PDSCH flexible processor clodeblock-batch size. Supported values:
+      pdsch_processor_type: auto              # Optional TEXT (auto). Sets the PDSCH processor type. Supported: [auto, generic, flexible].
+      pdsch_cb_batch_length: 0                # Optional UINT (4). Sets PDSCH flexible processor codeblock-batch size. Supported values:
                                               # 'auto' -> adapts the batch length to the number of threads dedicated to downlink processing
                                               # 'synchronous' -> disables batch-splitting and ensure that TB processing remains within the calling thread without parallelization
-      nof_pusch_decoder_threads: 1            # Optional UINT (1). Sets the number of threads used to encode PUSCH.
-      nof_ul_threads: 1                       # Optional UINT (1). Sets the number of upprt PHY threads to proccess uplink.
-      nof_dl_threads: 4                       # Optional UINT (1). Sets the number of upprt PHY threads to proccess downlink.
+                                              # Set it to a number large enough to reduce the overhead of concurrent tasks and small to reduce the batch processing latency.
+      max_pucch_concurrency: 0                # Optional UINT (0). Limits the simultaneous maximum number of threads processing PUCCH. Set to zero for no limit.
+      max_pusch_and_srs_concurrency: 1        # Optional UINT (1). Limits the simultaneous maximum number of threads processing PUSCH (estimation, equalization, demodulation and UCI decoding), and SRS chanel estimation. Set to zero for no limit.
+      max_pdsch_concurrency: 0                # Optional UINT (0). Limits the simultaneous maximum number of threads processing PDSCH. Set to zero for no limit.
     lower_phy:
-      execution_profile: quad                 # Optional TEXT (quad). Sets the lower physical layer executor profile. Supported: [single, dual, quad].
+      execution_profile: triple               # Optional TEXT (triple). Sets the lower physical layer executor profile. Supported: [single, dual, triple].
     ofh:
       enable_dl_parallelization: true         # Optional BOOLEAN (true). Sets the Open Fronthaul downlink parallelization flag. Supported: [false, true].
   queues:
