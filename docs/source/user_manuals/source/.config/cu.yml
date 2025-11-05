@@ -144,24 +144,17 @@ buffer_pool:
   segment_size: 2048                    # Optional UINT (2048). Sets the size of each buffer pool segment in bytes.
 
 expert_execution:
-  affinities:
-    isolated_cpus:                        # Optional TEXT. Sets the CPU core(s) isolated for the CU application. Supported: [1, 2, 3 , ..., N].
-    low_priority_cpus:                    # Optional TEXT. Sets the CPU core(s) assigned to low priority tasks. Supported: [1, 2, 3 , ..., N].
-    low_priority_pinning:                 # Optional TEXT. Sets the policy used for assigning CPU cores to low priority tasks.
-
-  threads:
-    non_rt:
-      nof_non_rt_threads: 4                   # Optional UINT (4). Sets the number of non real time threads for processing of CP and UP data in upper layers.
-      non_rt_task_queue_size: 2048            # Optional UINT (2048). Sets the non real time task worker queue size.
-
-  queues:
-    cu_up_dl_ue_executor_queue_size: 8192   # Optional UINT (8192). Sets the CU-UP's DL UE executor queue size.
-    cu_up_ul_ue_executor_queue_size: 8192   # Optional UINT (8192). Sets the CU-UP's UL UE executor queue size.
-    cu_up_ctrl_ue_executor_queue_size: 8192 # Optional UINT (8192). Sets the CU-UP's CTRL UE executor queue size.
-    cu_up_strand_batch_size: 256            # Optional UINT (256). Sets the CU-UP's strands batch size.
-
-  tracing:
-    cu_up_executor_tracing_enable: false    # Optional BOOLEAN (false). Enable tracing for CU-UP executors
+  main_pool:
+    nof_threads: 0                            # Optional UINT (0). Number of threads for processing upper PHY and upper layers.
+    task_queue_size: 2048                     # Optional UINT (2048). Main thread pool task queue size.
+    backoff_period: 50                        # Optional UINT (50). Main thread pool back-off period, in microseconds.
+  queues: 
+    cu_up_dl_ue_executor_queue_size: 8192     # Optional UINT (8192). Sets the CU-UP's DL UE executor queue size.
+    cu_up_ul_ue_executor_queue_size: 8192     # Optional UINT (8192). Sets the CU-UP's UL UE executor queue size.
+    cu_up_ctrl_ue_executor_queue_size: 8192   # Optional UINT (8192). Sets the CU-UP's CTRL UE executor queue size.
+    cu_up_strand_batch_size: 256              # Optional UINT (256). Sets the CU-UP's strands batch size.
+  tracing: 
+    cu_up_executor_tracing_enable: false      # Optional BOOLEAN (false). Enable tracing for CU-UP executors
 
 remote_control:
   enabled: false                        # Optional BOOLEAN (false). Enables the remote control feature. Supported: [false, true].
@@ -171,25 +164,25 @@ remote_control:
 log:
 # All gNB layers and components can be configured independently to output at various levels of detail. Logs can be configured to the following levels (from lowest to highest levels of detail):
 # none, error, warning, info, debug
-  filename:                             # Optional TEXT (/tmp/gnb.log). File path for logs. Logs can be redirected to stdout by setting the filename to "stdout".
+  filename: stdout                      # Optional TEXT (stdout). File path for logs. Logs can be redirected to stdout by setting the filename to "stdout".
   all_level: warning                    # Optional TEXT (warning). Sets a common log level across PHY, MAC, RLC, PDCP, RRC, SDAP, NGAP and GTPU layers.
   lib_level: warning                    # Optional TEXT (warning). Sets generic log level.
   e2ap_level: warning                   # Optional TEXT (warning). Sets E2AP log level.
   config_level: none                    # Optional TEXT (none). Sets the config log level.
-  tracing_filename:                     # Optional TEXT. Set to a valid file name to enable tracing log.
   rrc_level: warning                    # Optional TEXT (warning). Sets RRC log level.
   ngap_level: warning                   # Optional TEXT (warning). Sets NGAP log level.
-  f1ap_level: warning                   # Optional TEXT (warning). Sets F1AP log level.
-  sec_level: warning                    # Optional TEXT (warning). Sets security functions level.
-  f1ap_json_enabled: false              # Optional BOOLEAN (false). Enables the JSON logging of F1AP PDUs.
+  nrppa_level: warning                  # Optional TEXT (warning). Sets NRPPA log level.
   pdcp_level: warning                   # Optional TEXT (warning). Sets PDCP log level.
   sdap_level: warning                   # Optional TEXT (warning). Sets SDAP log level.
-  gtpu_level: warning                   # Optional TEXT (warning). Sets GTPU log level.
-  f1u_level: warning                    # Optional TEXT (warning). Sets F1u log level.
-  cu_level: warning                     # Optional TEXT (warning). Sets the CU log level.
-  hex_max_size: 0                       # Optional UINT (0). Sets maximum number of bytes to print for hex messages. Supported: [0 - 1024]
+  sec_level: warning                    # Optional TEXT (warning). Sets security functions level.
   e1ap_level: warning                   # Optional TEXT (warning). Sets E1AP log level.
   e1ap_json_enabled: false              # Optional BOOLEAN (false). Enables the JSON logging of E1AP PDUs. Supported: [false, true].
+  cu_level: warning                     # Optional TEXT (warning). Sets the CU log level.
+  f1ap_level: warning                   # Optional TEXT (warning). Sets F1AP log level.
+  f1u_level: warning                    # Optional TEXT (warning). Sets F1u log level.
+  gtpu_level: warning                   # Optional TEXT (warning). Sets GTPU log level.
+  f1ap_json_enabled: false              # Optional BOOLEAN (false). Enables the JSON logging of F1AP PDUs.
+  hex_max_size: 0                       # Optional INT (0). Sets the aximum number of bytes to print in hex (zero for no hex dumps, -1 for unlimited bytes). Supported: [-1 - 1024].
 
 pcap:
   ngap_filename: /tmp/gnb_ngap.pcap     # Optional TEXT (/tmp/gnb_ngap.pcap). Path for NGAP PCAPs.
@@ -207,19 +200,23 @@ pcap:
   e2ap_enable: false                    # Optional BOOLEAN (false). Enable/disable E2AP packet capture. Supported: [false, true].
 
 metrics:
-  addr: 127.0.0.1                       # Optional TEXT:IPV4 (127.0.0.1). Sets the metrics address. Supported: IPV4 address.
-  port: 55555                           # Optional UINT. Sets the metrics UPD port. Supported: [0 - 65535].
-  enable_json: false                    # Optional BOOLEAN (false). Enable JSON metrics reporting
-  enable_log: false                     # Optional BOOLEAN (false). Enable log metrics reporting
-  enable_verbose: false                 # Optional BOOLEAN (false). Enable extended detail metrics reporting
+  autostart_stdout_metrics: false       # Optional BOOLEAN (false). Sets whether or not to autostart stdout metrics reporting. Supported [false, true].
+  enable_json: false                    # Optional BOOLEAN (false). Enables JSON metrics reporting.
+  enable_log: false                     # Optional BOOLEAN (false). Enables log metrics reporting.
+  enable_verbose: false                 # Optional BOOLEAN (false). Enables extended detail metrics reporting.
+  layers: 
+    enable_app_usage: false             # Optional BOOLEAN (false). Enables application usage metrics.
+    enable_ngap: false                  # Optional BOOLEAN (false). Enables NGAP metrics.
+    enable_e1ap: false                  # Optional BOOLEAN (false). Enables E1AP metrics.
+    enable_pdcp: false                  # Optional BOOLEAN (false). Enables PDCP metrics.
+    enable_rrc: false                   # Optional BOOLEAN (false). Enables RRC metrics.
+    skip_cu_up_executor: true           # Optional BOOLEAN (true). Whether to skip logging CU-UP executor metrics when executor logging is enabled application wide.
+  periodicity: 
+    app_usage_report_period: 1000       # Optional UINT (1000). Application resource usage metrics report period in milliseconds.
+    cu_cp_report_period: 1000           # Optional UINT (1000). CU-CP metrics report period in milliseconds.
+    cu_up_report_period: 1000           # Optional UINT (1000). CU-UP metrics report period in milliseconds.
 
-  layers:
-    enable_app_usage: false               # Optional BOOLEAN (false). Enable application usage metrics
-    enable_e1ap: false                    # Optional BOOLEAN (false). Enable E1AP metrics
-    enable_pdcp: false                    # Optional BOOLEAN (false). Enable PDCP metrics
-    enable_cu_up_executor: false          # Optional BOOLEAN (false). Whether to log CU-UP executor metrics
-
-  perioidicity:
-    app_usage_report_period: 1000         # Optional UINT (1000). Application resource usage metrics report period in milliseconds
-    cu_cp_report_period: 1000             # Optional UINT (1000). CU-CP metrics report period in milliseconds
-    cu_up_report_period: 1000             # Optional UINT (1000). CU-UP metrics report period in milliseconds
+trace:
+  filename:                             # Optional TEXT. Set to a valid file path to enable tracing and write the trace to the file.
+  max_tracing_events_per_file: 1000000  # Optional UINT (1000000). Maximum number of events per file. Set to zero for no limit.
+  nof_tracing_events_after_severe: 0    # Optional UINT (0). Number of events to write prior to a severe event. Set to zero for writing all events.

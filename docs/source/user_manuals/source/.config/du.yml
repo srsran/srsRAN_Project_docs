@@ -343,65 +343,75 @@ fapi:
 ru_ofh:
 # Many of the following values are optional as they have default values. In practice, all of the following parameters should be defined by the user, as they will need
 # to be configured specifically for the RU being used. Failing to configure this parameters correctly may result in the RU failing to connect correctly to the DU.
-  gps_alpha: 0                          # Optional FLOAT (0). Sets the GPS alpha. Supported: [0 - 1.2288e+07].
-  gps_beta: 0                           # Optional INT (0). Sets the GPS beta. Supported: [-32768 - +32767].
-  ru_bandwidth_MHz: 100                 # Required UINT (0). Sets the channel bandwidth in MHz. Supported: [5,10,15,20,25,30,40,50,60,70,80,90,100].
-  t1a_max_cp_dl: 500                    # Optional INT (500). Sets T1a maximum value for downlink control-plane. Supported: [0 - 1960].
-  t1a_min_cp_dl: 258                    # Optional INT (258). Sets T1a minimum value for downlink control-plane. Supported: [0 - 1960].
-  t1a_max_cp_ul: 500                    # Optional INT (500). Sets T1a maximum value for uplink control-plane. Supported: [0 - 1960].
-  t1a_min_cp_ul: 258                    # Optional INT (258). Sets T1a minimum value for uplink control-plane. Supported: [0 - 1960].
-  t1a_max_up: 300                       # Optional INT (300).Sets T1a maximum value for uer-plane. Supported: [0 - 1960].
-  t1a_min_up: 85                        # Optional INT (85). Sets T1a minimum value for user-plane. Supported: [0 - 1960].
-  ta4_max: 300                          # Optional UINT (300). Sets the Ta4 maximum value for User-Plane. Supported: [0 - 1960].
-  ta4_min: 85                           # Optional UINT (85). Sets the Ta4 maximum value for User-Plane. Supported: [0 - 1960].
-  is_prach_cp_enabled: true             # Optional BOOLEAN (true). Sets PRACH control-plane enabled flag. Supported: [false, true].
-  ignore_ecpri_seq_id: false            # Optional BOOLEAN (false). Sets whether or not to ignore eCPRI sequence ID field value. Supported [false, true].
-  ignore_ecpri_payload_size: false      # Optional BOOLEAN (false). Sets whether or not to ignore eCPRI payload size field value. Supported [false, true].
-  ignore_prach_start_symbol: false      # Optional BOOLEAN (false). Sets whether or not to ignore PRACH start symbol in PRAACH U-Plane Packets. Supported [false, true].
-  warn_unreceived_ru_frames: after_traffic_detection       # Optional TEXT (always). Sets whether or not to send a warning when there are unreceived Radio Unit frames. Supported never, always, after_traffic_detection].
-  compr_method_ul: bfp                  # Optional TEXT (bfp). Sets the uplink compression method. Supported: [none, bfp, bfp selective, block scaling, mu law, modulation, modulation selective].
-  compr_bitwidth_ul: 9                  # Optional UINT (9). Sets the uplink compression bit width. Supported: [1 - 16].
-  compr_method_dl: bfp                  # Optional TEXT (bfp). Sets the downlink compression method. Supported: [none, bfp, bfp selective, block scaling, mu law, modulation, modulation selective].
-  compr_bitwidth_dl: 9                  # Optional UINT (9). Sets the downlink compression bit width. Supported: [1 - 16].
-  compr_method_prach: bfp               # Optional TEXT (bfp). Sets the PRACH compression method. Supported: [none, bfp, bfp selective, block scaling, mu law, modulation, modulation selective].
-  compr_bitwidth_prach: 9               # Optional UINT (9). Sets the PRACH compression bit width. Supported [1 - 16].
-  enable_ul_static_compr_hdr: true      # Optional BOOLEAN (true). Uplink static compression header enabled flag. Supported: [false, true].
-  enable_dl_static_compr_hdr: true      # Optional BOOLEAN (true). Downlink static compression header enabled flag. Supported: [false, true].
-  iq_scaling: 0.35                      # Optional FLOAT (0.35). Sets the IQ scaling factor. Supported: [0 - 20].
-  cells:                                # Optional TEXT. Sets the hardware specific cell configuration on a per cell basis.
-    -                                       # Cell 1 - set custom configuration for each cell
-      network_interface: enp1s0f0             # Optional TEXT (enp1s0f0). Sets the ethernet network interface name for the RU or PCIe identifier when using DPDK. Format: a string, e.g. [interface_name].
-      ru_mac_address: 70:b3:d5:e1:5b:06       # Optional TEXT (70:b3:d5:e1:5b:06). Sets the RU MAC address. Format: a string, e.g. [AA:BB:CC:DD:11:22:33].
-      du_mac_address: 00:11:22:33:00:77       # Optional TEXT (00:11:22:33:00:77). Sets the DU MAC address. Format: a string, e.g. [AA:BB:CC:DD:11:22:33].
-      vlan_tag_cp: 1                          # Optional UINT (1). Sets the VLAN tag value for C-Plane.
-      vlan_tag_up: 1                          # Optional UINT (1). Sets the VLAN tag value for U-Plane.
-      prach_port_id: [4]                   # Optional UINT (4). Sets the RU PRACH eAxC port ID. Supported: [0 - 65535].
-      dl_port_id: [0, 1]                   # Optional UINT (0, 1). Sets the RU downlink eAxC port ID. Format: vector containing all DL eXaC ports, e.g. [0, ...\ , N].
-      ul_port_id: [0]                      # Optional UINT (0). Sets the RU uplink eAxC port ID. Supported: [0 - 65535].
-      ru_bandwidth_MHz: 100                   # Required UINT (0). Sets the channel bandwidth in MHz. Supported: [5,10,15,20,25,30,40,50,60,70,80,90,100].
-      t1a_max_cp_dl: 500                      # Optional INT (500). Sets T1a maximum value for downlink control-plane. Supported: [0 - 1960].
-      t1a_min_cp_dl: 258                      # Optional INT (258). Sets T1a minimum value for downlink control-plane. Supported: [0 - 1960].
-      t1a_max_cp_ul: 500                      # Optional INT (500). Sets T1a maximum value for uplink control-plane. Supported: [0 - 1960].
-      t1a_min_cp_ul: 258                      # Optional INT (258). Sets T1a minimum value for uplink control-plane. Supported: [0 - 1960].
-      t1a_max_up: 300                         # Optional INT (300).Sets T1a maximum value for uer-plane. Supported: [0 - 1960].
-      t1a_min_up: 85                          # Optional INT (85). Sets T1a minimum value for user-plane. Supported: [0 - 1960].
-      ta4_max: 300                            # Optional UINT (300). Sets the Ta4 maximum value for User-Plane. Supported: [0 - 1960].
-      ta4_min: 85                             # Optional UINT (85). Sets the Ta4 maximum value for User-Plane. Supported: [0 - 1960].
-      is_prach_cp_enabled: true               # Optional BOOLEAN (true). Sets PRACH control-plane enabled flag. Supported: [false, true].
-      is_dl_broadcast_enabled: false          # Optional BOOLEAN (false). Sets downlink broadcast enabled flag. Supported: [false, true].
-      ignore_ecpri_seq_id: false              # Optional BOOLEAN (false). Sets whether or not to ignore eCPRI sequence ID field value. Supported [false, true].
-      ignore_ecpri_payload_size: false        # Optional BOOLEAN (false). Sets whether or not to ignore eCPRI payload size field value. Supported [false, true].
-      ignore_prach_start_symbol: false        # Optional BOOLEAN (false). Sets whether or not to ignore PRACH start symbol in PRAACH U-Plane Packets. Supported [false, true].
-      warn_unreceived_ru_frames: always       # Optional TEXT (always). Sets whether or not to send a warning when there are unreceived Radio Unit frames. Supported never, always, after_traffic_detection].
-      compr_method_ul: bfp                    # Optional TEXT (bfp). Sets the uplink compression method. Supported: [none, bfp, bfp selective, block scaling, mu law, modulation, modulation selective].
-      compr_bitwidth_ul: 9                    # Optional UINT (9). Sets the uplink compression bit width. Supported: [1 - 16].
-      compr_method_dl: bfp                    # Optional TEXT (bfp). Sets the downlink compression method. Supported: [none, bfp, bfp selective, block scaling, mu law, modulation, modulation selective].
-      compr_bitwidth_dl: 9                    # Optional UINT (9). Sets the downlink compression bit width. Supported: [1 - 16].
-      compr_method_prach: bfp                 # Optional TEXT (bfp). Sets the PRACH compression method. Supported: [none, bfp, bfp selective, block scaling, mu law, modulation, modulation selective].
-      compr_bitwidth_prach: 9                 # Optional UINT (9). Sets the PRACH compression bit width. Supported [1 - 16].
-      enable_ul_static_compr_hdr: true        # Optional BOOLEAN (true). Uplink static compression header enabled flag. Supported: [false, true].
-      enable_dl_static_compr_hdr: true        # Optional BOOLEAN (true). Downlink static compression header enabled flag. Supported: [false, true].
-      iq_scaling: 0.35                        # Optional FLOAT (0.35). Sets the IQ scaling factor. Supported: [0 - 20].
+  gps_alpha: 0                                             # Optional FLOAT (0). Sets the GPS alpha. Supported: [0 - 1.2288e+07].
+  gps_beta: 0                                              # Optional INT (0). Sets the GPS beta. Supported: [-32768 - +32767].
+  ru_bandwidth_MHz: <cell bandwidth>                         # Optional UINT (<cell bandwidth>). Sets the channel bandwidth in MHz. Supported: [5,10,15,20,25,30,40,50,60,70,80,90,100].
+  t1a_max_cp_dl: 500                                       # Optional INT (500). Sets T1a maximum value for downlink control-plane. Supported: [0 - 1960].
+  t1a_min_cp_dl: 258                                       # Optional INT (258). Sets T1a minimum value for downlink control-plane. Supported: [0 - 1960].
+  t1a_max_cp_ul: 500                                       # Optional INT (500). Sets T1a maximum value for uplink control-plane. Supported: [0 - 1960].
+  t1a_min_cp_ul: 258                                       # Optional INT (258). Sets T1a minimum value for uplink control-plane. Supported: [0 - 1960].
+  t1a_max_up: 300                                          # Optional INT (300).Sets T1a maximum value for uer-plane. Supported: [0 - 1960].
+  t1a_min_up: 85                                           # Optional INT (85). Sets T1a minimum value for user-plane. Supported: [0 - 1960].
+  ta4_max: 500                                             # Optional UINT (500). Sets the Ta4 maximum value for User-Plane. Supported: [0 - 1960].
+  ta4_min: 85                                              # Optional UINT (85). Sets the Ta4 maximum value for User-Plane. Supported: [0 - 1960].
+  is_prach_cp_enabled: true                                # Optional BOOLEAN (true). Sets PRACH control-plane enabled flag. Supported: [false, true].
+  ignore_ecpri_seq_id: false                               # Optional BOOLEAN (false). Sets whether or not to ignore eCPRI sequence ID field value. Supported [false, true].
+  ignore_ecpri_payload_size: false                         # Optional BOOLEAN (false). Sets whether or not to ignore eCPRI payload size field value. Supported [false, true].
+  ignore_prach_start_symbol: false                         # Optional BOOLEAN (false). Sets whether or not to ignore PRACH start symbol in PRACH U-Plane Packets. Supported [false, true].
+  log_lates_as_warnings: true                              # Optional BOOLEAN (true). Sets the log late events as warnings.
+  warn_unreceived_ru_frames: after_traffic_detection       # Optional TEXT (after_traffic_detection). Sets whether or not to send a warning when there are unreceived Radio Unit frames. Supported: [never, always, after_traffic_detection].
+  compr_method_ul: bfp                                     # Optional TEXT (bfp). Sets the uplink compression method. Supported: [none, bfp, bfp selective, block scaling, mu law, modulation, modulation selective].
+  compr_bitwidth_ul: 9                                     # Optional UINT (9). Sets the uplink compression bit width. Supported: [1 - 16].
+  compr_method_dl: bfp                                     # Optional TEXT (bfp). Sets the downlink compression method. Supported: [none, bfp, bfp selective, block scaling, mu law, modulation, modulation selective].
+  compr_bitwidth_dl: 9                                     # Optional UINT (9). Sets the downlink compression bit width. Supported: [1 - 16].
+  compr_method_prach: bfp                                  # Optional TEXT (bfp). Sets the PRACH compression method. Supported: [none, bfp, bfp selective, block scaling, mu law, modulation, modulation selective].
+  compr_bitwidth_prach: 9                                  # Optional UINT (9). Sets the PRACH compression bit width. Supported [1 - 16].
+  enable_ul_static_compr_hdr: true                         # Optional BOOLEAN (true). Uplink static compression header enabled flag. Supported: [false, true].
+  enable_dl_static_compr_hdr: true                         # Optional BOOLEAN (true). Downlink static compression header enabled flag. Supported: [false, true].
+  ru_reference_level_dBFS: -12                             # Optional FLOAT (-12). RU IQ reference level mapped to the maximum RF power. Supported: ($-\infty$ - 0]
+  subcarrier_rms_backoff_dB: 0                             # Optional FLOAT (0). Power back-off attenuation applied to all subcarriers with respect to the RU reference level. Supported: [0, $\infty$)
+  iq_scaling: 0.1                                          # Optional FLOAT (0.1). Sets the IQ scaling factor. This is an alternative to ru_reference_level_dBFS. Supported: [0 - 100].
+  cplane_prach_fft_len: 4096                               # Optional UINT (4096). PRACH FFT length (used in C-Plane Type-3 messages). Supported: [128, 256, 512, 1024, 1536, 2048, 3072, 4096].
+  cells:                                                   # Optional TEXT. Sets the hardware specific cell configuration on a per cell basis.
+    -                                                      # Cell 1 - set custom configuration for each cell
+      network_interface: enp1s0f0                          # Optional TEXT (enp1s0f0). Sets the ethernet network interface name for the RU or PCIe identifier when using DPDK. Format: a string, e.g. [interface_name].
+      enable_promiscuous: false                            # Optional BOOLEAN (false). Enables promiscuous mode flag.
+      check_link_status: false                             # Optional BOOLEAN (false). Ethernet link status checking flag.
+      mtu: 9000                                            # Optional UINT (9000). NIC interface MTU size. Supported: [1500 - 9600].
+      ru_mac_address: 70:b3:d5:e1:5b:06                    # Optional TEXT (70:b3:d5:e1:5b:06). Sets the RU MAC address. Format: a string, e.g. [AA:BB:CC:DD:11:22:33].
+      du_mac_address: 00:11:22:33:00:77                    # Optional TEXT (00:11:22:33:00:77). Sets the DU MAC address. Format: a string, e.g. [AA:BB:CC:DD:11:22:33].
+      vlan_tag_cp: 0                                       # Optional UINT (0). Sets the VLAN tag value for C-Plane. Supported: [1 - 4094].
+      vlan_tag_up: 0                                       # Optional UINT (1). Sets the VLAN tag value for U-Plane. Supported: [1 - 4094].
+      prach_port_id: [4]                                   # Optional UINT (4). Sets the RU PRACH eAxC port ID. Supported: [0 - 65535].
+      dl_port_id: [0]                                      # Optional UINT (0). Sets the RU downlink eAxC port ID. Format: vector containing all DL eXaC ports, e.g. [0, ...\ , N].
+      ul_port_id: [0]                                      # Optional UINT (0). Sets the RU uplink eAxC port ID. Supported: [0 - 65535].
+      ru_bandwidth_MHz: <cell bandwidth>                     # Optional UINT (<cell bandwidth>). Sets the channel bandwidth in MHz. Supported: [5,10,15,20,25,30,40,50,60,70,80,90,100].
+      t1a_max_cp_dl: 500                                   # Optional INT (500). Sets T1a maximum value for downlink control-plane. Supported: [0 - 1960].
+      t1a_min_cp_dl: 258                                   # Optional INT (258). Sets T1a minimum value for downlink control-plane. Supported: [0 - 1960].
+      t1a_max_cp_ul: 500                                   # Optional INT (500). Sets T1a maximum value for uplink control-plane. Supported: [0 - 1960].
+      t1a_min_cp_ul: 258                                   # Optional INT (258). Sets T1a minimum value for uplink control-plane. Supported: [0 - 1960].
+      t1a_max_up: 300                                      # Optional INT (300).Sets T1a maximum value for uer-plane. Supported: [0 - 1960].
+      t1a_min_up: 85                                       # Optional INT (85). Sets T1a minimum value for user-plane. Supported: [0 - 1960].
+      ta4_max: 500                                         # Optional UINT (500). Sets the Ta4 maximum value for User-Plane. Supported: [0 - 1960].
+      ta4_min: 85                                          # Optional UINT (85). Sets the Ta4 maximum value for User-Plane. Supported: [0 - 1960].
+      is_prach_cp_enabled: true                            # Optional BOOLEAN (true). Sets PRACH control-plane enabled flag. Supported: [false, true].
+      ignore_ecpri_seq_id: false                           # Optional BOOLEAN (false). Sets whether or not to ignore eCPRI sequence ID field value. Supported [false, true].
+      ignore_ecpri_payload_size: false                     # Optional BOOLEAN (false). Sets whether or not to ignore eCPRI payload size field value. Supported [false, true].
+      ignore_prach_start_symbol: false                     # Optional BOOLEAN (false). Sets whether or not to ignore PRACH start symbol in PRACH U-Plane Packets. Supported [false, true].
+      log_lates_as_warnings: true                          # Optional BOOLEAN (true). Sets the log late events as warnings.
+      warn_unreceived_ru_frames: after_traffic_detection   # Optional TEXT (after_traffic_detection). Sets whether or not to send a warning when there are unreceived Radio Unit frames. Supported: [never, always, after_traffic_detection].
+      compr_method_ul: bfp                                 # Optional TEXT (bfp). Sets the uplink compression method. Supported: [none, bfp, bfp selective, block scaling, mu law, modulation, modulation selective].
+      compr_bitwidth_ul: 9                                 # Optional UINT (9). Sets the uplink compression bit width. Supported: [1 - 16].
+      compr_method_dl: bfp                                 # Optional TEXT (bfp). Sets the downlink compression method. Supported: [none, bfp, bfp selective, block scaling, mu law, modulation, modulation selective].
+      compr_bitwidth_dl: 9                                 # Optional UINT (9). Sets the downlink compression bit width. Supported: [1 - 16].
+      compr_method_prach: bfp                              # Optional TEXT (bfp). Sets the PRACH compression method. Supported: [none, bfp, bfp selective, block scaling, mu law, modulation, modulation selective].
+      compr_bitwidth_prach: 9                              # Optional UINT (9). Sets the PRACH compression bit width. Supported [1 - 16].
+      enable_ul_static_compr_hdr: true                     # Optional BOOLEAN (true). Uplink static compression header enabled flag. Supported: [false, true].
+      enable_dl_static_compr_hdr: true                     # Optional BOOLEAN (true). Downlink static compression header enabled flag. Supported: [false, true].
+      ru_reference_level_dBFS: -12                         # Optional FLOAT (-12). RU IQ reference level mapped to the maximum RF power. Supported: ($-\infty$ - 0]
+      subcarrier_rms_backoff_dB: 0                         # Optional FLOAT (0). Power back-off attenuation applied to all subcarriers with respect to the RU reference level. Supported: [0, $\infty$)
+      iq_scaling: 0.1                                      # Optional FLOAT (0.1). Sets the IQ scaling factor. Supported: [0 - 100].
+      cplane_prach_fft_len: 4096                           # Optional UINT (4096). PRACH FFT length (used in C-Plane Type-3 messages). Supported: [128, 256, 512, 1024, 1536, 2048, 3072, 4096].
 
 ru_sdr:
   srate: 61.44                          # Required FLOAT (61.44). Sets the sampling rate of the RF-frontend in MHz.
@@ -452,43 +462,40 @@ buffer_pool:
   segment_size: 2048                    # Optional UINT (2048). Sets the size of each buffer pool segment in bytes.
 
 expert_execution:
-  cell_affinities:                      # Optional TEXT. Sets the cell CPU affinities configuration on a per cell basis. Entry order is the same as the order in the defined cell list.
+  cell_affinities:                            # Optional TEXT. Sets the cell CPU affinities configuration on a per cell basis. Entry order is the same as the order in the defined cell list.
     -
-      l1_dl_cpus:                           # Optional TEXT. Sets the CPU core(s) assigned to L1 downlink tasks. Supported: [1, 2, 3 , ..., N]. Where N is the number of total cores available.
-      l1_ul_cpus:                           # Optional TEXT. Sets the CPU core(s) assigned to L1 uplink tasks. Supported: [1, 2, 3 , ..., N].
-      l1_dl_pinning:                        # Optional TEXT. Sets the policy used for assigning CPU cores to L1 downlink tasks.
-      l1_ul_pinning:                        # Optional TEXT. Sets the policy used for assigning CPU cores to L1 uplink tasks.
-      l2_cell_cpus:                         # Optional TEXT. Sets the CPU core(s) assigned to L2 cells tasks. Supported: [1, 2, 3 , ..., N].
-      l2_cell_pinning:                      # Optional TEXT. Sets the policy used for assigning CPU cores to L2 cell tasks.
-      ru_cpus:                              # Optional TEXT. Sets the CPU core(s) used for the Radio Unit tasks. Supported: [1, 2, 3 , ..., N].
-      ru_pinning:                           # Optional TEXT. Sets the policy used for assigning CPU cores to Radio Unity tasks.
+      ru_cpus:                                # Optional TEXT. Sets the CPU core(s) used for the Radio Unit tasks. Supported: [1, 2, 3 , ..., N].
+      ru_pinning:                             # Optional TEXT. Sets the policy used for assigning CPU cores to Radio Unit tasks.
   affinities:
-    isolated_cpus:                        # Optional TEXT. Sets the CPU core(s) isolated for the DU application. Supported: [1, 2, 3 , ..., N].
-    low_priority_cpus:                    # Optional TEXT. Sets the CPU core(s) assigned to low priority tasks. Supported: [1, 2, 3 , ..., N].
-    low_priority_pinning:                 # Optional TEXT. Sets the policy used for assigning CPU cores to low priority tasks.
-    ru_timing_cpu:                        # Optional TEXT. Sets the CPU used for timing in the Radio Unity.
-    ofh:                                  # Optional TEXT Sets the CPU affinities configuration for RU cells tx-rx threads. Number of entries specified defines the number of tx-rx threads created. By default if no entries are specified, the number of tx-rx threads equals the number of RU cells.
+    ru_timing_cpu:                             # Optional TEXT. Sets the CPU used for timing in the Radio Unity.
+    ofh:                                      # Optional TEXT Sets the CPU affinities configuration for RU cells tx-rx threads. Number of entries specified defines the number of tx-rx threads created. By default if no entries are specified, the number of tx-rx threads equals the number of RU cells.
+      -
+        ru_txrx_cpus:                         # Optional TEXT. Number of CPUs used for the Radio Unit tasks.
   threads:
-    non_rt:
-      nof_non_rt_threads: 4                   # Optional UINT (4). Sets the number of non real time threads for processing of CP and UP data in upper layers.
-      non_rt_task_queue_size: 2048            # Optional UINT (2048). Sets the non real time task worker queue size.
     upper_phy:
       pdsch_processor_type: auto              # Optional TEXT (auto). Sets the PDSCH processor type. Supported: [auto, generic, flexible].
-      pdsch_cb_batch_length: 0                # Optional UINT (4). Sets PDSCH flexible processor codeblock-batch size. Supported values:
-                                              # 'auto' -> adapts the batch length to the number of threads dedicated to downlink processing
+      pdsch_cb_batch_length: 4                # Optional UINT (4). Sets PDSCH flexible processor clodeblock-batch size. Supported values: 
+                                              # 'auto' -> adapts the batch length to the number of threads dedicated to downlink processing 
                                               # 'synchronous' -> disables batch-splitting and ensure that TB processing remains within the calling thread without parallelization
-                                              # Set it to a number large enough to reduce the overhead of concurrent tasks and small to reduce the batch processing latency.
-      max_pucch_concurrency: 0                # Optional UINT (0). Limits the simultaneous maximum number of threads processing PUCCH. Set to zero for no limit.
-      max_pusch_and_srs_concurrency: 1        # Optional UINT (1). Limits the simultaneous maximum number of threads processing PUSCH (estimation, equalization, demodulation and UCI decoding), and SRS chanel estimation. Set to zero for no limit.
-      max_pdsch_concurrency: 0                # Optional UINT (0). Limits the simultaneous maximum number of threads processing PDSCH. Set to zero for no limit.
+      max_pucch_concurrency: 0                # Optional UINT (0). Maximum PUCCH processing concurrency for all cells.
+                                              # Limits the maximum number of threads that can concurrently process Physical Uplink Control Channel
+                                              # (PUCCH). Set it to zero for no limit of threads.
+      max_pusch_and_srs_concurrency: 1        # Optional UINT (1). Maximum PUSCH and SRS processing concurrency for all cells.
+                                              # Limits the maximum number of threads that can concurrently process Physical Uplink Shared Channel
+                                              # (PUSCH) and Sounding Reference Signals (SRS). Set it to zero for no limitation. If hardware
+                                              # acceleration is enabled, this parameter is set to the number of the accelerator queues.
+      max_pdsch_concurrency: 0                # Optional UINT (0). Maximum concurrency level for PDSCH processing for all cells.
+                                              # Limits the number of threads that can concurrently process Physical Downlink Shared Channel (PDSCH).
+                                              # Set to zero for no limitation. If hardware acceleration is enabled, this parameter is set to the
+                                              # number of the accelerator queues.
     lower_phy:
       execution_profile: triple               # Optional TEXT (triple). Sets the lower physical layer executor profile. Supported: [single, dual, triple].
-    ofh:
-      enable_dl_parallelization: true         # Optional BOOLEAN (true). Sets the Open Fronthaul downlink parallelization flag. Supported: [false, true].
-  queues:
-    du_ue_data_executor_queue_size: 8192    # Optional UINT (8192). Sets the DU's UE executor task queue size for PDU processing.
-  tracing:
-    du_high_enable: false                   # Optional BOOLEAN (false). Enable tracing for DU-high executors
+  main_pool:
+    nof_threads: 0                            # Optional UINT (0). Number of threads for processing upper PHY and upper layers.
+    task_queue_size: 2048                     # Optional UINT (2048). Main thread pool task queue size.
+    backoff_period: 50                        # Optional UINT (50). Main thread pool back-off period, in microseconds.
+  queues: 
+    du_ue_data_executor_queue_size: 8192      # Optional UINT (8192). Sets the DU's UE executor task queue size for PDU processing.
 
 remote_control:
   enabled: false                        # Optional BOOLEAN (false). Enables the remote control feature. Supported: [false, true].
@@ -531,30 +538,29 @@ test_mode:
 log:
 # All gNB layers and components can be configured independently to output at various levels of detail. Logs can be configured to the following levels (from lowest to highest levels of detail):
 # none, error, warning, info, debug
-  filename:                             # Optional TEXT (/tmp/gnb.log). File path for logs. Logs can be redirected to stdout by setting the filename to "stdout".
-  all_level: warning                    # Optional TEXT (warning). Sets a common log level across PHY, MAC, RLC, PDCP, RRC, SDAP, NGAP and GTPU layers.
-  lib_level: warning                    # Optional TEXT (warning). Sets the generic log level.
-  e2ap_level: warning                   # Optional TEXT (warning). Sets the E2AP log level.
-  config_level: none                    # Optional TEXT (none). Sets the config log level.
-  tracing_filename:                     # Optional TEXT. Set to a valid file name to enable tracing log.
-  mac_level: warning                    # Optional TEXT (warning). Sets the MAC log level.
-  rlc_level: warning                    # Optional TEXT (warning). Sets the RLC log level.
-  f1ap_level: warning                   # Optional TEXT (warning). Sets the F1AP log level.
-  f1u_level: warning                    # Optional TEXT (warning). Sets the F1u log level.
-  gtpu_level: warning                   # Optional TEXT (warning). Sets the GTPU log level.
-  du_level: warning                     # Optional TEXT (warning). Sets the DU log level.
-  f1ap_json_enabled: false              # Optional BOOLEAN (false). Enables the JSON logging of F1AP PDUs. Supported: [false, true].
-  high_latency_diagnostics_enabled: false # Optional BOOLEAN (false). Enables logging of performance diagnostics when high computational latencies are detected. Supported: [false, true].
-  fapi_level: warning                   # Optional TEXT (warning). Sets FAPI log level.
-  hal_level: warning                    # Optional TEXT (warning). Sets the HAL log level.
-  broadcast_enabled: false              # Optional BOOLEAN (false). Enables logging in the PHY and MAC layer of broadcast messages and all PRACH opportunities. Supported: [false, true].
-  phy_rx_symbols_filename:              # Optional TEXT. Print received symbols to file. Symbols will be printed if a valid path is set. Format: file path. This file can be used in the srsRAN_matlab project.
-  phy_rx_symbols_port: 0                # Optional TEXT. Set to a valid receive port number to dump the IQ symbols from that port only, or set to "all" to dump the IQ symbols from all UL receive ports. Only works if "phy_rx_symbols_filename" is set. Supported: [NON-NEGATIVE or all].
-  phy_rx_symbols_prach: false           # Optional BOOLEAN (false). Set to true to dump the IQ symbols from all the PRACH ports. Only works if "phy_rx_symbols_filename" is set. Supported: [false, true].
-  hex_max_size: 0                       # Optional UINT (0). Sets maximum number of bytes to print for hex messages. Supported: [0 - 1024]
-  ofh_level: warning                    # Optional TEXT (warning). Sets Open Fronthaul log level.
-  radio_level: info                     # Optional TEXT (info). Sets radio log level.
-  phy_level: warning                    # Optional TEXT (warning). Sets PHY log level.
+  filename: stdout                         # Optional TEXT (stdout). File path for logs. Logs can be redirected to stdout by setting the filename to "stdout".
+  all_level: warning                       # Optional TEXT (warning). Sets a common log level across PHY, MAC, RLC, PDCP, RRC, SDAP, NGAP and GTPU layers.
+  lib_level: warning                       # Optional TEXT (warning). Sets the generic log level.
+  e2ap_level: warning                      # Optional TEXT (warning). Sets the E2AP log level.
+  config_level: none                       # Optional TEXT (none). Sets the config log level.
+  mac_level: warning                       # Optional TEXT (warning). Sets the MAC log level.
+  rlc_level: warning                       # Optional TEXT (warning). Sets the RLC log level.
+  f1ap_level: warning                      # Optional TEXT (warning). Sets the F1AP log level.
+  f1u_level: warning                       # Optional TEXT (warning). Sets the F1u log level.
+  gtpu_level: warning                      # Optional TEXT (warning). Sets the GTPU log level.
+  du_level: warning                        # Optional TEXT (warning). Sets the DU log level.
+  f1ap_json_enabled: false                 # Optional BOOLEAN (false). Enables the JSON logging of F1AP PDUs. Supported: [false, true].
+  high_latency_diagnostics_enabled: false  # Optional BOOLEAN (false). Enables logging of performance diagnostics when high computational latencies are detected. Supported: [false, true].
+  fapi_level: warning                      # Optional TEXT (warning). Sets FAPI log level.
+  hal_level: warning                       # Optional TEXT (warning). Sets the HAL log level.
+  broadcast_enabled: false                 # Optional BOOLEAN (false). Enables logging in the PHY and MAC layer of broadcast messages and all PRACH opportunities. Supported: [false, true].
+  phy_rx_symbols_filename:                 # Optional TEXT. Print received symbols to file. Symbols will be printed if a valid path is set. Format: file path. This file can be used in the srsRAN_matlab project.
+  phy_rx_symbols_port: 0                   # Optional TEXT. Set to a valid receive port number to dump the IQ symbols from that port only, or set to "all" to dump the IQ symbols from all UL receive ports. Only works if "phy_rx_symbols_filename" is set. Supported: [NON-NEGATIVE or all].
+  phy_rx_symbols_prach: false              # Optional BOOLEAN (false). Set to true to dump the IQ symbols from all the PRACH ports. Only works if "phy_rx_symbols_filename" is set. Supported: [false, true].
+  hex_max_size: 0                          # Optional INT (0). Sets the aximum number of bytes to print in hex (zero for no hex dumps, -1 for unlimited bytes). Supported: [-1 - 1024]
+  ofh_level: warning                       # Optional TEXT (warning). Sets Open Fronthaul log level.
+  radio_level: info                        # Optional TEXT (info). Sets radio log level.
+  phy_level: warning                       # Optional TEXT (warning). Sets PHY log level.
 
 pcap:
   e2ap_du_filename: /tmp/du_e2ap.pcap   # Optional TEXT (/tmp/du_e2ap.pcap). Path for E2AP DU PCAPs.
@@ -571,22 +577,27 @@ pcap:
   mac_enable: false                     # Optional BOOLEAN (false). Enable/disable MAC packet capture. Supported: [false, true].            # Optional BOOLEAN (false). Enable/disable E2AP packet capture. Supported: [false, true].
 
 metrics:
-  autostart_stdout_metrics: false       # Optional BOOLEAN (false). Sets whether or note to autostart stdout metrics reporting. Supported [false, true].
-  addr: 127.0.0.1                       # Optional TEXT:IPV4 (127.0.0.1). Sets the metrics address. Supported: IPV4 address.
-  port: 55555                           # Optional UINT. Sets the metrics UPD port. Supported: [0 - 65535].
-  enable_json: false                    # Optional BOOLEAN (false). Enable JSON metrics reporting
-  enable_log: false                     # Optional BOOLEAN (false). Enable log metrics reporting
-  enable_verbose: false                 # Optional BOOLEAN (false). Enable extended detail metrics reporting
+  autostart_stdout_metrics: false       # Optional BOOLEAN (false). Sets whether or not to autostart stdout metrics reporting. Supported [false, true].
+  enable_json: false                    # Optional BOOLEAN (false). Enables JSON metrics reporting.
+  enable_log: false                     # Optional BOOLEAN (false). Enables log metrics reporting.
+  enable_verbose: false                 # Optional BOOLEAN (false). Enables extended detail metrics reporting.
+  layers: 
+    enable_app_usage: false             # Optional BOOLEAN (false). Enables application usage metrics.
+    enable_sched: true                  # Optional BOOLEAN (true). Enables DU scheduler metrics.
+    enable_rlc: false                   # Optional BOOLEAN (false). Enables RLC metrics.
+    enable_mac: false                   # Optional BOOLEAN (false). Enables MAC metrics.
+    enable_executor: false              # Optional BOOLEAN (false). Whether to log DU-high executor metrics.
+    enable_du_low: false                # Optional BOOLEAN (false). Enables DU low metrics (upper physical layer).
+    enable_ru: false                    # Optional BOOLEAN (false). Enables Radio Unit metrics.
+  periodicity: 
+    app_usage_report_period: 1000       # Optional UINT (1000). Application resource usage metrics report period in milliseconds.
+    du_report_period: 1000              # Optional UINT (1000). DU statistics report period in milliseconds. Supported: [0 - 10485760].
+    executors_report_period: 1000       # Optional UINT (1000). Executors metrics report period in milliseconds. Supported: [0 - 10485760].
 
+trace:
+  filename:                             # Optional TEXT. Set to a valid file path to enable tracing and write the trace to the file.
+  max_tracing_events_per_file: 1000000  # Optional UINT (1000000). Maximum number of events per file. Set to zero for no limit.
+  nof_tracing_events_after_severe: 0    # Optional UINT (0). Number of events to write prior to a severe event. Set to zero for writing all events.
   layers:
-    enable_app_usage: false               # Optional BOOLEAN (false). Enable application usage metrics
-    enable_sched: true                    # Optional BOOLEAN (true). Enable DU scheduler metrics
-    enable_rlc: false                     # Optional BOOLEAN (false). Enable RLC metrics
-    enable_mac: false                     # Optional BOOLEAN (false). Enable MAC metrics
-    enable_executor: false                # Optional BOOLEAN (false). Whether to log DU-high executor metrics
-    enable_du_low: false                  # Optional BOOLEAN (false). Enable DU low metrics (upper physical layer)
-    enable_ru: false                      # Optional BOOLEAN (false). Enable Radio Unit metrics
-
-  periodicity:
-    app_usage_report_period: 1000         # Optional UINT (1000). Application resource usage metrics report period in milliseconds
-    du_report_period: 1000                # Optional UINT:INT (1000). DU statistics report period in milliseconds. Format: [0 - 10485760].
+    du_high_enable: false               # Optional BOOLEAN (false). Enables tracing for DU-high executors.
+    phy_enable: false                   # Optional BOOLEAN (false). Enables tracing for physical layer executors.
