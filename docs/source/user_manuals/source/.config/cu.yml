@@ -62,6 +62,7 @@ cu_cp:
         report_type:                              # Required TEXT. The type of the report. Supported: [event_triggered, periodical]. Note that periodical reports are only supported for serving cells.
         event_triggered_report_type:              # Optional TEXT. Sets the type of event triggered report. Supported: [a1, a2, a3, a4, a5, a6].
         report_interval_ms: 1024                  # Optional UINT (1024). The report interval in ms. Supported: [120, 240, 480, 640, 1024, 2048, 5120, 10240, 20480, 40960, 60000, 360000, 720000, 1800000].
+        periodic_ho_rsrp_offset_db: -1            # OPTIONAL INT (-1). Measurement trigger quantity offset in dB used to trigger handovers by periodic measurement reports. When set to -1 no handover will be triggered from periodical measurements. Note the actual value is field value * 0.5 dB. Supported: [-1 - 30].
         meas_trigger_quantity:                    # Optional TEXT. Sets the quantity to be measured. Supported: [rsrp, rsrq, sinr].
         meas_trigger_quantity_threshold_db:       # Optional UINT. Sets the measurement trigger quantity threshold in dB used for measurement report trigger of event A1/A2/A4/A5. Supported: [0 - 127].
         meas_trigger_quantity_threshold_2_db:     # Optional UINT. Sets the measurement trigger quantity threshold 2 in dB used for measurement report trigger of event A5. Supported: [0 - 127].
