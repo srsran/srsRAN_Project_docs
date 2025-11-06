@@ -41,22 +41,37 @@ To enable the correct reporting of metrics to the Grafana UI, the gNB or DU conf
 where it can be parsed and displayed correctly by the GUI.
 
 .. code-block:: yaml
-
     metrics:
-        enable_json: true       # Enable reporting metrics in JSON format
-        addr: 172.19.1.4        # Metrics-server IP
-        port: 55555             # Metrics-server Port
+        autostart_stdout_metrics: true        # Sets whether or not to autostart stdout metrics reporting.
+        enable_json: true                     # Enables reporting metrics in JSON format
+        enable_log: false                     # Disables log metrics reporting.
+        enable_verbose: false                 # Disables extended detail metrics reporting.
         layers: 
-            enable_app_usage: true      # Enable application usage metrics
-            enable_e1ap: true           # Enable E1AP metrics
-            enable_pdcp: true           # Enable PDCP metrics
-            enable_cu_up_executor: true # Enable CU-UP executor metrics
-            enable_sched: true          # Enable DU scheduler metrics
-            enable_rlc: true            # Enable RLC metrics
-            enable_mac: true            # Enable MAC metrics
-            enable_executor: true       # Enable DU-high executor metrics
-            enable_du_low: true         # Enable DU low metrics (upper physical layer)
-            enable_ru: true             # Enable Radio Unit metrics
+            enable_app_usage: true            # Enable application usage metrics.
+            enable_ngap: true                 # Enable NGAP usage metricx.
+            enable_e1ap: true                 # Enable E1AP metrics.
+            enable_pdcp: true                 # Enable PDCP metrics.
+            enable_rrc: true                  # Enable RRC metrics.
+            skip_cu_up_executor: false        # Enable CU-UP executor metrics.
+            enable_sched: true                # Enable DU scheduler metrics.
+            enable_rlc: true                  # Enable RLC metrics.
+            enable_mac: true                  # Enable MAC metrics.
+            enable_executor: true             # Enable DU-high executor metrics.
+            enable_du_low: true               # Enable DU low metrics (upper physical layer).
+            enable_ru: true                   # Enable Radio Unit metrics.
+
+        periodicity: 
+            app_usage_report_period: 1000       # Application resource usage metrics report period in milliseconds.
+            cu_cp_report_period: 1000           # CU-CP metrics report period in milliseconds.
+            cu_up_report_period: 1000           # CU-UP metrics report period in milliseconds.
+            du_report_period: 1000              # DU statistics report period in milliseconds.
+            executors_report_period: 1000       # Executors metrics report period in milliseconds.
+
+    remote_control:
+        enabled: true            # Enables the Remote Control Server.
+        bind_addr: 127.0.0.1     # Remote Control Server bind address.
+        port: 8001               # Port where the remote control server listens for incoming connections.
+
 
 The ``addr`` and ``port`` values defined above mirror those set in the ``docker-compose.yml`` file found in the ``/docker`` folder. Any changes in these values must be kept consistent across both files. 
 

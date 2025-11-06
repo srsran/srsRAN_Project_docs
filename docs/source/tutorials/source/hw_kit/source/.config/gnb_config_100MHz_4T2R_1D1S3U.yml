@@ -80,18 +80,19 @@ ru_ofh:
   enable_dl_static_compr_hdr: true
   iq_scaling: 20.0
   cells:
-  - network_interface: 0000:01:01.0          # Replace with the DU network interface name (or BDF) for the DU <-> RU connection.
-    ru_mac_addr: AA:BB:CC:DD:EE:FF           # Replace with the RU MAC address.
-    du_mac_addr: AA:BB:CC:DD:EE:FF           # Replace with the MAC address of the DU interface.
-    enable_promiscuous: false
-    vlan_tag_up: 6                           # Replace with the used CP VLAN.
-    vlan_tag_cp: 6                           # Replace with the used UP VLAN.
-    prach_port_id: [4,5]
-    dl_port_id: [0,1,2,3]
-    ul_port_id: [0,1]
+    -
+      network_interface: 0000:01:01.0          # Replace with the DU network interface name (or BDF) for the DU <-> RU connection.
+      ru_mac_addr: AA:BB:CC:DD:EE:FF           # Replace with the RU MAC address.
+      du_mac_addr: AA:BB:CC:DD:EE:FF           # Replace with the MAC address of the DU interface.
+      enable_promiscuous: false
+      vlan_tag_up: 6                           # Replace with the used UP VLAN.
+      vlan_tag_cp: 6                           # Replace with the used CP VLAN.
+      prach_port_id: [4,5]
+      dl_port_id: [0,1,2,3]
+      ul_port_id: [0,1]
 
 hal:
-  eal_args: "--lcores (0-1)@(0-23) -a 0000:01:01.0" # Replace the DU network interface name. 
+  eal_args: "--lcores (0-1)@(0-23) -a 0000:01:01.0" # Replace the DU network interface PCIe BDF. 
 
 expert_phy:
   max_request_headroom_slots: 0

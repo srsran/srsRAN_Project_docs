@@ -165,7 +165,7 @@ Firstly, the metrics output can be enabled by adding the following to your confi
 .. code-block:: yaml 
 
   metrics: 
-    enable_json_metrics: true
+    enable_json: true
 
 With this enabled, the metrics will be sent to ``127.0.0.1:55555``. The metrics can be written to a file in real-time while the gNB is running using the following Python code: 
 

@@ -437,7 +437,7 @@ ru_ofh:
   t1a_min_cp_dl: 258                                       # Optional INT (258). Sets T1a minimum value for downlink control-plane. Supported: [0 - 1960].
   t1a_max_cp_ul: 500                                       # Optional INT (500). Sets T1a maximum value for uplink control-plane. Supported: [0 - 1960].
   t1a_min_cp_ul: 258                                       # Optional INT (258). Sets T1a minimum value for uplink control-plane. Supported: [0 - 1960].
-  t1a_max_up: 300                                          # Optional INT (300).Sets T1a maximum value for uer-plane. Supported: [0 - 1960].
+  t1a_max_up: 300                                          # Optional INT (300).Sets T1a maximum value for user-plane. Supported: [0 - 1960].
   t1a_min_up: 85                                           # Optional INT (85). Sets T1a minimum value for user-plane. Supported: [0 - 1960].
   ta4_max: 500                                             # Optional UINT (500). Sets the Ta4 maximum value for User-Plane. Supported: [0 - 1960].
   ta4_min: 85                                              # Optional UINT (85). Sets the Ta4 maximum value for User-Plane. Supported: [0 - 1960].
@@ -467,17 +467,17 @@ ru_ofh:
       mtu: 9000                                            # Optional UINT (9000). NIC interface MTU size. Supported: [1500 - 9600].
       ru_mac_address: 70:b3:d5:e1:5b:06                    # Optional TEXT (70:b3:d5:e1:5b:06). Sets the RU MAC address. Format: a string, e.g. [AA:BB:CC:DD:11:22:33].
       du_mac_address: 00:11:22:33:00:77                    # Optional TEXT (00:11:22:33:00:77). Sets the DU MAC address. Format: a string, e.g. [AA:BB:CC:DD:11:22:33].
-      vlan_tag_cp: 0                                       # Optional UINT (0). Sets the VLAN tag value for C-Plane. Supported: [1 - 4094].
-      vlan_tag_up: 0                                       # Optional UINT (1). Sets the VLAN tag value for U-Plane. Supported: [1 - 4094].
+      vlan_tag_cp: 1                                       # Optional UINT (1). Sets the VLAN tag value for C-Plane. Outgoing Ethernet packets will not include a VLAN tag if the vlan_tag_cp and vlan_tag_up parameters are not set. Supported: [1 - 4094].
+      vlan_tag_up: 1                                       # Optional UINT (1). Sets the VLAN tag value for U-Plane. Outgoing Ethernet packets will not include a VLAN tag if the vlan_tag_cp and vlan_tag_up parameters are not set. Supported: [1 - 4094].
       prach_port_id: [4]                                   # Optional UINT (4). Sets the RU PRACH eAxC port ID. Supported: [0 - 65535].
-      dl_port_id: [0]                                      # Optional UINT (0). Sets the RU downlink eAxC port ID. Format: vector containing all DL eXaC ports, e.g. [0, ...\ , N].
+      dl_port_id: [0]                                      # Optional UINT (0). Sets the RU downlink eAxC port ID. Format: vector containing all DL eAxC ports, e.g. [0, ...\ , N].
       ul_port_id: [0]                                      # Optional UINT (0). Sets the RU uplink eAxC port ID. Supported: [0 - 65535].
       ru_bandwidth_MHz: <cell bandwidth>                     # Optional UINT (<cell bandwidth>). Sets the channel bandwidth in MHz. Supported: [5,10,15,20,25,30,40,50,60,70,80,90,100].
       t1a_max_cp_dl: 500                                   # Optional INT (500). Sets T1a maximum value for downlink control-plane. Supported: [0 - 1960].
       t1a_min_cp_dl: 258                                   # Optional INT (258). Sets T1a minimum value for downlink control-plane. Supported: [0 - 1960].
       t1a_max_cp_ul: 500                                   # Optional INT (500). Sets T1a maximum value for uplink control-plane. Supported: [0 - 1960].
       t1a_min_cp_ul: 258                                   # Optional INT (258). Sets T1a minimum value for uplink control-plane. Supported: [0 - 1960].
-      t1a_max_up: 300                                      # Optional INT (300).Sets T1a maximum value for uer-plane. Supported: [0 - 1960].
+      t1a_max_up: 300                                      # Optional INT (300).Sets T1a maximum value for user-plane. Supported: [0 - 1960].
       t1a_min_up: 85                                       # Optional INT (85). Sets T1a minimum value for user-plane. Supported: [0 - 1960].
       ta4_max: 500                                         # Optional UINT (500). Sets the Ta4 maximum value for User-Plane. Supported: [0 - 1960].
       ta4_min: 85                                          # Optional UINT (85). Sets the Ta4 maximum value for User-Plane. Supported: [0 - 1960].
@@ -576,10 +576,10 @@ expert_execution:
       ru_cpus:                                # Optional TEXT. Sets the CPU core(s) used for the Radio Unit tasks. Supported: [1, 2, 3 , ..., N].
       ru_pinning:                             # Optional TEXT. Sets the policy used for assigning CPU cores to Radio Unit tasks.
   affinities:
-    ru_timing_cpu:                             # Optional TEXT. Sets the CPU used for timing in the Radio Unity.
     ofh:                                      # Optional TEXT Sets the CPU affinities configuration for RU cells tx-rx threads. Number of entries specified defines the number of tx-rx threads created. By default if no entries are specified, the number of tx-rx threads equals the number of RU cells.
-      -
-        ru_txrx_cpus:                         # Optional TEXT. Number of CPUs used for the Radio Unit tasks.
+      timing_cpu:                             # Optional TEXT. Sets the CPU core(s) used for timing in the Radio Unit.
+      txrx_cpus:                              # Optional TEXT. List of CPU core(s) used for the Radio Unit tasks.
+        - <cpu set>
   threads:
     upper_phy:
       pdsch_processor_type: auto              # Optional TEXT (auto). Sets the PDSCH processor type. Supported: [auto, generic, flexible].
@@ -704,7 +704,7 @@ metrics:
     enable_sched: true                  # Optional BOOLEAN (true). Enables DU scheduler metrics.
     enable_rlc: false                   # Optional BOOLEAN (false). Enables RLC metrics.
     enable_mac: false                   # Optional BOOLEAN (false). Enables MAC metrics.
-    enable_executor: false              # Optional BOOLEAN (false). Whether to log DU-high executor metrics.
+    enable_executor: false              # Optional BOOLEAN (false). Whether to log application executors metrics.
     enable_du_low: false                # Optional BOOLEAN (false). Enables DU low metrics (upper physical layer).
     enable_ru: false                    # Optional BOOLEAN (false). Enables Radio Unit metrics.
   periodicity: 
