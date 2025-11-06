@@ -16,10 +16,10 @@ qos:                                # Optional TEXT. Configures RLC and PDCP rad
 srbs:                               # Optional TEXT. Configures signaling radio bearers. Each list entry should begin with "-".
 
 cu_cp:
-  max_nof_dus:                          # Optional UINT. Maximum number of DU connections that the CU-CP may accept.
-  max_nof_cu_ups:                       # Optional UINT. Maximum number of CU-UP connections that the CU-CP may accept.
-  max_nof_ues:                          # Optional UINT. Maximum number of UEs that the CU-CP may accept.
-  max_nof_drbs_per_ue:                  # Optional UINT. Maximum number of DRBs per UE. Supported: [1 - 29].
+  max_nof_dus: 6                        # Optional UINT. Maximum number of DU connections that the CU-CP may accept.
+  max_nof_cu_ups: 6                     # Optional UINT. Maximum number of CU-UP connections that the CU-CP may accept.
+  max_nof_ues: 8192                     # Optional UINT. Maximum number of UEs that the CU-CP may accept.
+  max_nof_drbs_per_ue: 8                # Optional UINT. Maximum number of DRBs per UE. Supported: [1 - 29].
   inactivity_timer: 120                 # Optional INT (120). Sets the UE/PDU Session/DRB inactivity timer in seconds. Supported: [1 - 7200].
   request_pdu_session_timeout: 3        # Optional INT (3). Timeout for the setup of a PDU session after an InitialUeMessage was sent to the core, in seconds. The timeout must be larger than T310. If the value is reached, the UE will be released
 
@@ -38,7 +38,7 @@ cu_cp:
     sctp_hb_interval: 30000               # Optional INT (30000). SCTP heartbeat interval in milliseconds (-1 to use system default).
     sctp_assoc_max_retx: 10               # Optional INT (10). SCTP association max retransmissions (-1 to use system default).
     sctp_nodelay: false                   # Optional BOOLEAN. Setting to true allows the gNB to send SCTP messages as soon as possible without any Nagle-like algorithm. Supported: [false, true].
-    supported_tracking_areas:             # Required TEXT. Sets the list of tracking areas supported by this AMF.
+    supported_tracking_areas:             # Optional TEXT. Sets the list of tracking areas supported by this AMF.
       -                                     # Supported TAC #1
         tac: 7                                # Required UINT. Sets the Tracking Area Code.
         plmn_list:                            # Required TEXT. Sets the list of PLMN items supported for this Tracking Area.
@@ -53,20 +53,27 @@ cu_cp:
     trigger_handover_from_measurements: false   # Optional BOOLEAN (false). Sets whether or not to start HO if neighbor cells become stronger. Supported: [false, true].
     cells:                                      # Optional TEXT. Sets the list of cells known to the CU-CP, their configs (if not provided over F1) and their respective neighbor cells.
       -                                         # Define Cell 1
-        nr_cell_id:                               # Required UINT. The ID of this serving cell.
-        periodic_report_cfg_id:                   # Optional UINT. The periodical report configuration to use for this serving cell.
+        nr_cell_id:                               # Required UINT. The ID of a cell that belongs to this gNB.
+        periodic_report_cfg_id:                   # Optional UINT. The periodical report configuration to use for this cell.
         ncells:                                   # Required TEXT. List of neighbor cells.
-          nr_cell_id:                                 # Required UINT. The ID of this neighbor cell.
-          report_configs:                             # Required TEXT. List of report configurations to use for measurements of this neighbor cell.
-        gnb_id_bit_length:                        # Optional UINT. The ID of this gNB. Supported: [22 - 32]
-        pci:                                      # Optional UINT. The PCI of this serving cell. Supported: [0-1007]
-        band:                                     # Optional UINT. The NR band of this serving cell cell. Must be present if not provided over F1.
-        ssb_scs:                                  # Optional UINT. The SSB subcarrier spacing of this serving cell in KHz. Must be present if not provided over F1.
-        ssb_period:                               # Optional UINT. The SSB period of this serving cell in ms.  Must be present if not provided over F1.
-        ssb_offset:                               # Optional UINT. The SSB offset of this serving cell. Must be present if not provided over F1.
-        ssb_duration:                             # Optional UINT. The SSB duration of this serving cell in subframes. Must be present if not provided over F1.
+          -                                         # Define neighbour cell(s) of Cell 1.
+            nr_cell_id:                             # Required UINT. The ID of this neighbor cell.
+            report_configs:                         # Required TEXT. List of report configurations to use for measurements of this neighbor cell.
+      -                                         # Define Cell 2
+        nr_cell_id:                               # Required UINT. The ID of a cell that does not belong to this gNB.
+        ncells:                                   # Required TEXT. List of neighbor cells.
+          -                                         # Define neighbour cell(s) of Cell 2.
+            nr_cell_id:                             # Required UINT. The ID of this neighbor cell.
+            report_configs:                         # Required TEXT. List of report configurations to use for measurements of this neighbor cell.
+        gnb_id_bit_length:                        # Optional UINT. The ID of this cell's gNB. Must be present if the cell does not belong to this gNB. Supported: [22 - 32]
+        pci:                                      # Optional UINT. The PCI of this cell. Must be present if the cell does not belong to this gNB. Supported: [0-1007]
+        band:                                     # Optional UINT. The NR band of this cell. Must be present if the cell does not belong to this gNB.
+        ssb_scs:                                  # Optional UINT. The SSB subcarrier spacing of this cell in KHz. Must be present if cell does not belong to this gNB.
+        ssb_period:                               # Optional UINT. The SSB period of this cell in ms. Must be present if cell does not belong to this gNB.
+        ssb_offset:                               # Optional UINT. The SSB offset of this cell. Must be present if cell does not belong to this gNB.
+        ssb_duration:                             # Optional UINT. The SSB duration of this cell in subframes. Must be present if cell does not belong to this gNB.
     report_configs:                             # Optional TEXT. Sets the list of report configurations to dynamically build a measurement configuration sent to the UEs using the below values.
-      -                                         # Define report configs for cell 1
+      -                                         # Define report configs to be used by the UEs
         report_cfg_id:                            # Required UINT. The ID of this report configuration.
         report_type:                              # Required TEXT. The type of the report. Supported: [event_triggered, periodical]. Note that periodical reports are only supported for serving cells.
         event_triggered_report_type:              # Optional TEXT. Sets the type of event triggered report. Supported: [a1, a2, a3, a4, a5, a6].
