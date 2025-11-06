@@ -435,3 +435,462 @@ Scheduler UE metrics
     - Average/Maximum PUCCH HARQ delay in ms: it measures the time between the slot when the PUCCH is received and the slot when the UCI carrying HARQ-ACK bits for that PUCCH decoding is completed.
   * - ``avg_sr_to_pusch_delay``, ``max_sr_to_pusch_delay``
     - Average/Maximum SR to PUSCH delay in ms: it measures the time between the slot when the SR is received and the slot when the first PUSCH (following the SR) is allocated for this UE.    
+
+.. _ofh_metrics:
+
+OFH metrics
+===========
+
+The structured OFH metrics are shown below:
+
+.. code-block:: json
+
+  {
+    "timestamp": "2025-11-04T15:51:26.845",
+    "ru": {
+      "ofh": {
+        "timing_stats": {
+          "nof_skipped_symbols": 0,
+          "skipped_symbols_max_burst": 0
+        },
+        "cells": [    # List of cells.
+          {
+            "pci": 0,
+            "ul": {
+              "received_packets": {
+                "total": 0,
+                "early": 0,
+                "on_time": 0,
+                "late": 0,
+                "earliest_msg_us": 0.0,
+                "latest_msg_us": 0.0
+              },
+              "ethernet_receiver": {
+                "average_throughput_mbps": 0.0,
+                "average_latency_us": 0.0,
+                "max_latency_us": 0.0,
+                "cpu_usage_percent": 0.0
+              },
+              "message_decoder": {
+                "prach": {
+                  "nof_dropped_messages": 0,
+                  "average_latency_us": 0.0,
+                  "max_latency_us": 0.0,
+                  "cpu_usage_percent": 0.0
+                },
+                "data": {
+                  "nof_dropped_messages": 0,
+                  "average_latency_us": 0.0,
+                  "max_latency_us": 0.0,
+                  "cpu_usage_percent": 0.0
+                },
+                "ecpri": {
+                  "nof_future_seqid_messages": 0,
+                  "nof_past_seqid_messages": 0
+                }
+              },
+              "rx_window_stats": {
+                "nof_missed_uplink_symbols": 0,
+                "nof_missed_prach_occasions": 0
+              }
+            },
+            "dl": {
+              "ethernet_transmitter": {
+                "average_throughput_mbps": 0.0,
+                "average_latency_us": 0.0,
+                "max_latency_us": 0.0,
+                "cpu_usage_percent": 0.0
+              },
+              "message_encoder": {
+                "dl_cp": {
+                  "average_latency_us": 0,
+                  "max_latency_us": 0,
+                  "cpu_usage_percent": 0
+                },
+                "ul_cp": {
+                  "average_latency_us": 0,
+                  "max_latency_us": 0,
+                  "cpu_usage_percent": 0
+                },
+                "dl_up": {
+                  "average_latency_us": 0,
+                  "max_latency_us": 0,
+                  "cpu_usage_percent": 0
+                },
+              },
+              "message_transmitter": {
+                "average_latency_us": 0,
+                "max_latency_us": 0,
+                "cpu_usage_percent": 0
+              },
+              "transmitter_stats": {
+                "late_dl_slots": 0,
+                "late_ul_slot_requests": 0,
+                "late_cp_dl_messages": 0,
+                "late_up_dl_messages": 0,
+                "late_cp_ul_messages": 0
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+
+The OFH metrics are structured into the following sections:
+
+* ``timing_stats`` representing the timing statistics.
+* ``cells`` representing a list of cells metrics.
+
+The ``timing_stats`` metrics are shown in the following table:
+
+.. list-table::
+  :width: 100 %
+  :widths: 25 75
+  :header-rows: 1
+
+  * - **OFH timing_stats metrics**
+    - **Description**
+  * - ``nof_skipped_symbols``
+    - Number of symbols skipped when the timing worker wakes up late.
+  * - ``skipped_symbols_max_burst``
+    - Maximum number of skipped symbols in a burst.
+
+A cell is composed of three elements as it is shown in the following table:
+
+.. list-table::
+  :width: 100 %
+  :widths: 25 75
+  :header-rows: 1
+
+  * - **OFH cells metrics**
+    - **Description**
+  * - ``pci``
+    - Physical Cell Identifier (described in 3GPP TS 38.331). Supported [0 - 1007].
+  * - ``ul``
+    - Object holding the Uplink metrics for the given cell.
+  * - ``dl``
+    - Object holding the Downlink metrics for the given cell.
+
+The Uplink metrics are structured in the following sections:
+
+* ``received_packets``
+* ``ethernet_receiver``
+* ``message_decoder``
+* ``rx_window_stats``
+
+The Received packets metrics for Uplink are described in the following table:
+
+.. list-table::
+  :width: 100 %
+  :widths: 25 75
+  :header-rows: 1
+
+  * - **OFH Uplink cells received packets metrics**
+    - **Description**
+  * - ``total``
+    - Total number of received packets.
+  * - ``early``
+    - Number of OFH packets received early.
+  * - ``on_time``
+    - Number of OFH packets received on time.
+  * - ``late``
+    - Number of OFH packets received late.
+  * - ``earliest_msg_us``
+    - Earliest received packet in microseconds.
+  * - ``latest_msg_us``
+    - Latest received packet in microseconds.
+
+The Ethernet receiver metrics for Uplink is described in the following table:
+
+.. list-table::
+  :width: 100 %
+  :widths: 25 75
+  :header-rows: 1
+
+  * - **OFH cell Ethernet receiver metrics**
+    - **Description**
+  * - ``average_throughput_mbps``
+    - Average received throughput during metrics period represented in megabits per second.
+  * - ``average_latency_us``
+    - Average latency of packet reception in microseconds.
+  * - ``max_latency_us``
+    - Maximum latency of packet reception in microseconds.
+  * - ``cpu_usage_percent``
+    - CPU usage in percentage of the Ethernet receiver.
+
+The Uplink message decoder metrics are structured in the following sections:
+
+* ``prach``
+* ``data``
+* ``ecpri``
+
+The PRACH metrics for Uplink message decoder are described in the following table:
+
+.. list-table::
+  :width: 100 %
+  :widths: 25 75
+  :header-rows: 1
+
+  * - **OFH cell PRACH messages decoder metrics**
+    - **Description**
+  * - ``nof_dropped_messages``
+    - Number of dropped PRACH messages.
+  * - ``average_latency_us``
+    - Average latency of PRACH message decoding.
+  * - ``max_latency_us``
+    - Maximum latency of PRACH message decoding.
+  * - ``cpu_usage_percent``
+    - CPU usage in percentage of PRACH messages decoding.
+
+The Data metrics for Uplink message decoder are described in the following table:
+
+.. list-table::
+  :width: 100 %
+  :widths: 25 75
+  :header-rows: 1
+
+  * - **OFH cell Data messages decoder metrics**
+    - **Description**
+  * - ``nof_dropped_messages``
+    - Number of dropped Data messages.
+  * - ``average_latency_us``
+    - Average decoding latency of the received Data messages.
+  * - ``max_latency_us``
+    - Maximum decoding latency of the received Data messages.
+  * - ``cpu_usage_percent``
+    - CPU usage in percentage of the Data flow.
+
+The eCPRI metrics for Uplink message decoder are described in the following table:
+
+.. list-table::
+  :width: 100 %
+  :widths: 25 75
+  :header-rows: 1
+
+  * - **OFH Uplink cells message decoder eCPRI metrics**
+    - **Description**
+  * - ``nof_future_seqid_messages``
+    - Number of skipped messages by the eCPRI.
+  * - ``nof_past_seqid_messages``
+    - Number of dropped messages by the eCPRI.
+
+The Receiver window statistics metrics for Uplink are described in the following table:
+
+.. list-table::
+  :width: 100 %
+  :widths: 25 75
+  :header-rows: 1
+
+  * - **OFH Uplink cells Receiver window statistics metrics**
+    - **Description**
+  * - ``nof_missed_uplink_symbols``
+    - Number of requested uplink symbols that were not fully received within the expected reception window.
+  * - ``nof_missed_prach_occasions``
+    - Number of PRACHs that were not fully received within the expected reception window.
+
+The Downlink metrics are structured in the following sections:
+
+* ``ethernet_transmitter``
+* ``message_encoder``
+* ``message_transmitter``
+* ``transmitter_stats``
+
+The Ethernet transmitter metrics for Downlink are described in the following table:
+
+.. list-table::
+  :width: 100 %
+  :widths: 25 75
+  :header-rows: 1
+
+  * - **OFH cell Ethernet transmitter metrics**
+    - **Description**
+  * - ``average_throughput_mbps``
+    - Average transmitted throughput during metrics period represented in megabits per second.
+  * - ``average_latency_us``
+    - Average latency of packet transmission in microseconds.
+  * - ``max_latency_us``
+    - Maximum latency of packet transmission in microseconds.
+  * - ``cpu_usage_percent``
+    - CPU usage in percentage of the Ethernet transmitter.
+
+The Downlink message encoder metrics are structured in the following sections:
+
+* ``dl_cp``
+* ``ul_cp``
+* ``dl_up``
+
+The message encoder Downlink Control-Plane metrics are described in the following table:
+
+.. list-table::
+  :width: 100 %
+  :widths: 25 75
+  :header-rows: 1
+
+  * - **OFH cell Downlink Control-Plane messages encoder metrics**
+    - **Description**
+  * - ``average_latency_us``
+    - Average latency of the Downlink Control-Plane processing in microseconds.
+  * - ``max_latency_us``
+    - Maximum latency of the Downlink Control-Plane processing in microseconds.
+  * - ``cpu_usage_percent``
+    - CPU usage in percentage of the Downlink Control-Plane processing.
+
+The message encoder Uplink Control-Plane metrics are described in the following table:
+
+.. list-table::
+  :width: 100 %
+  :widths: 25 75
+  :header-rows: 1
+
+  * - **OFH cell Uplink Control-Plane messages encoder metrics**
+    - **Description**
+  * - ``average_latency_us``
+    - Average latency of the Uplink Control-Plane processing in microseconds.
+  * - ``max_latency_us``
+    - Maximum latency of the Uplink Control-Plane processing in microseconds.
+  * - ``cpu_usage_percent``
+    - CPU usage in percentage of the Uplink Control-Plane processing.
+
+The Message encoder Downlink User-Plane metrics are described in the following table:
+
+.. list-table::
+  :width: 100 %
+  :widths: 25 75
+  :header-rows: 1
+
+  * - **OFH cell Downlink User-Plane messages encoder metrics**
+    - **Description**
+  * - ``average_latency_us``
+    - Average latency of the Downlink User-Plane processing in microseconds.
+  * - ``max_latency_us``
+    - Maximum latency of the Downlink User-Plane processing in microseconds.
+  * - ``cpu_usage_percent``
+    - CPU usage in percentage of the Downlink User-Plane processing.
+
+The Message transmitter metrics for Downlink are described in the following table:
+
+.. list-table::
+  :width: 100 %
+  :widths: 25 75
+  :header-rows: 1
+
+  * - **OFH cell messages transmitter metrics**
+    - **Description**
+  * - ``average_latency_us``
+    - Average latency of messages processing (including Ethernet transmission) performed at each symbol boundary.
+  * - ``max_latency_us``
+    - Maximum latency of messages processing (including Ethernet transmission) performed at each symbol boundary.
+  * - ``cpu_usage_percent``
+    - CPU usage in percentage of the messages transmitter.
+
+The Transmitter statistics for Downlink is described in the following table:
+
+.. list-table::
+  :width: 100 %
+  :widths: 25 75
+  :header-rows: 1
+
+  * - **OFH Downlink cells transmitter statistics metrics**
+    - **Description**
+  * - ``late_dl_slots``
+    - Number of late downlink resource grids received from the PHY.
+  * - ``late_ul_slot_requests``
+    - Number of late uplink request.
+  * - ``late_cp_dl_messages``
+    - Number of late Control-Plane downlink messages, i.e., messages that were not transmitted.
+  * - ``late_up_dl_messages``
+    - Number of late User-Plane downlink messages, i.e., messages that were not transmitted.
+  * - ``late_cp_ul_messages``
+    - Number of late Control-Plane uplink messages, i.e., messages that were not transmitted.
+
+
+.. _executors_metrics:
+
+Executors metrics
+===========
+
+The structured Executors metrics are shown below:
+
+.. code-block:: json
+
+  {
+    "timestamp": "2025-11-04T15:51:26.845",
+    "executor_metrics": {
+      "name": "",
+      "nof_executes": 0,
+      "nof_defers": 0,
+      "enqueue_avg": 0,
+      "enqueue_max": 0,
+      "task_avg": 0,
+      "task_max": 0,
+      "cpu_load": 0,
+      "nof_vol_ctxt_switch": 0,
+      "nof_invol_ctxt_switch": 0.0	
+    }
+  }
+
+The table below describes the Executors metrics.
+
+.. list-table::
+  :width: 100 %
+  :widths: 25 75
+  :header-rows: 1
+
+  * - **Executors metrics**
+    - **Description**
+  * - ``name``
+    - Executor name.
+  * - ``nof_executes``
+    - Number of times executor ran a task.
+  * - ``nof_defers``
+    - Number of times a task execution was deferred.
+  * - ``enqueue_avg``
+    - Average task enqueueing latency in microseconds.
+  * - ``enqueue_max``
+    - Maximum task enqueueing latency in microseconds.
+  * - ``task_avg``
+    - Average task duration in microseconds.
+  * - ``task_max``
+    - Maximum task duration in microseconds.
+  * - ``cpu_load``
+    - Average CPU usage percentage of the executor.
+  * - ``nof_vol_ctxt_switch``
+    - Number of voluntary context switches during the report period.
+  * - ``nof_invol_ctxt_switch``
+    - Number of involuntary context switches during the report period.
+
+
+.. _app_resource_usage_metrics:
+
+Application resource usage metrics
+===========
+
+The structured Application resource usage metrics are shown below:
+
+.. code-block:: json
+
+  {
+    "timestamp": "2025-11-04T15:51:26.845",
+    "app_resource_usage": {
+      "cpu_usage_percent": 0,
+      "memory_usage_mb": 0,
+      "power_consumption_watts": 0
+    }
+  }
+
+The table below describes the Application resource usage metrics.
+
+.. list-table::
+  :width: 100 %
+  :widths: 25 75
+  :header-rows: 1
+
+  * - **Application resource usage metrics**
+    - **Description**
+  * - ``cpu_usage_percent``
+    - CPU usage of the application as a percentage. It can exceed 100% indicating how many CPU cores are utilized.
+  * - ``memory_usage_mb``
+    - Memory consumption of the application in Megabytes.
+  * - ``power_consumption_watts``
+    - CPU package power consumption in Watts measured while running the application.
