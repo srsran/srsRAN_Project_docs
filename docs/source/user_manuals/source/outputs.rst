@@ -6,7 +6,7 @@ Outputs
 Logs
 ****
 
-|project_name| provides users with a highly configurable logging mechanism, with per-layer and per-component log levels. Set the log file path and log levels in the gNB config 
+|project_name| provides users with a highly configurable logging mechanism, with per-layer and per-component log levels. Set the log file path and log levels in the gNB config
 file. See the :ref:`Configuration Reference<manual_config_ref>` for more details.
 
 The format used for all log messages is as follows:
@@ -62,7 +62,7 @@ An example log file excerpt can be seen below:
 PCAPs
 *****
 
-|project_name| can output PCAPs at the following layers: 
+|project_name| can output PCAPs at the following layers:
 
   - MAC
   - RLC
@@ -89,9 +89,9 @@ To analyze a MAC-layer PCAP using Wireshark, you will need to configure User DLT
 RLC
 ===
 
-.. note:: 
+.. note::
 
-  To correctly view the RLC PCAPs you will need Wireshark v4.3.x or later. 
+  To correctly view the RLC PCAPs you will need Wireshark v4.3.x or later.
 
 To analyze a RLC-layer PCAP using Wireshark, you will need to configure User DLT 149 for UDP and enable the rlc_nr_udp protocol:
 
@@ -162,9 +162,9 @@ The metrics can be received and printed to ``stdout`` using a Python script.
 
 Firstly, the metrics output and remote control can be enabled by adding the following to your configuration file:
 
-.. code-block:: yaml 
+.. code-block:: yaml
 
-  metrics: 
+  metrics:
     enable_json: true
   remote_control:
     bind_addr: 0.0.0.0
@@ -188,9 +188,9 @@ You can download the source-code for the above Python script :download:`here <.s
 
 The metrics are generated on a layer basis, and each layer can be enabled through the configuration file.
 
-.. code-block:: yaml 
+.. code-block:: yaml
 
-  metrics: 
+  metrics:
     layers:                    # Enable metrics per layer
       enable_executor: true    # false to disable
       enable_app_usage: true   # false to disable
@@ -203,7 +203,7 @@ The metrics are generated on a layer basis, and each layer can be enabled throug
       enable_mac: true         # false to disable
       enable_du_low: true      # false to disable
       enable_ru: true          # false to disable
-  
+
 
 .. _mac_metrics:
 
@@ -266,13 +266,13 @@ The scheduler metrics object contains 2 keys:
   - ``timestamp``: Date and time at which the metrics were generated.
 
 .. code-block::
-  
+
   {
     "cells": [   # List of cells, one metric object per cell.
       {
         "cell_metrics": {
           "average_latency": 3,
-          ... 
+          ...
         },
         "event_list": [   # List of events for this cell.
           {
@@ -293,11 +293,11 @@ The scheduler metrics object contains 2 keys:
     ],
     "timestamp": "2025-11-04T02:12:48.105"
   }
-  
+
 
 Each element of the ``cells`` list contains the metrics of the cell, which can be accessed through the following keys:
 
-  - ``cell_metrics``: reports the cell metrics for a given cell; refer to :ref:`scheduler_cell_metrics` for details. 
+  - ``cell_metrics``: reports the cell metrics for a given cell; refer to :ref:`scheduler_cell_metrics` for details.
   - ``event_list``: list of events reported in this cell metric report. Refer to :ref:`cell_events` for details.
   - ``ue_list``: reports the list of UEs connected to this cell; each UE entry contains the UE metrics described in :ref:`scheduler_ue_metrics`.
 
@@ -356,9 +356,9 @@ Cell events
   * - ``event_type``
     -  Possible events are: `ue_create` for UE creation, `ue_reconf` for UE reconfiguration, `ue_rem` for UE removal.
   * - ``rnti``
-    -  RNTI of the UE for which the event occured.    
+    -  RNTI of the UE for which the event occured.
   * - ``slot``
-    -  Slot at which the creation/reconfiguration/removal procedure was completed in the scheduler.    
+    -  Slot at which the creation/reconfiguration/removal procedure was completed in the scheduler.
 
 .. _scheduler_ue_metrics:
 
@@ -406,7 +406,7 @@ Scheduler UE metrics
     - Average Timing advance in nanoseconds: it includes the TA offset for PUSCH grants only.
   * - ``pucch_ta_ns``
     - Average Timing advance in nanoseconds: it includes the TA offset for PUCCH grants only.
-  * - ``srs_ta_ns`` 
+  * - ``srs_ta_ns``
     - Average Timing advance in nanoseconds: it includes the TA offset for SRS grants only.
   * - ``ul_mcs``
     - Average MCS index used for UL grants.
@@ -426,11 +426,11 @@ Scheduler UE metrics
     - Sum of the last UL buffer status reports (BSRs) of all logical channel groups.
   * - ``nof_pucch_f0f1_invalid_harqs``
     - Number of invalid UCI carrying HARQ-ACK bits detected on PUCCH format 0 and 1.
-  * - ``nof_pucch_f2f3f4_invalid_harqs``  
+  * - ``nof_pucch_f2f3f4_invalid_harqs``
     - Number of invalid UCI carrying HARQ-ACK bits detected on PUCCH format 2, 3 and 4.
-  * - ``nof_pucch_f2f3f4_invalid_csis`` 
+  * - ``nof_pucch_f2f3f4_invalid_csis``
     - Number of invalid UCI carrying bits CSIs detected on PUCCH format 2, 3 and 4.
-  * - ``nof_pusch_invalid_harqs`` 
+  * - ``nof_pusch_invalid_harqs``
     - Number of invalid UCI carrying HARQ-ACK bits detected on PUSCH.
   * - ``nof_pusch_invalid_csis``
     - Number of invalid UCI carrying CSI bits detected on PUSCH.
@@ -443,7 +443,7 @@ Scheduler UE metrics
   * - ``avg_pucch_harq_delay``, ``max_pucch_harq_delay``
     - Average/Maximum PUCCH HARQ delay in ms: it measures the time between the slot when the PUCCH is received and the slot when the UCI carrying HARQ-ACK bits for that PUCCH decoding is completed.
   * - ``avg_sr_to_pusch_delay``, ``max_sr_to_pusch_delay``
-    - Average/Maximum SR to PUSCH delay in ms: it measures the time between the slot when the SR is received and the slot when the first PUSCH (following the SR) is allocated for this UE.    
+    - Average/Maximum SR to PUSCH delay in ms: it measures the time between the slot when the SR is received and the slot when the first PUSCH (following the SR) is allocated for this UE.
 
 .. _ofh_metrics:
 
@@ -813,6 +813,311 @@ The Transmitter statistics for Downlink is described in the following table:
   * - ``late_cp_ul_messages``
     - Number of late Control-Plane uplink messages, i.e., messages that were not transmitted.
 
+.. _ngap_metrics:
+
+NGAP metrics
+===========
+
+The NGAP metrics are encapsulated in the CU-CP metric object, which contains the following keys:
+
+  - ``cu-cp``: Includes the CU-CP ID under the ``id`` key, NGAP metrics under the ``ngaps`` key, and RRC metrics under the ``rrcs`` key.
+  - ``timestamp``: Date and time at which the metrics were generated.
+
+and is structured as shown below.
+
+.. code-block::
+
+  {
+    "cu-cp": {
+      "id": "srs-cu-cp",
+      "ngaps": {
+        "ngap": [  # List of NGAP instances for connected AMFs.
+          ...
+        ],
+        "nof_handover_preparations_requested": 0,
+        "nof_successful_handover_preparations": 0
+      },
+      "rrcs": {
+        "du": [  # List of RRC instances for connected DUs.
+          ...
+        ],
+        "nof_handover_executions_requested": 0,
+        "nof_successful_handover_executions": 0
+      }
+    },
+    "timestamp": "2025-11-04T15:51:26.845"
+  }
+
+The NGAP metrics are structured as shown below.
+
+.. code-block::
+
+  {
+    "ngaps": {
+      "ngap": [
+        {
+          "amf_name": "open5gs-amf0",
+          "connected": true,
+          "paging_measurement": {
+            "nof_cn_initiated_paging_requests": 0
+          },
+          "pdu_session_management": {
+            "nof_pdu_sessions_failed_to_setup": {
+              "misc-ctrl_processing_overload": 0,
+              "misc-hardware_fail": 0,
+              "misc-not_enough_user_plane_processing_res": 0,
+              "misc-om_intervention": 0,
+              "misc-unknown_plmn_or_sn_pn": 0,
+              "nas-authentication_fail": 0,
+              "nas-deregister": 0,
+              "nas-normal_release": 0,
+              "nas-unspecified": 0,
+              "protocol-abstract_syntax_error_falsely_constructed_msg": 0,
+              "protocol-abstract_syntax_error_ignore_and_notify": 0,
+              "protocol-abstract_syntax_error_reject": 0,
+              "protocol-msg_not_compatible_with_receiver_state": 0,
+              "protocol-semantic_error": 0,
+              "protocol-transfer_syntax_error": 0,
+              "protocol-unspecified": 0,
+              "radio_network-cag_only_access_denied": 0,
+              "radio_network-cell_not_available": 0,
+              "radio_network-encryption_and_or_integrity_protection_algorithms_not_supported": 0,
+              "radio_network-fail_in_radio_interface_proc": 0,
+              "radio_network-ho_cancelled": 0,
+              "radio_network-ho_desirable_for_radio_reason": 0,
+              "radio_network-ho_fail_in_target_5_gc_ngran_node_or_target_sys": 0,
+              "radio_network-ho_target_not_allowed": 0,
+              "radio_network-ims_voice_eps_fallback_or_rat_fallback_triggered": 0,
+              "radio_network-inconsistent_remote_ue_ngap_id": 0,
+              "radio_network-inconsistent_slice_info_for_the_session": 0,
+              "radio_network-indicated_mbs_session_area_info_not_served_by_the_gnb": 0,
+              "radio_network-insufficient_ue_cap": 0,
+              "radio_network-interaction_with_other_proc": 0,
+              "radio_network-invalid_qos_combination": 0,
+              "radio_network-misaligned_assoc_for_multicast_unicast": 0,
+              "radio_network-multiple_location_report_ref_id_instances": 0,
+              "radio_network-multiple_pdu_session_id_instances": 0,
+              "radio_network-multiple_qos_flow_id_instances": 0,
+              "radio_network-n26_interface_not_available": 0,
+              "radio_network-ng_inter_sys_ho_triggered": 0,
+              "radio_network-ng_intra_sys_ho_triggered": 0,
+              "radio_network-no_radio_res_available_in_target_cell": 0,
+              "radio_network-not_supported_5qi_value": 0,
+              "radio_network-npn_access_denied": 0,
+              "radio_network-partial_ho": 0,
+              "radio_network-radio_conn_with_ue_lost": 0,
+              "radio_network-radio_res_not_available": 0,
+              "radio_network-redcap_ue_not_supported": 0,
+              "radio_network-redirection": 0,
+              "radio_network-reduce_load_in_serving_cell": 0,
+              "radio_network-release_due_to_5gc_generated_reason": 0,
+              "radio_network-release_due_to_cn_detected_mob": 0,
+              "radio_network-release_due_to_ngran_generated_reason": 0,
+              "radio_network-release_due_to_pre_emption": 0,
+              "radio_network-res_not_available_for_the_slice": 0,
+              "radio_network-res_optim_ho": 0,
+              "radio_network-rsn_not_available_for_the_up": 0,
+              "radio_network-slice_not_supported": 0,
+              "radio_network-successful_ho": 0,
+              "radio_network-time_crit_ho": 0,
+              "radio_network-tngrelocoverall_expiry": 0,
+              "radio_network-tngrelocprep_expiry": 0,
+              "radio_network-txnrelocoverall_expiry": 0,
+              "radio_network-ue_context_transfer": 0,
+              "radio_network-ue_in_rrc_inactive_state_not_reachable": 0,
+              "radio_network-ue_max_integrity_protected_data_rate_reason": 0,
+              "radio_network-unknown_local_ue_ngap_id": 0,
+              "radio_network-unknown_mbs_session_id": 0,
+              "radio_network-unknown_pdu_session_id": 0,
+              "radio_network-unknown_target_id": 0,
+              "radio_network-unkown_qos_flow_id": 0,
+              "radio_network-unspecified": 0,
+              "radio_network-up_confidentiality_protection_not_possible": 0,
+              "radio_network-up_integrity_protection_not_possible": 0,
+              "radio_network-user_inactivity": 0,
+              "radio_network-xn_ho_triggered": 0,
+              "transport-transport_res_unavailable": 0,
+              "transport-unspecified": 0
+            },
+            "nof_pdu_sessions_requested_to_setup": 1,
+            "nof_pdu_sessions_successfully_setup": 1,
+            "s-nssai": "(sst=1 sd=na)"
+          },
+          "supported_plmns": "[ 00101, 99902, ]"
+        }
+      ],
+      "nof_handover_preparations_requested": 0,
+      "nof_successful_handover_preparations": 0
+    }
+  }
+
+The table below describes the NGAP metrics reported in the CU-CP metrics JSON output, under the ``ngaps`` key.
+
+.. list-table::
+  :width: 100 %
+  :widths: 25 75
+  :header-rows: 1
+
+  * - **NGAP metrics**
+    - **Description**
+  * - ``ngap``
+    - A list of NGAP instances for connected AMFs.
+  * - ``nof_handover_preparations_requested``
+    - Number of handover preparations requested, see TS 128.552 section 5.1.3.7.1.1.
+  * - ``nof_successful_handover_preparations``
+    - Number of successful handover preparations, see TS 128.552 section 5.1.3.7.1.2.
+
+The ``ngap`` list contains one object per connected AMF, structured as shown below.
+
+.. list-table::
+  :width: 100 %
+  :widths: 25 75
+  :header-rows: 1
+
+  * - **NGAP metrics**
+    - **Description**
+  * - ``amf_name``
+    - Name of the related AMF.
+  * - ``connected``
+    - AMF connection status.
+  * - ``paging_measurement``
+    - Contains number of CN initiated paging requests, see TS 128.552 section 5.1.1.27.1.
+  * - ``pdu_session_management``
+    - Contains:
+        * number of PDU sessions requested to setup, see TS 128.552 section 5.1.1.5.1
+        * number of PDU sessions successfully setup, see TS 128.552 section 5.1.1.5.2
+        * number of PDU Sessions failed to setup, see TS 128.552 section 5.1.1.5.3
+        * the S-NSSAI associated with the PDU sessions.
+  * - ``supported_plmns``
+    - Contains a list of supported PLMNs for the AMF.
+
+.. _rrc_metrics:
+
+RRC metrics
+===========
+
+The RRC metrics are encapsulated in the CU-CP metric object, which contains the following keys:
+
+  - ``cu-cp``: Includes the CU-CP ID under the ``id`` key, NGAP metrics under the ``ngaps`` key, and RRC metrics under the ``rrcs`` key.
+  - ``timestamp``: Date and time at which the metrics were generated.
+
+and is structured as shown below.
+
+.. code-block::
+
+  {
+    "cu-cp": {
+      "id": "srs-cu-cp",
+      "ngaps": {
+        "ngap": [  # List of NGAP instances for connected AMFs.
+          ...
+        ],
+        "nof_handover_preparations_requested": 0,
+        "nof_successful_handover_preparations": 0
+      },
+      "rrcs": {
+        "du": [  # List of RRC instances for connected DUs.
+          ...
+        ],
+        "nof_handover_executions_requested": 0,
+        "nof_successful_handover_executions": 0
+      }
+    },
+    "timestamp": "2025-11-04T15:51:26.845"
+  }
+
+The RRC metrics are structured as shown below.
+
+.. code-block::
+
+  {
+    "rrcs": {
+      "du": [
+        {
+          "gnb_du_id": 0,
+          "rrc_connection_establishment": {
+            "attempted_rrc_connection_establishments": {
+              "emergency": 0,
+              "high_prio_access": 0,
+              "mcs_prio_access": 0,
+              "mo_data": 0,
+              "mo_sig": 1,
+              "mo_sms": 0,
+              "mo_video_call": 0,
+              "mo_voice_call": 0,
+              "mps_prio_access": 0,
+              "mt_access": 0
+            },
+            "successful_rrc_connection_establishments": {
+              "emergency": 0,
+              "high_prio_access": 0,
+              "mcs_prio_access": 0,
+              "mo_data": 0,
+              "mo_sig": 1,
+              "mo_sms": 0,
+              "mo_video_call": 0,
+              "mo_voice_call": 0,
+              "mps_prio_access": 0,
+              "mt_access": 0
+            }
+          },
+          "rrc_connection_number": {
+            "max_nof_rrc_connections": 1,
+            "mean_nof_rrc_connections": 1
+          },
+          "rrc_connection_reestablishment": {
+            "attempted_rrc_connection_reestablishments": 0,
+            "successful_rrc_connection_reestablishments_with_ue_context": 0,
+            "successful_rrc_connection_reestablishments_without_ue_context": 0
+          }
+        }
+      ],
+      "nof_handover_executions_requested": 0,
+      "nof_successful_handover_executions": 0
+    }
+  }
+
+The table below describes the RRC metrics reported in the CU-CP metrics JSON output, under the ``rrcs`` key.
+
+.. list-table::
+  :width: 100 %
+  :widths: 25 75
+  :header-rows: 1
+
+  * - **RRC metrics**
+    - **Description**
+  * - ``du``
+    - A list of RRC instances for connected DUs.
+  * - ``nof_handover_executions_requested``
+    - Number of handover executions requested, see TS 128.552 section 5.1.1.6.2.1.
+  * - ``nof_successful_handover_executions``
+    - Number of successful handover executions, see TS 128.552 section 5.1.1.6.2.2.
+
+The ``du`` list contains one object per connected DU, structured as shown below.
+
+.. list-table::
+  :width: 100 %
+  :widths: 25 75
+  :header-rows: 1
+
+  * - **RRC metrics**
+    - **Description**
+  * - ``gnb_du_id``
+    - ID of the related DU.
+  * - ``rrc_connection_establishment``
+    - RRC connection establisment metrics, containing:
+        * number of attempted RRC connection establishments, see TS 128.552 section 5.1.1.15.1.
+        * number of successful RRC connection establishments, see TS 128.552 section 5.1.1.15.2.
+  * - ``rrc_connection_number``
+    - Contains RRC connections statistics, containing:
+        * mean number of RRC Connections, see TS 128.552 section 5.1.1.4.1.
+        * max number of RRC Connections, see TS 128.552 section 5.1.1.4.2.
+  * - ``rrc_connection_reestablishment``
+    - RRC connection reestablisment metrics, containing:
+        * number of RRC connection re-establishment attempts, see TS 128.552 section 5.1.1.17.1.
+        * number of successful RRC connection reestablishment with UE context, see TS 128.552 section 5.1.1.17.2.
+        * number of successful RRC connection reestablishment without UE context, see TS 128.552 section 5.1.1.17.3.
+
 
 .. _executors_metrics:
 
@@ -835,7 +1140,7 @@ The structured Executors metrics are shown below:
       "task_max": 0,
       "cpu_load": 0,
       "nof_vol_ctxt_switch": 0,
-      "nof_invol_ctxt_switch": 0.0	
+      "nof_invol_ctxt_switch": 0.0
     }
   }
 
