@@ -33,7 +33,7 @@ cu_cp:
     sctp_rto_initial: 120                 # Optional INT. Sets the initial retransmission timeout when creating the SCTP connection.
     sctp_rto_min: 120                     # Optional INT. Sets the minimum retransmission timeout for the SCTP connection.
     sctp_rto_max: 500                     # Optional INT. Sets the maximum retransmission timeout for the SCTP connection.
-    sctp_init_max_attempts: 3          # Optional INT. Sets the maximum retransmission attempts for the initial SCTP connection.
+    sctp_init_max_attempts: 3             # Optional INT. Sets the maximum retransmission attempts for the initial SCTP connection.
     sctp_max_init_timeo: 500              # Optional INT. Sets the maximum retransmission timeout for the initial SCTP connection.
     sctp_hb_interval: 30000               # Optional INT (30000). SCTP heartbeat interval in milliseconds (-1 to use system default).
     sctp_assoc_max_retx: 10               # Optional INT (10). SCTP association max retransmissions (-1 to use system default).
@@ -106,19 +106,22 @@ cu_up:
 
   ngu:
     no_core: false                        # Optional BOOLEAN (false). Setting to true allows the gNB to run without a core. Supported: [0, 1].
-    socket:                               # Define socket(s) for NG-U interface.
-      -                                     # Socket 1
-        bind_addr: 127.0.3.1                  # Optional TEXT (auto). Sets local IP address to bind for N3 interface. Format: IPV4 or IPV6 IP address.
-        udp:
-          max_rx_msgs: 256                      # Optional INT (256). Sets the maximum number of messages RX from a socket in a single syscall.
-          pool_threshold: 0.9                   # Optional FLOAT (0.9). Sets the pool occupancy threshold, after which packets are dropped. Supported: [0.0 - 1.0].
-          dscp:                                 # Optional UINT. Sets the Differentiated Services Code Point. Supported: [0 - 63].
     gtpu:
       queue_size: 2046                       # Optional UINT (2046). GTP-U queue size, in PDUs
       batch_size: 256                        # Optional UINT (256). Maximum number of GTP-U PDUs processed in a batch
       reordering_timer: 0                    # Optional UINT (0). GTP-U RX reordering timer (in milliseconds)
-      rate_limiter_period:                   # Optional INT. GTP-U RX rate limiter period (in milliseconds)
+      rate_limiter_period: 100               # Optional INT. GTP-U RX rate limiter period (in milliseconds)
       ignore_ue_ambr: true                   # Optional BOOLEAN (true). Ignore GTP-U DL UE-AMBR rate limiter
+    socket:                               # Define socket(s) for NG-U interface.
+      -                                     # Socket 1 
+        bind_addr: 127.0.0.1                  # Optional TEXT (auto). Sets local IP address to bind for N3 interface. Format: IPV4 or IPV6 IP address.
+        udp:
+          max_rx_msgs: 256                      # Optional INT (256). Sets the maximum number of messages RX from a socket in a single syscall.
+          tx_qsize: 4096                        # Optional INT (4096). Sets the transmit queue of the UDP gatewsy.
+          max_tx_msgs: 256                      # Optional INT (256). Sets the maximum number of messages TX from a socket in a single syscall.
+          max_tx_segments: 256                  # Optional INT (256). Sets the maximum number amount on a segments TX SDU.
+          pool_threshold: 0.9                   # Optional FLOAT (0.9). Sets the pool occupancy threshold, after which packets are dropped. Supported: [0.0 - 1.0].
+          dscp:                                 # Optional UINT. Sets the Differentiated Services Code Point. Supported: [0 - 63].
 
   test_mode:
     enable: false                         # Optional BOOLEAN (false). Enable or disable CU-UP test mode
@@ -128,6 +131,7 @@ cu_up:
     nia_algo: 2                           # Optional UINT:INT (2). NIA algo to use for testing. Format: [1 - 3]
     ue_ambr:                              # Optional UINT. DL UE-AMBR used for testing in bps
     attach_detach_period:                 # Optional INT. Attach/detach period for test mode. 0 means always attached.
+    reestablish_period:                   # Optional INT. Re-establish period for test mode. 0 means no re-establishment.
 
 du:
   warn_on_drop: false                   # Optional BOOLEAN (false). Enables the option to log a warning for dropped packets in F1-U, RLC and MAC due to full queues. Supported: [false, true].
