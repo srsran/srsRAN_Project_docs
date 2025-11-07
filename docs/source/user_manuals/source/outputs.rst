@@ -156,26 +156,35 @@ To analyze an E2AP PCAP using Wireshark, you will need to configure User DLT 155
 JSON Metrics
 ************
 
-|project_name| supports the reporting of the console metrics to a JSON file over UDP socket. This is used to generate the output seen in the :ref:`GrafanaGUI <grafana_gui>`. 
+|project_name| supports the reporting of the console metrics to JSON data format over websocket. This is used to generate the output seen in the :ref:`GrafanaGUI <grafana_gui>`.
 
-The metrics can be received and written to a file using a Python script. To do this a Python UDP receiver is needed. 
+The metrics can be received and printed to ``stdout`` using a Python script.
 
-Firstly, the metrics output can be enabled by adding the following to your configuration file: 
+Firstly, the metrics output and remote control can be enabled by adding the following to your configuration file:
 
 .. code-block:: yaml 
 
   metrics: 
     enable_json: true
+  remote_control:
+    bind_addr: 0.0.0.0
+    port: 8001
+    enabled: true
 
-With this enabled, the metrics will be sent to ``127.0.0.1:55555``. The metrics can be written to a file in real-time while the gNB is running using the following Python code: 
+With this enabled, the websocket will listen on ``127.0.0.1:8001``. The metrics can be subscribed and written to ``stdout`` in real-time while the gNB is running using the following Python code:
 
-.. literalinclude:: .scripts/metrics_udp_receiver.py
+.. literalinclude:: .scripts/metrics_ws_receiver.py
   :language: python
 
-This application will need to be run in parallel with the gNB to successfully write the metrics. The metrics will be written to a file called ``gnb_metrics.json``, which will be stored in 
-the same location as where the Python application was run. 
+You must specify the address and port of the websocket via environment variable ``WS_URL``, e.g. start the script as follows:
 
-You can download the source-code for the above Python application :download:`here <.scripts/metrics_udp_receiver.py>`. 
+.. code-block:: bash
+
+  WS_URL="127.0.0.1:8001" ./metrics_ws_receiver.py
+
+This script will need to be run in parallel with the gNB to successfully print the metrics. The metrics will be written to ``stdout``.
+
+You can download the source-code for the above Python script :download:`here <.scripts/metrics_ws_receiver.py>`.
 
 The metrics are generated on a layer basis, and each layer can be enabled through the configuration file.
 
