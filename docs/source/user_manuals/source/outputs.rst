@@ -462,7 +462,7 @@ The structured OFH metrics are shown below:
           "nof_skipped_symbols": 0,
           "skipped_symbols_max_burst": 0
         },
-        "cells": [    # List of cells.
+        "cells": [
           {
             "pci": 0,
             "ul": {

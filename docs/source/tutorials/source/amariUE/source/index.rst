@@ -161,11 +161,11 @@ Modify the ``ru_sdr`` section with IPs from which gNB sends and receives radio s
 Amarisoft UE
 ------------
 
-Modify the ``ru_sdr`` section of Amarisoft UE configuration with IPs from which UE sends and receives radio samples via ZMQ driver:
+Modify the ``rf_driver`` section of Amarisoft UE configuration with IPs from which UE sends and receives radio samples via ZMQ driver:
 
 .. code-block:: cfg
 
-  ru_sdr: {
+  rf_driver: {
     name:      "srsran",
     args:      "",
     tx_port0:  "tcp://10.53.1.2:6000",
@@ -540,11 +540,11 @@ Modify the ``ru_sdr`` section to send and receive radio samples via UHD driver:
 Amarisoft UE
 ------------
 
-Modify the ``ru_sdr`` section of Amarisoft UE configuration to send and receive radio samples via UHD driver:
+Modify the ``rf_driver`` section of Amarisoft UE configuration to send and receive radio samples via UHD driver:
 
 .. code-block:: cfg
 
-    ru_sdr: {
+    rf_driver: {
         name: "uhd",
         sync: "none",
     #if CELL_BANDWIDTH < 5
