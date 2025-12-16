@@ -1046,7 +1046,8 @@ The RRC metrics are structured as shown below.
               "mo_video_call": 0,
               "mo_voice_call": 0,
               "mps_prio_access": 0,
-              "mt_access": 0
+              "mt_access": 0,
+              "unknown": 0
             },
             "successful_rrc_connection_establishments": {
               "emergency": 0,
@@ -1058,17 +1059,87 @@ The RRC metrics are structured as shown below.
               "mo_video_call": 0,
               "mo_voice_call": 0,
               "mps_prio_access": 0,
-              "mt_access": 0
+              "mt_access": 0,
+              "unknown": 0
             }
           },
           "rrc_connection_number": {
+            "max_nof_inactive_rrc_connections": 0,
             "max_nof_rrc_connections": 1,
+            "mean_nof_inactive_rrc_connections": 0,
             "mean_nof_rrc_connections": 1
           },
           "rrc_connection_reestablishment": {
             "attempted_rrc_connection_reestablishments": 0,
             "successful_rrc_connection_reestablishments_with_ue_context": 0,
             "successful_rrc_connection_reestablishments_without_ue_context": 0
+          },
+          "rrc_connection_resume": {
+            "attempted_rrc_connection_resumes": {
+              "emergency": 0,
+              "high_prio_access": 0,
+              "mcs_prio_access": 0,
+              "mo_data": 0,
+              "mo_sig": 0,
+              "mo_sms": 0,
+              "mo_video_call": 0,
+              "mo_voice_call": 0,
+              "mps_prio_access": 0,
+              "mt_access": 0,
+              "unknown": 0
+            },
+            "attempted_rrc_connection_resumes_followed_by_rrc_setup": {
+              "emergency": 0,
+              "high_prio_access": 0,
+              "mcs_prio_access": 0,
+              "mo_data": 0,
+              "mo_sig": 0,
+              "mo_sms": 0,
+              "mo_video_call": 0,
+              "mo_voice_call": 0,
+              "mps_prio_access": 0,
+              "mt_access": 0,
+              "unknown": 0
+            },
+            "rrc_connection_resumes_followed_by_network_release": {
+              "emergency": 0,
+              "high_prio_access": 0,
+              "mcs_prio_access": 0,
+              "mo_data": 0,
+              "mo_sig": 0,
+              "mo_sms": 0,
+              "mo_video_call": 0,
+              "mo_voice_call": 0,
+              "mps_prio_access": 0,
+              "mt_access": 0,
+              "unknown": 0
+            },
+            "successful_rrc_connection_resumes": {
+              "emergency": 0,
+              "high_prio_access": 0,
+              "mcs_prio_access": 0,
+              "mo_data": 0,
+              "mo_sig": 0,
+              "mo_sms": 0,
+              "mo_video_call": 0,
+              "mo_voice_call": 0,
+              "mps_prio_access": 0,
+              "mt_access": 0,
+              "unknown": 0
+            },
+            "successful_rrc_connection_resumes_with_fallback": {
+              "emergency": 0,
+              "high_prio_access": 0,
+              "mcs_prio_access": 0,
+              "mo_data": 0,
+              "mo_sig": 0,
+              "mo_sms": 0,
+              "mo_video_call": 0,
+              "mo_voice_call": 0,
+              "mps_prio_access": 0,
+              "mt_access": 0,
+              "unknown": 0
+            }
           }
         }
       ],
@@ -1112,12 +1183,20 @@ The ``du`` list contains one object per connected DU, structured as shown below.
     - Contains RRC connections statistics, containing:
         * mean number of RRC Connections, see TS 128.552 section 5.1.1.4.1.
         * max number of RRC Connections, see TS 128.552 section 5.1.1.4.2.
+        * mean number of stored inactive RRC Connections, see TS 128.552 section 5.1.1.4.3.
+        * max number of stored inactive RRC Connections, see TS 128.552 section 5.1.1.4.4.
   * - ``rrc_connection_reestablishment``
     - RRC connection reestablisment metrics, containing:
         * number of RRC connection re-establishment attempts, see TS 128.552 section 5.1.1.17.1.
         * number of successful RRC connection reestablishment with UE context, see TS 128.552 section 5.1.1.17.2.
         * number of successful RRC connection reestablishment without UE context, see TS 128.552 section 5.1.1.17.3.
-
+  * - ``rrc_connection_resume``
+    - RRC connection resume metrics, containing:
+        * number of RRC connection resuming attempts, see TS 128.552 section 5.1.1.18.1.
+        * number of successful RRC connection resumes, see TS 128.552 section 5.1.1.18.2.
+        * number of successful RRC connection resumes with fallback, see TS 128.552 section 5.1.1.18.3.
+        * number of RRC connection resumes followed by network release, see TS 128.552 section 5.1.1.18.4.
+        * number of RRC connection resuming attempts followed by RRC setup, see TS 128.552 section 5.1.1.18.6.
 
 .. _executors_metrics:
 
