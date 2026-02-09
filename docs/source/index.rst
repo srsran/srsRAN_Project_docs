@@ -1,3 +1,8 @@
+.. warning::
+
+  |project_name| is discontinued. The code as well as all other assets have been
+  transitioned to OCUDU. See `here <https://ocudu.org>`_ for more information.
+
 
 |project_name| Documentation
 #############################
